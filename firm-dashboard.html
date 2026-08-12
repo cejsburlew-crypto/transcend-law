@@ -455,45 +455,96 @@
                 <!-- Intakes Page -->
                 <div id="intakes" class="page">
                     <div class="card">
-                        <h2>Client Intakes</h2>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Client Name</th>
-                                    <th>Email</th>
-                                    <th>Practice Area</th>
-                                    <th>Status</th>
-                                    <th>Received</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Michael Brown</td>
-                                    <td>michael@email.com</td>
-                                    <td>Personal Injury</td>
-                                    <td><span class="badge pending">New</span></td>
-                                    <td>2024-02-10</td>
-                                    <td><button class="btn" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Review</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Lisa Anderson</td>
-                                    <td>lisa@email.com</td>
-                                    <td>Estate Planning</td>
-                                    <td><span class="badge pending">New</span></td>
-                                    <td>2024-02-11</td>
-                                    <td><button class="btn" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Review</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Tom Wilson</td>
-                                    <td>tom@email.com</td>
-                                    <td>Business Law</td>
-                                    <td><span class="badge active">Reviewed</span></td>
-                                    <td>2024-02-09</td>
-                                    <td><button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Assign</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <h2>📋 Client Intakes Queue</h2>
+                        <p style="margin-bottom: 1.5rem; color: #666; font-size: 0.9rem;">Review client intakes and assign to attorneys. Documents are automatically scoped to the case.</p>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <h3 style="margin-bottom: 1rem; color: #1e3a5f;">New Intakes (2)</h3>
+                            <div style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; margin-bottom: 1rem;">
+                                <div style="padding: 1.5rem; border-bottom: 1px solid #e0e0e0;">
+                                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                                        <div>
+                                            <div style="font-weight: bold; font-size: 1.1rem; color: #1e3a5f;">Michael Brown</div>
+                                            <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">
+                                                📧 michael@email.com | 📱 (555) 123-4567
+                                            </div>
+                                            <div style="color: #999; font-size: 0.85rem; margin-top: 0.5rem;">
+                                                <strong>Case Type:</strong> Personal Injury | <strong>Received:</strong> Today 2:30 PM
+                                            </div>
+                                            <div style="color: #666; font-size: 0.9rem; margin-top: 0.75rem; line-height: 1.5;">
+                                                <strong>Description:</strong> Car accident on Highway 101, seeking representation for insurance claim
+                                            </div>
+                                            <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                                                <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">📄 View Documents (3)</button>
+                                                <select style="padding: 0.5rem 1rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
+                                                    <option>Assign to Attorney...</option>
+                                                    <option>Sarah Johnson (Lead - Personal Injury)</option>
+                                                    <option>David Martinez (Senior - Personal Injury)</option>
+                                                </select>
+                                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">❌ Decline</button>
+                                            </div>
+                                        </div>
+                                        <span style="background: #ffd700; color: #333; padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; font-size: 0.85rem;">🆕 NEW</span>
+                                    </div>
+                                </div>
+                                <div style="padding: 1.5rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                                        <div>
+                                            <div style="font-weight: bold; font-size: 1.1rem; color: #1e3a5f;">Lisa Anderson</div>
+                                            <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">
+                                                📧 lisa@email.com | 📱 (555) 234-5678
+                                            </div>
+                                            <div style="color: #999; font-size: 0.85rem; margin-top: 0.5rem;">
+                                                <strong>Case Type:</strong> Estate Planning | <strong>Received:</strong> Yesterday 10:15 AM
+                                            </div>
+                                            <div style="color: #666; font-size: 0.9rem; margin-top: 0.75rem; line-height: 1.5;">
+                                                <strong>Description:</strong> Estate planning - will & trust setup. Multiple properties, asset protection
+                                            </div>
+                                            <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                                                <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">📄 View Documents (2)</button>
+                                                <select style="padding: 0.5rem 1rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
+                                                    <option>Assign to Attorney...</option>
+                                                    <option>Jennifer Lee (Senior - Estate Planning)</option>
+                                                    <option>Robert Kim (Estate Planning)</option>
+                                                </select>
+                                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">❌ Decline</button>
+                                            </div>
+                                        </div>
+                                        <span style="background: #ffd700; color: #333; padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; font-size: 0.85rem;">🆕 NEW</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 style="margin-bottom: 1rem; color: #1e3a5f;">Reviewed (1)</h3>
+                            <div style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: start;">
+                                    <div>
+                                        <div style="font-weight: bold; font-size: 1.1rem; color: #1e3a5f;">Tom Wilson</div>
+                                        <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">
+                                            📧 tom@email.com | 📱 (555) 345-6789
+                                        </div>
+                                        <div style="color: #999; font-size: 0.85rem; margin-top: 0.5rem;">
+                                            <strong>Case Type:</strong> Business Law | <strong>Reviewed:</strong> 2 days ago
+                                        </div>
+                                        <div style="color: #666; font-size: 0.9rem; margin-top: 0.75rem; line-height: 1.5;">
+                                            <strong>Description:</strong> Contract review - business services agreement
+                                        </div>
+                                        <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                                            <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">📄 View Documents (2)</button>
+                                            <select style="padding: 0.5rem 1rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
+                                                <option>Assign to Attorney...</option>
+                                                <option value="michael">Michael Chen (Lead - Corporate)</option>
+                                                <option value="susan">Susan Rodriguez (Co-counsel)</option>
+                                            </select>
+                                            <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">❌ Decline</button>
+                                        </div>
+                                    </div>
+                                    <span style="background: #4caf50; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; font-size: 0.85rem;">✓ REVIEWED</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

@@ -302,7 +302,10 @@
       "Bash(cp /Users/jbconsultingassociatesinc./code/transcend-ssp/firm-dashboard.html /private/tmp/claude-501/-Users-jbconsultingassociatesinc--code-transcend-ssp/9e95c4e3-aa1f-4687-affed-1131263d4443/scratchpad/ && cp /Users/jbconsultingassociatesinc./code/transcend-ssp/frontend-final.html /private/tmp/claude-501/-Users-jbconsultingassociatesinc--code-transcend-ssp/9e95c4e3-aa1f-4687-affed-1131263d4443/scratchpad/ && cp /Users/jbconsultingassociatesinc./code/transcend-ssp/MARKETPLACE-DEMO.html /private/tmp/claude-501/-Users-jbconsultingassociatesinc--code-transcend-ssp/9e95c4e3-aa1f-4687-affed-1131263d4443/scratchpad/ && echo \"✅ All HTML files synced to scratchpad\")",
       "Bash(git init *)",
       "Bash(git add *)",
-      "Bash(git commit -m 'Build TRANSCEND LAW - Multi-tenant SaaS legal marketplace *)"
+      "Bash(git commit -m 'Build TRANSCEND LAW - Multi-tenant SaaS legal marketplace *)",
+      "Bash(cp /Users/jbconsultingassociatesinc./code/transcend-ssp/client-dashboard.html /private/tmp/claude-501/-Users-jbconsultingassociatesinc--code-transcend-ssp/9e95c4e3-aa1f-4687-affed-1131263d4443/scratchpad/client-dashboard.html && echo \"✅ Client dashboard updated\")",
+      "Bash(cp /Users/jbconsultingassociatesinc./code/transcend-ssp/firm-dashboard.html /private/tmp/claude-501/-Users-jbconsultingassociatesinc--code-transcend-ssp/9e95c4e3-aa1f-4687-affed-1131263d4443/scratchpad/firm-dashboard.html && echo \"✅ Firm dashboard updated\")",
+      "Bash(git commit -m 'Build complete TRANSCEND LAW feature suite *)"
     ]
   }
 }
