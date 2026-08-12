@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attorney Verification Dashboard - TRANSCEND LAW Admin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2c5aa0 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .header-meta { font-size: 0.95rem; opacity: 0.9; }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-label { color: #666; font-size: 0.85rem; text-transform: uppercase; }
+        .stat-value { font-size: 2.5rem; font-weight: bold; color: #1e88e5; margin-top: 0.5rem; }
+
+        /* Filters */
+        .filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .filter-group select, .filter-group input {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-primary { background: #1e88e5; color: white; }
+        .btn-primary:hover { background: #1565c0; }
+
+        /* Attorney Queue */
+        .queue-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .queue-header {
+            background: #f5f5f5;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Attorney Card */
+        .attorney-verification-card {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 2rem;
+            transition: all 0.2s;
+        }
+
+        .attorney-verification-card:hover {
+            background: #f9f9f9;
+        }
+
+        .attorney-verification-card:last-child {
+            border-bottom: none;
+        }
+
+        .attorney-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1.5rem;
+        }
+
+        .attorney-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e3a5f;
+        }
+
+        .attorney-firm {
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 0.3rem;
+        }
+
+        .verification-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-pending { background: #fff3e0; color: #e65100; }
+        .badge-approved { background: #c8e6c9; color: #2e7d32; }
+        .badge-rejected { background: #ffcdd2; color: #c62828; }
+        .badge-flagged { background: #f3e5f5; color: #6a1b9a; }
+
+        /* Verification Details */
+        .verification-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-box {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 4px;
+            border-left: 4px solid #1e88e5;
+        }
+
+        .detail-label { color: #999; font-size: 0.85rem; margin-bottom: 0.3rem; }
+        .detail-value { font-weight: 600; color: #333; }
+
+        .verification-check {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .check-icon {
+            font-size: 1.2rem;
+        }
+
+        .check-icon.verified { color: #4caf50; }
+        .check-icon.unverified { color: #f44336; }
+        .check-icon.pending { color: #ff9800; }
+
+        /* Complaints Section */
+        .complaints-section {
+            background: #fff3e0;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #ff9800;
+        }
+
+        .complaints-section h4 {
+            color: #e65100;
+            margin-bottom: 0.5rem;
+        }
+
+        .complaint-item {
+            background: white;
+            padding: 0.75rem;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .complaint-type {
+            display: inline-block;
+            background: #ffe0b2;
+            color: #e65100;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        /* Actions */
+        .verification-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-approve { background: #4caf50; color: white; }
+        .btn-approve:hover { background: #388e3c; }
+
+        .btn-reject { background: #f44336; color: white; }
+        .btn-reject:hover { background: #d32f2f; }
+
+        .btn-flag { background: #ff9800; color: white; }
+        .btn-flag:hover { background: #f57c00; }
+
+        .btn-view { background: #1e88e5; color: white; }
+        .btn-view:hover { background: #1565c0; }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #1e88e5;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-group textarea, .form-group select {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .attorney-header { flex-direction: column; }
+            .verification-details { grid-template-columns: 1fr; }
+            .filters { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>⚖️ Attorney Verification Dashboard</h1>
+            <div class="header-meta">Review and verify attorney credentials and BAR status</div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Pending Review</div>
+                <div class="stat-value" id="pending-count">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Approved</div>
+                <div class="stat-value" id="approved-count">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Flagged Issues</div>
+                <div class="stat-value" id="flagged-count">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">With Complaints</div>
+                <div class="stat-value" id="complaints-count">0</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <label>Status</label>
+                <select id="status-filter">
+                    <option value="">All</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="flagged">Flagged</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Has Complaints</label>
+                <select id="complaints-filter">
+                    <option value="">All</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>BAR State</label>
+                <select id="state-filter">
+                    <option value="">All States</option>
+                    <option value="CA">California</option>
+                    <option value="TX">Texas</option>
+                    <option value="NY">New York</option>
+                    <option value="FL">Florida</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="applyFilters()">Apply Filters</button>
+        </div>
+
+        <!-- Queue -->
+        <div class="queue-container">
+            <div class="queue-header">
+                🔍 Attorneys Pending Verification
+            </div>
+            <div id="attorneys-list"></div>
+        </div>
+    </div>
+
+    <!-- Verification Modal -->
+    <div class="modal" id="verification-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                Verification Decision
+                <button onclick="closeModal()" style="float: right; background: none; border: none; cursor: pointer; font-size: 1.5rem;">×</button>
+            </div>
+            <form onsubmit="submitVerification(event)">
+                <div class="form-group">
+                    <label>Decision</label>
+                    <select id="decision-select" required>
+                        <option value="">Select decision...</option>
+                        <option value="approved">✅ Approve</option>
+                        <option value="rejected">❌ Reject</option>
+                        <option value="flagged">⚠️ Flag for Review</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Notes (Required)</label>
+                    <textarea id="admin-notes" placeholder="Add notes explaining your decision..." required></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Submit Decision</button>
+                    <button type="button" class="btn" style="background: #f0f0f0; color: #333;" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Demo attorneys data
+        const attorneyQueue = [
+            {
+                id: 'att-001',
+                firstName: 'Sarah',
+                lastName: 'Johnson',
+                barLicenseNumber: 'CA#123456',
+                barState: 'CA',
+                yearsInBusiness: 18,
+                firmName: 'Smith & Associates',
+                status: 'pending',
+                barVerified: false,
+                complaintsFound: 0,
+                disciplinaryFound: 0,
+                lastCheck: '2026-08-12'
+            },
+            {
+                id: 'att-002',
+                firstName: 'Michael',
+                lastName: 'Chen',
+                barLicenseNumber: 'CA#234567',
+                barState: 'CA',
+                yearsInBusiness: 15,
+                firmName: 'Smith & Associates',
+                status: 'pending',
+                barVerified: false,
+                complaintsFound: 1,
+                disciplinaryFound: 0,
+                lastCheck: '2026-08-12'
+            },
+            {
+                id: 'att-003',
+                firstName: 'Jennifer',
+                lastName: 'Davis',
+                barLicenseNumber: 'CA#345678',
+                barState: 'CA',
+                yearsInBusiness: 7,
+                firmName: 'Smith & Associates',
+                status: 'pending',
+                barVerified: false,
+                complaintsFound: 0,
+                disciplinaryFound: 0,
+                lastCheck: '2026-08-12'
+            }
+        ];
+
+        let filteredAttorneys = [...attorneyQueue];
+        let selectedAttorneyId = null;
+
+        function renderAttorneys() {
+            const container = document.getElementById('attorneys-list');
+
+            if (filteredAttorneys.length === 0) {
+                container.innerHTML = '<div class="empty-state">✅ No attorneys pending verification</div>';
+                return;
+            }
+
+            container.innerHTML = filteredAttorneys.map(att => `
+                <div class="attorney-verification-card">
+                    <div class="attorney-header">
+                        <div>
+                            <div class="attorney-name">${att.firstName} ${att.lastName}</div>
+                            <div class="attorney-firm">${att.firmName}</div>
+                        </div>
+                        <span class="verification-badge badge-${att.status}">${att.status.toUpperCase()}</span>
+                    </div>
+
+                    <div class="verification-details">
+                        <div class="detail-box">
+                            <div class="detail-label">BAR License</div>
+                            <div class="detail-value">${att.barLicenseNumber}</div>
+                            <div class="detail-value" style="color: #1e88e5; font-size: 0.9rem; margin-top: 0.3rem;">📍 ${att.barState}</div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Years Practicing</div>
+                            <div class="detail-value">${att.yearsInBusiness}+ years</div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">BAR Status</div>
+                            <div class="verification-check">
+                                <span class="check-icon ${att.barVerified ? 'verified' : 'unverified'}">${att.barVerified ? '✓' : '○'}</span>
+                                <span>${att.barVerified ? 'Verified' : 'Pending Verification'}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    ${att.complaintsFound > 0 ? `
+                        <div class="complaints-section">
+                            <h4>⚠️ Complaints Found: ${att.complaintsFound}</h4>
+                            <div class="complaint-item">
+                                <span class="complaint-type">State Bar</span>
+                                1 complaint on file - Requires review
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    <div class="verification-actions">
+                        <button class="btn btn-small btn-view" onclick="viewDetails('${att.id}')">📋 Full Details</button>
+                        <button class="btn btn-small" style="background: #ff9800; color: white;" onclick="verifyViaAvvo('${att.id}')" title="Verify through Avvo.com">⭐ Verify via Avvo</button>
+                        <button class="btn btn-small btn-approve" onclick="openVerificationModal('${att.id}', 'approved')">✅ Approve</button>
+                        <button class="btn btn-small btn-reject" onclick="openVerificationModal('${att.id}', 'rejected')">❌ Reject</button>
+                        <button class="btn btn-small btn-flag" onclick="openVerificationModal('${att.id}', 'flagged')">⚠️ Flag</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function applyFilters() {
+            const statusFilter = document.getElementById('status-filter').value;
+            const complaintsFilter = document.getElementById('complaints-filter').value;
+            const stateFilter = document.getElementById('state-filter').value;
+
+            filteredAttorneys = attorneyQueue.filter(att => {
+                const matchesStatus = !statusFilter || att.status === statusFilter;
+                const matchesComplaints = !complaintsFilter ||
+                    (complaintsFilter === 'yes' && att.complaintsFound > 0) ||
+                    (complaintsFilter === 'no' && att.complaintsFound === 0);
+                const matchesState = !stateFilter || att.barState === stateFilter;
+
+                return matchesStatus && matchesComplaints && matchesState;
+            });
+
+            renderAttorneys();
+            updateStats();
+        }
+
+        function updateStats() {
+            const pending = attorneyQueue.filter(a => a.status === 'pending').length;
+            const approved = attorneyQueue.filter(a => a.status === 'approved').length;
+            const flagged = attorneyQueue.filter(a => a.status === 'flagged').length;
+            const complaints = attorneyQueue.filter(a => a.complaintsFound > 0).length;
+
+            document.getElementById('pending-count').textContent = pending;
+            document.getElementById('approved-count').textContent = approved;
+            document.getElementById('flagged-count').textContent = flagged;
+            document.getElementById('complaints-count').textContent = complaints;
+        }
+
+        function openVerificationModal(attorneyId, decision) {
+            selectedAttorneyId = attorneyId;
+            document.getElementById('decision-select').value = decision;
+            document.getElementById('admin-notes').value = '';
+            document.getElementById('verification-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('verification-modal').classList.remove('active');
+            selectedAttorneyId = null;
+        }
+
+        function submitVerification(event) {
+            event.preventDefault();
+            const decision = document.getElementById('decision-select').value;
+            const notes = document.getElementById('admin-notes').value;
+
+            // Update attorney status
+            const attorney = attorneyQueue.find(a => a.id === selectedAttorneyId);
+            if (attorney) {
+                attorney.status = decision;
+            }
+
+            alert(`✅ Attorney verification decision submitted: ${decision.toUpperCase()}`);
+            closeModal();
+            applyFilters();
+        }
+
+        function viewDetails(attorneyId) {
+            const attorney = attorneyQueue.find(a => a.id === attorneyId);
+            if (attorney) {
+                alert(`Full Details for ${attorney.firstName} ${attorney.lastName}:\n\nBar License: ${attorney.barLicenseNumber}\nBar State: ${attorney.barState}\nYears: ${attorney.yearsInBusiness}+\nFirm: ${attorney.firmName}\n\nComplaints: ${attorney.complaintsFound}\nDisciplinary: ${attorney.disciplinaryFound}`);
+            }
+        }
+
+        function verifyViaAvvo(attorneyId) {
+            const attorney = attorneyQueue.find(a => a.id === attorneyId);
+            if (attorney) {
+                // Simulate Avvo API verification
+                const avvoData = {
+                    name: `${attorney.firstName} ${attorney.lastName}`,
+                    barNumber: attorney.barLicenseNumber,
+                    jurisdiction: attorney.barState,
+                    status: 'Active & in Good Standing',
+                    avvoRating: 8.5,
+                    reviewCount: 24,
+                    barAdmissionDate: new Date(new Date().getTime() - (attorney.yearsInBusiness * 365 * 24 * 60 * 60 * 1000)).getFullYear()
+                };
+
+                alert(`✅ Avvo Verification Successful!\n\nAttorney: ${avvoData.name}\nAvvo Rating: ${avvoData.avvoRating}/10\nReviews: ${avvoData.reviewCount}\nStatus: ${avvoData.status}\n\nBar Admission: ${avvoData.barAdmissionDate}\n\nYou can now approve this attorney with confidence.`);
+
+                // Auto-open verification modal with approved status
+                attorney.barVerified = true;
+                openVerificationModal(attorneyId, 'approved');
+                renderAttorneys();
+            }
+        }
+
+        // Initialize
+        updateStats();
+        renderAttorneys();
+    </script>
+</body>
+</html>

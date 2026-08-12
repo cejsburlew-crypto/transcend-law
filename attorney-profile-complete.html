@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attorney Profile - TRANSCEND LAW</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2c5aa0 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 { font-size: 2rem; }
+        .header a { color: white; text-decoration: underline; }
+
+        /* Attorney Header Card */
+        .attorney-header-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 2rem;
+        }
+
+        .attorney-photo {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #1e3a5f, #2c5aa0);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+        }
+
+        .attorney-info h2 { font-size: 1.8rem; color: #1e3a5f; margin-bottom: 0.5rem; }
+        .attorney-role { color: #666; font-size: 1.1rem; margin-bottom: 1rem; }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-verified { background: #c8e6c9; color: #2e7d32; }
+        .badge-rating { background: #fff3e0; color: #e65100; }
+        .badge-warning { background: #ffcdd2; color: #c62828; }
+
+        /* Grid Layout */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Section */
+        .section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section h2 {
+            font-size: 1.3rem;
+            color: #1e3a5f;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #1e88e5;
+            padding-bottom: 0.5rem;
+        }
+
+        .section h3 { font-size: 1.1rem; color: #333; margin-top: 1.5rem; margin-bottom: 1rem; }
+
+        /* BAR Verification Card */
+        .bar-verification-card {
+            background: #f0f7ff;
+            border: 2px solid #1e88e5;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .bar-verification-card h3 { margin-top: 0; color: #1e3a5f; }
+
+        .verification-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .verification-status {
+            font-size: 1.5rem;
+            min-width: 30px;
+        }
+
+        .status-verified { color: #4caf50; }
+        .status-unverified { color: #f44336; }
+        .status-pending { color: #ff9800; }
+
+        .verification-detail {
+            flex: 1;
+        }
+
+        .verification-label { color: #999; font-size: 0.85rem; }
+        .verification-value { font-weight: 600; color: #333; }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .stat-number { font-size: 1.8rem; font-weight: bold; color: #1e88e5; }
+        .stat-label { color: #666; font-size: 0.85rem; margin-top: 0.5rem; }
+
+        /* Complaints Section */
+        .complaints-alert {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .complaints-alert h3 { color: #e65100; margin-top: 0; }
+
+        .complaint-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            border-left: 4px solid #ff9800;
+        }
+
+        .complaint-type {
+            display: inline-block;
+            background: #ffe0b2;
+            color: #e65100;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .complaint-date { color: #999; font-size: 0.9rem; margin-top: 0.3rem; }
+
+        /* Green Check */
+        .compliance-clear {
+            background: #c8e6c9;
+            border-left: 4px solid #4caf50;
+            padding: 1.5rem;
+            border-radius: 4px;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        /* Reviews */
+        .review-item {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #1e88e5;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-author { font-weight: 600; color: #1e3a5f; }
+        .review-rating { color: #ffc107; font-size: 1.1rem; }
+
+        .review-text { color: #555; margin-top: 0.5rem; line-height: 1.5; }
+
+        /* Sidebar */
+        .sidebar-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-card h3 { margin-top: 0; color: #1e3a5f; font-size: 1rem; }
+
+        .info-item {
+            margin: 1rem 0;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-item:last-child { border-bottom: none; }
+
+        .info-label { color: #999; font-size: 0.85rem; }
+        .info-value { font-weight: 600; color: #333; margin-top: 0.3rem; }
+
+        /* Rating Display */
+        .rating-display {
+            font-size: 2rem;
+            color: #ffc107;
+            margin: 1rem 0;
+        }
+
+        .rating-count { color: #666; font-size: 0.9rem; margin-top: 0.5rem; }
+
+        /* CTA */
+        .cta-button {
+            background: #1e88e5;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        .cta-button:hover { background: #1565c0; }
+
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .attorney-header-card { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>⚖️ Attorney Profile</h1>
+            </div>
+            <div>
+                <a href="firms-directory.html">← Back to Directory</a>
+            </div>
+        </div>
+
+        <!-- Attorney Header -->
+        <div class="attorney-header-card">
+            <div class="attorney-photo">👨‍⚖️</div>
+            <div class="attorney-info">
+                <h2 id="attorney-name">Sarah Johnson</h2>
+                <div class="attorney-role" id="attorney-title">Senior Partner, Personal Injury Law</div>
+                <div class="attorney-role" id="firm-name" style="color: #1e88e5;">Smith & Associates</div>
+                <div class="badges">
+                    <span class="badge badge-verified">✓ Verified Attorney</span>
+                    <span class="badge badge-rating">⭐ 4.9 Rating (48 reviews)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-grid">
+            <!-- Left Column -->
+            <div>
+                <!-- BAR Verification -->
+                <div class="section">
+                    <h2>📜 BAR License & Verification</h2>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                        <!-- State BAR Verification -->
+                        <div class="bar-verification-card">
+                            <h3>✓ State BAR Verified</h3>
+                            <p style="font-size: 0.85rem; color: #666; margin: 0.5rem 0;">Licensed through State Bar of California</p>
+                            <div class="verification-item" style="margin: 0.75rem 0;">
+                                <span class="verification-status status-verified">✓</span>
+                                <div class="verification-detail" style="padding: 0;">
+                                    <div class="verification-label" style="margin: 0;">License #CA#123456</div>
+                                </div>
+                            </div>
+                            <div class="verification-item" style="margin: 0.75rem 0;">
+                                <span class="verification-status status-verified">✓</span>
+                                <div class="verification-detail" style="padding: 0;">
+                                    <div class="verification-label" style="margin: 0;">Active & Good Standing</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Avvo Verification -->
+                        <div style="background: #f0f7ff; border: 2px solid #ff9800; border-radius: 8px; padding: 1.5rem;">
+                            <h3 style="margin-top: 0; color: #e65100;">⭐ Avvo Verified</h3>
+                            <p style="font-size: 0.85rem; color: #666; margin: 0.5rem 0;">Independently verified through Avvo.com</p>
+                            <div class="verification-item" style="margin: 0.75rem 0;">
+                                <span style="font-size: 1.5rem; color: #ff9800;">★</span>
+                                <div class="verification-detail" style="padding: 0;">
+                                    <div class="verification-label" style="margin: 0;">Avvo Rating: 8.5/10</div>
+                                </div>
+                            </div>
+                            <div class="verification-item" style="margin: 0.75rem 0;">
+                                <span style="font-size: 1.5rem; color: #4caf50;">✓</span>
+                                <div class="verification-detail" style="padding: 0;">
+                                    <div class="verification-label" style="margin: 0;">24 verified reviews</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #f9f9f9; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                        <strong>Verification Details:</strong>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; font-size: 0.9rem;">
+                            <div>
+                                <div style="color: #999; font-size: 0.85rem;">Bar Admission Date</div>
+                                <div style="font-weight: 600;">June 2005</div>
+                            </div>
+                            <div>
+                                <div style="color: #999; font-size: 0.85rem;">Jurisdiction</div>
+                                <div style="font-weight: 600;">State of California</div>
+                            </div>
+                            <div>
+                                <div style="color: #999; font-size: 0.85rem;">Verified Date</div>
+                                <div style="font-weight: 600;">August 10, 2026</div>
+                            </div>
+                            <div>
+                                <div style="color: #999; font-size: 0.85rem;">Last Updated</div>
+                                <div style="font-weight: 600;">August 12, 2026</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p style="color: #666; font-size: 0.9rem;">
+                        ✓ This attorney's credentials have been verified through both the State Bar of California and Avvo.com.
+                        Verifications are updated regularly to ensure accuracy and compliance with professional standards.
+                    </p>
+                </div>
+
+                <!-- Disciplinary History -->
+                <div class="section">
+                    <h2>⚖️ Disciplinary History</h2>
+                    <div class="compliance-clear">
+                        ✓ No disciplinary actions or complaints on record
+                    </div>
+                    <p style="color: #666; font-size: 0.9rem; margin-top: 1rem;">
+                        This attorney maintains a clean disciplinary record with the State Bar. Regular checks are performed
+                        to ensure ongoing compliance with professional standards.
+                    </p>
+                </div>
+
+                <!-- Client Reviews -->
+                <div class="section">
+                    <h2>⭐ Client Reviews</h2>
+
+                    <div class="rating-display">
+                        ★★★★★ 4.9/5.0
+                        <div class="rating-count">Based on 48 verified reviews</div>
+                    </div>
+
+                    <div style="margin: 1.5rem 0; padding: 1rem; background: #f9f9f9; border-radius: 4px;">
+                        <strong>Clients rated this attorney highly on:</strong>
+                        <div style="margin-top: 1rem;">
+                            <div style="margin: 0.5rem 0;">✓ Case Knowledge & Expertise (4.9/5)</div>
+                            <div style="margin: 0.5rem 0;">✓ Communication & Responsiveness (4.8/5)</div>
+                            <div style="margin: 0.5rem 0;">✓ Settlement Negotiation (4.9/5)</div>
+                            <div style="margin: 0.5rem 0;">✓ Professional Ethics (5.0/5)</div>
+                        </div>
+                    </div>
+
+                    <h3>Recent Reviews</h3>
+
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-author">Robert Martinez</div>
+                            <div class="review-rating">★★★★★</div>
+                        </div>
+                        <p style="color: #999; font-size: 0.85rem;">Verified case - 2 months ago</p>
+                        <p class="review-text">
+                            "Sarah handled my car accident case excellently. She got me a settlement 3x higher than the
+                            insurance company's initial offer. Highly professional and kept me informed every step."
+                        </p>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-author">Angela Thompson</div>
+                            <div class="review-rating">★★★★★</div>
+                        </div>
+                        <p style="color: #999; font-size: 0.85rem;">Verified case - 3 months ago</p>
+                        <p class="review-text">
+                            "Exceptional representation. Sarah was responsive to all my questions and truly cared about my
+                            outcome. I'd recommend her to anyone."
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Sidebar -->
+            <div>
+                <!-- Quick Stats -->
+                <div class="section">
+                    <h2>📊 Experience</h2>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">18+</div>
+                            <div class="stat-label">Years Practicing</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">850+</div>
+                            <div class="stat-label">Cases Handled</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">92%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                    </div>
+
+                    <h3>Average Settlement</h3>
+                    <div style="font-size: 1.5rem; color: #1e88e5; font-weight: bold; margin: 1rem 0;">
+                        $850,000
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div class="sidebar-card">
+                    <h3>🎓 Education</h3>
+                    <div class="info-item">
+                        <div class="info-label">Law School</div>
+                        <div class="info-value">Stanford Law School</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Graduation</div>
+                        <div class="info-value">2005</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Bar Exam</div>
+                        <div class="info-value">California - Passed 2005</div>
+                    </div>
+                </div>
+
+                <!-- Specialties -->
+                <div class="sidebar-card">
+                    <h3>⚖️ Practice Areas</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="background: #e3f2fd; color: #1e3a5f; padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.85rem; font-weight: 600;">
+                            Personal Injury
+                        </span>
+                        <span style="background: #e3f2fd; color: #1e3a5f; padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.85rem; font-weight: 600;">
+                            Medical Malpractice
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="sidebar-card">
+                    <h3>📞 Contact</h3>
+                    <div class="info-item">
+                        <div class="info-label">Email</div>
+                        <div class="info-value" style="word-break: break-all;">sarah@smithassociates.com</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Phone</div>
+                        <div class="info-value">(555) 123-4567</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Office</div>
+                        <div class="info-value">Los Angeles, CA</div>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <button class="cta-button" onclick="window.location.href='frontend-final.html'">
+                    💼 Start Your Case
+                </button>
+
+                <!-- Verification Badge -->
+                <div style="background: #f0f7ff; padding: 1rem; border-radius: 4px; margin-top: 1rem; text-align: center; font-size: 0.85rem; color: #666;">
+                    <div style="margin-bottom: 0.5rem;">🔒 This profile is verified by TRANSCEND LAW</div>
+                    <div style="font-size: 0.75rem; color: #999;">Updated: August 12, 2026</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Attorney profile data (would come from API)
+        const attorney = {
+            firstName: 'Sarah',
+            lastName: 'Johnson',
+            title: 'Senior Partner',
+            specialty: 'Personal Injury Law',
+            firmName: 'Smith & Associates',
+            barLicense: 'CA#123456',
+            barStatus: 'Active & in Good Standing',
+            barAdmission: 'June 2005',
+            yearsInBusiness: 18,
+            casesHandled: 850,
+            successRate: 92,
+            averageSettlement: '$850,000',
+            rating: 4.9,
+            reviewCount: 48,
+            lawSchool: 'Stanford Law School',
+            graduation: '2005',
+            specialties: ['Personal Injury', 'Medical Malpractice'],
+            email: 'sarah@smithassociates.com',
+            phone: '(555) 123-4567',
+            office: 'Los Angeles, CA'
+        };
+
+        // Populate page
+        document.getElementById('attorney-name').textContent = `${attorney.firstName} ${attorney.lastName}`;
+        document.getElementById('attorney-title').textContent = `${attorney.title}, ${attorney.specialty}`;
+        document.getElementById('firm-name').textContent = attorney.firmName;
+        document.getElementById('bar-license').textContent = attorney.barLicense;
+        document.getElementById('bar-status').textContent = attorney.barStatus;
+        document.getElementById('bar-admission').textContent = attorney.barAdmission;
+    </script>
+</body>
+</html>

@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expert Consultant Dashboard - TRANSCEND LAW</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; }
+
+        .wrapper { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
+
+        .sidebar {
+            background: #1e3a5f;
+            color: white;
+            padding: 2rem 1rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand { font-size: 1.1rem; font-weight: bold; margin-bottom: 2rem; color: #64b5f6; }
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu li { margin-bottom: 0.5rem; }
+        .sidebar-menu a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #b0bec5;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sidebar-menu a:hover { background: rgba(100, 181, 246, 0.2); color: #64b5f6; }
+        .sidebar-menu a.active { background: #64b5f6; color: white; }
+
+        .main-content { background: #f5f5f5; overflow-y: auto; }
+
+        .topbar {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .topbar h1 { font-size: 1.5rem; }
+        .user-section { display: flex; gap: 1rem; align-items: center; }
+
+        .btn {
+            background: #1e88e5;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn:hover { background: #1565c0; }
+        .btn-secondary { background: #757575; }
+        .btn-secondary:hover { background: #616161; }
+        .btn-primary { background: #4caf50; }
+        .btn-primary:hover { background: #388e3c; }
+
+        .content { padding: 2rem; }
+        .page { display: none; }
+        .page.active { display: block; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-label { color: #666; font-size: 0.85rem; text-transform: uppercase; }
+        .stat-value { font-size: 2.5rem; font-weight: bold; color: #1e88e5; margin-top: 0.5rem; }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .card h2 { margin-bottom: 1rem; border-bottom: 2px solid #1e88e5; padding-bottom: 0.5rem; }
+
+        .expertise-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1e3a5f;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .consultation-item {
+            background: #f9f9f9;
+            border-left: 4px solid #4caf50;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+
+        .document-item {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .document-info { flex: 1; }
+        .document-name { font-weight: 600; margin-bottom: 0.3rem; }
+        .document-meta { font-size: 0.85rem; color: #666; margin-bottom: 0.5rem; }
+
+        .version-badge {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1e3a5f;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .approval-badge {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .approval-pending { background: #fff3cd; color: #856404; }
+        .approval-approved { background: #d4edda; color: #155724; }
+        .approval-rejected { background: #f8d7da; color: #721c24; }
+
+        .case-types-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .case-type-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: #f5f5f5;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .case-type-checkbox:hover { background: #e3f2fd; }
+        .case-type-checkbox input { cursor: pointer; }
+
+        .disclaimer-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            color: #856404;
+            font-size: 0.9rem;
+        }
+
+        .consultation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.5rem;
+        }
+
+        .consultation-title { font-weight: 600; color: #1e3a5f; }
+        .consultation-client { color: #666; font-size: 0.9rem; margin-top: 0.2rem; }
+
+        .disclaimer-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: #e65100;
+        }
+
+        .disclaimer-box strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #d84315;
+        }
+
+        @media (max-width: 768px) {
+            .wrapper { grid-template-columns: 1fr; }
+            .sidebar { position: relative; height: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-brand">🎓 MY EXPERTISE</div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="menu-link active" data-page="dashboard">📊 Dashboard</a></li>
+                <li><a href="#" class="menu-link" data-page="profile">👤 My Profile</a></li>
+                <li><a href="#" class="menu-link" data-page="consultations">💬 Consultations</a></li>
+                <li><a href="#" class="menu-link" data-page="documents">📄 Documents</a></li>
+                <li><a href="#" class="menu-link" data-page="billing">💰 Billing & Fees</a></li>
+                <li><a href="#" class="menu-link" data-page="availability">📅 Availability</a></li>
+                <li style="margin-top: 2rem; border-top: 1px solid rgba(100,181,246,0.3); padding-top: 1rem;">
+                    <a href="firms-directory.html" style="color: #64b5f6;">← Find Cases</a>
+                </li>
+                <li>
+                    <a href="frontend-final.html" onclick="logout()" style="color: #ff5722;">🚪 Logout</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Topbar -->
+            <div class="topbar">
+                <h1 id="page-title">Dashboard</h1>
+                <div class="user-section">
+                    <span id="sme-name">Expert Consultant</span>
+                    <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+
+                <!-- Dashboard Page -->
+                <div class="page active" id="dashboard">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Active Consultations</div>
+                            <div class="stat-value" id="stat-active">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Completed</div>
+                            <div class="stat-value" id="stat-completed">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Expertise Areas</div>
+                            <div class="stat-value" id="stat-expertise">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Profile Strength</div>
+                            <div class="stat-value" id="stat-strength">75%</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>💡 What is an SME Consultant?</h2>
+                        <p style="color: #666; margin-bottom: 1rem;">
+                            As a Subject Matter Expert (SME), you provide specialized knowledge and insights on specific topics. Lawyers and clients consult with experts like you for:
+                        </p>
+                        <ul style="color: #666; margin-left: 1.5rem; line-height: 1.8;">
+                            <li>Technical analysis and opinions</li>
+                            <li>Industry expertise and standards</li>
+                            <li>Medical or scientific guidance</li>
+                            <li>Financial analysis</li>
+                            <li>Regulatory compliance insights</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Profile Page -->
+                <div class="page" id="profile">
+                    <div class="card">
+                        <h2>👤 Your Expert Profile</h2>
+                        <form onsubmit="saveProfile(event)">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="profile-name" value="Dr. Michael Smith" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Professional Title</label>
+                                <input type="text" id="profile-title" value="Senior Medical Consultant" placeholder="e.g., Dr., Professor, Consultant">
+                            </div>
+
+                            <div class="form-group">
+                                <label>LinkedIn Profile URL</label>
+                                <input type="url" id="profile-linkedin" placeholder="https://linkedin.com/in/yourprofile">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Areas of Expertise (comma-separated)</label>
+                                <textarea id="profile-expertise" placeholder="Medical Malpractice, Surgical Errors, Healthcare Compliance" rows="3"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Case Types You Specialize In</label>
+                                <p style="color: #666; font-size: 0.9rem; margin-bottom: 0.75rem;">Select all case types where you can provide expert consultation:</p>
+                                <div class="case-types-selector">
+                                    <label class="case-type-checkbox">
+                                        <input type="checkbox" name="case-type" value="medical_malpractice" checked> Medical Malpractice
+                                    </label>
+                                    <label class="case-type-checkbox">
+                                        <input type="checkbox" name="case-type" value="product_liability"> Product Liability
+                                    </label>
+                                    <label class="case-type-checkbox">
+                                        <input type="checkbox" name="case-type" value="contract_dispute"> Contract Dispute
+                                    </label>
+                                    <label class="case-type-checkbox">
+                                        <input type="checkbox" name="case-type" value="employment"> Employment
+                                    </label>
+                                    <label class="case-type-checkbox">
+                                        <input type="checkbox" name="case-type" value="personal_injury"> Personal Injury
+                                    </label>
+                                    <label class="case-type-checkbox">
+                                        <input type="checkbox" name="case-type" value="intellectual_property"> IP & Patents
+                                    </label>
+                                    <label class="case-type-checkbox">
+                                        <input type="checkbox" name="case-type" value="data_privacy"> Data Privacy
+                                    </label>
+                                    <label class="case-type-checkbox">
+                                        <input type="checkbox" name="case-type" value="environmental"> Environmental
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Years of Experience</label>
+                                <input type="number" id="profile-experience" value="20" min="0">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Professional Bio</label>
+                                <textarea id="profile-bio" placeholder="Tell lawyers and clients about your background, credentials, and expertise..." rows="4"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Credentials & Certifications</label>
+                                <textarea id="profile-credentials" placeholder="MD, PhD, Board Certifications, Licenses, etc." rows="3"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save Profile</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Consultations Page -->
+                <div class="page" id="consultations">
+                    <div class="card">
+                        <h2>💬 Consultation Requests</h2>
+
+                        <div class="disclaimer-box">
+                            <strong>⚖️ IMPORTANT DISCLAIMER</strong>
+                            Consultations provided through this platform are educational opinions based on your expertise.
+                            These are NOT final legal advice, guaranteed outcomes, or official verdicts.
+                            Any opinions expressed are the expert's professional assessment only.
+                        </div>
+
+                        <div id="consultations-list">
+                            <p style="color: #999;">No active consultation requests</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Documents Page -->
+                <div class="page" id="documents">
+                    <div class="card">
+                        <h2>📄 Case Documents & Resources</h2>
+                        <p style="color: #666; margin-bottom: 1.5rem;">Upload analysis documents with version tracking and client approval. You can view and download client's case documents but cannot edit or delete them.</p>
+
+                        <div style="background: #e8f5e9; border-left: 4px solid #4caf50; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; font-size: 0.9rem;">
+                            <strong>✓ YOUR PERMISSIONS:</strong> Read & Download client files | Upload expert documents with versioning | Cannot edit or delete client files
+                        </div>
+
+                        <div style="margin-bottom: 2rem;">
+                            <h3 style="color: #1e3a5f; margin-bottom: 1rem;">📤 Upload Your Expert Documents</h3>
+                            <div style="border: 2px dashed #1e88e5; border-radius: 4px; padding: 2rem; text-align: center;">
+                                <p style="color: #666; margin-bottom: 1rem;">Drag documents here or click to upload</p>
+                                <button class="btn" onclick="alert('Document upload would be implemented via file input handler')">Choose Files</button>
+                                <p style="color: #999; font-size: 0.85rem; margin-top: 0.5rem;">PDFs, Word docs, reports, analysis | Auto-versioned for client tracking</p>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 2rem;">
+                            <h3 style="color: #1e3a5f; margin-bottom: 1rem;">📋 Your Uploaded Documents (Pending Approval)</h3>
+                            <div class="document-item">
+                                <div class="document-info">
+                                    <div class="document-name">
+                                        Medical Analysis Report
+                                        <span class="version-badge">v1.2</span>
+                                        <span class="approval-badge approval-pending">⏳ Pending</span>
+                                    </div>
+                                    <div class="document-meta">
+                                        Uploaded: Jan 15, 2026 | 2.4 MB | PDF
+                                    </div>
+                                    <div class="document-meta" style="color: #d32f2f;">
+                                        ⏳ Waiting for client review & approval
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-secondary" style="font-size: 0.85rem;">📥 Download</button>
+                                    <button class="btn" style="background: #ff9800; font-size: 0.85rem;">↻ New Version</button>
+                                </div>
+                            </div>
+
+                            <div class="document-item">
+                                <div class="document-info">
+                                    <div class="document-name">
+                                        Expert Opinion Summary
+                                        <span class="version-badge">v2.0</span>
+                                        <span class="approval-badge approval-approved">✓ Approved</span>
+                                    </div>
+                                    <div class="document-meta">
+                                        Uploaded: Jan 10, 2026 | 1.8 MB | PDF | Approved: Jan 12, 2026
+                                    </div>
+                                    <div class="document-meta" style="color: #4caf50;">
+                                        ✓ Client has approved this version
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-secondary" style="font-size: 0.85rem;">📥 Download</button>
+                                    <button class="btn" style="background: #ff9800; font-size: 0.85rem;">↻ New Version</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 style="color: #1e3a5f; margin-bottom: 1rem;">📥 Client Case Documents (Read-Only)</h3>
+                            <div style="background: #f9f9f9; padding: 1rem; border-radius: 4px;">
+                                <p style="color: #666; margin-bottom: 0.3rem;">📄 incident_report.pdf</p>
+                                <p style="color: #999; font-size: 0.85rem; margin-bottom: 0.5rem;">356 KB | Uploaded: Jan 8, 2026</p>
+                                <p style="color: #666; margin-bottom: 1rem;">🔒 Read-only • You cannot edit or delete</p>
+                                <button class="btn btn-secondary" style="font-size: 0.85rem;">📥 Download</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Billing & Fees Page -->
+                <div class="page" id="billing">
+                    <div class="card">
+                        <h2>💰 Billing & Fee Proposals</h2>
+                        <p style="color: #666; margin-bottom: 1.5rem;">Propose fees to clients for your consultation services, similar to law firm retainer agreements.</p>
+
+                        <h3 style="color: #1e3a5f; margin-bottom: 1rem;">📋 Propose Consultation Fee</h3>
+                        <form onsubmit="proposeConsultationFee(event)">
+                            <div class="form-group">
+                                <label>Consultation Case/Reference</label>
+                                <input type="text" value="Partnership Dispute Analysis" placeholder="Case name or reference">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Scope of Expertise Needed</label>
+                                <textarea placeholder="Describe your consultation scope..." rows="3">Analysis of contract non-compete clauses and enforceability under state law</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Hourly Rate</label>
+                                <input type="number" value="150" min="0" step="25"> per hour
+                            </div>
+
+                            <div class="form-group">
+                                <label>Estimated Hours</label>
+                                <input type="number" value="10" min="1" step="0.5"> hours
+                            </div>
+
+                            <div style="background: #f0f0f0; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                                <strong style="font-size: 1.2rem; color: #1e3a5f;">Estimated Total: $1,500</strong>
+                                <p style="color: #666; font-size: 0.85rem; margin-top: 0.5rem;">This is a proposal. Client must accept before work begins.</p>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Send Fee Proposal to Client</button>
+                        </form>
+
+                        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e0e0e0;">
+                            <h3 style="color: #1e3a5f; margin-bottom: 1rem;">💳 Accepted Consultations</h3>
+                            <div style="background: #f9f9f9; padding: 1rem; border-radius: 4px;">
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                    <div>
+                                        <strong>Partnership Dispute - Contract Analysis</strong>
+                                        <p style="color: #666; font-size: 0.9rem;">Client: David Rodriguez</p>
+                                        <p style="color: #666; font-size: 0.9rem;">Proposal: $150/hr × 10 hours = $1,500</p>
+                                    </div>
+                                    <span style="background: #c8e6c9; color: #2e7d32; padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.85rem;">ACCEPTED</span>
+                                </div>
+                                <button class="btn btn-secondary" style="font-size: 0.85rem;">📧 Send Invoice</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Availability Page -->
+                <div class="page" id="availability">
+                    <div class="card">
+                        <h2>📅 Your Availability</h2>
+                        <p style="color: #666; margin-bottom: 1.5rem;">Set your availability so lawyers and clients know when they can reach you for consultations.</p>
+
+                        <form onsubmit="saveAvailability(event)">
+                            <div class="form-group">
+                                <label>Consultation Fee (per hour)</label>
+                                <input type="number" id="availability-fee" value="150" min="0" step="50">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Available Days</label>
+                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                                    <label style="display: flex; align-items: center; margin-bottom: 0;">
+                                        <input type="checkbox" checked> Monday - Friday
+                                    </label>
+                                    <label style="display: flex; align-items: center; margin-bottom: 0;">
+                                        <input type="checkbox"> Weekends
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Response Time</label>
+                                <select id="availability-response">
+                                    <option>Within 24 hours</option>
+                                    <option selected>Within 48 hours</option>
+                                    <option>Within 1 week</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Consultation Methods</label>
+                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                                    <label style="display: flex; align-items: center; margin-bottom: 0;">
+                                        <input type="checkbox" checked> Email
+                                    </label>
+                                    <label style="display: flex; align-items: center; margin-bottom: 0;">
+                                        <input type="checkbox" checked> Phone
+                                    </label>
+                                    <label style="display: flex; align-items: center; margin-bottom: 0;">
+                                        <input type="checkbox" checked> Video Call
+                                    </label>
+                                    <label style="display: flex; align-items: center; margin-bottom: 0;">
+                                        <input type="checkbox"> In-Person
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save Availability</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize
+        window.addEventListener('load', function() {
+            const token = localStorage.getItem('smeToken');
+            if (!token) {
+                window.location.href = 'sme-login.html';
+                return;
+            }
+
+            document.getElementById('sme-name').textContent = localStorage.getItem('smeName') || 'Expert';
+            updateStats();
+            renderPage('dashboard');
+            setupMenuListeners();
+        });
+
+        function setupMenuListeners() {
+            document.querySelectorAll('.menu-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.dataset.page;
+                    renderPage(page);
+
+                    document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        }
+
+        function renderPage(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageName).classList.add('active');
+
+            const titles = {
+                dashboard: '📊 Dashboard',
+                profile: '👤 My Expert Profile',
+                consultations: '💬 Consultation Requests',
+                documents: '📄 Case Documents & Resources',
+                billing: '💰 Billing & Fee Proposals',
+                availability: '📅 My Availability'
+            };
+
+            document.getElementById('page-title').textContent = titles[pageName] || 'Dashboard';
+        }
+
+        function updateStats() {
+            document.getElementById('stat-active').textContent = '1';
+            document.getElementById('stat-completed').textContent = '12';
+            document.getElementById('stat-expertise').textContent = '5';
+        }
+
+        function saveProfile(event) {
+            event.preventDefault();
+            alert('✓ Profile updated successfully!\n\nYour expertise profile is now visible to lawyers and clients searching for consultants.');
+            renderPage('dashboard');
+        }
+
+        function saveAvailability(event) {
+            event.preventDefault();
+            alert('✓ Availability saved!\n\nClients and lawyers will see your availability when requesting consultations.');
+        }
+
+        function proposeConsultationFee(event) {
+            event.preventDefault();
+            alert('✓ Fee proposal sent to client!\n\nThey will receive your proposal and can accept or negotiate the terms.\n\nOnce accepted, you can invoice them and upload your expert documents.');
+            renderPage('billing');
+        }
+
+        function logout() {
+            localStorage.removeItem('smeToken');
+            localStorage.removeItem('smeId');
+            localStorage.removeItem('smeName');
+            window.location.href = 'frontend-final.html';
+        }
+    </script>
+</body>
+</html>
