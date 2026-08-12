@@ -1,0 +1,901 @@
+<!-- TRANSCEND LAW - FINANCIAL DOCUMENTS & COMPLIANCE VERIFICATION UI -->
+<!-- Handles document uploads, AI verification, and compliance tracking -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Documents - Transcend Law</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    .header {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .header h1 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 32px;
+    }
+
+    .header p {
+      color: #666;
+      font-size: 16px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      border-bottom: 2px solid #eee;
+    }
+
+    .tab-btn {
+      padding: 12px 20px;
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      color: #666;
+      transition: all 0.3s ease;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+    }
+
+    .tab-btn.active {
+      color: #667eea;
+      border-bottom-color: #667eea;
+      font-weight: 600;
+    }
+
+    .content { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+    .content.full { grid-template-columns: 1fr; }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .card h2 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card h2 .icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #667eea;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .upload-area {
+      border: 2px dashed #667eea;
+      border-radius: 8px;
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: #f8f9ff;
+    }
+
+    .upload-area:hover {
+      border-color: #764ba2;
+      background: #f0f2ff;
+    }
+
+    .upload-area.drag-over {
+      border-color: #764ba2;
+      background: #e8ebff;
+    }
+
+    .upload-area input { display: none; }
+
+    .upload-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+
+    .upload-text { color: #667eea; font-weight: 600; margin-bottom: 5px; }
+    .upload-subtext { color: #999; font-size: 14px; }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .btn-secondary:hover {
+      background: #e0e0e0;
+    }
+
+    .compliance-checklist {
+      list-style: none;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      background: #f8f9fa;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .checklist-item.completed {
+      background: #e8f5e9;
+      border-left: 4px solid #4caf50;
+    }
+
+    .checklist-item.pending {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+    }
+
+    .checklist-item.missing {
+      background: #ffebee;
+      border-left: 4px solid #f44336;
+    }
+
+    .checkbox {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .checklist-item.completed .checkbox {
+      background: #4caf50;
+      color: white;
+    }
+
+    .checklist-item.pending .checkbox {
+      background: #ffc107;
+      color: white;
+    }
+
+    .checklist-item.missing .checkbox {
+      background: #f44336;
+      color: white;
+    }
+
+    .checklist-label {
+      flex: 1;
+    }
+
+    .checklist-label h4 { color: #333; font-size: 14px; margin-bottom: 3px; }
+    .checklist-label p { color: #666; font-size: 12px; }
+
+    .progress-bar {
+      background: #e0e0e0;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      transition: width 0.3s ease;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-box {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 32px;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .stat-label {
+      color: #666;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .document-list {
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .document-item {
+      padding: 15px;
+      border: 1px solid #eee;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .document-item:hover {
+      border-color: #667eea;
+      background: #f8f9ff;
+    }
+
+    .document-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 10px;
+    }
+
+    .document-title { font-weight: 600; color: #333; }
+
+    .document-status {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status-verified {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .status-pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status-manual {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+
+    .status-rejected {
+      background: #ffebee;
+      color: #c62828;
+    }
+
+    .document-meta {
+      display: flex;
+      gap: 20px;
+      font-size: 12px;
+      color: #666;
+      margin-top: 10px;
+    }
+
+    .ai-scores {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .score-item {
+      background: #f0f0f0;
+      padding: 8px;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .score-value {
+      font-size: 18px;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .score-label {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .alert {
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .alert.show { display: block; }
+
+    .alert-success {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border-left: 4px solid #4caf50;
+    }
+
+    .alert-error {
+      background: #ffebee;
+      color: #c62828;
+      border-left: 4px solid #f44336;
+    }
+
+    .alert-warning {
+      background: #fff3cd;
+      color: #856404;
+      border-left: 4px solid #ffc107;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.show { display: flex; }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h3 {
+      color: #333;
+      font-size: 20px;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    @media (max-width: 768px) {
+      .content { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>💰 Financial Documents & Compliance</h1>
+      <p>Upload and verify financial documents for notaries, attorneys, SMEs, and service providers</p>
+
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('upload')">Upload Documents</button>
+        <button class="tab-btn" onclick="switchTab('compliance')">Compliance Status</button>
+        <button class="tab-btn" onclick="switchTab('documents')">My Documents</button>
+        <button class="tab-btn" onclick="switchTab('admin')">Admin Review</button>
+      </div>
+    </div>
+
+    <!-- Upload Documents Tab -->
+    <div id="upload-tab" class="content">
+      <div class="card">
+        <h2><span class="icon">📄</span>Upload Financial Documents</h2>
+
+        <form id="upload-form">
+          <div class="alert alert-success" id="success-alert"></div>
+          <div class="alert alert-error" id="error-alert"></div>
+
+          <div class="form-group">
+            <label>Provider Type</label>
+            <select id="provider_type" required>
+              <option value="">Select...</option>
+              <option value="notary">Notary</option>
+              <option value="attorney">Attorney</option>
+              <option value="sme">Subject Matter Expert (SME)</option>
+              <option value="tagger">Vehicle Registration Specialist</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Document Type</label>
+            <select id="document_type" required>
+              <option value="">Select...</option>
+              <option value="Tax ID (SSN)">Tax ID / SSN</option>
+              <option value="Identification">Identification (Driver License/Passport)</option>
+              <option value="Tax ID (EIN)">Business Tax ID (EIN)</option>
+              <option value="Business Registration">Business Registration</option>
+              <option value="License">Professional License</option>
+              <option value="Insurance">Professional Liability Insurance</option>
+              <option value="Banking">Banking Information</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Document Number (if applicable)</label>
+            <input type="text" id="document_number" placeholder="License #, Tax ID, etc.">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Issue Date</label>
+              <input type="date" id="document_issue_date">
+            </div>
+            <div class="form-group">
+              <label>Expiration Date</label>
+              <input type="date" id="document_expiration_date">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Issuing Authority</label>
+            <input type="text" id="issuing_authority" placeholder="e.g., California Secretary of State">
+          </div>
+
+          <div class="form-group">
+            <div class="upload-area" id="drop-zone">
+              <div class="upload-icon">📎</div>
+              <div class="upload-text">Click to upload or drag and drop</div>
+              <div class="upload-subtext">PDF, PNG, JPG or Word docs (max 20MB)</div>
+              <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx">
+            </div>
+          </div>
+
+          <div id="selected-file" style="margin-top: 10px; color: #667eea; font-size: 14px;"></div>
+
+          <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">Upload & Verify</button>
+            <button type="reset" class="btn btn-secondary" style="flex: 1;">Clear</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2><span class="icon">✅</span>Required Documents Checklist</h2>
+        <ul class="compliance-checklist" id="checklist"></ul>
+        <div style="margin-top: 20px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <span style="font-weight: 600; color: #333;">Overall Compliance</span>
+            <span id="compliance-percent" style="font-weight: 600; color: #667eea;">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="compliance-progress" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compliance Status Tab -->
+    <div id="compliance-tab" class="content full" style="display: none;">
+      <div class="card">
+        <h2><span class="icon">📊</span>Compliance Dashboard</h2>
+
+        <div class="stats-grid" id="stats-grid"></div>
+
+        <h3 style="margin-bottom: 20px; color: #333;">Provider Compliance Summary</h3>
+        <div id="compliance-summary"></div>
+      </div>
+    </div>
+
+    <!-- My Documents Tab -->
+    <div id="documents-tab" class="content full" style="display: none;">
+      <div class="card">
+        <h2><span class="icon">📁</span>Your Uploaded Documents</h2>
+
+        <div class="document-list" id="documents-list"></div>
+      </div>
+    </div>
+
+    <!-- Admin Review Tab -->
+    <div id="admin-tab" class="content full" style="display: none;">
+      <div class="card">
+        <h2><span class="icon">🔍</span>Documents Pending Manual Review</h2>
+
+        <div class="document-list" id="review-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Review Modal -->
+  <div class="modal" id="review-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Manual Review</h3>
+        <button class="close-btn" onclick="closeReviewModal()">×</button>
+      </div>
+
+      <div class="form-group">
+        <label>Decision</label>
+        <select id="review-decision">
+          <option value="">Select...</option>
+          <option value="verified">✅ Approve</option>
+          <option value="rejected">❌ Reject</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="rejection-reason-group" style="display: none;">
+        <label>Rejection Reason</label>
+        <select id="rejection-reason">
+          <option value="expired">Document Expired</option>
+          <option value="invalid_format">Invalid Format</option>
+          <option value="data_mismatch">Data Mismatch</option>
+          <option value="duplicate">Duplicate Submission</option>
+          <option value="incomplete">Incomplete Information</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Notes</label>
+        <textarea id="review-notes" style="width: 100%; height: 100px; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"></textarea>
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <button class="btn btn-primary" style="flex: 1;" onclick="submitReview()">Submit Review</button>
+        <button class="btn btn-secondary" style="flex: 1;" onclick="closeReviewModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentProvider = null;
+
+    // Tab switching
+    function switchTab(tabName) {
+      // Hide all tabs
+      document.querySelectorAll('[id$="-tab"]').forEach(tab => {
+        tab.style.display = 'none';
+      });
+
+      // Show selected tab
+      document.getElementById(tabName + '-tab').style.display = 'block';
+
+      // Update active tab button
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      if (tabName === 'compliance') loadComplianceSummary();
+      if (tabName === 'documents') loadMyDocuments();
+      if (tabName === 'admin') loadReviewList();
+    }
+
+    // File upload handling
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+    const selectedFileDiv = document.getElementById('selected-file');
+
+    dropZone.addEventListener('click', () => fileInput.click());
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('drag-over');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('drag-over');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      fileInput.files = e.dataTransfer.files;
+      updateFileDisplay();
+    });
+
+    fileInput.addEventListener('change', updateFileDisplay);
+
+    function updateFileDisplay() {
+      if (fileInput.files.length > 0) {
+        selectedFileDiv.textContent = `✓ ${fileInput.files[0].name} (${(fileInput.files[0].size / 1024 / 1024).toFixed(2)}MB)`;
+      }
+    }
+
+    // Form submission
+    document.getElementById('upload-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append('document', fileInput.files[0]);
+      formData.append('service_provider_id', 'user_' + Date.now());
+      formData.append('provider_type', document.getElementById('provider_type').value);
+      formData.append('document_type', document.getElementById('document_type').value);
+      formData.append('document_number', document.getElementById('document_number').value);
+      formData.append('document_issue_date', document.getElementById('document_issue_date').value);
+      formData.append('document_expiration_date', document.getElementById('document_expiration_date').value);
+      formData.append('issuing_authority', document.getElementById('issuing_authority').value);
+
+      try {
+        const response = await fetch('/api/financial-documents/documents/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          showAlert('success', `✅ Document uploaded successfully! Status: ${data.verification_status}`);
+          document.getElementById('upload-form').reset();
+          selectedFileDiv.textContent = '';
+          updateCompliance();
+        } else {
+          showAlert('error', `❌ Error: ${data.error}`);
+        }
+      } catch (error) {
+        showAlert('error', `❌ Upload failed: ${error.message}`);
+      }
+    });
+
+    function showAlert(type, message) {
+      const alert = document.getElementById(type + '-alert');
+      alert.textContent = message;
+      alert.classList.add('show');
+      setTimeout(() => alert.classList.remove('show'), 5000);
+    }
+
+    async function updateCompliance() {
+      // Load compliance checklist based on selected provider type
+      const providerType = document.getElementById('provider_type').value;
+      if (!providerType) return;
+
+      try {
+        const response = await fetch(`/api/financial-documents/profile/user_${Date.now()}/${providerType}`);
+        const data = await response.json();
+
+        // Update checklist
+        const checklist = document.getElementById('checklist');
+        checklist.innerHTML = '';
+
+        const checks = [
+          { name: 'has_tax_id', label: 'Tax ID', desc: 'SSN or EIN verified' },
+          { name: 'has_identification', label: 'Identification', desc: 'Driver License or Passport' },
+          { name: 'has_business_registration', label: 'Business Registration', desc: 'LLC/Corporation filing' },
+          { name: 'has_insurance', label: 'Insurance', desc: 'Professional Liability Insurance' },
+          { name: 'has_banking_info', label: 'Banking Info', desc: 'Direct Deposit Details' },
+        ];
+
+        let completed = 0;
+        checks.forEach(check => {
+          const isCompleted = data.compliance_checklist?.[check.name];
+          if (isCompleted) completed++;
+
+          const status = isCompleted ? 'completed' : 'missing';
+          const icon = isCompleted ? '✓' : '○';
+
+          const li = document.createElement('li');
+          li.className = `checklist-item ${status}`;
+          li.innerHTML = `
+            <div class="checkbox">${icon}</div>
+            <div class="checklist-label">
+              <h4>${check.label}</h4>
+              <p>${check.desc}</p>
+            </div>
+          `;
+          checklist.appendChild(li);
+        });
+
+        const percent = Math.round((completed / checks.length) * 100);
+        document.getElementById('compliance-percent').textContent = percent + '%';
+        document.getElementById('compliance-progress').style.width = percent + '%';
+      } catch (error) {
+        console.error('Error loading compliance:', error);
+      }
+    }
+
+    async function loadComplianceSummary() {
+      try {
+        const response = await fetch('/api/financial-documents/compliance/summary');
+        const data = await response.json();
+
+        const grid = document.getElementById('stats-grid');
+        grid.innerHTML = '';
+
+        const stats = [
+          { label: 'Total Providers', value: data.reduce((s, p) => s + p.total_providers, 0) },
+          { label: 'Verified', value: data.reduce((s, p) => s + p.verified_count, 0) },
+          { label: 'Pending Review', value: data.reduce((s, p) => s + p.pending_count, 0) },
+        ];
+
+        stats.forEach(stat => {
+          const box = document.createElement('div');
+          box.className = 'stat-box';
+          box.innerHTML = `
+            <div class="stat-number">${stat.value}</div>
+            <div class="stat-label">${stat.label}</div>
+          `;
+          grid.appendChild(box);
+        });
+
+        const summary = document.getElementById('compliance-summary');
+        summary.innerHTML = data.map(p => `
+          <div style="padding: 15px; background: #f8f9fa; border-radius: 6px; margin-bottom: 10px;">
+            <div style="font-weight: 600; color: #333; margin-bottom: 10px;">
+              ${p.provider_type.toUpperCase()}
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 14px;">
+              <div>Total: <strong>${p.total_providers}</strong></div>
+              <div>Verified: <strong>${p.verified_count}</strong></div>
+              <div>Ready: <strong>${p.ready_for_payment_count}</strong></div>
+            </div>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Error loading summary:', error);
+      }
+    }
+
+    async function loadMyDocuments() {
+      // Implementation for loading user's documents
+      const list = document.getElementById('documents-list');
+      list.innerHTML = '<p style="color: #999;">Documents will appear here once uploaded</p>';
+    }
+
+    async function loadReviewList() {
+      try {
+        const response = await fetch('/api/financial-documents/admin/pending-review');
+        const docs = await response.json();
+
+        const list = document.getElementById('review-list');
+        if (docs.length === 0) {
+          list.innerHTML = '<p style="color: #999;">No documents pending review</p>';
+          return;
+        }
+
+        list.innerHTML = docs.map(doc => `
+          <div class="document-item">
+            <div class="document-header">
+              <div>
+                <div class="document-title">${doc.document_type}</div>
+                <div style="font-size: 12px; color: #666;">Provider ID: ${doc.service_provider_id}</div>
+              </div>
+              <button class="btn btn-primary" style="padding: 6px 12px; font-size: 12px;" onclick="openReviewModal(${doc.id})">Review</button>
+            </div>
+            <div class="ai-scores">
+              <div class="score-item">
+                <div class="score-value">${doc.document_authenticity_score}%</div>
+                <div class="score-label">Authenticity</div>
+              </div>
+              <div class="score-item">
+                <div class="score-value">${doc.completeness_score}%</div>
+                <div class="score-label">Completeness</div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Error loading review list:', error);
+      }
+    }
+
+    function openReviewModal(docId) {
+      currentProvider = docId;
+      document.getElementById('review-modal').classList.add('show');
+
+      document.getElementById('review-decision').addEventListener('change', (e) => {
+        const reasonGroup = document.getElementById('rejection-reason-group');
+        reasonGroup.style.display = e.target.value === 'rejected' ? 'block' : 'none';
+      });
+    }
+
+    function closeReviewModal() {
+      document.getElementById('review-modal').classList.remove('show');
+    }
+
+    async function submitReview() {
+      const decision = document.getElementById('review-decision').value;
+      const reason = document.getElementById('rejection-reason').value;
+      const notes = document.getElementById('review-notes').value;
+
+      try {
+        const response = await fetch(`/api/financial-documents/admin/verify/${currentProvider}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            verified: decision === 'verified',
+            rejection_reason: reason,
+          }),
+        });
+
+        if (response.ok) {
+          closeReviewModal();
+          loadReviewList();
+          showAlert('success', '✅ Review submitted');
+        }
+      } catch (error) {
+        showAlert('error', 'Error submitting review');
+      }
+    }
+
+    // Load initial data
+    updateCompliance();
+  </script>
+</body>
+</html>
