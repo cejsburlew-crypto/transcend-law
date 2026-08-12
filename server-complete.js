@@ -1081,6 +1081,178 @@ app.get('/api/sme/plans', (req, res) => {
     });
 });
 
+// ==================== PROFESSIONAL DIRECTORIES ====================
+
+// Search Notaries Directory
+app.get('/api/directories/notaries/search', verifyToken, async (req, res) => {
+    try {
+        const { state, city, last_name, status = 'ACTIVE', limit = 50, offset = 0 } = req.query;
+
+        let query = 'SELECT * FROM state_notaries WHERE status = $1';
+        const params = [status];
+        let paramCount = 1;
+
+        if (state) {
+            params.push(state.toUpperCase());
+            query += ` AND state = $${++paramCount}`;
+        }
+        if (city) {
+            params.push(`%${city}%`);
+            query += ` AND city ILIKE $${++paramCount}`;
+        }
+        if (last_name) {
+            params.push(`%${last_name}%`);
+            query += ` AND last_name ILIKE $${++paramCount}`;
+        }
+
+        query += ` ORDER BY last_name ASC LIMIT $${++paramCount} OFFSET $${++paramCount}`;
+        params.push(parseInt(limit), parseInt(offset));
+
+        const result = await pool.query(query, params);
+        res.json({ count: result.rows.length, notaries: result.rows });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Search Attorneys Directory
+app.get('/api/directories/attorneys/search', verifyToken, async (req, res) => {
+    try {
+        const { state, city, last_name, status = 'ACTIVE', bar_number, limit = 50, offset = 0 } = req.query;
+
+        let query = 'SELECT * FROM state_attorneys WHERE status = $1';
+        const params = [status];
+        let paramCount = 1;
+
+        if (state) {
+            params.push(state.toUpperCase());
+            query += ` AND state = $${++paramCount}`;
+        }
+        if (city) {
+            params.push(`%${city}%`);
+            query += ` AND office_city ILIKE $${++paramCount}`;
+        }
+        if (last_name) {
+            params.push(`%${last_name}%`);
+            query += ` AND last_name ILIKE $${++paramCount}`;
+        }
+        if (bar_number) {
+            params.push(bar_number);
+            query += ` AND bar_number = $${++paramCount}`;
+        }
+
+        query += ` ORDER BY last_name ASC LIMIT $${++paramCount} OFFSET $${++paramCount}`;
+        params.push(parseInt(limit), parseInt(offset));
+
+        const result = await pool.query(query, params);
+        res.json({ count: result.rows.length, attorneys: result.rows });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Search Law Firms Directory
+app.get('/api/directories/law-firms/search', verifyToken, async (req, res) => {
+    try {
+        const { state, city, firm_name, status = 'ACTIVE', limit = 50, offset = 0 } = req.query;
+
+        let query = 'SELECT * FROM state_law_firms WHERE status = $1';
+        const params = [status];
+        let paramCount = 1;
+
+        if (state) {
+            params.push(state.toUpperCase());
+            query += ` AND state = $${++paramCount}`;
+        }
+        if (city) {
+            params.push(`%${city}%`);
+            query += ` AND office_city ILIKE $${++paramCount}`;
+        }
+        if (firm_name) {
+            params.push(`%${firm_name}%`);
+            query += ` AND firm_name ILIKE $${++paramCount}`;
+        }
+
+        query += ` ORDER BY firm_name ASC LIMIT $${++paramCount} OFFSET $${++paramCount}`;
+        params.push(parseInt(limit), parseInt(offset));
+
+        const result = await pool.query(query, params);
+        res.json({ count: result.rows.length, firms: result.rows });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Admin: Get Directory Statistics
+app.get('/api/directories/stats', verifyToken, async (req, res) => {
+    try {
+        const stats = await Promise.all([
+            pool.query('SELECT state, COUNT(*) as count FROM state_notaries WHERE status = \'ACTIVE\' GROUP BY state ORDER BY count DESC'),
+            pool.query('SELECT state, COUNT(*) as count FROM state_attorneys WHERE status = \'ACTIVE\' GROUP BY state ORDER BY count DESC'),
+            pool.query('SELECT state, COUNT(*) as count FROM state_law_firms WHERE status = \'ACTIVE\' GROUP BY state ORDER BY count DESC'),
+            pool.query('SELECT COUNT(*) as total FROM state_notaries WHERE status = \'ACTIVE\''),
+            pool.query('SELECT COUNT(*) as total FROM state_attorneys WHERE status = \'ACTIVE\''),
+            pool.query('SELECT COUNT(*) as total FROM state_law_firms WHERE status = \'ACTIVE\'')
+        ]);
+
+        res.json({
+            notaries: {
+                total: parseInt(stats[3].rows[0].total),
+                byState: stats[0].rows
+            },
+            attorneys: {
+                total: parseInt(stats[4].rows[0].total),
+                byState: stats[1].rows
+            },
+            lawFirms: {
+                total: parseInt(stats[5].rows[0].total),
+                byState: stats[2].rows
+            }
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Admin: Export Directory to CSV (notaries, attorneys, or law_firms)
+app.get('/api/directories/:type/export', verifyToken, async (req, res) => {
+    try {
+        const { type } = req.params;
+        const { state, status = 'ACTIVE' } = req.query;
+
+        if (!['notaries', 'attorneys', 'law_firms'].includes(type)) {
+            return res.status(400).json({ error: 'Invalid directory type' });
+        }
+
+        const tableMap = {
+            notaries: 'state_notaries',
+            attorneys: 'state_attorneys',
+            law_firms: 'state_law_firms'
+        };
+
+        const table = tableMap[type];
+        let query = `SELECT * FROM ${table} WHERE status = $1`;
+        const params = [status];
+
+        if (state) {
+            params.push(state.toUpperCase());
+            query += ` AND state = $2`;
+        }
+
+        const result = await pool.query(query, params);
+
+        // Convert to CSV
+        const headers = Object.keys(result.rows[0] || {});
+        const csv = [headers.join(','), ...result.rows.map(row => headers.map(h => `"${row[h] || ''}"`).join(','))].join('\n');
+
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', `attachment; filename="${type}_${state || 'all'}_${status.toLowerCase()}.csv"`);
+        res.send(csv);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // ==================== HEALTH CHECK ====================
 
 app.get('/api/health', (req, res) => {
