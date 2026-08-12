@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Registration & Tag Service - TRANSCEND LAW</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3a5f 0%, #2c5aa0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .container { max-width: 900px; width: 100%; }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .info-section h2 { color: #1e3a5f; margin-bottom: 1.5rem; font-size: 1.5rem; }
+
+        .service-list {
+            list-style: none;
+        }
+
+        .service-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .service-list li:last-child { border-bottom: none; }
+
+        .service-icon {
+            font-size: 1.5rem;
+            min-width: 30px;
+        }
+
+        .service-text {
+            flex: 1;
+        }
+
+        .service-text strong { color: #1e3a5f; display: block; margin-bottom: 0.3rem; }
+        .service-text span { color: #666; font-size: 0.9rem; display: block; margin-bottom: 0.2rem; }
+        .service-price { color: #ff9800; font-weight: 600; }
+
+        .login-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .login-section h2 { color: #1e3a5f; margin-bottom: 1.5rem; font-size: 1.5rem; }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1e88e5;
+            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            background: #1e88e5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover { background: #1565c0; }
+        .btn-secondary { background: #757575; }
+        .btn-secondary:hover { background: #616161; }
+
+        .divider {
+            text-align: center;
+            color: #999;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .links a {
+            color: #1e88e5;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .links a:hover { text-decoration: underline; }
+
+        .info-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: #2e7d32;
+        }
+
+        .user-types {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            text-align: left;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .user-types strong {
+            display: block;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-types ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .user-types li {
+            margin-bottom: 0.3rem;
+        }
+
+        .user-types li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🚚 Vehicle Registration & Tag Service</h1>
+            <p>Expert DMV paperwork completion for trucking companies and fleet operators</p>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Service Information -->
+            <div class="info-section">
+                <h2>Available Services</h2>
+                <ul class="service-list">
+                    <li>
+                        <div class="service-icon">🚗</div>
+                        <div class="service-text">
+                            <strong>Vehicle Registration Renewal</strong>
+                            <span>State DMV registration renewal paperwork</span>
+                            <span class="service-price">$75-150 per vehicle</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="service-icon">🏷️</div>
+                        <div class="service-text">
+                            <strong>License Plate & Tags</strong>
+                            <span>New/replacement plate and tag applications</span>
+                            <span class="service-price">$25-100 per application</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="service-icon">🚛</div>
+                        <div class="service-text">
+                            <strong>Commercial Truck Registration</strong>
+                            <span>USDOT, MC number, and commercial permits</span>
+                            <span class="service-price">$200-400 per setup</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="service-icon">🛣️</div>
+                        <div class="service-text">
+                            <strong>Interstate Commerce Compliance</strong>
+                            <span>IRP/IFTA multi-state registration</span>
+                            <span class="service-price">$200-500 setup | $75-150 renewal</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="service-icon">📝</div>
+                        <div class="service-text">
+                            <strong>Form Completion Service</strong>
+                            <span>Expert review and completion of registration forms</span>
+                            <span class="service-price">$75-200 per form package</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="service-icon">✅</div>
+                        <div class="service-text">
+                            <strong>DMV Document Preparation</strong>
+                            <span>Organize and validate documents for DMV submission</span>
+                            <span class="service-price">$100-250 per submission</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Login Section -->
+            <div class="login-section">
+                <h2>Get Started</h2>
+
+                <div class="info-box">
+                    ✓ Find expert vehicle registration services | 📋 Submit paperwork requests | 💬 Consult with specialists
+                </div>
+
+                <div class="user-types">
+                    <strong>Who uses this service?</strong>
+                    <ul>
+                        <li>Individual vehicle owners</li>
+                        <li>Small trucking companies</li>
+                        <li>Fleet operators (10-1000 vehicles)</li>
+                        <li>Construction/trade businesses</li>
+                        <li>Logistics providers</li>
+                        <li>Car rental companies</li>
+                    </ul>
+                </div>
+
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="user-type">I am a...</label>
+                        <select id="user-type" required>
+                            <option value="">-- Select User Type --</option>
+                            <option value="individual">Individual Driver / Vehicle Owner</option>
+                            <option value="small-fleet">Small Trucking Company (1-10 vehicles)</option>
+                            <option value="mid-fleet">Mid-size Fleet Operator (10-50 vehicles)</option>
+                            <option value="large-fleet">Large Fleet Operator (50+ vehicles)</option>
+                            <option value="professional">Professional Services Provider</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="btn">Sign In</button>
+                </form>
+
+                <div class="divider">OR</div>
+
+                <button class="btn btn-secondary" onclick="showDemo()">Demo Login</button>
+
+                <div class="links">
+                    <a href="frontend-final.html">← Back Home</a>
+                    <a href="#" onclick="createNewAccount()">Create Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            const userType = document.getElementById('user-type').value;
+            const email = document.getElementById('email').value;
+
+            alert(`✅ Login request received!\n\nUser Type: ${userType}\nEmail: ${email}\n\nIn production, this would connect to the Vehicle Registration Service Portal.`);
+        }
+
+        function showDemo() {
+            document.getElementById('user-type').value = 'small-fleet';
+            document.getElementById('email').value = 'demo@trucking.com';
+            document.getElementById('password').value = 'password';
+            alert('Demo credentials filled. Click "Sign In" to proceed.');
+        }
+
+        function createNewAccount() {
+            alert('🚚 Create Your Account\n\nSteps:\n1. Select user type (individual, small fleet, enterprise)\n2. Enter company name (if applicable)\n3. Provide contact information\n4. Verify email\n5. Set password\n6. Start requesting services!\n\nIn production, this would open a comprehensive registration flow.');
+        }
+    </script>
+</body>
+</html>
