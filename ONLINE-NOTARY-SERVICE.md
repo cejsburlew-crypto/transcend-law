@@ -20,35 +20,36 @@
 
 ## NOTARY EARNING MODEL
 
-### $30 Per Stamped Page (Industry Standard)
+### $35-50 Per Stamped Page (Premium Rates)
 
 ```
 Standard Rates:
-  Single document (1-3 pages):     $30-90
-  Multi-page docs (4-10 pages):    $120-300
+  Single document (1-3 pages):     $35-105
+  Multi-page docs (4-10 pages):    $140-500
   Complex notarizations:           $50-75 per page
-  Rush orders (same-day):          +$25-50 rush fee
-  Certified copies:                $40-50 per cert
+  Rush orders (same-day):          $50+ base rate
+  Certified copies:                $50-75 per cert
 
 Example Earnings:
-  Power of Attorney (5 pages):     $150
-  Affidavit (3 pages):            $90
-  Contract (8 pages):             $240
-  Title Transfer (1 page):        $30
-  Rush medical form (2 pages):    $95 ($30 × 2 + $35 rush)
+  Power of Attorney (5 pages):     $175-250
+  Affidavit (3 pages):            $105-150
+  Contract (8 pages):             $280-400
+  Title Transfer (1 page):        $35-50
+  Rush medical form (2 pages):    $100-120
 
-Monthly Potential:
-  Basic (10 docs/month):          $300
-  Active (40 docs/month):         $1,200
-  Full-time (100 docs/month):     $3,000+
+Monthly Potential (at 20% payout):
+  Basic (10 docs @ $7-10):         $70-100
+  Active (40 docs @ $7-10):        $280-400
+  Full-time (100 docs @ $7-10):    $700-1,000
 ```
 
-### Payment via Clove
+### Admin-Controlled Payment Model
 
-- Daily settlement available
-- Automatic invoicing ($30 per page calculation)
-- No payment processing delays
-- All fees transparent in notary journal
+- **Client Rate (set by TRANSCEND admin):** $35-50 per page
+- **Notary Payout:** 20% of listed rate = $7-10 per page
+- **TRANSCEND Platform Fee:** 80% = $28-40 per page
+- Payment via Clove (daily settlement available)
+- All fees transparent in notary journal and payment records
 
 ---
 
@@ -342,44 +343,33 @@ Notary:
 
 ## REVENUE MODEL FOR TRANSCEND LAW
 
-### 1% + Transaction Fee
+### Admin-Controlled 80/20 Split
 
 ```
 Per Notarization Transaction:
 
-Client pays:          $30 (notary fee)
+Client pays:          $35-50 (variable client rate, set by admin)
     ↓
-TRANSCEND captures:   $0.30 (1% platform fee)
-Notary receives:      $29.70
+Notary receives:      $7-10 (20% payout)
+TRANSCEND captures:   $28-40 (80% platform fee)
     ↓
-Or alternative split:
-Notary fee:           $35
-TRANSCEND captures:   $5 (15% platform fee)
-Notary receives:      $30
+Example at $50/page:
+  Client pays:        $50
+  Notary receives:    $10 (20%)
+  TRANSCEND revenue:  $40 (80%)
 
 Monthly Volume Potential:
-  1,000 notarizations × $35 = $35,000
-  TRANSCEND revenue: $5,000-$5,250/month
-  Annual: $60,000-$63,000
+  1,000 notarizations × $40 avg = $40,000 TRANSCEND revenue
+  Year 1 (estimated growth): $200,000
+  Year 2 (scaled): $500,000+
 ```
 
-### Notary Subscription Tiers (Optional)
+### Admin Dashboard
 
-```
-FREE TIER:
-  • Notarize documents
-  • Digital journal
-  • Earn $30/page
-  • Commission: 15% platform fee
-
-PREMIUM NOTARY ($9.99/month):
-  • Notarize documents
-  • Digital journal
-  • Earn full $30/page (no commission)
-  • Priority visibility in search
-  • Advanced analytics
-  • Commission: Only payment processing (2%)
-```
+- Adjust per-page client rate ($35-50 range recommended)
+- View notary payout calculations (always 20% of client rate)
+- Track platform revenue in real-time
+- View transaction history and dispute resolution
 
 ---
 
