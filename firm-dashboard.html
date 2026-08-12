@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firm Dashboard - TRANSCEND LAW</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; }
+
+        .wrapper {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: #1e3a5f;
+            color: white;
+            padding: 2rem 1rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            color: #64b5f6;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sidebar-brand:hover {
+            color: white;
+            text-shadow: 0 0 10px rgba(100, 181, 246, 0.5);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #b0bec5;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sidebar-menu a:hover {
+            background: rgba(100, 181, 246, 0.2);
+            color: #64b5f6;
+        }
+
+        .sidebar-menu a.active {
+            background: #64b5f6;
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: #f5f5f5;
+            overflow-y: auto;
+        }
+
+        .topbar {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .topbar h1 { font-size: 1.5rem; }
+
+        .user-section {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            background: #1e88e5;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover { background: #1565c0; }
+        .btn-secondary { background: #757575; }
+        .btn-secondary:hover { background: #616161; }
+        .btn-outline { background: white; color: #1e88e5; border: 1px solid #1e88e5; }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-label { color: #666; font-size: 0.85rem; text-transform: uppercase; }
+        .stat-value { font-size: 2.5rem; font-weight: bold; color: #1e88e5; margin-top: 0.5rem; }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .card h2 {
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #1e88e5;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Tables */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            background: #f5f5f5;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table tr:hover { background: #f9f9f9; }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1e88e5;
+            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .badge.active { background: #e8f5e9; color: #2e7d32; }
+        .badge.pending { background: #fff3e0; color: #e65100; }
+        .badge.closed { background: #f3e5f5; color: #6a1b9a; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-brand" onclick="goHome()" title="Back to home">TRANSCEND LAW</div>
+            <ul class="sidebar-menu">
+                <li><a onclick="showPage('dashboard')" class="nav-link active">📊 Dashboard</a></li>
+                <li><a onclick="showPage('cases')" class="nav-link">📋 Cases</a></li>
+                <li><a onclick="showPage('attorneys')" class="nav-link">⚖️ Attorneys</a></li>
+                <li><a onclick="showPage('clients')" class="nav-link">👥 Clients</a></li>
+                <li><a onclick="showPage('intakes')" class="nav-link">📝 Intakes</a></li>
+                <li><a onclick="showPage('settings')" class="nav-link">⚙️ Settings</a></li>
+                <li><a onclick="showPage('billing')" class="nav-link">💳 Billing</a></li>
+                <li style="margin-top: 2rem;"><a onclick="logout()" class="nav-link">🚪 Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Topbar -->
+            <div class="topbar">
+                <h1 id="page-title">Dashboard</h1>
+                <div class="user-section">
+                    <span id="firm-name">Smith & Associates</span>
+                    <span id="user-info">admin@acmelegal.com</span>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Dashboard Page -->
+                <div id="dashboard" class="page active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Open Leads</div>
+                            <div class="stat-value">3</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Active Cases</div>
+                            <div class="stat-value">12</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Licensed Attorneys</div>
+                            <div class="stat-value">5/5</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Current Plan</div>
+                            <div class="stat-value" style="font-size: 1.5rem;">Professional</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Recent Cases</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Case ID</th>
+                                    <th>Client Name</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Attorney</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CS-2024-001</td>
+                                    <td>John Smith</td>
+                                    <td>Personal Injury</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>Sarah Johnson</td>
+                                </tr>
+                                <tr>
+                                    <td>CS-2024-002</td>
+                                    <td>Jane Doe</td>
+                                    <td>Estate Planning</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>Michael Chen</td>
+                                </tr>
+                                <tr>
+                                    <td>CS-2024-003</td>
+                                    <td>Bob Johnson</td>
+                                    <td>Business Law</td>
+                                    <td><span class="badge pending">Pending</span></td>
+                                    <td>Unassigned</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Cases Page -->
+                <div id="cases" class="page">
+                    <div class="card">
+                        <h2>Cases</h2>
+                        <button class="btn" style="margin-bottom: 1rem;">+ New Case</button>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Case ID</th>
+                                    <th>Client</th>
+                                    <th>Type</th>
+                                    <th>Lead Attorney</th>
+                                    <th>Status</th>
+                                    <th>Date Created</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CS-2024-001</td>
+                                    <td>John Smith</td>
+                                    <td>Personal Injury</td>
+                                    <td>Sarah Johnson</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>2024-01-15</td>
+                                </tr>
+                                <tr>
+                                    <td>CS-2024-002</td>
+                                    <td>Jane Doe</td>
+                                    <td>Estate Planning</td>
+                                    <td>Michael Chen</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>2024-01-20</td>
+                                </tr>
+                                <tr>
+                                    <td>CS-2023-045</td>
+                                    <td>Alice Wilson</td>
+                                    <td>Corporate</td>
+                                    <td>Robert Martinez</td>
+                                    <td><span class="badge closed">Closed</span></td>
+                                    <td>2023-11-10</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Attorneys Page -->
+                <div id="attorneys" class="page">
+                    <div class="card">
+                        <h2>Attorneys</h2>
+                        <button class="btn" style="margin-bottom: 1rem;">+ Add Attorney</button>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>State Bar License</th>
+                                    <th>License Status</th>
+                                    <th>Practice Areas</th>
+                                    <th>Active Cases</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Sarah Johnson</td>
+                                    <td>CA #123456</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>Personal Injury, Medical Malpractice</td>
+                                    <td>5</td>
+                                </tr>
+                                <tr>
+                                    <td>Michael Chen</td>
+                                    <td>CA #234567</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>Estate Planning, Probate</td>
+                                    <td>3</td>
+                                </tr>
+                                <tr>
+                                    <td>Robert Martinez</td>
+                                    <td>CA #345678</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>Corporate, Business Law</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>Jennifer Lee</td>
+                                    <td>CA #456789</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>Family Law, Divorce</td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>David Brown</td>
+                                    <td>CA #567890</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>Criminal Defense, White Collar</td>
+                                    <td>1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Clients Page -->
+                <div id="clients" class="page">
+                    <div class="card">
+                        <h2>Client Directory</h2>
+                        <button class="btn" style="margin-bottom: 1rem;">+ Add Client</button>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Cases</th>
+                                    <th>Joined</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>John Smith</td>
+                                    <td>john@email.com</td>
+                                    <td>(555) 123-4567</td>
+                                    <td>1</td>
+                                    <td>2024-01-15</td>
+                                </tr>
+                                <tr>
+                                    <td>Jane Doe</td>
+                                    <td>jane@email.com</td>
+                                    <td>(555) 234-5678</td>
+                                    <td>1</td>
+                                    <td>2024-01-20</td>
+                                </tr>
+                                <tr>
+                                    <td>Bob Johnson</td>
+                                    <td>bob@email.com</td>
+                                    <td>(555) 345-6789</td>
+                                    <td>1</td>
+                                    <td>2024-02-01</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Intakes Page -->
+                <div id="intakes" class="page">
+                    <div class="card">
+                        <h2>Client Intakes</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Client Name</th>
+                                    <th>Email</th>
+                                    <th>Practice Area</th>
+                                    <th>Status</th>
+                                    <th>Received</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Michael Brown</td>
+                                    <td>michael@email.com</td>
+                                    <td>Personal Injury</td>
+                                    <td><span class="badge pending">New</span></td>
+                                    <td>2024-02-10</td>
+                                    <td><button class="btn" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Review</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Lisa Anderson</td>
+                                    <td>lisa@email.com</td>
+                                    <td>Estate Planning</td>
+                                    <td><span class="badge pending">New</span></td>
+                                    <td>2024-02-11</td>
+                                    <td><button class="btn" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Review</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Tom Wilson</td>
+                                    <td>tom@email.com</td>
+                                    <td>Business Law</td>
+                                    <td><span class="badge active">Reviewed</span></td>
+                                    <td>2024-02-09</td>
+                                    <td><button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Assign</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div id="settings" class="page">
+                    <div class="card">
+                        <h2>Firm Settings</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Firm Name</label>
+                                <input type="text" value="Smith & Associates">
+                            </div>
+                            <div class="form-group">
+                                <label>Email Domain</label>
+                                <input type="text" value="acmelegal.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <input type="text" value="123 Legal Street, Los Angeles, CA 90001">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" value="(555) 999-0000">
+                            </div>
+                            <div class="form-group">
+                                <label>Website</label>
+                                <input type="url" value="https://acmelegal.com">
+                            </div>
+                        </div>
+                        <button class="btn">Save Settings</button>
+                    </div>
+
+                    <div class="card">
+                        <h2>Practice Areas (Case Types)</h2>
+                        <p style="margin-bottom: 1.5rem; color: #666; font-size: 0.95rem;">Select all case types your firm handles. This helps match clients with the right attorneys.</p>
+
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox" checked> <span>1. Administrative Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>2. Alternative Dispute Resolution</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>3. Antitrust/Competition</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>4. Appellate Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>5. Arbitration</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>6. Bankruptcy</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>7. Business Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>8. Civil Rights</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>9. Commercial Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>10. Construction Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>11. Consumer Protection</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>12. Contract Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>13. Copyright/IP</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>14. Corporate Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox" checked> <span>15. Criminal Defense</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>16. Criminal Prosecution</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>17. Custody/Child Support</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>18. Debt Collection</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>19. Defamation/Libel</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>20. Disability Rights</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>21. Divorce/Family Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>22. Education Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>23. Elder Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>24. Employment Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>25. Environmental Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>26. Estate Planning</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>27. Eviction/Landlord-Tenant</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>28. Family Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>29. Financial Services</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>30. Franchise Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>31. Fraud</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>32. Government/Administrative</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>33. Health Care Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>34. Immigration</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>35. Insurance Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>36. Intellectual Property</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>37. International Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>38. Labor Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>39. Land Use/Zoning</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>40. Litigation/Dispute Resolution</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox" checked> <span>41. Medical Malpractice</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>42. Military Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>43. Municipal/Local Government</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>44. Nonprofit/Tax Exempt</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>45. Patent Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox" checked> <span>46. Personal Injury</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>47. Privacy Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>48. Probate/Estate Admin</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>49. Product Liability</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>50. Professional Liability</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>51. Property Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>52. Real Estate</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>53. Regulatory Compliance</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>54. Securities Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>55. Sexual Harassment/Discrimination</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>56. Shareholder Disputes</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>57. Social Security/Disability</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>58. Sports Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>59. Tax Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>60. Telecommunications</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>61. Trademark Law</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>62. Trade Secrets</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>63. Transportation/Aviation</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>64. Trust Administration</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>65. Unclaimed Property</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>66. Uniform Commercial Code</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>67. Veteran's Benefits</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>68. Wills/Trusts</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>69. Workers' Compensation</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>70. Wrongful Termination</span></label>
+                        </div>
+
+                        <div style="background: #f5f5f5; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                            <strong>Selected Case Types:</strong> 1, 15, 41, 46 (4 selected)
+                        </div>
+
+                        <button class="btn">Save Practice Areas</button>
+                    </div>
+
+                    <div class="card">
+                        <h2>Service Areas (States & Counties)</h2>
+                        <p style="margin-bottom: 1.5rem; color: #666; font-size: 0.95rem;">Select which states and counties you serve. Clients must live in your service areas to be matched with your firm.</p>
+
+                        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox" checked> <span>CA (All)</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>TX (All)</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>NY (All)</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>FL (All)</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>IL (All)</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>PA (All)</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>OH (All)</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>GA (All)</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>NC (All)</span></label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>MI (All)</span></label>
+                        </div>
+
+                        <div style="background: #f5f5f5; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                            <strong>Your Service Areas:</strong> California (All), New York (All)
+                        </div>
+
+                        <button class="btn">Save Service Areas</button>
+                    </div>
+
+                    <div class="card">
+                        <h2>Team Members</h2>
+                        <button class="btn" style="margin-bottom: 1rem;">+ Add Team Member</button>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>You</td>
+                                    <td>admin@acmelegal.com</td>
+                                    <td>Firm Admin</td>
+                                    <td><span class="badge active">Active</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Sarah Johnson</td>
+                                    <td>sarah@acmelegal.com</td>
+                                    <td>Attorney</td>
+                                    <td><span class="badge active">Active</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Billing Page -->
+                <div id="billing" class="page">
+                    <div class="card">
+                        <h2>Current Subscription</h2>
+                        <div style="padding: 1rem; background: #f5f5f5; border-radius: 4px; margin-bottom: 1rem;">
+                            <p><strong>Plan:</strong> Professional ($299/month)</p>
+                            <p><strong>Licensed Attorneys:</strong> 5 / 5</p>
+                            <p><strong>Monthly Lead Quota:</strong> 25 leads</p>
+                            <p><strong>Leads Used:</strong> 12 / 25</p>
+                            <p><strong>Billing Cycle:</strong> Feb 1, 2024 - Mar 1, 2024</p>
+                            <button class="btn" style="margin-top: 1rem;">Upgrade Plan</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Payment History</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2024-02-01</td>
+                                    <td>Professional Plan - Monthly</td>
+                                    <td>$299.00</td>
+                                    <td><span class="badge active">Paid</span></td>
+                                </tr>
+                                <tr>
+                                    <td>2024-01-01</td>
+                                    <td>Professional Plan - Monthly</td>
+                                    <td>$299.00</td>
+                                    <td><span class="badge active">Paid</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Session check on page load
+        window.addEventListener('load', function() {
+            const firmToken = localStorage.getItem('firmToken');
+            const firmId = localStorage.getItem('firmId');
+
+            if (!firmToken || !firmId) {
+                window.location.href = 'frontend-final.html';
+            }
+        });
+
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            event.target.classList.add('active');
+
+            // Update title
+            const titles = {
+                dashboard: 'Dashboard',
+                cases: 'Cases',
+                attorneys: 'Attorneys',
+                clients: 'Client Directory',
+                intakes: 'Client Intakes',
+                settings: 'Settings',
+                billing: 'Billing'
+            };
+            document.getElementById('page-title').textContent = titles[pageId] || 'Dashboard';
+        }
+
+        function goHome() {
+            window.location.href = 'frontend-final.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('firmToken');
+            localStorage.removeItem('firmId');
+            localStorage.removeItem('firmEmail');
+            window.location.href = 'frontend-final.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "transcend/ssp-api",
+  "description": "Site Safety Plan API for Transcend PM add-on",
+  "type": "project",
+  "require": {
+    "php": ">=8.2",
+    "dompdf/dompdf": "^3.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Transcend\\Ssp\\": "src/"
+    }
+  }
+}

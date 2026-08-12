@@ -1,0 +1,94 @@
+<div class="procurement-page">
+  <div class="page-header">
+    <h1 class="page-title">Procurement Opportunities</h1>
+    <div class="tab-toggle">
+      <button [class.active]="activeTab === 'active'" (click)="setTab('active')">Active RFQs</button>
+      <button [class.active]="activeTab === 'all'" (click)="setTab('all')">All Events</button>
+    </div>
+  </div>
+
+  <div class="filter-bar" *ngIf="activeTab === 'all'">
+    <select class="filter-select" [(ngModel)]="filters['state']" (change)="loadAll()">
+      <option value="">All States</option>
+      <option *ngFor="let s of states" [value]="s">{{ s }}</option>
+    </select>
+    <select class="filter-select" [(ngModel)]="filters['service_type']" (change)="loadAll()">
+      <option value="">All Service Types</option>
+      <option *ngFor="let t of serviceTypes" [value]="t">{{ serviceLabel(t) }}</option>
+    </select>
+    <select class="filter-select" [(ngModel)]="filters['event_type']" (change)="loadAll()">
+      <option value="">All Event Types</option>
+      <option *ngFor="let t of eventTypes" [value]="t">{{ eventTypeLabel(t) }}</option>
+    </select>
+    <label class="filter-toggle">
+      <input type="checkbox" [(ngModel)]="filters['due_soon']" (change)="loadAll()">
+      <span>Due in 30 days</span>
+    </label>
+  </div>
+
+  <app-loading-spinner *ngIf="loading" />
+
+  <div class="table-wrap" *ngIf="!loading">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Agency</th>
+          <th>Project Name</th>
+          <th>Title / RFQ</th>
+          <th>Delivery</th>
+          <th>Service</th>
+          <th>Trade(s)</th>
+          <th>Issue Date</th>
+          <th>Due Date</th>
+          <th>PO Amount</th>
+          <th>Est. Value</th>
+          <th>Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of events" [class.urgent-row]="isUrgent(e.due_date)">
+          <td class="td-agency">
+            <strong>{{ e.agency_name || '—' }}</strong>
+            <span class="state-badge" *ngIf="e.state">{{ e.state }}</span>
+          </td>
+          <td class="td-project">
+            <span *ngIf="e.project_name">{{ e.project_name }}</span>
+            <span *ngIf="!e.project_name" class="td-empty-cell">—</span>
+          </td>
+          <td class="td-title">
+            <span *ngIf="isUrgent(e.due_date)" class="urgent-flag">⚠ Due soon</span>
+            {{ e.title }}
+          </td>
+          <td>
+            <span *ngIf="e.delivery_method" class="delivery-badge">{{ e.delivery_method }}</span>
+            <span *ngIf="!e.delivery_method" class="td-empty-cell">—</span>
+          </td>
+          <td><span class="service-chip">{{ serviceLabel(e.service_type) }}</span></td>
+          <td class="td-trades">
+            <ng-container *ngIf="parseTrades(e.trades) as trades">
+              <span *ngFor="let t of trades" class="trade-tag">{{ t }}</span>
+            </ng-container>
+          </td>
+          <td>{{ e.issue_date | date:'MMM d, yyyy' }}</td>
+          <td [class.td-urgent]="isUrgent(e.due_date)">{{ e.due_date | date:'MMM d, yyyy' }}</td>
+          <td class="td-num">
+            <strong *ngIf="e.po_amount">{{ e.po_amount | currencyMillions }}</strong>
+            <span *ngIf="!e.po_amount" class="td-empty-cell">—</span>
+          </td>
+          <td class="td-num">{{ e.estimated_value | currencyMillions }}</td>
+          <td>
+            <a *ngIf="e.source_url" [href]="e.source_url" target="_blank" class="source-link">
+              <span class="material-icons">open_in_new</span>
+              <span *ngIf="e.portal_name">{{ e.portal_name }}</span>
+            </a>
+            <span *ngIf="!e.source_url && e.portal_name" class="portal-name-only">{{ e.portal_name }}</span>
+            <span *ngIf="!e.source_url && !e.portal_name" class="td-empty-cell">—</span>
+          </td>
+        </tr>
+        <tr *ngIf="events.length === 0">
+          <td colspan="11" class="td-empty">No procurement events found. Run the procurement scraper to populate.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

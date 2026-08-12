@@ -1,0 +1,186 @@
+<div class="dashboard">
+
+  <app-loading-spinner *ngIf="loading" />
+
+  <ng-container *ngIf="!loading && summary">
+
+    <!-- KPI Row -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-card__icon kpi-card__icon--blue">
+          <span class="material-icons">business</span>
+        </div>
+        <div class="kpi-card__body">
+          <div class="kpi-card__value">{{ summary.total_agencies | number }}</div>
+          <div class="kpi-card__label">Total Agencies</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-card__icon kpi-card__icon--green">
+          <span class="material-icons">account_balance</span>
+        </div>
+        <div class="kpi-card__body">
+          <div class="kpi-card__value">{{ summary.total_bond_value | currencyMillions }}</div>
+          <div class="kpi-card__label">Total Bond Value</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-card__icon kpi-card__icon--gold">
+          <span class="material-icons">how_to_vote</span>
+        </div>
+        <div class="kpi-card__body">
+          <div class="kpi-card__value">{{ summary.agencies_with_bonds_passed | number }}</div>
+          <div class="kpi-card__label">Bonds Passed</div>
+        </div>
+      </div>
+
+      <div class="kpi-card kpi-card--hot">
+        <div class="kpi-card__icon kpi-card__icon--red">
+          <span class="material-icons">bolt</span>
+        </div>
+        <div class="kpi-card__body">
+          <div class="kpi-card__value">{{ summary.approach_now_count | number }}</div>
+          <div class="kpi-card__label">Approach Now</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Two-column grid -->
+    <div class="grid-2">
+
+      <!-- Top Opportunities -->
+      <div class="card">
+        <div class="card__header">
+          <h2 class="card__title">Top Opportunities</h2>
+          <a routerLink="/leads" class="card__link">View all →</a>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>State</th>
+              <th>Agency</th>
+              <th>
+                <span class="has-tip" data-tip="Lead Score  (0 – 100)
+
+Formula breakdown:
+  Bond stage       up to 40 pts
+  Unissued capacity  up to 30 pts
+  Active procurement up to 20 pts
+  Data completeness  up to 10 pts
+
+Scale:
+  70 – 100  🔴 Hot — approach now
+  50 – 69   🟠 Warm — monitor closely
+  30 – 49   🔵 Cool — nurture
+   0 – 29   ⚪ Cold — watch list">Score <span class="tip-icon">?</span></span>
+              </th>
+              <th>
+                <span class="has-tip" data-tip="Bond Amount
+
+Total voter-approved authorization from the agency's most recent measure — the full program size.
+
+Not the same as what's left to spend. See the agency detail page for:
+  Authorized → Issued → Remaining Unissued">Bond <span class="tip-icon">?</span></span>
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let opp of summary.top_opportunities">
+              <td><span class="state-badge">{{ opp.state }}</span></td>
+              <td class="td-name">{{ opp.agency_name }}</td>
+              <td><app-score-badge [score]="opp.score" size="sm" /></td>
+              <td>{{ opp.bond_amount | currencyMillions }}</td>
+              <td>
+                <a [routerLink]="['/agencies', opp.agency_id]" class="btn-link">View</a>
+              </td>
+            </tr>
+            <tr *ngIf="summary.top_opportunities.length === 0">
+              <td colspan="5" class="td-empty">No opportunities scored yet — run the scraper first.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pipeline by Stage -->
+      <div class="card">
+        <div class="card__header">
+          <h2 class="card__title">Pipeline by Stage</h2>
+        </div>
+        <div class="pipeline-bars">
+          <div class="pipeline-bar" *ngFor="let s of pipelineStages">
+            <div class="pipeline-bar__label">{{ s.stage | stageLabel }}</div>
+            <div class="pipeline-bar__track">
+              <div class="pipeline-bar__fill" [style.width.%]="s.pct"></div>
+            </div>
+            <div class="pipeline-bar__count">{{ s.count }}</div>
+          </div>
+          <div *ngIf="pipelineStages.length === 0" class="empty-msg">No stage data yet.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bond Value by State -->
+    <div class="card card--wide">
+      <div class="card__header">
+        <h2 class="card__title">Bond Value by State</h2>
+      </div>
+      <div class="state-bars">
+        <div class="state-bar" *ngFor="let s of topStatesByValue">
+          <div class="state-bar__label">{{ s.state }}</div>
+          <div class="state-bar__track">
+            <div class="state-bar__fill" [style.width.%]="(s.total_value / maxStateValue) * 100"></div>
+          </div>
+          <div class="state-bar__value">{{ s.total_value | currencyMillions }}</div>
+          <div class="state-bar__count">{{ s.count }} agencies</div>
+        </div>
+        <div *ngIf="topStatesByValue.length === 0" class="empty-msg">No state data yet.</div>
+      </div>
+    </div>
+
+    <!-- Recent Scraper Activity -->
+    <div class="card card--wide">
+      <div class="card__header">
+        <h2 class="card__title">Recent Scraper Activity</h2>
+        <a routerLink="/scraper" class="card__link">Manage scrapers →</a>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Scraper</th>
+            <th>Status</th>
+            <th><span class="has-tip" data-tip="Records Found — total matching records the scraper located from the source (e.g. bond measures on Ballotpedia, RFQs on a portal).">Found <span class="tip-icon">?</span></span></th>
+            <th><span class="has-tip" data-tip="Created — new records inserted into the database this run. These are net-new agencies, measures, or procurement events.">New <span class="tip-icon">?</span></span></th>
+            <th><span class="has-tip" data-tip="Updated — existing records refreshed with new data this run (e.g. vote % confirmed, RFQ due date changed).">Updated <span class="tip-icon">?</span></span></th>
+            <th>Completed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let run of summary.recent_scrape_runs">
+            <td><span class="state-badge">{{ run.state }}</span></td>
+            <td><strong>{{ run.scraper_name }}</strong></td>
+            <td><span class="status-badge status-badge--{{ getStatusClass(run.status) }}">{{ run.status }}</span></td>
+            <td>{{ run.records_found }}</td>
+            <td>{{ run.records_created }}</td>
+            <td>{{ run.records_updated }}</td>
+            <td>{{ run.completed_at | date:'MMM d, h:mm a' }}</td>
+          </tr>
+          <tr *ngIf="summary.recent_scrape_runs.length === 0">
+            <td colspan="7" class="td-empty">No scrape runs yet. Go to the Scraper page to start.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </ng-container>
+
+  <div *ngIf="error" class="error-banner">
+    <span class="material-icons">error_outline</span>
+    {{ error }} — Make sure the PHP API is running at http://localhost:8080
+  </div>
+
+</div>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRANSCEND LAW - Legal Services Platform</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f9fa; color: #333; }
+
+        .navbar {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-brand { font-size: 1.5rem; font-weight: bold; color: #1e88e5; }
+
+        .navbar-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .navbar-menu a {
+            text-decoration: none;
+            color: #333;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .navbar-menu a:hover { color: #1e88e5; }
+        .navbar-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .user-info {
+            background: #f0f0f0;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            background: #1e88e5;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover { background: #1565c0; }
+        .btn-outline { background: transparent; color: #1e88e5; border: 1px solid #1e88e5; }
+        .btn-outline:hover { background: #f0f7ff; }
+        .btn-secondary { background: #757575; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+        .page { display: none; }
+        .page.active { display: block; }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1e88e5;
+            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+        }
+
+        .auth-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: 4rem auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .auth-form h2 { margin-bottom: 1.5rem; }
+
+        .home-hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .home-hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+        .home-hero p { font-size: 1.2rem; color: #666; margin-bottom: 3rem; }
+
+        .login-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .login-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .login-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .login-card h3 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .login-card .title { font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem; }
+        .login-card p { color: #666; margin-bottom: 1.5rem; font-size: 0.9rem; }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .card h2 { margin-bottom: 1.5rem; border-bottom: 2px solid #1e88e5; padding-bottom: 0.5rem; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-label { color: #666; font-size: 0.9rem; }
+        .stat-value { font-size: 2.5rem; font-weight: bold; color: #1e88e5; margin-top: 0.5rem; }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .table th {
+            background: #f5f5f5;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table tr:hover { background: #f9f9f9; }
+
+        .error { color: #d32f2f; margin-top: 0.5rem; }
+        .success { color: #388e3c; margin-top: 0.5rem; }
+
+        .alert {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+
+        .alert.success { background: #e8f5e9; border-left-color: #4caf50; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="navbar">
+        <div class="navbar-brand">TRANSCEND LAW</div>
+        <div class="navbar-menu" id="navbar-menu">
+            <a onclick="goHome()">Home</a>
+            <span id="nav-extra"></span>
+        </div>
+        <div class="navbar-right" id="navbar-right">
+            <span id="user-status"></span>
+        </div>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <div class="container">
+            <div class="home-hero">
+                <h1>Legal Services Platform</h1>
+                <p>Connect clients with law firms. Manage your practice. Scale your business.</p>
+
+                <div class="login-buttons">
+                    <!-- Client Login -->
+                    <div class="login-card" onclick="showPage('client-login')">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">👤</div>
+                        <div class="title">Client</div>
+                        <p>Find and hire an attorney for your legal needs</p>
+                        <button class="btn">Login / Sign Up</button>
+                    </div>
+
+                    <!-- Law Firm Login -->
+                    <div class="login-card" onclick="firmLoginClick()">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🏢</div>
+                        <div class="title">Law Firm</div>
+                        <p>Manage your attorneys, leads, and cases</p>
+                        <button class="btn">Login</button>
+                    </div>
+
+                    <!-- Admin Login -->
+                    <div class="login-card" onclick="showPage('admin-login')">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">👨‍💼</div>
+                        <div class="title">Admin</div>
+                        <p>Manage all firms, subscriptions, and billing</p>
+                        <button class="btn">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CLIENT LOGIN PAGE -->
+    <div id="client-login" class="page">
+        <div class="auth-form">
+            <h2>Client Login</h2>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="client-email" placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="client-password" placeholder="••••••••">
+            </div>
+            <button class="btn" onclick="clientLogin()">Login</button>
+            <p style="text-align: center; margin-top: 1rem; color: #666;">
+                New here? <a onclick="goHome()" style="color: #1e88e5; cursor: pointer;">Create profile</a>
+            </p>
+            <div id="client-error" class="error"></div>
+            <p style="text-align: center; margin-top: 1rem;">
+                <a onclick="goHome()" style="color: #1e88e5; cursor: pointer;">← Back</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- CLIENT DASHBOARD PAGE -->
+    <div id="client-dashboard" class="page">
+        <div class="container" style="max-width: 900px; margin: 2rem auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h1>My Cases</h1>
+                <button class="btn" onclick="logout()">Logout</button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                <div class="stat-card">
+                    <div class="stat-label">Active Cases</div>
+                    <div class="stat-value" style="font-size: 2.5rem; color: #1e88e5;">2</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Pending Responses</div>
+                    <div class="stat-value" style="font-size: 2.5rem; color: #ff9800;">1</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Messages</div>
+                    <div class="stat-value" style="font-size: 2.5rem; color: #4caf50;">3</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Your Cases</h2>
+                <table class="table" style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #f5f5f5; border-bottom: 2px solid #e0e0e0;">
+                            <th style="padding: 1rem; text-align: left;">Case</th>
+                            <th style="padding: 1rem; text-align: left;">Attorney</th>
+                            <th style="padding: 1rem; text-align: left;">Status</th>
+                            <th style="padding: 1rem; text-align: left;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 1rem;">Personal Injury Claim</td>
+                            <td style="padding: 1rem;">Sarah Johnson</td>
+                            <td style="padding: 1rem;"><span style="background: #e8f5e9; color: #2e7d32; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: bold;">Active</span></td>
+                            <td style="padding: 1rem;"><button class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">View</button></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 1rem;">Contract Review</td>
+                            <td style="padding: 1rem;">Michael Chen</td>
+                            <td style="padding: 1rem;"><span style="background: #fff3e0; color: #e65100; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: bold;">Pending</span></td>
+                            <td style="padding: 1rem;"><button class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>Recent Messages</h2>
+                <div style="padding: 1.5rem;">
+                    <div style="padding: 1rem; background: #f5f5f5; border-radius: 4px; margin-bottom: 1rem;">
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Sarah Johnson</div>
+                        <div style="color: #666; font-size: 0.9rem;">I've reviewed your medical records. Let's schedule a call this week.</div>
+                        <div style="color: #999; font-size: 0.8rem; margin-top: 0.5rem;">2 hours ago</div>
+                    </div>
+                    <div style="padding: 1rem; background: #f5f5f5; border-radius: 4px;">
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Michael Chen</div>
+                        <div style="color: #666; font-size: 0.9rem;">Ready to discuss next steps on your contract.</div>
+                        <div style="color: #999; font-size: 0.8rem; margin-top: 0.5rem;">5 hours ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LAW FIRM LOGIN PAGE -->
+    <div id="firm-login" class="page">
+        <div class="auth-form">
+            <h2>Law Firm Login</h2>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="firm-email" placeholder="admin@yourfirm.com">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="firm-password" placeholder="••••••••">
+            </div>
+            <button class="btn" onclick="firmLogin()">Login</button>
+            <div id="firm-error" class="error"></div>
+            <p style="text-align: center; margin-top: 1rem;">
+                <a onclick="goHome()" style="color: #1e88e5; cursor: pointer;">← Back</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- ADMIN LOGIN PAGE -->
+    <div id="admin-login" class="page">
+        <div class="auth-form">
+            <h2>Admin Login</h2>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="admin-email" placeholder="admin@transcendlaw.com">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="admin-password" placeholder="••••••••">
+            </div>
+            <button class="btn" onclick="adminLogin()">Login</button>
+            <div id="admin-error" class="error"></div>
+            <p style="text-align: center; margin-top: 1rem;">
+                <a onclick="goHome()" style="color: #1e88e5; cursor: pointer;">← Back</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- LAW FIRM DASHBOARD -->
+    <div id="firm-dashboard" class="page">
+        <div class="container">
+            <h1>Firm Dashboard</h1>
+
+            <div id="firm-info" style="margin-bottom: 2rem;"></div>
+
+            <div class="grid">
+                <div class="stat-card">
+                    <div class="stat-label">Open Leads</div>
+                    <div class="stat-value" id="stat-leads">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Cases</div>
+                    <div class="stat-value" id="stat-cases">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Licensed Attorneys</div>
+                    <div class="stat-value" id="stat-attorneys">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Current Plan</div>
+                    <div class="stat-value" id="stat-plan" style="font-size: 1.2rem;">Pro</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Incoming Leads</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Practice Area</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="firm-leads-tbody">
+                        <tr><td colspan="4" style="text-align: center; color: #999;">No leads yet</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD -->
+    <div id="admin-dashboard" class="page">
+        <div class="container">
+            <h1>Admin Dashboard</h1>
+
+            <div class="grid">
+                <div class="stat-card">
+                    <div class="stat-label">Active Firms</div>
+                    <div class="stat-value" id="stat-firms">2</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Leads</div>
+                    <div class="stat-value" id="stat-total-leads">2</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Monthly Revenue</div>
+                    <div class="stat-value" id="stat-revenue">$598</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Subscriptions</div>
+                    <div class="stat-value" id="stat-subs">2</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>All Law Firms</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Firm Name</th>
+                            <th>Plan</th>
+                            <th>Licensed Attorneys</th>
+                            <th>Monthly Cost</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-firms-tbody">
+                        <tr>
+                            <td>Smith & Associates</td>
+                            <td>Professional ($299/mo)</td>
+                            <td>5 / 5</td>
+                            <td>$299</td>
+                            <td><span style="background: #e8f5e9; color: #4caf50; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem;">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Estate Planning Experts</td>
+                            <td>Professional ($299/mo)</td>
+                            <td>3 / 5</td>
+                            <td>$299</td>
+                            <td><span style="background: #e8f5e9; color: #4caf50; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem;">Active</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>Subscription Plans (License-Based)</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Plan</th>
+                            <th>Licensed Attorneys</th>
+                            <th>Monthly Leads</th>
+                            <th>Price</th>
+                            <th>Features</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Basic</strong></td>
+                            <td>1</td>
+                            <td>5</td>
+                            <td>$99/mo</td>
+                            <td>Solo practice</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Professional</strong></td>
+                            <td>5</td>
+                            <td>25</td>
+                            <td>$299/mo</td>
+                            <td>Small/medium firm</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Enterprise</strong></td>
+                            <td>Unlimited</td>
+                            <td>Unlimited</td>
+                            <td>$999/mo</td>
+                            <td>Large firm / Multi-office</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <script>
+        const API = 'http://localhost:3001';
+        let currentUser = null;
+        let userRole = null;
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function goHome() {
+            showPage('home');
+            updateNavigation();
+        }
+
+        function updateNavigation() {
+            const userStatus = document.getElementById('user-status');
+            const navbar = document.getElementById('navbar-menu');
+
+            if (currentUser) {
+                userStatus.innerHTML = `
+                    <div class="user-info">${currentUser}</div>
+                    <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="logout()">Logout</button>
+                `;
+            } else {
+                userStatus.innerHTML = '';
+            }
+        }
+
+        async function clientLogin() {
+            const email = document.getElementById('client-email').value;
+            const password = document.getElementById('client-password').value;
+
+            if (!email || !password) {
+                document.getElementById('client-error').textContent = 'Please enter email and password';
+                return;
+            }
+
+            // Store client session
+            localStorage.setItem('clientToken', 'client-token-' + Date.now());
+            localStorage.setItem('clientEmail', email);
+
+            currentUser = email;
+            userRole = 'client';
+            updateNavigation();
+
+            // Redirect to client dashboard
+            window.location.href = 'client-dashboard.html';
+        }
+
+        function firmLoginClick() {
+            const firmToken = localStorage.getItem('firmToken');
+            const firmId = localStorage.getItem('firmId');
+
+            if (firmToken && firmId) {
+                window.location.href = 'firm-dashboard.html';
+            } else {
+                showPage('firm-login');
+            }
+        }
+
+        async function firmLogin() {
+            const email = document.getElementById('firm-email').value;
+            const password = document.getElementById('firm-password').value;
+
+            if (!email || !password) {
+                document.getElementById('firm-error').textContent = 'Please enter email and password';
+                return;
+            }
+
+            // Demo: Accept known credentials
+            if (email === 'admin@acmelegal.com' && password === 'password123') {
+                currentUser = email;
+                userRole = 'firm';
+
+                // Store session data
+                localStorage.setItem('firmToken', 'demo-token-' + Date.now());
+                localStorage.setItem('firmId', 'firm-123');
+                localStorage.setItem('firmEmail', email);
+
+                updateNavigation();
+                window.location.href = 'firm-dashboard.html';
+            } else {
+                document.getElementById('firm-error').textContent = 'Invalid credentials. Try admin@acmelegal.com / password123';
+            }
+        }
+
+        async function adminLogin() {
+            const email = document.getElementById('admin-email').value;
+            const password = document.getElementById('admin-password').value;
+
+            if (!email || !password) {
+                document.getElementById('admin-error').textContent = 'Please enter email and password';
+                return;
+            }
+
+            // Demo: Accept any admin-like email
+            if (email.includes('admin') && password) {
+                currentUser = email;
+                userRole = 'admin';
+                updateNavigation();
+                showPage('admin-dashboard');
+            } else {
+                document.getElementById('admin-error').textContent = 'Admin access required. Use admin email.';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('clientToken');
+            localStorage.removeItem('clientEmail');
+            localStorage.removeItem('firmToken');
+            localStorage.removeItem('firmId');
+            localStorage.removeItem('firmEmail');
+
+            currentUser = null;
+            userRole = null;
+            updateNavigation();
+            goHome();
+        }
+    </script>
+</body>
+</html>

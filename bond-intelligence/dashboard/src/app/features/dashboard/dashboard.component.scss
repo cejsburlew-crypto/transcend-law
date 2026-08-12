@@ -1,0 +1,88 @@
+.dashboard { display: flex; flex-direction: column; gap: 24px; max-width: 1400px; }
+
+// KPI Row
+.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.kpi-card {
+  background: #fff; border-radius: 10px; padding: 20px;
+  display: flex; align-items: center; gap: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  border: 1px solid #e2e8f0;
+  &--hot { border-left: 4px solid #ef4444; }
+}
+.kpi-card__icon {
+  width: 48px; height: 48px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  .material-icons { font-size: 24px; color: #fff; }
+  &--blue  { background: #3b82f6; }
+  &--green { background: #22c55e; }
+  &--gold  { background: #c9a84c; }
+  &--red   { background: #ef4444; }
+}
+.kpi-card__value { font-size: 28px; font-weight: 700; color: #0f172a; line-height: 1; }
+.kpi-card__label { font-size: 14px; color: #64748b; margin-top: 4px; font-weight: 500; }
+
+// Cards
+.card {
+  background: #fff; border-radius: 10px; padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07); border: 1px solid #e2e8f0;
+  &--wide { grid-column: 1 / -1; }
+}
+.card__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.card__title { font-size: 15px; font-weight: 600; color: #0f172a; margin: 0; }
+.card__link { font-size: 14px; color: #c9a84c; text-decoration: none; font-weight: 500; &:hover { text-decoration: underline; } }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+// Data table
+.data-table { width: 100%; border-collapse: collapse; font-size: 14px;
+  th { text-align: left; padding: 8px 10px; font-size: 14px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #f1f5f9; }
+  td { padding: 10px; border-bottom: 1px solid #f8fafc; color: #1e293b; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+}
+.td-name { font-weight: 600; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.td-empty { color: #94a3b8; font-style: italic; text-align: center; padding: 24px; }
+
+.state-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 4px;
+  background: #f1f5f9; color: #475569; font-size: 14px; font-weight: 700;
+}
+
+.btn-link { color: #3b82f6; text-decoration: none; font-size: 14px; font-weight: 600; &:hover { text-decoration: underline; } }
+
+.status-badge {
+  padding: 2px 8px; border-radius: 10px; font-size: 14px; font-weight: 600;
+  &--success { background: #dcfce7; color: #16a34a; }
+  &--info    { background: #dbeafe; color: #2563eb; }
+  &--warning { background: #fef9c3; color: #ca8a04; }
+  &--danger  { background: #fee2e2; color: #dc2626; }
+}
+
+// Pipeline bars
+.pipeline-bars { display: flex; flex-direction: column; gap: 10px; }
+.pipeline-bar { display: grid; grid-template-columns: 160px 1fr 40px; align-items: center; gap: 10px; }
+.pipeline-bar__label { font-size: 14px; color: #475569; font-weight: 500; }
+.pipeline-bar__track { height: 8px; background: #f1f5f9; border-radius: 4px; overflow: hidden; }
+.pipeline-bar__fill { height: 100%; background: linear-gradient(90deg, #0a1628, #c9a84c); border-radius: 4px; transition: width 0.6s ease; min-width: 4px; }
+.pipeline-bar__count { font-size: 14px; font-weight: 700; color: #0f172a; text-align: right; }
+
+// State bars
+.state-bars { display: flex; flex-direction: column; gap: 10px; }
+.state-bar { display: grid; grid-template-columns: 40px 1fr 80px 80px; align-items: center; gap: 12px; }
+.state-bar__label { font-size: 14px; font-weight: 700; color: #0f172a; }
+.state-bar__track { height: 10px; background: #f1f5f9; border-radius: 5px; overflow: hidden; }
+.state-bar__fill { height: 100%; background: #c9a84c; border-radius: 5px; transition: width 0.6s ease; }
+.state-bar__value { font-size: 14px; font-weight: 600; color: #0f172a; }
+.state-bar__count { font-size: 14px; color: #94a3b8; }
+
+.empty-msg { color: #94a3b8; font-size: 14px; padding: 16px 0; }
+
+.error-banner {
+  display: flex; align-items: center; gap: 8px;
+  background: #fee2e2; color: #dc2626; border-radius: 8px; padding: 16px;
+  font-size: 14px; font-weight: 500;
+  .material-icons { font-size: 18px; }
+}
+
+@media (max-width: 1024px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } .grid-2 { grid-template-columns: 1fr; } }
+@media (max-width: 600px)  { .kpi-row { grid-template-columns: 1fr; } }

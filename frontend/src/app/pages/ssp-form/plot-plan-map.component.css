@@ -1,0 +1,35 @@
+.map-host {
+  height: 420px;
+  border: 1px solid var(--tp-border);
+  border-radius: 8px;
+}
+
+.map-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.label-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.label-tools input {
+  min-width: 140px;
+}
+
+:host ::ng-deep .map-label-icon {
+  background: #fff3cd;
+  border: 1px solid #856404;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}

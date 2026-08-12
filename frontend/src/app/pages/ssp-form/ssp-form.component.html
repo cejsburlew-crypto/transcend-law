@@ -1,0 +1,320 @@
+<section class="card">
+  <div class="form-header">
+    <h1>{{ isEdit ? 'Edit Site Safety Plan' : 'New Site Safety Plan' }}</h1>
+    <button type="button" class="btn btn-secondary" (click)="loadLongleyWayExample()">
+      Load Longley Way example
+    </button>
+  </div>
+
+  <nav class="wizard-steps" aria-label="SSP workflow steps">
+    @for (step of steps; track step.num) {
+      <button
+        type="button"
+        class="wizard-step"
+        [class.active]="currentStep === step.num"
+        [class.done]="currentStep > step.num"
+        (click)="goToStep(step.num)">
+        <span class="step-num">{{ step.num }}</span>
+        <span class="step-text">
+          <strong>{{ step.title }}</strong>
+          <small>{{ step.summary }}</small>
+        </span>
+      </button>
+    }
+  </nav>
+
+  <p class="file-name-hint">
+    DSA PDF file name: <code>{{ pdfFileName }}</code>
+  </p>
+
+  @if (message) {
+    <p [class.ok]="messageOk" [class.error]="!messageOk">{{ message }}</p>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="save()">
+    @if (currentStep === 1) {
+      <section class="step-panel">
+        <h2>Step 1 — Site address</h2>
+        <p class="hint section-intro">Enter the project site address. Lookup fills <strong>site name</strong>, <strong>property owner</strong>, APN, and emergency services.</p>
+
+        <div class="form-group">
+          <label for="project_address">Project address *</label>
+          <div class="address-row">
+            <input id="project_address" formControlName="project_address" placeholder="2601 Longley Way, Arcadia, CA 91007" (blur)="onAddressBlur()">
+            <button type="button" class="btn btn-primary" (click)="lookupFromAddress(true)" [disabled]="lookupInProgress || !form.controls.project_address.value?.trim()">
+              {{ lookupInProgress ? 'Looking up…' : 'Look up site' }}
+            </button>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="site_name">Site name</label>
+            <input id="site_name" formControlName="site_name" placeholder="Longley Way Elementary School">
+          </div>
+          <div class="form-group">
+            <label for="property_owner">Property owner</label>
+            <input id="property_owner" formControlName="property_owner" placeholder="Arcadia Unified School District">
+          </div>
+          <div class="form-group">
+            <label for="apn">APN</label>
+            <input id="apn" formControlName="apn" readonly class="readonly">
+          </div>
+        </div>
+
+        <details class="emergency-summary">
+          <summary>Emergency services (from lookup)</summary>
+          <div class="grid-2 compact">
+            <div><strong>Hospital:</strong> {{ form.controls.hospital_name.value }}</div>
+            <div><strong>Urgent care:</strong> {{ form.controls.urgent_care_name.value }}</div>
+            <div><strong>Fire (LFA):</strong> {{ form.controls.fire_department_name.value }}</div>
+            <div><strong>Police:</strong> {{ form.controls.police_department_name.value }}</div>
+          </div>
+        </details>
+      </section>
+    }
+
+    @if (currentStep === 2) {
+      <section class="step-panel">
+        <h2>Step 2 — APN plot plan</h2>
+        <p class="hint section-intro">Parcel boundary from county GIS. Toggle service layers and place labels for hydrants, FDCs, and fire routes.</p>
+
+        @if (parcelLoading) {
+          <p>Loading parcel geometry…</p>
+        } @else if (mapLayers) {
+          <app-plot-plan-map
+            #plotMapStep2
+            [layers]="mapLayers"
+            (layersChange)="onMapLayersChange($event)">
+          </app-plot-plan-map>
+        } @else {
+          <p class="error">Complete Step 1 address lookup to load the plot plan.</p>
+          <button type="button" class="btn btn-secondary" (click)="loadParcelForPlot()">Retry parcel load</button>
+        }
+      </section>
+    }
+
+    @if (currentStep === 3) {
+      <section class="step-panel">
+        <h2>Step 3 — DSA A# / Transcend PM project</h2>
+        <p class="hint section-intro">Enter the DSA application number. When Transcend PM is connected this will pull live project data; for now the Longley Way catalog is available.</p>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="transcend_pm_project_id">DSA A#</label>
+            <div class="address-row">
+              <input id="transcend_pm_project_id" formControlName="transcend_pm_project_id" placeholder="03-125694">
+              <button type="button" class="btn btn-primary" (click)="lookupDsaProject()" [disabled]="dsaLookupInProgress">
+                {{ dsaLookupInProgress ? 'Loading…' : 'Pull project' }}
+              </button>
+            </div>
+            @if (form.controls.transcend_pm_project_id.invalid && form.controls.transcend_pm_project_id.touched) {
+              <span class="field-error">Format: xx-xxxxxx</span>
+            }
+          </div>
+          <div class="form-group">
+            <label for="transcend_pm_org_id">DSA Facility ID</label>
+            <input id="transcend_pm_org_id" formControlName="transcend_pm_org_id">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="project_name">Project name</label>
+          <input id="project_name" formControlName="project_name">
+        </div>
+        <div class="form-group">
+          <label for="scope_of_work">Scope of work</label>
+          <textarea id="scope_of_work" formControlName="scope_of_work" rows="4"></textarea>
+        </div>
+      </section>
+    }
+
+    @if (currentStep === 4) {
+      <section class="step-panel">
+        <h2>Step 4 — Project Site Safety Plan</h2>
+        <p class="hint section-intro">Mark up the plot plan (Step 2 labels sync here) and complete CFC §3303.1.1 components. Export generates a plansheet PDF without moving prior data.</p>
+
+        @if (mapLayers) {
+          <app-plot-plan-map
+            #plotMapStep4
+            [layers]="mapLayers"
+            [drawingMode]="true"
+            (layersChange)="onMapLayersChange($event)"
+            (drawingChange)="onDrawingChange($event)">
+          </app-plot-plan-map>
+        }
+
+        <h2>CFC §3303.1.1 — required components</h2>
+
+        <div class="cfc-grid">
+          <div class="form-group">
+            <label for="site_safety_director_name">#1 Site safety director — name</label>
+            <input id="site_safety_director_name" formControlName="site_safety_director_name">
+          </div>
+          <div class="form-group">
+            <label for="site_safety_director_phone">Phone</label>
+            <input id="site_safety_director_phone" formControlName="site_safety_director_phone">
+          </div>
+          <div class="form-group">
+            <label for="site_safety_director_email">Email</label>
+            <input id="site_safety_director_email" formControlName="site_safety_director_email">
+          </div>
+          <div class="form-group span-2">
+            <label for="site_safety_director_training">#2 Site safety director training</label>
+            <textarea id="site_safety_director_training" formControlName="site_safety_director_training" rows="2"></textarea>
+          </div>
+          <div class="form-group span-2">
+            <label for="fire_watch_training">#2 Fire watch personnel training</label>
+            <textarea id="fire_watch_training" formControlName="fire_watch_training" rows="2"></textarea>
+          </div>
+          <div class="form-group span-2">
+            <label for="incident_reporting">#3 Emergency reporting procedures</label>
+            <textarea id="incident_reporting" formControlName="incident_reporting" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="fire_access_routes">#4 Fire department vehicle access routes</label>
+            <textarea id="fire_access_routes" formControlName="fire_access_routes" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="fire_protection_equipment">#5 Fire protection equipment locations</label>
+            <textarea id="fire_protection_equipment" formControlName="fire_protection_equipment" rows="3"></textarea>
+          </div>
+          <div class="form-group span-2">
+            <label for="smoking_cooking_policy">#6 Smoking and cooking policies</label>
+            <textarea id="smoking_cooking_policy" formControlName="smoking_cooking_policy" rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="temporary_heating_plan">#7 Temporary heating equipment</label>
+            <textarea id="temporary_heating_plan" formControlName="temporary_heating_plan" rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="hot_work_plan">#8 Hot work plan</label>
+            <textarea id="hot_work_plan" formControlName="hot_work_plan" rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="combustible_waste_plan">#9 Combustible waste control</label>
+            <textarea id="combustible_waste_plan" formControlName="combustible_waste_plan" rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="flammable_materials_storage">#10 Flammable / hazardous materials storage</label>
+            <textarea id="flammable_materials_storage" formControlName="flammable_materials_storage" rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="site_security_plan">#11 Site security</label>
+            <textarea id="site_security_plan" formControlName="site_security_plan" rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="plan_changes_procedure">#12 Changes affecting this plan</label>
+            <textarea id="plan_changes_procedure" formControlName="plan_changes_procedure" rows="2"></textarea>
+          </div>
+          <div class="form-group span-2">
+            <label for="lfa_site_specific">#13 LFA site-specific information</label>
+            <textarea id="lfa_site_specific" formControlName="lfa_site_specific" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="export-actions">
+          <button type="button" class="btn btn-primary" (click)="exportPdf()" [disabled]="exportInProgress">
+            {{ exportInProgress ? 'Exporting…' : 'Export plansheet PDF' }}
+          </button>
+        </div>
+      </section>
+    }
+
+    @if (currentStep === 5) {
+      <section class="step-panel">
+        <h2>Step 5 — Fire department approved sheets</h2>
+        <p class="hint section-intro">Upload LFA-approved fire access / site plan sheets to attach to the submission package.</p>
+
+        <div class="upload-row">
+          <input type="file" accept=".pdf,.png,.jpg,.jpeg" (change)="onUploadSelected($event)">
+          <button type="button" class="btn btn-primary" (click)="uploadAttachment()" [disabled]="uploadInProgress || !selectedUploadFile">
+            {{ uploadInProgress ? 'Uploading…' : 'Upload approved sheet' }}
+          </button>
+        </div>
+
+        @if (attachments.length) {
+          <ul class="attachment-list">
+            @for (file of attachments; track file.id) {
+              <li>{{ file.original_name }} <span class="hint">({{ file.created_at }})</span></li>
+            }
+          </ul>
+        } @else {
+          <p class="hint">No approved sheets uploaded yet.</p>
+        }
+
+        <div class="export-actions">
+          <button type="button" class="btn btn-primary" (click)="exportPackage()" [disabled]="packageExportInProgress">
+            {{ packageExportInProgress ? 'Building…' : 'Download submission package (ZIP)' }}
+          </button>
+          <span class="hint">Includes plansheet PDF plus uploaded LFA-approved sheets.</span>
+        </div>
+      </section>
+    }
+
+    @if (currentStep === 6) {
+      <section class="step-panel">
+        <h2>Step 6 — Contractor & project team</h2>
+        <p class="hint section-intro">Select the general contractor from the project directory (loaded with DSA A# in Step 3).</p>
+
+        @if (projectContractors.length) {
+          <div class="contractor-grid">
+            @for (c of projectContractors; track c.id) {
+              <button
+                type="button"
+                class="contractor-card"
+                [class.selected]="form.controls.contractor_id.value === c.id"
+                (click)="selectContractor(c)">
+                <strong>{{ c.name }}</strong>
+                <span>{{ c.role }}</span>
+              </button>
+            }
+          </div>
+        } @else {
+          <p class="hint">Enter DSA A# in Step 3 and pull project to load contractors, or enter manually below.</p>
+        }
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="general_contractor">General contractor</label>
+            <input id="general_contractor" formControlName="general_contractor">
+          </div>
+          <div class="form-group">
+            <label for="architect_firm">Architect</label>
+            <input id="architect_firm" formControlName="architect_firm">
+          </div>
+          <div class="form-group">
+            <label for="contractor_contact_name">GC contact</label>
+            <input id="contractor_contact_name" formControlName="contractor_contact_name">
+          </div>
+          <div class="form-group">
+            <label for="contractor_phone">GC phone</label>
+            <input id="contractor_phone" formControlName="contractor_phone">
+          </div>
+          <div class="form-group">
+            <label for="site_superintendent">Site superintendent</label>
+            <input id="site_superintendent" formControlName="site_superintendent">
+          </div>
+          <div class="form-group">
+            <label for="prepared_by">Prepared by</label>
+            <input id="prepared_by" formControlName="prepared_by">
+          </div>
+        </div>
+      </section>
+    }
+
+    <div class="wizard-nav">
+      @if (currentStep > 1) {
+        <button type="button" class="btn btn-secondary" (click)="prevStep()">Back</button>
+      }
+      @if (currentStep < 6) {
+        <button type="button" class="btn btn-primary" (click)="nextStep()">Continue</button>
+      }
+      <button type="submit" class="btn btn-secondary" [disabled]="saving">{{ saving ? 'Saving…' : 'Save draft' }}</button>
+      @if (currentStep === 6) {
+        <button type="button" class="btn btn-primary" (click)="saveAndFinish()">Save & finish</button>
+      }
+      <a routerLink="/" class="btn btn-link">Cancel</a>
+    </div>
+  </form>
+</section>

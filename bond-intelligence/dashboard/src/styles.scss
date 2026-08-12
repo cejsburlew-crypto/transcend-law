@@ -1,0 +1,105 @@
+@use '@angular/material' as mat;
+
+:root {
+  --color-navy:   #0a1628;
+  --color-gold:   #c9a84c;
+  --color-success:#22c55e;
+  --color-warning:#f59e0b;
+  --color-danger: #ef4444;
+  --color-info:   #3b82f6;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px; color: #1e293b; background: #f1f5f9;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+// Scrollbar
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+// ── Info tooltip ──────────────────────────────────────────────────────────────
+// Usage: <span class="info-tip" data-tip="Your explanation here">Label</span>
+// Or wrap a label: <span class="has-tip" data-tip="...">Label <span class="tip-icon">?</span></span>
+.info-tip,
+.has-tip {
+  position: relative;
+  cursor: help;
+
+  &::after {
+    content: attr(data-tip);
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0f172a;
+    color: #f8fafc;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    white-space: pre-line;
+    width: 270px;
+    text-align: left;
+    text-transform: none;
+    letter-spacing: normal;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    z-index: 9999;
+  }
+
+  // Arrow points up — tooltip drops below the element
+  &::before {
+    content: '';
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-bottom-color: #0f172a;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    z-index: 9999;
+  }
+
+  &:hover::after,
+  &:hover::before { opacity: 1; }
+}
+
+.tip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  color: #475569;
+  font-size: 10px;
+  font-weight: 700;
+  font-style: normal;
+  margin-left: 4px;
+  vertical-align: middle;
+  line-height: 1;
+  cursor: help;
+  transition: background 0.15s;
+
+  .info-tip:hover &,
+  .has-tip:hover & { background: #94a3b8; }
+}
+
+// ── Leaflet popup override
+.leaflet-popup-content-wrapper { border-radius: 8px !important; box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important; }
+.leaflet-popup-content { margin: 12px 14px !important; }

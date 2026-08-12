@@ -1,0 +1,92 @@
+<div class="export-page">
+  <div class="page-header">
+    <h1 class="page-title">Export Data</h1>
+    <p class="page-subtitle">Download leads as CSV or in CRM-ready format for HubSpot.</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="card">
+    <h3 class="card__title">Filter Export</h3>
+    <div class="filter-row">
+      <div class="filter-group">
+        <label>State</label>
+        <select [(ngModel)]="filters['state']">
+          <option value="">All States</option>
+          <option *ngFor="let s of states" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Min Score</label>
+        <input type="number" min="0" max="100" [(ngModel)]="filters['min_score']" placeholder="0">
+      </div>
+      <div class="filter-group">
+        <label>Stage</label>
+        <select [(ngModel)]="filters['opportunity_stage']">
+          <option value="">All Stages</option>
+          <option *ngFor="let s of stages" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+      <div class="filter-group filter-group--checkbox">
+        <label>
+          <input type="checkbox" [(ngModel)]="filters['approach_now']">
+          Approach Now only
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Export Options -->
+  <div class="export-grid">
+
+    <!-- Full CSV -->
+    <div class="export-card">
+      <div class="export-card__header">
+        <span class="export-card__icon material-icons">table_chart</span>
+        <div>
+          <h3 class="export-card__title">Full CSV Export</h3>
+          <p class="export-card__desc">All agency, bond, score, and contact fields. Best for analysis in Excel or Google Sheets.</p>
+        </div>
+      </div>
+      <div class="column-preview">
+        <h4>Columns included ({{ csvColumns.length }})</h4>
+        <div class="column-chips">
+          <span class="column-chip" *ngFor="let col of csvColumns">{{ col }}</span>
+        </div>
+      </div>
+      <button class="btn-download btn-download--csv" (click)="exportCsv()" [disabled]="downloading !== null">
+        <span class="material-icons">{{ downloading === 'csv' ? 'hourglass_empty' : 'download' }}</span>
+        {{ downloading === 'csv' ? 'Preparing…' : 'Download CSV' }}
+      </button>
+    </div>
+
+    <!-- CRM Export -->
+    <div class="export-card">
+      <div class="export-card__header">
+        <span class="export-card__icon material-icons">hub</span>
+        <div>
+          <h3 class="export-card__title">CRM Export (HubSpot)</h3>
+          <p class="export-card__desc">HubSpot-compatible company import format. Ready to upload directly to your CRM.</p>
+        </div>
+      </div>
+      <div class="column-preview">
+        <h4>Columns included ({{ crmColumns.length }})</h4>
+        <div class="column-chips">
+          <span class="column-chip column-chip--crm" *ngFor="let col of crmColumns">{{ col }}</span>
+        </div>
+      </div>
+      <button class="btn-download btn-download--crm" (click)="exportCrm()" [disabled]="downloading !== null">
+        <span class="material-icons">{{ downloading === 'crm' ? 'hourglass_empty' : 'upload_file' }}</span>
+        {{ downloading === 'crm' ? 'Preparing…' : 'Download HubSpot CSV' }}
+      </button>
+    </div>
+
+  </div>
+
+  <div class="info-box">
+    <span class="material-icons">lightbulb</span>
+    <div>
+      <strong>HubSpot import tip:</strong> Go to <em>Contacts → Companies → Import → From file</em> and select the CRM export.
+      Map "Company Name" → Company Name, "Annual Revenue" → Annual Revenue, and create custom properties for Bond Score and Opportunity Stage.
+    </div>
+  </div>
+</div>

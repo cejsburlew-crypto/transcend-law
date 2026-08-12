@@ -1,0 +1,485 @@
+<app-loading-spinner *ngIf="loading" />
+
+<div class="agency-detail" *ngIf="!loading && agency">
+
+  <!-- Header -->
+  <div class="detail-header">
+    <a routerLink="/agencies" class="back-link">
+      <span class="material-icons">arrow_back</span> Agencies
+    </a>
+    <div class="detail-header__main">
+      <div class="detail-header__info">
+        <h1 class="detail-header__name">{{ agency.name }}</h1>
+        <div class="detail-header__meta">
+          <span class="state-badge">{{ agency.state }}</span>
+          <span class="type-chip">{{ agency.agency_type | agencyTypeLabel }}</span>
+          <span *ngIf="agency.city">{{ agency.city }}</span>
+          <span *ngIf="agency.county">{{ agency.county }} County</span>
+          <a *ngIf="agency.website" [href]="agency.website" target="_blank" class="web-link">
+            <span class="material-icons">open_in_new</span> Website
+          </a>
+        </div>
+      </div>
+      <div class="detail-header__score" *ngIf="agency.lead_score">
+        <app-score-badge [score]="agency.lead_score.score" size="lg" />
+        <app-stage-badge [stage]="agency.lead_score.opportunity_stage" />
+        <span *ngIf="agency.lead_score.approach_now" class="approach-now-badge">⚡ Approach Now</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button *ngFor="let tab of tabs" class="tab-btn" [class.active]="activeTab === tab" (click)="setTab(tab)">
+      {{ tab | titlecase }}
+    </button>
+  </div>
+
+  <!-- ── Overview ── -->
+  <div *ngIf="activeTab === 'overview'" class="tab-content">
+
+    <!-- Agency quick-links -->
+    <div class="card overview-links" *ngIf="agency.website">
+      <a [href]="agency.website" target="_blank" class="overview-link">
+        <span class="material-icons">language</span> Agency Website
+      </a>
+    </div>
+
+    <!-- Bond Measures (one card per measure) -->
+    <div *ngFor="let b of agency.bond_measures" class="card measure-card">
+      <div class="measure-card__header">
+        <div class="measure-card__title">
+          <h3>{{ b.measure_name }}</h3>
+          <span class="result-badge result-badge--{{ b.result }}">{{ b.result | titlecase }}</span>
+          <span *ngIf="b.election_type" class="type-chip">{{ b.election_type | titlecase }}</span>
+        </div>
+        <div class="measure-card__links">
+          <a *ngIf="b.source_url" [href]="b.source_url" target="_blank" class="btn-link">
+            <span class="material-icons">open_in_new</span> View Measure
+          </a>
+          <a *ngIf="agency.website" [href]="agency.website" target="_blank" class="btn-link btn-link--secondary">
+            <span class="material-icons">language</span> Agency Site
+          </a>
+        </div>
+      </div>
+
+      <div class="measure-meta">
+        <span *ngIf="b.election_date"><strong>Election:</strong> {{ b.election_date | date:'MMMM d, yyyy' }}</span>
+        <span *ngIf="b.vote_pct"><strong>Vote:</strong> {{ b.vote_pct | number:'1.1-1' }}% (threshold {{ b.required_threshold | number:'1.0-0' }}%)</span>
+        <span *ngIf="b.state"><strong>State:</strong> {{ b.state }}</span>
+      </div>
+
+      <p class="measure-purpose" *ngIf="b.bond_purpose">{{ b.bond_purpose }}</p>
+
+      <!-- Financial breakdown -->
+      <div class="bond-financials">
+
+        <!-- AUTHORIZED -->
+        <div class="bond-fin-item bond-fin-item--authorized">
+          <div class="bond-fin-label">Authorized</div>
+          <div class="bond-fin-value">{{ b.authorized_amount | currencyMillions }}</div>
+          <div class="bond-fin-meta" *ngIf="b.election_date">
+            Voter-approved {{ b.election_date | date:'MMM yyyy' }}
+          </div>
+          <div class="bond-fin-docs" *ngIf="b.source_url">
+            <a [href]="b.source_url" target="_blank" class="bond-doc-link">
+              <span class="material-icons">open_in_new</span> Measure source
+            </a>
+          </div>
+        </div>
+
+        <div class="bond-fin-arrow"><span class="material-icons">arrow_forward</span></div>
+
+        <!-- ISSUED / BOND RELEASES -->
+        <div class="bond-fin-item bond-fin-item--issued">
+          <div class="bond-fin-label has-tip"
+               data-tip="Bond Releases — the authorized amount sold to investors in dated series. Each series is a separate bond sale reported to CDIAC (CA) or BRB (TX). The table below shows each release.">
+            Issued (Bond Releases) <span class="tip-icon">?</span>
+          </div>
+          <div class="bond-fin-value">{{ b.issued_amount | currencyMillions }}</div>
+          <div class="bond-fin-pct" *ngIf="b.authorized_amount && b.issued_amount">
+            {{ (b.issued_amount / b.authorized_amount * 100) | number:'1.0-0' }}% of auth.
+          </div>
+
+          <!-- Multi-year bond series table -->
+          <ng-container *ngIf="b.bond_series?.length">
+            <table class="series-table">
+              <thead>
+                <tr>
+                  <th>Series</th>
+                  <th>Sale Date</th>
+                  <th class="num">Par Amount</th>
+                  <th>Ratings</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let s of b.bond_series">
+                  <td><strong>{{ s.series_name }}</strong></td>
+                  <td>{{ s.sale_date | date:'MMM d, yyyy' }}</td>
+                  <td class="num">{{ s.par_amount | currencyMillions }}</td>
+                  <td>
+                    <span *ngIf="s.rating_sp" class="rating-chip">S&amp;P {{ s.rating_sp }}</span>
+                    <span *ngIf="s.rating_moody" class="rating-chip">Moody's {{ s.rating_moody }}</span>
+                  </td>
+                  <td>
+                    <a *ngIf="s.official_statement_url" [href]="s.official_statement_url"
+                       target="_blank" class="bond-doc-link bond-doc-link--sm">
+                      <span class="material-icons">description</span>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-container>
+
+          <!-- CDIAC / registry links -->
+          <div class="bond-fin-docs bond-fin-docs--registry">
+            <a *ngIf="agency.state === 'CA'"
+               href="https://www.treasurer.ca.gov/cdiac/debtdata.asp"
+               target="_blank" class="bond-doc-link bond-doc-link--external">
+              <span class="material-icons">account_balance</span> CDIAC DebtWatch
+            </a>
+            <a *ngIf="agency.state === 'TX'"
+               href="https://www.brb.texas.gov/tins/"
+               target="_blank" class="bond-doc-link bond-doc-link--external">
+              <span class="material-icons">account_balance</span> TX Bond Review Board
+            </a>
+          </div>
+        </div>
+
+        <div class="bond-fin-arrow"><span class="material-icons">arrow_forward</span></div>
+
+        <!-- REMAINING UNISSUED -->
+        <div class="bond-fin-item bond-fin-item--unissued">
+          <div class="bond-fin-label">Remaining Unissued</div>
+          <div class="bond-fin-value">{{ b.unissued_amount | currencyMillions }}</div>
+          <div class="bond-fin-pct" *ngIf="b.authorized_amount && b.unissued_amount">
+            {{ (b.unissued_amount / b.authorized_amount * 100) | number:'1.0-0' }}% remaining
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Issuance progress bar -->
+      <div class="issuance-bar" *ngIf="b.authorized_amount && b.issued_amount">
+        <div class="issuance-bar__track">
+          <div class="issuance-bar__fill"
+               [style.width.%]="(b.issued_amount / b.authorized_amount * 100)"></div>
+        </div>
+        <span class="issuance-bar__label">{{ (b.issued_amount / b.authorized_amount * 100) | number:'1.0-0' }}% issued</span>
+      </div>
+    </div>
+
+    <p class="empty-msg" *ngIf="!agency.bond_measures?.length">No bond measures found.</p>
+
+    <!-- Lead Summary (only if scored) -->
+    <div class="card" *ngIf="agency.lead_score">
+      <h3 class="card__title">Lead Summary</h3>
+      <div class="summary-rows">
+        <div class="summary-row"><span>Score</span><strong>{{ agency.lead_score.score }}/100</strong></div>
+        <div class="summary-row"><span>Confidence</span><strong>{{ agency.lead_score.confidence }}%</strong></div>
+        <div class="summary-row"><span>Stage</span><app-stage-badge [stage]="agency.lead_score.opportunity_stage" /></div>
+        <div class="summary-row"><span>Approach Now</span><strong>{{ agency.lead_score.approach_now ? 'Yes ⚡' : 'No' }}</strong></div>
+        <div class="summary-row summary-row--full"><span>Next Action</span><p>{{ agency.lead_score.estimated_next_action }}</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Contacts ── -->
+  <div *ngIf="activeTab === 'contacts'" class="tab-content">
+
+    <!-- Executive Leadership -->
+    <div class="contacts-section" *ngIf="execContacts.length">
+      <h3 class="contacts-section__title">
+        <span class="material-icons">business_center</span> Executive Leadership
+      </h3>
+      <div class="contacts-grid contacts-grid--exec">
+        <div class="contact-card contact-card--exec" *ngFor="let c of execContacts">
+          <div class="contact-card__role">{{ roleLabel(c.role) }}</div>
+          <div class="contact-card__name">{{ c.name || '—' }}</div>
+          <div class="contact-card__title" *ngIf="c.title">{{ c.title }}</div>
+          <div class="contact-card__details">
+            <div class="contact-card__detail" *ngIf="c.email">
+              <span class="material-icons">email</span>
+              <a [href]="'mailto:' + c.email">{{ c.email }}</a>
+            </div>
+            <div class="contact-card__detail" *ngIf="c.phone">
+              <span class="material-icons">phone</span>
+              <a [href]="'tel:' + c.phone">{{ c.phone }}</a>
+            </div>
+          </div>
+          <div class="contact-card__actions">
+            <a *ngIf="c.email" [href]="'mailto:' + c.email" class="contact-action contact-action--email">
+              <span class="material-icons">email</span>
+            </a>
+            <a *ngIf="c.phone" [href]="'tel:' + c.phone" class="contact-action contact-action--phone">
+              <span class="material-icons">phone</span>
+            </a>
+            <a *ngIf="c.linkedin_url" [href]="c.linkedin_url" target="_blank" class="contact-action contact-action--linkedin">
+              <span class="material-icons">person</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Board of Education / Board of Trustees -->
+    <div class="contacts-section contacts-section--board" *ngIf="boardContacts.length">
+      <h3 class="contacts-section__title">
+        <span class="material-icons">groups</span> Board of Education
+      </h3>
+      <div class="contacts-grid contacts-grid--board">
+        <div class="contact-card contact-card--board" *ngFor="let c of boardContacts">
+          <div class="contact-card__role contact-card__role--board">{{ roleLabel(c.role) }}</div>
+          <div class="contact-card__name">{{ c.name || '—' }}</div>
+          <div class="contact-card__title" *ngIf="c.title">{{ c.title }}</div>
+          <div class="contact-card__details">
+            <div class="contact-card__detail" *ngIf="c.email">
+              <span class="material-icons">email</span>
+              <a [href]="'mailto:' + c.email">{{ c.email }}</a>
+            </div>
+            <div class="contact-card__detail" *ngIf="c.phone">
+              <span class="material-icons">phone</span>
+              <a [href]="'tel:' + c.phone">{{ c.phone }}</a>
+            </div>
+          </div>
+          <div class="contact-card__actions">
+            <a *ngIf="c.email" [href]="'mailto:' + c.email" class="contact-action contact-action--email">
+              <span class="material-icons">email</span>
+            </a>
+            <a *ngIf="c.phone" [href]="'tel:' + c.phone" class="contact-action contact-action--phone">
+              <span class="material-icons">phone</span>
+            </a>
+            <a *ngIf="c.linkedin_url" [href]="c.linkedin_url" target="_blank" class="contact-action contact-action--linkedin">
+              <span class="material-icons">person</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-msg" *ngIf="!agency.contacts?.length">No contacts on file for this agency.</div>
+  </div>
+
+  <!-- ── Consultants ── -->
+  <div *ngIf="activeTab === 'consultants'" class="tab-content">
+    <div class="grid-2">
+      <div class="card">
+        <h3 class="card__title">Awarded Consultants</h3>
+        <div class="consultant-list">
+          <div class="consultant-row" *ngFor="let c of agency.consultants">
+            <div class="consultant-row__type">{{ serviceTypeLabel(c.service_type) }}</div>
+            <div class="consultant-row__firm">{{ c.firm_name }}</div>
+            <div class="consultant-row__amount" *ngIf="c.contract_amount">{{ c.contract_amount | currencyMillions }}</div>
+            <a *ngIf="c.source_url" [href]="c.source_url" target="_blank" class="source-link">
+              <span class="material-icons">open_in_new</span>
+            </a>
+          </div>
+          <p class="empty-msg" *ngIf="!agency.consultants?.length">No consultants on record.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card__title">Open Opportunities</h3>
+        <p class="card__subtitle">Service types not yet awarded — potential Transcend PM roles</p>
+        <div class="opportunity-list">
+          <div class="opportunity-item" *ngFor="let t of missingServiceTypes">
+            <span class="material-icons opportunity-icon">add_circle_outline</span>
+            <span>{{ serviceTypeLabel(t) }}</span>
+          </div>
+          <p class="empty-msg" *ngIf="missingServiceTypes.length === 0">All major service types appear to be awarded.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Procurement ── -->
+  <div *ngIf="activeTab === 'procurement'" class="tab-content">
+    <div class="card">
+      <h3 class="card__title">Procurement Events</h3>
+      <div class="procurement-timeline" *ngIf="agency.procurement_events?.length">
+        <div class="timeline-item" *ngFor="let p of agency.procurement_events">
+          <div class="timeline-dot"></div>
+          <div class="timeline-body">
+            <div class="timeline-header">
+              <span class="event-type-badge">{{ p.event_type }}</span>
+              <span class="service-chip">{{ serviceTypeLabel(p.service_type) }}</span>
+              <span *ngIf="p.issue_date" class="timeline-date">{{ p.issue_date | date:'MMM d, yyyy' }}</span>
+            </div>
+            <div class="timeline-title">{{ p.title }}</div>
+            <div class="timeline-meta">
+              <span *ngIf="p.due_date">Due: {{ p.due_date | date:'MMM d, yyyy' }}</span>
+              <span *ngIf="p.awarded_to">Awarded to: <strong>{{ p.awarded_to }}</strong></span>
+              <span *ngIf="p.estimated_value">Est. Value: {{ p.estimated_value | currencyMillions }}</span>
+              <a *ngIf="p.source_url" [href]="p.source_url" target="_blank" class="source-link">Source</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="empty-msg" *ngIf="!agency.procurement_events?.length">No procurement events on record.</p>
+    </div>
+  </div>
+
+  <!-- ── Score Breakdown ── -->
+  <div *ngIf="activeTab === 'score'" class="tab-content">
+
+    <!-- Definitions legend -->
+    <div class="score-legend-grid">
+      <div class="score-legend-card">
+        <div class="score-legend-card__icon score-legend-card__icon--score">
+          <span class="material-icons">speed</span>
+        </div>
+        <div>
+          <div class="score-legend-card__label">Score (0–100)</div>
+          <div class="score-legend-card__body">How attractive this agency is as a sales target <em>right now</em>. Combines bond size, lifecycle stage, unissued balance, procurement activity, and contact accessibility. Higher = prioritize outreach sooner.</div>
+          <div class="score-legend-card__bands">
+            <span class="band band--hot">70–100 Hot</span>
+            <span class="band band--warm">50–69 Warm</span>
+            <span class="band band--cool">30–49 Cool</span>
+            <span class="band band--cold">0–29 Cold</span>
+          </div>
+        </div>
+      </div>
+      <div class="score-legend-card">
+        <div class="score-legend-card__icon score-legend-card__icon--confidence">
+          <span class="material-icons">verified</span>
+        </div>
+        <div>
+          <div class="score-legend-card__label">Confidence (%)</div>
+          <div class="score-legend-card__body">How much verified data backs the score. A 90% confidence score of 75 is reliable. A 30% confidence score of 75 means limited data — treat as directional only. Confidence rises as scrapers collect more bond, procurement, and contact records.</div>
+          <div class="score-legend-card__bands">
+            <span class="band band--high">≥80% High</span>
+            <span class="band band--med">50–79% Medium</span>
+            <span class="band band--low">&lt;50% Low</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Factor key -->
+    <div class="card score-factor-key">
+      <h3 class="card__title">Scoring Signal Reference</h3>
+      <div class="factor-key-grid">
+        <div class="factor-key-row">
+          <span class="factor-key-dot factor-key-dot--positive"></span>
+          <strong>Bond Passed</strong> — voter approved ≥55% (CA) or ≥66.7% (supermajority); program is funded and active.
+        </div>
+        <div class="factor-key-row">
+          <span class="factor-key-dot factor-key-dot--positive"></span>
+          <strong>Large Unissued Balance</strong> — significant bond dollars not yet sold to investors; future contract work is ahead.
+        </div>
+        <div class="factor-key-row">
+          <span class="factor-key-dot factor-key-dot--positive"></span>
+          <strong>Active RFQ/RFP</strong> — agency is currently soliciting PM, CM, A/E, or inspection services.
+        </div>
+        <div class="factor-key-row">
+          <span class="factor-key-dot factor-key-dot--positive"></span>
+          <strong>Recent Election</strong> — bond passed within 36 months; program setup phase is underway.
+        </div>
+        <div class="factor-key-row">
+          <span class="factor-key-dot factor-key-dot--positive"></span>
+          <strong>No Incumbent PM</strong> — no program manager on record; open opportunity for Transcend.
+        </div>
+        <div class="factor-key-row">
+          <span class="factor-key-dot factor-key-dot--positive"></span>
+          <strong>Multiple Measures</strong> — agency has stacked bond programs; higher total contract potential.
+        </div>
+        <div class="factor-key-row">
+          <span class="factor-key-dot factor-key-dot--negative"></span>
+          <strong>Incumbent Awarded</strong> — PM or CM contract already awarded; limited near-term entry.
+        </div>
+        <div class="factor-key-row">
+          <span class="factor-key-dot factor-key-dot--negative"></span>
+          <strong>Bond Fully Issued</strong> — all authorized dollars sold; construction may be winding down.
+        </div>
+        <div class="factor-key-row">
+          <span class="factor-key-dot factor-key-dot--negative"></span>
+          <strong>Bond Failed</strong> — measure did not pass; no funded program at this time.
+        </div>
+        <div class="factor-key-row">
+          <span class="factor-key-dot factor-key-dot--negative"></span>
+          <strong>Stale Data</strong> — last scrape &gt;90 days ago; score reliability is reduced.
+        </div>
+      </div>
+    </div>
+
+    <div class="card" *ngIf="agency.lead_score">
+      <div class="score-header">
+        <div>
+          <h3 class="card__title">This Agency's Score Breakdown</h3>
+          <p class="card__subtitle">Scored {{ agency.lead_score.scored_at | date:'MMM d, yyyy h:mm a' }}</p>
+        </div>
+        <button class="btn-rescore" (click)="rescore()" [disabled]="rescoring">
+          <span class="material-icons">refresh</span>
+          {{ rescoring ? 'Rescoring…' : 'Re-score' }}
+        </button>
+      </div>
+
+      <div class="confidence-meter">
+        <span class="confidence-label">Confidence: {{ confidencePct }}%</span>
+        <div class="confidence-track">
+          <div class="confidence-fill" [style.width.%]="confidencePct"></div>
+        </div>
+      </div>
+
+      <div class="factors-list">
+        <h4>Positive Signals</h4>
+        <div class="factor-row factor-row--positive" *ngFor="let f of positivefactors">
+          <span class="factor-points">+{{ f.points }}</span>
+          <span class="factor-reason">{{ f.reason }}</span>
+        </div>
+        <h4 *ngIf="negativeFactors.length">Negative Signals</h4>
+        <div class="factor-row factor-row--negative" *ngFor="let f of negativeFactors">
+          <span class="factor-points">{{ f.points }}</span>
+          <span class="factor-reason">{{ f.reason }}</span>
+        </div>
+      </div>
+    </div>
+    <p class="empty-msg" *ngIf="!agency.lead_score">No score yet — click Re-score to generate.</p>
+  </div>
+
+  <!-- ── Outreach ── -->
+  <div *ngIf="activeTab === 'outreach'" class="tab-content">
+    <div class="card" *ngIf="agency.lead_score">
+      <h3 class="card__title">Recommended Outreach Angle</h3>
+      <div class="outreach-angle">{{ agency.lead_score.recommended_outreach_angle }}</div>
+      <h3 class="card__title" style="margin-top: 24px;">Next Estimated Action</h3>
+      <div class="outreach-action">{{ agency.lead_score.estimated_next_action }}</div>
+    </div>
+  </div>
+
+  <!-- ── Sources ── -->
+  <div *ngIf="activeTab === 'sources'" class="tab-content">
+
+    <div class="sources-info-box">
+      <span class="material-icons">info</span>
+      <span>Sources are official government pages, bond measure advertisements, voter pamphlets, and PDFs scraped from state election portals. Each row links to the original document. Use "Scraped" dates to judge freshness.</span>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">Source Documents & Advertisements</h3>
+      <div class="source-list" *ngIf="agency.source_documents?.length">
+        <div class="source-item" *ngFor="let s of agency.source_documents">
+          <div class="source-type-icon" [class]="'source-type-icon--' + docTypeClass(s.document_type || s.doc_type || '')">
+            <span class="material-icons">{{ docTypeIcon(s.document_type || s.doc_type || '') }}</span>
+          </div>
+          <div class="source-body">
+            <a [href]="s.url" target="_blank" class="source-title">{{ s.title || s.url }}</a>
+            <div class="source-meta">
+              <span class="source-type-tag">{{ docTypeLabel(s.document_type || s.doc_type || '') }}</span>
+              <span *ngIf="s.source_name" class="source-meta-item">{{ s.source_name }}</span>
+              <span *ngIf="s.published_date" class="source-meta-item">Published {{ s.published_date | date:'MMM d, yyyy' }}</span>
+              <span *ngIf="s.scraped_at" class="source-meta-item source-meta-item--scraped">Scraped {{ s.scraped_at | date:'MMM d, yyyy' }}</span>
+            </div>
+          </div>
+          <a [href]="s.url" target="_blank" class="source-open-btn">
+            <span class="material-icons">open_in_new</span>
+          </a>
+        </div>
+      </div>
+      <p class="empty-msg" *ngIf="!agency.source_documents?.length">No source documents on file. Run the Ballotpedia or CDIAC scraper to populate.</p>
+    </div>
+  </div>
+
+</div>

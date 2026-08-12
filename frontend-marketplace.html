@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRANSCEND LAW - Legal Marketplace</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f9fa; color: #333; }
+
+        .navbar {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-brand { font-size: 1.5rem; font-weight: bold; color: #1e88e5; }
+        .navbar-menu { display: flex; gap: 2rem; align-items: center; }
+        .navbar-menu a { text-decoration: none; color: #333; cursor: pointer; }
+        .navbar-menu a:hover { color: #1e88e5; }
+        .navbar-menu a.active { color: #1e88e5; font-weight: bold; border-bottom: 2px solid #1e88e5; }
+        .auth-button { background: #1e88e5; color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 4px; cursor: pointer; }
+        .auth-button:hover { background: #1565c0; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* Auth Pages */
+        .auth-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: 4rem auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1e88e5;
+            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+        }
+
+        .btn {
+            background: #1e88e5;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .btn:hover { background: #1565c0; }
+        .btn:disabled { background: #999; cursor: not-allowed; }
+        .btn-outline { background: transparent; color: #1e88e5; border: 1px solid #1e88e5; }
+        .btn-outline:hover { background: #f0f7ff; }
+        .btn-danger { background: #d32f2f; }
+        .btn-danger:hover { background: #c62828; }
+
+        .error { color: #d32f2f; margin-top: 0.5rem; font-size: 0.9rem; }
+        .success { color: #388e3c; margin-top: 0.5rem; font-size: 0.9rem; }
+
+        /* Marketplace */
+        .firm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .firm-grid.tier-premium {
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        }
+
+        .tier-section {
+            margin-bottom: 3rem;
+        }
+
+        .tier-section-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .firm-card.premium {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #fff3e0 0%, #fff9c4 100%);
+            border: 3px solid #ff9800;
+            box-shadow: 0 8px 24px rgba(255, 152, 0, 0.3);
+            padding: 2rem;
+            position: relative;
+        }
+
+        .firm-card.premium::before {
+            content: "🏆 PREMIUM";
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff9800;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .firm-card.featured {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border: 2px solid #2196f3;
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);
+            position: relative;
+        }
+
+        .firm-card.featured::before {
+            content: "⭐ FEATURED";
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #2196f3;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .firm-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .firm-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .firm-name { font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem; }
+        .firm-rating { color: #ff9800; margin-bottom: 0.5rem; }
+        .firm-location { color: #666; margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .firm-practice { color: #1e88e5; font-weight: 500; margin-bottom: 1rem; }
+
+        /* Intake Form */
+        .intake-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 2rem auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .intake-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem; }
+
+        .routing-options {
+            margin: 2rem 0;
+        }
+
+        .routing-option {
+            margin-bottom: 1rem;
+        }
+
+        .routing-option input[type="radio"] {
+            margin-right: 0.5rem;
+        }
+
+        .routing-option label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Firm Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-label { color: #666; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .stat-value { font-size: 2rem; font-weight: bold; color: #1e88e5; }
+
+        /* Leads Table */
+        .leads-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .leads-table th {
+            background: #f5f5f5;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .leads-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .leads-table tr:hover { background: #f9f9f9; }
+
+        .lead-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-open { background: #e3f2fd; color: #1976d2; }
+        .status-claimed { background: #f3e5f5; color: #7b1fa2; }
+        .status-accepted { background: #e8f5e9; color: #388e3c; }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            float: right;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #666;
+        }
+
+        /* Admin */
+        .admin-section { margin-bottom: 3rem; }
+        .admin-section-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem; border-bottom: 2px solid #1e88e5; padding-bottom: 0.5rem; }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .metric-value { font-size: 2.5rem; font-weight: bold; color: #1e88e5; }
+        .metric-label { color: #666; margin-top: 0.5rem; font-size: 0.9rem; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="navbar">
+        <div class="navbar-brand">TRANSCEND LAW</div>
+        <div class="navbar-menu" id="navbar-menu">
+            <a onclick="showPage('home')" class="nav-link" data-page="home">Home</a>
+            <a onclick="showPage('marketplace')" class="nav-link" data-page="marketplace">Find Attorneys</a>
+            <span id="auth-status"></span>
+        </div>
+    </div>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <div class="container">
+            <div style="text-align: center; padding: 4rem 0;">
+                <h1 style="font-size: 3rem; margin-bottom: 1rem;">Legal Marketplace</h1>
+                <p style="font-size: 1.2rem; color: #666; margin-bottom: 2rem;">Connect with qualified attorneys instantly</p>
+                <button class="btn" onclick="showPage('login')" style="width: 200px; margin-right: 1rem;">Attorney Login</button>
+                <button class="btn btn-outline" onclick="showPage('marketplace')" style="width: 200px;">Find an Attorney</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Marketplace Page (Client View) -->
+    <div id="marketplace" class="page">
+        <div class="container">
+            <h1 style="margin-bottom: 2rem;">Find an Attorney</h1>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                <div class="form-group">
+                    <label>Practice Area</label>
+                    <input type="text" id="search-practice" placeholder="e.g., Personal Injury" onchange="filterFirms()">
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="search-location" placeholder="e.g., Los Angeles" onchange="filterFirms()">
+                </div>
+            </div>
+
+            <div id="firms-container" class="firm-grid"></div>
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login" class="page">
+        <div class="auth-form">
+            <h2 style="margin-bottom: 1.5rem;">Attorney Login</h2>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="login-email" placeholder="your@firm.com">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="login-password" placeholder="••••••••">
+            </div>
+            <button class="btn" onclick="handleLogin()">Login</button>
+            <div id="login-error" class="error"></div>
+            <p style="text-align: center; margin-top: 1rem;">
+                <a onclick="showPage('signup')" style="color: #1e88e5; cursor: pointer;">Create a firm account</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Signup Page -->
+    <div id="signup" class="page">
+        <div class="auth-form">
+            <h2 style="margin-bottom: 1.5rem;">Register Your Firm</h2>
+            <div class="form-group">
+                <label>Firm Name</label>
+                <input type="text" id="signup-firm" placeholder="Smith & Associates">
+            </div>
+            <div class="form-group">
+                <label>Subdomain</label>
+                <input type="text" id="signup-subdomain" placeholder="smithassociates" onchange="validateSubdomain()">
+                <small id="subdomain-status"></small>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="signup-email" placeholder="your@firm.com">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="signup-password" placeholder="••••••••">
+            </div>
+            <button class="btn" onclick="handleSignup()">Create Account</button>
+            <div id="signup-error" class="error"></div>
+            <p style="text-align: center; margin-top: 1rem;">
+                <a onclick="showPage('login')" style="color: #1e88e5; cursor: pointer;">Already registered? Login</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Attorney Dashboard -->
+    <div id="attorney-dashboard" class="page">
+        <div class="container">
+            <h1 style="margin-bottom: 2rem;">Firm Dashboard</h1>
+
+            <div class="dashboard" id="dashboard-stats"></div>
+
+            <h2 style="margin-bottom: 1rem; margin-top: 2rem;">Incoming Leads</h2>
+            <div style="overflow-x: auto;">
+                <table class="leads-table" id="leads-table">
+                    <thead>
+                        <tr>
+                            <th>Client Name</th>
+                            <th>Practice Area</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leads-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="page">
+        <div class="container">
+            <h1 style="margin-bottom: 2rem;">Platform Metrics</h1>
+
+            <div class="metrics-grid" id="platform-metrics"></div>
+
+            <div class="admin-section">
+                <h2 class="admin-section-title">Active Firms</h2>
+                <div style="overflow-x: auto;">
+                    <table class="leads-table" id="firms-table">
+                        <thead>
+                            <tr>
+                                <th>Firm Name</th>
+                                <th>Plan</th>
+                                <th>Leads This Month</th>
+                                <th>Response Rate</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="firms-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Intake Form Modal -->
+    <div id="intake-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('intake-modal')">&times;</span>
+            <div class="intake-form">
+                <h2 class="intake-title">Your Legal Intake Form</h2>
+
+                <div class="form-group">
+                    <label>Your Name *</label>
+                    <input type="text" id="prospect-name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" id="prospect-email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="prospect-phone">
+                </div>
+
+                <div class="form-group">
+                    <label>Case Description *</label>
+                    <textarea id="prospect-description" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; min-height: 120px;" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="prospect-location">
+                </div>
+
+                <div class="routing-options">
+                    <label style="display: block; font-weight: 600; margin-bottom: 1rem;">How would you like to connect?</label>
+
+                    <div class="routing-option">
+                        <input type="radio" name="routing" value="specific_firm" id="routing-specific" checked>
+                        <label for="routing-specific">Contact this specific firm</label>
+                    </div>
+
+                    <div class="routing-option">
+                        <input type="radio" name="routing" value="multiple_firms" id="routing-multiple">
+                        <label for="routing-multiple">Send to multiple firms (first response wins)</label>
+                    </div>
+
+                    <div class="routing-option">
+                        <input type="radio" name="routing" value="open_recommendation" id="routing-open">
+                        <label for="routing-open">Open recommendation (any qualified firm)</label>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="submitIntakeForm()">Submit Intake Form</button>
+                <div id="intake-error" class="error"></div>
+                <div id="intake-success" class="success"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lead Detail Modal -->
+    <div id="lead-detail-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('lead-detail-modal')">&times;</span>
+            <div id="lead-detail-content" style="background: white; padding: 1.5rem; border-radius: 8px;"></div>
+        </div>
+    </div>
+
+    <script>
+        const API = 'http://localhost:3001';
+        let currentUser = null;
+        let currentFirm = null;
+        let selectedFirmId = null;
+        let allFirms = [];
+
+        // ============================================
+        // INIT
+        // ============================================
+
+        function init() {
+            loadFromStorage();
+            setupNavbar();
+
+            // Check if direct firm link
+            const params = new URLSearchParams(window.location.search);
+            const firmId = params.get('firm_id');
+
+            if (firmId) {
+                // Direct firm link - open intake for this firm
+                selectedFirmId = firmId;
+                loadFirmAndOpenIntake(firmId);
+            } else {
+                loadFirms();
+            }
+        }
+
+        async function loadFirmAndOpenIntake(firmId) {
+            try {
+                const res = await fetch(`${API}/api/marketplace/firms/${firmId}`);
+                if (!res.ok) throw new Error('Firm not found');
+                const firm = await res.json();
+
+                // Display firm info before opening intake
+                displayDirectFirmLink(firm);
+
+                // Auto-open intake form after 1 second
+                setTimeout(() => {
+                    openIntakeForm(firmId);
+                }, 1000);
+            } catch (error) {
+                showPage('marketplace');
+                alert('Firm not found. Browse our directory instead.');
+                loadFirms();
+            }
+        }
+
+        function displayDirectFirmLink(firm) {
+            showPage('marketplace');
+            const container = document.getElementById('firms-container');
+            container.innerHTML = `
+                <div style="background: white; padding: 2rem; border-radius: 8px; margin-bottom: 2rem; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <p style="color: #666; margin-bottom: 1rem;">Connected with</p>
+                    <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">${firm.firm_id.substring(0, 8)}</h2>
+                    <p style="color: #1e88e5; font-weight: 500; margin-bottom: 1.5rem;">${firm.practice_areas}</p>
+                    <p style="color: #666; margin-bottom: 1rem;">Opening intake form...</p>
+                </div>
+            `;
+        }
+
+        function loadFromStorage() {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            const firm = localStorage.getItem('firm');
+
+            if (token && user && firm) {
+                currentUser = JSON.parse(user);
+                currentFirm = JSON.parse(firm);
+            }
+        }
+
+        function setupNavbar() {
+            const authStatus = document.getElementById('auth-status');
+            if (currentUser) {
+                authStatus.innerHTML = `
+                    <span>${currentUser.email}</span>
+                    <button class="btn" style="padding: 0.5rem 1rem; margin-left: 1rem;" onclick="logout()">Logout</button>
+                `;
+            }
+        }
+
+        // ============================================
+        // PAGES
+        // ============================================
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const page = document.getElementById(pageId);
+            if (page) {
+                page.classList.add('active');
+
+                if (pageId === 'attorney-dashboard' && currentUser) {
+                    loadDashboard();
+                } else if (pageId === 'admin-dashboard' && currentUser) {
+                    loadAdminDashboard();
+                } else if (pageId === 'marketplace') {
+                    loadFirms();
+                }
+            }
+        }
+
+        // ============================================
+        // MARKETPLACE
+        // ============================================
+
+        async function loadFirms() {
+            try {
+                const res = await fetch(`${API}/api/marketplace/firms`);
+                if (!res.ok) throw new Error('Failed to load firms');
+                allFirms = await res.json();
+                displayFirms(allFirms);
+            } catch (error) {
+                console.error('Load firms error:', error);
+            }
+        }
+
+        function filterFirms() {
+            const practice = document.getElementById('search-practice')?.value || '';
+            const location = document.getElementById('search-location')?.value || '';
+
+            const filtered = allFirms.filter(f => {
+                const matchPractice = !practice || f.practice_areas.toLowerCase().includes(practice.toLowerCase());
+                const matchLocation = !location || f.service_areas.toLowerCase().includes(location.toLowerCase());
+                return matchPractice && matchLocation;
+            });
+
+            displayFirms(filtered);
+        }
+
+        function displayFirms(firms) {
+            const container = document.getElementById('firms-container');
+
+            // Sort by: 1) Sponsorship tier (premium > featured > basic), 2) Name A-Z
+            const tierOrder = { premium: 0, featured: 1, basic: 2 };
+            const sorted = firms.sort((a, b) => {
+                const tierA = tierOrder[a.sponsorship_tier] || 2;
+                const tierB = tierOrder[b.sponsorship_tier] || 2;
+                if (tierA !== tierB) return tierA - tierB;
+                return (a.firm_id || '').localeCompare(b.firm_id || '');
+            });
+
+            // Group by tier
+            const premium = sorted.filter(f => f.sponsorship_tier === 'premium');
+            const featured = sorted.filter(f => f.sponsorship_tier === 'featured');
+            const basic = sorted.filter(f => !f.sponsorship_tier || f.sponsorship_tier === 'basic');
+
+            let html = '';
+
+            // Premium section
+            if (premium.length > 0) {
+                html += `<div class="tier-section">
+                    <div class="tier-section-title">🏆 Premium Firms</div>
+                    <div class="firm-grid">
+                        ${premium.map(f => createFirmCard(f, 'premium')).join('')}
+                    </div>
+                </div>`;
+            }
+
+            // Featured section
+            if (featured.length > 0) {
+                html += `<div class="tier-section">
+                    <div class="tier-section-title">⭐ Featured Firms</div>
+                    <div class="firm-grid">
+                        ${featured.map(f => createFirmCard(f, 'featured')).join('')}
+                    </div>
+                </div>`;
+            }
+
+            // Basic section
+            if (basic.length > 0) {
+                html += `<div class="tier-section">
+                    <div class="tier-section-title">All Firms (A-Z)</div>
+                    <div class="firm-grid">
+                        ${basic.map(f => createFirmCard(f, 'basic')).join('')}
+                    </div>
+                </div>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function createFirmCard(f, tier) {
+            return `
+                <div class="firm-card ${tier}" onclick="selectFirm('${f.firm_id}')">
+                    <div class="firm-name">${f.firm_id.substring(0, 8)}</div>
+                    <div class="firm-rating">⭐ ${f.client_rating || 'New'}</div>
+                    <div class="firm-location">📍 ${f.primary_location}</div>
+                    <div class="firm-practice">${f.practice_areas}</div>
+                    <p>${f.bio}</p>
+                    ${f.response_time_avg_hours ? `<div style="color: #666; font-size: 0.9rem;">⏱️ Avg response: ${f.response_time_avg_hours}h</div>` : ''}
+                    <button class="btn" onclick="openIntakeForm('${f.firm_id}'); event.stopPropagation();">Submit Intake</button>
+                </div>
+            `;
+        }
+
+        function selectFirm(firmId) {
+            selectedFirmId = firmId;
+        }
+
+        function openIntakeForm(firmId) {
+            selectedFirmId = firmId;
+            document.getElementById('intake-modal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        async function submitIntakeForm() {
+            const name = document.getElementById('prospect-name').value;
+            const email = document.getElementById('prospect-email').value;
+            const phone = document.getElementById('prospect-phone').value;
+            const description = document.getElementById('prospect-description').value;
+            const location = document.getElementById('prospect-location').value;
+            const routing = document.querySelector('input[name="routing"]:checked').value;
+
+            if (!name || !email || !description) {
+                document.getElementById('intake-error').textContent = 'Please fill all required fields';
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API}/api/marketplace/intakes/submit`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prospect_name: name,
+                        prospect_email: email,
+                        prospect_phone: phone,
+                        practice_area: allFirms.find(f => f.firm_id === selectedFirmId)?.practice_areas || 'General',
+                        description,
+                        location,
+                        routing_type: routing,
+                        selected_firm_ids: routing === 'specific_firm' ? [selectedFirmId] : []
+                    })
+                });
+
+                if (!res.ok) throw new Error('Failed to submit');
+
+                const data = await res.json();
+                document.getElementById('intake-success').textContent = '✓ Intake submitted! Attorneys will respond soon.';
+                setTimeout(() => closeModal('intake-modal'), 2000);
+            } catch (error) {
+                document.getElementById('intake-error').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        // ============================================
+        // AUTH
+        // ============================================
+
+        async function handleSignup() {
+            const firmName = document.getElementById('signup-firm').value;
+            const subdomain = document.getElementById('signup-subdomain').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+
+            if (!firmName || !subdomain || !email || !password) {
+                document.getElementById('signup-error').textContent = 'All fields required';
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API}/api/auth/signup`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ firm_name: firmName, subdomain, email, password })
+                });
+
+                if (!res.ok) {
+                    const error = await res.json();
+                    throw new Error(error.error);
+                }
+
+                const data = await res.json();
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+                localStorage.setItem('firm', JSON.stringify(data.firm));
+
+                currentUser = data.user;
+                currentFirm = data.firm;
+
+                setupNavbar();
+                showPage('attorney-dashboard');
+            } catch (error) {
+                document.getElementById('signup-error').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            if (!email || !password) {
+                document.getElementById('login-error').textContent = 'Email and password required';
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API}/api/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (!res.ok) {
+                    const error = await res.json();
+                    throw new Error(error.error);
+                }
+
+                const data = await res.json();
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+
+                // Find firm
+                const firmsRes = await fetch(`${API}/api/v1/${email}/firms`, {
+                    headers: { 'Authorization': `Bearer ${data.token}` }
+                });
+
+                currentUser = data.user;
+                setupNavbar();
+
+                // Show appropriate dashboard
+                if (email === 'admin@transcendlaw.com') {
+                    showPage('admin-dashboard');
+                } else {
+                    showPage('attorney-dashboard');
+                }
+            } catch (error) {
+                document.getElementById('login-error').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            currentUser = null;
+            currentFirm = null;
+            setupNavbar();
+            showPage('home');
+        }
+
+        // ============================================
+        // DASHBOARDS
+        // ============================================
+
+        async function loadDashboard() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const res = await fetch(`${API}/api/v1/mock-firm-id/leads`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!res.ok) throw new Error('Failed to load leads');
+                const leads = await res.json();
+
+                displayDashboard(leads);
+            } catch (error) {
+                console.error('Load dashboard error:', error);
+            }
+        }
+
+        function displayDashboard(leads) {
+            const stats = document.getElementById('dashboard-stats');
+            const tbody = document.getElementById('leads-tbody');
+
+            // Stats
+            stats.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-label">Leads This Month</div>
+                    <div class="stat-value">${leads.length}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Open Leads</div>
+                    <div class="stat-value">${leads.filter(l => l.status === 'open').length}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Accepted</div>
+                    <div class="stat-value">${leads.filter(l => l.status === 'accepted').length}</div>
+                </div>
+            `;
+
+            // Leads table
+            tbody.innerHTML = leads.map(l => `
+                <tr onclick="showLeadDetail('${l.lead_id}')">
+                    <td>${l.prospect_name}</td>
+                    <td>${l.practice_area}</td>
+                    <td>${l.description.substring(0, 50)}...</td>
+                    <td><span class="lead-status status-${l.status}">${l.status}</span></td>
+                    <td>
+                        <button class="btn" onclick="respondToLead('${l.lead_id}'); event.stopPropagation();">Respond</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function showLeadDetail(leadId) {
+            // Show detailed view
+        }
+
+        async function respondToLead(leadId) {
+            const message = prompt('Enter your response message:');
+            if (!message) return;
+
+            const token = localStorage.getItem('token');
+            try {
+                const res = await fetch(`${API}/api/v1/mock-firm-id/leads/${leadId}/respond`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ attorney_id: currentUser.user_id, message })
+                });
+
+                if (!res.ok) throw new Error('Failed to respond');
+                alert('Response sent!');
+                loadDashboard();
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        async function loadAdminDashboard() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const res = await fetch(`${API}/api/admin/metrics`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!res.ok) throw new Error('Failed to load metrics');
+                const data = await res.json();
+
+                const metricsDiv = document.getElementById('platform-metrics');
+                const metrics = data.platform_metrics;
+
+                metricsDiv.innerHTML = `
+                    <div class="metric">
+                        <div class="metric-value">${metrics.total_firms}</div>
+                        <div class="metric-label">Active Firms</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">${metrics.open_leads}</div>
+                        <div class="metric-label">Open Leads</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">$${metrics.monthly_revenue.toLocaleString()}</div>
+                        <div class="metric-label">Monthly Revenue</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">${metrics.conversion_rate}%</div>
+                        <div class="metric-label">Conversion Rate</div>
+                    </div>
+                `;
+
+                loadAdminFirms();
+            } catch (error) {
+                console.error('Load metrics error:', error);
+            }
+        }
+
+        async function loadAdminFirms() {
+            const token = localStorage.getItem('token');
+            try {
+                const res = await fetch(`${API}/api/admin/firms`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!res.ok) throw new Error('Failed to load firms');
+                const firms = await res.json();
+
+                const tbody = document.getElementById('firms-tbody');
+                tbody.innerHTML = firms.map(f => `
+                    <tr>
+                        <td>${f.firm_name}</td>
+                        <td>${f.subscription?.plan_name || 'N/A'}</td>
+                        <td>${f.leads_count}</td>
+                        <td>${(f.responses_count / Math.max(f.leads_count, 1) * 100).toFixed(0)}%</td>
+                        <td><span class="lead-status status-${f.subscription?.status}">${f.subscription?.status}</span></td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Load admin firms error:', error);
+            }
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+
+        init();
+    </script>
+</body>
+</html>

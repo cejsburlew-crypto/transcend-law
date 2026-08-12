@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRANSCEND LAW - Legal Services Platform</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f9fa; color: #333; }
+
+        /* Navigation */
+        .navbar {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-brand { font-size: 1.5rem; font-weight: bold; color: #1e88e5; }
+
+        .navbar-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .navbar-menu a {
+            text-decoration: none;
+            color: #333;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .navbar-menu a:hover { color: #1e88e5; }
+        .navbar-menu a.active { color: #1e88e5; border-bottom: 2px solid #1e88e5; }
+
+        .navbar-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .user-info {
+            background: #f0f0f0;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            background: #1e88e5;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover { background: #1565c0; }
+        .btn-outline { background: transparent; color: #1e88e5; border: 1px solid #1e88e5; }
+        .btn-outline:hover { background: #f0f7ff; }
+        .btn-secondary { background: #757575; }
+        .btn-secondary:hover { background: #616161; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+        /* Pages */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1e88e5;
+            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+        }
+
+        .form-group textarea { resize: vertical; min-height: 100px; }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Auth Form */
+        .auth-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: 4rem auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .auth-form h2 { margin-bottom: 1.5rem; }
+
+        /* Home Page */
+        .home-hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .home-hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+        .home-hero p { font-size: 1.2rem; color: #666; margin-bottom: 2rem; }
+
+        .home-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .home-button-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .home-button-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .home-button-card h3 { margin-bottom: 1rem; }
+        .home-button-card p { color: #666; margin-bottom: 1.5rem; font-size: 0.9rem; }
+        .home-button-card .btn { width: 100%; }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .card h2 { margin-bottom: 1.5rem; border-bottom: 2px solid #1e88e5; padding-bottom: 0.5rem; }
+
+        /* Tables */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .table th {
+            background: #f5f5f5;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table tr:hover { background: #f9f9f9; }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-label { color: #666; font-size: 0.9rem; }
+        .stat-value { font-size: 2.5rem; font-weight: bold; color: #1e88e5; margin-top: 0.5rem; }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            float: right;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #666;
+        }
+
+        /* Error/Success */
+        .error { color: #d32f2f; margin-top: 0.5rem; }
+        .success { color: #388e3c; margin-top: 0.5rem; }
+
+        /* Attorney Card */
+        .attorney-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .attorney-card:hover {
+            border-color: #1e88e5;
+            box-shadow: 0 4px 12px rgba(30, 136, 229, 0.2);
+        }
+
+        .attorney-card.selected {
+            background: #e3f2fd;
+            border-color: #1e88e5;
+        }
+
+        .attorney-name { font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem; }
+        .attorney-license { color: #666; font-size: 0.9rem; }
+        .attorney-rating { color: #ff9800; margin: 0.5rem 0; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="navbar">
+        <div class="navbar-brand">TRANSCEND LAW</div>
+        <div class="navbar-menu" id="navbar-menu">
+            <a onclick="goHome()">Home</a>
+            <span id="nav-extra"></span>
+        </div>
+        <div class="navbar-right" id="navbar-right">
+            <span id="user-status"></span>
+        </div>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <div class="container">
+            <div class="home-hero">
+                <h1>Legal Services Made Simple</h1>
+                <p>Connect with qualified attorneys or manage your legal cases</p>
+
+                <div class="home-buttons">
+                    <div class="home-button-card" onclick="startClientFlow()">
+                        <h3>👤 Create Client Profile</h3>
+                        <p>I need legal services and want to find an attorney</p>
+                        <button class="btn">Get Started</button>
+                    </div>
+
+                    <div class="home-button-card" onclick="showPage('attorney-login')">
+                        <h3>⚖️ Attorney Login</h3>
+                        <p>I'm an attorney managing cases</p>
+                        <button class="btn">Login</button>
+                    </div>
+
+                    <div class="home-button-card" onclick="showPage('browse-attorneys')">
+                        <h3>🔍 Browse Attorneys</h3>
+                        <p>Find an attorney directly</p>
+                        <button class="btn btn-outline">Browse</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CLIENT PROFILE PAGE -->
+    <div id="client-profile" class="page">
+        <div class="container">
+            <div class="card" style="max-width: 600px; margin: 0 auto;">
+                <h2>Create Your Client Profile</h2>
+                <div class="form-group">
+                    <label>First Name *</label>
+                    <input type="text" id="client-first-name" placeholder="John">
+                </div>
+                <div class="form-group">
+                    <label>Last Name *</label>
+                    <input type="text" id="client-last-name" placeholder="Smith">
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" id="client-email" placeholder="john@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="client-phone" placeholder="(555) 123-4567">
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="client-location" placeholder="Los Angeles, CA">
+                </div>
+                <button class="btn" onclick="saveClientProfile()">Continue to Intake Form</button>
+                <button class="btn btn-secondary" style="margin-left: 1rem;" onclick="goHome()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTAKE FORM PAGE -->
+    <div id="intake-form" class="page">
+        <div class="container">
+            <div class="card" style="max-width: 600px; margin: 0 auto;">
+                <h2>Describe Your Legal Case</h2>
+                <div class="form-group">
+                    <label>Practice Area *</label>
+                    <select id="practice-area" required>
+                        <option value="">Select a practice area</option>
+                        <option value="Personal Injury">Personal Injury</option>
+                        <option value="Estate Planning">Estate Planning</option>
+                        <option value="Criminal Defense">Criminal Defense</option>
+                        <option value="Family Law">Family Law</option>
+                        <option value="Business Law">Business Law</option>
+                        <option value="Real Estate">Real Estate</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Case Description *</label>
+                    <textarea id="case-description" placeholder="Describe your legal issue..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Urgency Level</label>
+                    <select id="urgency">
+                        <option value="Low">Low - can wait a few weeks</option>
+                        <option value="Medium" selected>Medium - within 1-2 weeks</option>
+                        <option value="High">High - need assistance soon</option>
+                        <option value="Urgent">Urgent - need immediate help</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="continueToAttorneySelection()">Find Attorneys</button>
+                <button class="btn btn-secondary" style="margin-left: 1rem;" onclick="showPage('client-profile')">Back</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BROWSE ATTORNEYS PAGE -->
+    <div id="browse-attorneys" class="page">
+        <div class="container">
+            <h1>Find Your Attorney</h1>
+            <div id="attorneys-list"></div>
+            <button class="btn btn-secondary" onclick="goHome()">Back to Home</button>
+        </div>
+    </div>
+
+    <!-- ATTORNEY SELECTION PAGE -->
+    <div id="attorney-selection" class="page">
+        <div class="container">
+            <h1>Select Your Attorney</h1>
+            <p style="color: #666; margin-bottom: 2rem;">Choose the attorney that best fits your needs</p>
+            <div id="attorney-options"></div>
+            <button class="btn" onclick="confirmAttorneySelection()">Confirm Selection</button>
+            <button class="btn btn-secondary" style="margin-left: 1rem;" onclick="showPage('intake-form')">Back</button>
+        </div>
+    </div>
+
+    <!-- ATTORNEY LOGIN PAGE -->
+    <div id="attorney-login" class="page">
+        <div class="auth-form">
+            <h2>Attorney Login</h2>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="attorney-email" placeholder="your@firm.com">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="attorney-password" placeholder="••••••••">
+            </div>
+            <button class="btn" onclick="attorneyLogin()">Login</button>
+            <div id="login-error" class="error"></div>
+            <p style="text-align: center; margin-top: 1rem;">
+                <a onclick="goHome()" style="color: #1e88e5; cursor: pointer;">Back to Home</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- ATTORNEY DASHBOARD -->
+    <div id="attorney-dashboard" class="page">
+        <div class="container">
+            <h1>Attorney Dashboard</h1>
+
+            <div class="grid">
+                <div class="stat-card">
+                    <div class="stat-label">Open Leads</div>
+                    <div class="stat-value" id="stat-open-leads">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Cases</div>
+                    <div class="stat-value" id="stat-active-cases">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Response Rate</div>
+                    <div class="stat-value" id="stat-response-rate">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Acceptance Rate</div>
+                    <div class="stat-value" id="stat-acceptance-rate">0%</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Incoming Leads</h2>
+                <table class="table" id="leads-table">
+                    <thead>
+                        <tr>
+                            <th>Client Name</th>
+                            <th>Practice Area</th>
+                            <th>Case Description</th>
+                            <th>Urgency</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leads-tbody">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #999;">No open leads</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>Active Cases</h2>
+                <table class="table" id="cases-table">
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Case Type</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cases-tbody">
+                        <tr>
+                            <td colspan="4" style="text-align: center; color: #999;">No active cases</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API = 'http://localhost:3001';
+        let currentUser = null;
+        let currentClient = null;
+        let selectedAttorney = null;
+        let allAttorneys = [];
+
+        // PAGE NAVIGATION
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const page = document.getElementById(pageId);
+            if (page) page.classList.add('active');
+        }
+
+        function goHome() {
+            showPage('home');
+            updateNavigation();
+        }
+
+        // CLIENT FLOW
+        function startClientFlow() {
+            showPage('client-profile');
+        }
+
+        function saveClientProfile() {
+            const firstName = document.getElementById('client-first-name').value;
+            const lastName = document.getElementById('client-last-name').value;
+            const email = document.getElementById('client-email').value;
+            const phone = document.getElementById('client-phone').value;
+            const location = document.getElementById('client-location').value;
+
+            if (!firstName || !lastName || !email) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            currentClient = { firstName, lastName, email, phone, location };
+            showPage('intake-form');
+        }
+
+        function continueToAttorneySelection() {
+            const practiceArea = document.getElementById('practice-area').value;
+            const caseDescription = document.getElementById('case-description').value;
+            const urgency = document.getElementById('urgency').value;
+
+            if (!practiceArea || !caseDescription) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            currentClient.practiceArea = practiceArea;
+            currentClient.caseDescription = caseDescription;
+            currentClient.urgency = urgency;
+
+            loadAttorneyOptions();
+        }
+
+        async function loadAttorneyOptions() {
+            try {
+                const res = await fetch(`${API}/api/marketplace/firms?practice_area=${currentClient.practiceArea}`);
+                if (!res.ok) throw new Error('Failed to load attorneys');
+                allAttorneys = await res.json();
+
+                const container = document.getElementById('attorney-options');
+                container.innerHTML = allAttorneys.map(a => `
+                    <div class="attorney-card" onclick="selectAttorney('${a.firm_id}', this)">
+                        <div class="attorney-name">${a.firm_id.substring(0, 8)}</div>
+                        <div class="attorney-rating">⭐ ${a.client_rating || 'New'}</div>
+                        <div class="attorney-license">Specializing in: ${a.practice_areas}</div>
+                        <div style="color: #666; font-size: 0.9rem; margin-top: 0.5rem;">📍 ${a.primary_location}</div>
+                        <div style="color: #666; font-size: 0.9rem;">⏱️ Response time: ${a.response_time_avg_hours}h avg</div>
+                    </div>
+                `).join('');
+
+                showPage('attorney-selection');
+            } catch (error) {
+                alert('Error loading attorneys: ' + error.message);
+            }
+        }
+
+        function selectAttorney(attorneyId, element) {
+            document.querySelectorAll('.attorney-card').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedAttorney = attorneyId;
+        }
+
+        async function confirmAttorneySelection() {
+            if (!selectedAttorney) {
+                alert('Please select an attorney');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API}/api/marketplace/intakes/submit`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prospect_name: `${currentClient.firstName} ${currentClient.lastName}`,
+                        prospect_email: currentClient.email,
+                        prospect_phone: currentClient.phone,
+                        practice_area: currentClient.practiceArea,
+                        description: currentClient.caseDescription,
+                        location: currentClient.location,
+                        routing_type: 'specific_firm',
+                        selected_firm_ids: [selectedAttorney]
+                    })
+                });
+
+                if (!res.ok) throw new Error('Failed to submit intake');
+
+                alert('✓ Your intake has been submitted! The attorney will contact you soon.');
+                goHome();
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        // ATTORNEY LOGIN
+        async function attorneyLogin() {
+            const email = document.getElementById('attorney-email').value;
+            const password = document.getElementById('attorney-password').value;
+
+            if (!email || !password) {
+                document.getElementById('login-error').textContent = 'Please enter email and password';
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API}/api/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (!res.ok) {
+                    const error = await res.json();
+                    throw new Error(error.error);
+                }
+
+                const data = await res.json();
+                currentUser = data.user;
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+
+                updateNavigation();
+                showPage('attorney-dashboard');
+                loadAttorneyDashboard();
+            } catch (error) {
+                document.getElementById('login-error').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        function loadAttorneyDashboard() {
+            // Placeholder data
+            document.getElementById('stat-open-leads').textContent = '3';
+            document.getElementById('stat-active-cases').textContent = '12';
+            document.getElementById('stat-response-rate').textContent = '94%';
+            document.getElementById('stat-acceptance-rate').textContent = '78%';
+        }
+
+        function updateNavigation() {
+            const navExtra = document.getElementById('nav-extra');
+            const userStatus = document.getElementById('user-status');
+
+            if (currentUser) {
+                navExtra.innerHTML = `
+                    <a onclick="showPage('attorney-dashboard')">Dashboard</a>
+                    <a onclick="showPage('attorney-dashboard')">Cases</a>
+                    <a onclick="showPage('attorney-dashboard')">Settings</a>
+                `;
+                userStatus.innerHTML = `
+                    <div class="user-info">${currentUser.email}</div>
+                    <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                `;
+            } else {
+                navExtra.innerHTML = '';
+                userStatus.innerHTML = '';
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.clear();
+            updateNavigation();
+            goHome();
+        }
+
+        // INIT
+        window.addEventListener('load', () => {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            if (token && user) {
+                currentUser = JSON.parse(user);
+                updateNavigation();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+node_modules/
+vendor/
+backend/data/*.sqlite
+backend/.env
+frontend/dist/
+frontend/.angular/
+.DS_Store
+*.log

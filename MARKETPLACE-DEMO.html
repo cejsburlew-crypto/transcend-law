@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcend Law - Legal Marketplace Live Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+        }
+
+        .demo-card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .demo-card p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+        }
+
+        .demo-section {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .demo-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-btn {
+            background: #999;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            background: #777;
+        }
+
+        /* CLIENT DEMO */
+        .firm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .firm-card {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .firm-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .firm-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .firm-info {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .firm-rating {
+            color: #ffc107;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .select-btn {
+            width: 100%;
+            padding: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .select-btn:hover {
+            background: #5568d3;
+        }
+
+        .selected {
+            background: #48bb78;
+        }
+
+        .selected:hover {
+            background: #38a169;
+        }
+
+        /* FORM */
+        .form-section {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .routing-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .routing-option {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .routing-option:hover {
+            border-color: #667eea;
+        }
+
+        .routing-option.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .routing-option h3 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .routing-option p {
+            color: #666;
+            font-size: 12px;
+        }
+
+        /* FIRM DASHBOARD */
+        .inbox {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .lead-card {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .lead-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .lead-badge.claimed {
+            background: #48bb78;
+        }
+
+        .lead-client-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .lead-details {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .lead-description {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .lead-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .btn-respond {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-respond:hover {
+            background: #5568d3;
+        }
+
+        .btn-decline {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-decline:hover {
+            background: #ccc;
+        }
+
+        /* ADMIN DASHBOARD */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .status-active { background: #c6f6d5; color: #22543d; }
+        .status-pending { background: #fed7d7; color: #742a2a; }
+        .status-claimed { background: #bee3f8; color: #2c5282; }
+
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f7fafc;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            color: #4a5568;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 13px;
+            color: #4a5568;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .warning {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .info {
+            background: #bee3f8;
+            color: #2c5282;
+        }
+
+        .flow-diagram {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .flow-step {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 6px;
+            margin: 0 10px;
+            font-weight: 600;
+            min-width: 150px;
+        }
+
+        .flow-arrow {
+            display: inline-block;
+            color: #667eea;
+            font-size: 24px;
+            margin: 0 10px;
+        }
+
+        @media (max-width: 768px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-step {
+                display: block;
+                margin: 10px 0;
+            }
+
+            .flow-arrow {
+                display: block;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚖️ Transcend Law</h1>
+            <p>Legal Marketplace Platform - Live Demo</p>
+        </div>
+
+        <!-- MAIN MENU -->
+        <div id="mainMenu" class="demo-section active">
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h2>👥 Client View</h2>
+                    <p>See how clients find and hire attorneys through the marketplace.</p>
+                    <button class="btn" onclick="showDemo('clientDemo')">View Client Experience</button>
+                </div>
+
+                <div class="demo-card">
+                    <h2>🏢 Firm Dashboard</h2>
+                    <p>See how firms receive leads and respond to clients.</p>
+                    <button class="btn" onclick="showDemo('firmDemo')">View Firm Dashboard</button>
+                </div>
+
+                <div class="demo-card">
+                    <h2>📊 Admin Dashboard</h2>
+                    <p>See platform metrics and monitoring as the operator.</p>
+                    <button class="btn" onclick="showDemo('adminDemo')">View Admin Dashboard</button>
+                </div>
+
+                <div class="demo-card">
+                    <h2>💰 Billing System</h2>
+                    <p>See how automatic billing and access control works.</p>
+                    <button class="btn" onclick="showDemo('billingDemo')">View Billing Demo</button>
+                </div>
+
+                <div class="demo-card">
+                    <h2>🔄 Lead Flow Demo</h2>
+                    <p>See the complete lead flow from client to attorney.</p>
+                    <button class="btn" onclick="showDemo('flowDemo')">See Lead Flow</button>
+                </div>
+
+                <div class="demo-card">
+                    <h2>📱 Features Overview</h2>
+                    <p>See key features and differentiators.</p>
+                    <button class="btn" onclick="showDemo('featuresDemo')">View Features</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CLIENT DEMO -->
+        <div id="clientDemo" class="demo-section">
+            <button class="btn back-btn" onclick="showDemo('mainMenu')">← Back</button>
+
+            <div class="form-section">
+                <h2 style="margin-bottom: 20px;">🔍 Find an Attorney</h2>
+                <div class="form-group">
+                    <label>Practice Area</label>
+                    <select>
+                        <option>Personal Injury</option>
+                        <option>Estate Planning</option>
+                        <option>Business Law</option>
+                        <option>Family Law</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <select>
+                        <option>Los Angeles, CA</option>
+                        <option>New York, NY</option>
+                        <option>Houston, TX</option>
+                        <option>Chicago, IL</option>
+                    </select>
+                </div>
+            </div>
+
+            <h3 style="color: white; margin-bottom: 20px;">📋 Available Attorneys</h3>
+            <div class="firm-grid">
+                <div class="firm-card">
+                    <div class="firm-name">Smith & Associates</div>
+                    <div class="firm-info">📍 Los Angeles, CA</div>
+                    <div class="firm-info">⚖️ Personal Injury, Medical Malpractice</div>
+                    <div class="firm-rating">★★★★★ 4.8 (47 reviews)</div>
+                    <div class="firm-info">⏱️ Avg response: 2 hours</div>
+                    <button class="select-btn" onclick="selectFirm(this)">Select This Firm</button>
+                </div>
+
+                <div class="firm-card">
+                    <div class="firm-name">Johnson Law Group</div>
+                    <div class="firm-info">📍 Los Angeles, CA</div>
+                    <div class="firm-info">⚖️ Personal Injury</div>
+                    <div class="firm-rating">★★★★☆ 4.5 (32 reviews)</div>
+                    <div class="firm-info">⏱️ Avg response: 3 hours</div>
+                    <button class="select-btn" onclick="selectFirm(this)">Select This Firm</button>
+                </div>
+
+                <div class="firm-card">
+                    <div class="firm-name">Estate Planning Experts</div>
+                    <div class="firm-info">📍 Los Angeles, CA</div>
+                    <div class="firm-info">⚖️ Estate Planning, Probate</div>
+                    <div class="firm-rating">★★★★★ 4.9 (61 reviews)</div>
+                    <div class="firm-info">⏱️ Avg response: 1 hour</div>
+                    <button class="select-btn" onclick="selectFirm(this)">Select This Firm</button>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2 style="margin-bottom: 20px;">📝 Submit Your Case</h2>
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" placeholder="John Smith" value="John Smith">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="john@email.com" value="john@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" placeholder="(555) 123-4567" value="(555) 123-4567">
+                </div>
+                <div class="form-group">
+                    <label>Case Description</label>
+                    <textarea placeholder="Tell us about your case...">I was injured in a car accident on August 1st. The other driver was at fault. I have medical bills and lost wages.</textarea>
+                </div>
+
+                <label style="font-weight: 600; margin-top: 20px; margin-bottom: 15px;">How do you want to find an attorney?</label>
+                <div class="routing-options">
+                    <div class="routing-option selected" onclick="selectRouting(this, 'specific')">
+                        <h3>📍 Specific Firm</h3>
+                        <p>Get one attorney (from above)</p>
+                    </div>
+                    <div class="routing-option" onclick="selectRouting(this, 'multiple')">
+                        <h3>🔀 Multiple Firms</h3>
+                        <p>Compare quotes from 2-3 firms</p>
+                    </div>
+                    <div class="routing-option" onclick="selectRouting(this, 'open')">
+                        <h3>🌐 Open Recommendation</h3>
+                        <p>Any qualified attorney</p>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="submitCase()" style="width: 100%; padding: 15px; margin-top: 20px; font-size: 16px;">Submit Case ✓</button>
+            </div>
+        </div>
+
+        <!-- FIRM DEMO -->
+        <div id="firmDemo" class="demo-section">
+            <button class="btn back-btn" onclick="showDemo('mainMenu')">← Back</button>
+
+            <div class="form-section">
+                <h2>🏢 Smith & Associates - Attorney Dashboard</h2>
+                <p style="color: #666; margin-top: 10px;">Logged in as: Sarah Attorney</p>
+            </div>
+
+            <h3 style="color: white; margin-bottom: 20px;">📥 Incoming Leads (3 New)</h3>
+            <div class="inbox">
+                <div class="lead-card">
+                    <div class="lead-badge">🆕 NEW</div>
+                    <div class="lead-client-name">John Smith</div>
+                    <div class="lead-details">📧 john@email.com | 📱 (555) 123-4567</div>
+                    <div class="lead-details">⚖️ Personal Injury | 📍 Los Angeles</div>
+                    <div class="lead-description">Car accident on August 1st. Medical bills and lost wages. Other driver at fault.</div>
+                    <div class="lead-actions">
+                        <button class="btn-small btn-respond" onclick="respondToLead(this)">👍 Respond</button>
+                        <button class="btn-small btn-decline" onclick="declineLead(this)">👎 Decline</button>
+                    </div>
+                </div>
+
+                <div class="lead-card">
+                    <div class="lead-badge">2 hours ago</div>
+                    <div class="lead-client-name">Jane Doe</div>
+                    <div class="lead-details">📧 jane@email.com | 📱 (555) 987-6543</div>
+                    <div class="lead-details">⚖️ Personal Injury | 📍 Los Angeles</div>
+                    <div class="lead-description">Slip and fall at grocery store. Multiple fractures. Seeking compensation.</div>
+                    <div class="lead-actions">
+                        <button class="btn-small btn-respond" onclick="respondToLead(this)">👍 Respond</button>
+                        <button class="btn-small btn-decline" onclick="declineLead(this)">👎 Decline</button>
+                    </div>
+                </div>
+
+                <div class="lead-card">
+                    <div class="lead-badge claimed">✓ RESPONDED</div>
+                    <div class="lead-client-name">Bob Johnson</div>
+                    <div class="lead-details">📧 bob@email.com | 📱 (555) 456-7890</div>
+                    <div class="lead-details">⚖️ Personal Injury | 📍 Los Angeles</div>
+                    <div class="lead-description">Dog bite incident. Infection and scarring. Owner insured.</div>
+                    <div class="lead-actions">
+                        <button class="btn-small" style="background: #999; color: white; cursor: default;">✓ Your response sent</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section" style="margin-top: 30px;">
+                <h3 style="margin-bottom: 20px;">💬 Respond to Lead</h3>
+                <div class="form-group">
+                    <label>Your Message</label>
+                    <textarea placeholder="Type your response..." style="min-height: 120px;">Thank you for contacting us. I specialize in personal injury cases and would like to help with your case. I have successfully recovered over $2M for clients in similar situations. Let's discuss your case details and next steps. Please reply at your earliest convenience.</textarea>
+                </div>
+                <button class="btn" onclick="alert('✓ Response sent to John Smith through Transcend platform')">Send Response</button>
+            </div>
+        </div>
+
+        <!-- ADMIN DEMO -->
+        <div id="adminDemo" class="demo-section">
+            <button class="btn back-btn" onclick="showDemo('mainMenu')">← Back</button>
+
+            <div class="form-section">
+                <h2>📊 Master Admin Dashboard - Transcend Law</h2>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">247</div>
+                    <div class="metric-label">Firms on Platform</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">1,847</div>
+                    <div class="metric-label">Leads This Month</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">$47.3K</div>
+                    <div class="metric-label">Monthly Revenue</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">2.1 hrs</div>
+                    <div class="metric-label">Avg Response Time</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">67%</div>
+                    <div class="metric-label">Conversion Rate</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">2.1%</div>
+                    <div class="metric-label">Churn Rate</div>
+                </div>
+            </div>
+
+            <h3 style="color: white; margin-bottom: 20px;">🎯 Billing Status</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Firm</th>
+                            <th>Plan</th>
+                            <th>Monthly</th>
+                            <th>Status</th>
+                            <th>Renewal Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Smith & Associates</td>
+                            <td>Pro</td>
+                            <td>$299</td>
+                            <td><span class="badge success">✓ Active</span></td>
+                            <td>Sep 11, 2026</td>
+                        </tr>
+                        <tr>
+                            <td>Johnson Law Group</td>
+                            <td>Starter</td>
+                            <td>$99</td>
+                            <td><span class="badge success">✓ Active</span></td>
+                            <td>Sep 15, 2026</td>
+                        </tr>
+                        <tr>
+                            <td>Estate Planning Experts</td>
+                            <td>Enterprise</td>
+                            <td>$999</td>
+                            <td><span class="badge success">✓ Active</span></td>
+                            <td>Sep 8, 2026</td>
+                        </tr>
+                        <tr>
+                            <td>Miller & Associates</td>
+                            <td>Pro</td>
+                            <td>$299</td>
+                            <td><span class="badge warning">⚠ Grace Period</span></td>
+                            <td>Sep 20, 2026</td>
+                        </tr>
+                        <tr>
+                            <td>Brown Law Firm</td>
+                            <td>Starter</td>
+                            <td>$99</td>
+                            <td><span class="badge info">🔴 Suspended</span></td>
+                            <td>N/A</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color: white; margin-bottom: 20px; margin-top: 30px;">📈 Recent Leads</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Practice Area</th>
+                            <th>Type</th>
+                            <th>Firm Responses</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Smith</td>
+                            <td>Personal Injury</td>
+                            <td>🔀 Multiple Firms</td>
+                            <td>2 / 3</td>
+                            <td><span class="badge info">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>Jane Doe</td>
+                            <td>Personal Injury</td>
+                            <td>📍 Specific Firm</td>
+                            <td>1 / 1</td>
+                            <td><span class="badge success">Accepted</span></td>
+                        </tr>
+                        <tr>
+                            <td>Bob Johnson</td>
+                            <td>Estate Planning</td>
+                            <td>🌐 Open Rec</td>
+                            <td>5 / 12</td>
+                            <td><span class="badge success">Accepted</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- BILLING DEMO -->
+        <div id="billingDemo" class="demo-section">
+            <button class="btn back-btn" onclick="showDemo('mainMenu')">← Back</button>
+
+            <div class="form-section">
+                <h2>💰 Automatic Billing & Access Control System</h2>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                <div class="form-section">
+                    <h3>✅ Active Subscription</h3>
+                    <div style="background: #c6f6d5; padding: 15px; border-radius: 6px; margin: 15px 0;">
+                        <div><strong>Status:</strong> ACTIVE</div>
+                        <div><strong>Next Renewal:</strong> Sep 11, 2026</div>
+                        <div><strong>Monthly Fee:</strong> $299</div>
+                        <div><strong>Access:</strong> ✓ Full Access</div>
+                    </div>
+                    <p style="font-size: 13px; color: #666;">Firm can:</p>
+                    <ul style="font-size: 13px; color: #666; margin-left: 20px;">
+                        <li>✓ Receive leads</li>
+                        <li>✓ Respond to leads</li>
+                        <li>✓ Manage cases</li>
+                        <li>✓ View metrics</li>
+                    </ul>
+                </div>
+
+                <div class="form-section">
+                    <h3>⚠️ Grace Period (Payment Failed)</h3>
+                    <div style="background: #fed7d7; padding: 15px; border-radius: 6px; margin: 15px 0;">
+                        <div><strong>Status:</strong> GRACE PERIOD</div>
+                        <div><strong>Days Overdue:</strong> 4 / 7</div>
+                        <div><strong>Days Until Suspension:</strong> 3</div>
+                        <div><strong>Access:</strong> ⚠️ Limited</div>
+                    </div>
+                    <p style="font-size: 13px; color: #666;">Firm can:</p>
+                    <ul style="font-size: 13px; color: #666; margin-left: 20px;">
+                        <li>✓ View existing leads</li>
+                        <li>✓ Respond to leads</li>
+                        <li>✗ Create new leads</li>
+                    </ul>
+                </div>
+
+                <div class="form-section">
+                    <h3>🔴 Account Suspended</h3>
+                    <div style="background: #bee3f8; padding: 15px; border-radius: 6px; margin: 15px 0;">
+                        <div><strong>Status:</strong> SUSPENDED</div>
+                        <div><strong>Reason:</strong> Payment Overdue</div>
+                        <div><strong>Days Overdue:</strong> 12</div>
+                        <div><strong>Access:</strong> ✗ NO ACCESS</div>
+                    </div>
+                    <p style="font-size: 13px; color: #666;">Firm can:</p>
+                    <ul style="font-size: 13px; color: #666; margin-left: 20px;">
+                        <li>✗ Cannot access platform</li>
+                        <li>✗ Cannot receive leads</li>
+                        <li>✗ Cannot respond</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-section" style="margin-top: 30px;">
+                <h3 style="margin-bottom: 20px;">🔄 Billing Timeline</h3>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 6px; border-left: 4px solid #667eea;">
+                    <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd;">
+                        <strong style="color: #667eea;">Day 0: Renewal Date</strong>
+                        <p style="font-size: 13px; color: #666; margin-top: 5px;">Automatic charge of $299 attempted</p>
+                    </div>
+                    <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd;">
+                        <strong style="color: #667eea;">Day 0: Payment Failed</strong>
+                        <p style="font-size: 13px; color: #666; margin-top: 5px;">Email sent: "Payment failed - update payment method"</p>
+                    </div>
+                    <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd;">
+                        <strong style="color: #ffc107;">Day 0-3: Grace Period Active</strong>
+                        <p style="font-size: 13px; color: #666; margin-top: 5px;">Firm still has LIMITED access (can receive leads but can't create new ones)</p>
+                    </div>
+                    <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd;">
+                        <strong style="color: #ffc107;">Day 3: Retry Payment</strong>
+                        <p style="font-size: 13px; color: #666; margin-top: 5px;">System attempts payment again</p>
+                    </div>
+                    <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd;">
+                        <strong style="color: #ffc107;">Day 4: Reminder Email</strong>
+                        <p style="font-size: 13px; color: #666; margin-top: 5px;">"Final reminder - 3 days until suspension"</p>
+                    </div>
+                    <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd;">
+                        <strong style="color: #e74c3c;">Day 7: Access Suspended</strong>
+                        <p style="font-size: 13px; color: #666; margin-top: 5px;">Account locked. Email: "Account suspended - update payment to restore"</p>
+                    </div>
+                    <div>
+                        <strong style="color: #999;">Day 37: Data Deletion</strong>
+                        <p style="font-size: 13px; color: #666; margin-top: 5px;">Data deleted (30 days after suspension). Backup available on request.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FLOW DEMO -->
+        <div id="flowDemo" class="demo-section">
+            <button class="btn back-btn" onclick="showDemo('mainMenu')">← Back</button>
+
+            <div class="flow-diagram">
+                <h2 style="margin-bottom: 30px;">🔄 Complete Lead Flow</h2>
+
+                <div style="margin: 30px 0;">
+                    <div class="flow-step">1. Client Visits Platform</div>
+                    <div class="flow-arrow">↓</div>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <div class="flow-step">2. Searches & Finds Attorney</div>
+                    <div class="flow-arrow">↓</div>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <div style="display: inline-block; background: #667eea; color: white; padding: 15px 25px; border-radius: 6px; margin: 0 10px;">
+                        3. Choose Routing:
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px;">
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                            <strong>📍 Specific</strong><br>
+                            <span style="font-size: 12px; color: #666;">One firm</span>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                            <strong>🔀 Multiple</strong><br>
+                            <span style="font-size: 12px; color: #666;">2-3 firms</span>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                            <strong>🌐 Open</strong><br>
+                            <span style="font-size: 12px; color: #666;">All matching</span>
+                        </div>
+                    </div>
+                    <div class="flow-arrow" style="margin-top: 20px;">↓</div>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <div class="flow-step">4. Client Submits Lead</div>
+                    <div class="flow-arrow">↓</div>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <div class="flow-step">5. Firm(s) Notified (In-App)</div>
+                    <div class="flow-arrow">↓</div>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <div class="flow-step">6. Attorney Responds</div>
+                    <div class="flow-arrow">↓</div>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <div class="flow-step">7. Client Reviews & Selects</div>
+                    <div class="flow-arrow">↓</div>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <div class="flow-step">8. Case Created</div>
+                    <div class="flow-arrow">↓</div>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <div class="flow-step">9. Revenue Recorded ✓</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURES DEMO -->
+        <div id="featuresDemo" class="demo-section">
+            <button class="btn back-btn" onclick="showDemo('mainMenu')">← Back</button>
+
+            <div class="demo-grid" style="margin-top: 20px;">
+                <div class="demo-card">
+                    <h2>⚖️ Attorney Licensing</h2>
+                    <p>Verify state bar licenses for all attorneys. Display public info from state bar in client communications.</p>
+                </div>
+
+                <div class="demo-card">
+                    <h2>💳 Automatic Billing</h2>
+                    <p>Automatic recurring charges. Grace periods. Automatic suspension after 7 days. Data preservation for 30 days.</p>
+                </div>
+
+                <div class="demo-card">
+                    <h2>📥 Smart Lead Routing</h2>
+                    <p>3 routing types: specific firm, multiple firms (first-wins), or open recommendation to all matching firms.</p>
+                </div>
+
+                <div class="demo-card">
+                    <h2>💬 In-App Messaging Only</h2>
+                    <p>No email auto-replies. All communication through Transcend platform. Keeps clients engaged with the platform.</p>
+                </div>
+
+                <div class="demo-card">
+                    <h2>📊 Real-Time Analytics</h2>
+                    <p>For each firm: response time, acceptance rate, rating. For you: MRR, churn, lead volume, conversion rates.</p>
+                </div>
+
+                <div class="demo-card">
+                    <h2>🔐 Data Isolation</h2>
+                    <p>Multi-tenant architecture. Each firm sees only their own leads. Complete data separation. GDPR/CCPA compliant.</p>
+                </div>
+
+                <div class="demo-card">
+                    <h2>⭐ Client Reviews</h2>
+                    <p>After case closes, clients rate attorneys. Ratings visible to future clients. Incentivizes quality service.</p>
+                </div>
+
+                <div class="demo-card">
+                    <h2>📱 Public Directory</h2>
+                    <p>Firms listed publicly by practice area and location. Searchable. Ratings visible. Drives organic lead generation.</p>
+                </div>
+
+                <div class="demo-card">
+                    <h2>🧑‍⚖️ Co-Counsel Support</h2>
+                    <p>Multiple licensed attorneys per case. Lead attorney assigns co-counsel. Case staff (non-attorneys) with permissions.</p>
+                </div>
+
+                <div class="demo-card">
+                    <h2>💰 Revenue Model</h2>
+                    <p>$99-$999/month subscription. Optional 10% commission on cases. 90% gross margin at 300 firms. $100K+ MRR possible.</p>
+                </div>
+
+                <div class="demo-card">
+                    <h2>🌍 Competitive Edge</h2>
+                    <p>vs Avvo: leads not just directory. vs TheLaw: digital-first, no phone calls. vs Justia: structured matching.</p>
+                </div>
+
+                <div class="demo-card">
+                    <h2>🚀 Scale Ready</h2>
+                    <p>Multi-tenant database. Load balancing ready. Handles 1000s of firms. API-first architecture. White-label capable.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showDemo(demoId) {
+            document.querySelectorAll('.demo-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById(demoId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function selectFirm(btn) {
+            document.querySelectorAll('.select-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
+        function selectRouting(el, type) {
+            document.querySelectorAll('.routing-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            el.classList.add('selected');
+        }
+
+        function respondToLead(btn) {
+            alert('✅ Response sent!\n\nYour message has been delivered to the client through the Transcend platform.\n\nNo emails sent - client stays engaged on the platform.\n\nNow waiting for client to select your firm...');
+        }
+
+        function declineLead(btn) {
+            alert('❌ Lead declined\n\nThis lead will be offered to other firms in the open recommendation.');
+            btn.parentElement.parentElement.style.opacity = '0.5';
+        }
+
+        function submitCase() {
+            const selectedRouting = document.querySelector('.routing-option.selected');
+            const routingText = selectedRouting ? selectedRouting.querySelector('h3').textContent : 'Not selected';
+
+            alert(`✅ Case Submitted!\n\nRouting: ${routingText}\n\nYour case is now in the system.\n\nAttorneys will see your intake and respond through the Transcend platform.\n\nYou'll receive notifications as attorneys respond.`);
+        }
+    </script>
+</body>
+</html>

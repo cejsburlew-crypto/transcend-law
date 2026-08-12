@@ -1,0 +1,71 @@
+:root {
+  --tp-blue: #1e4b7a;
+  --tp-blue-light: #2f6fad;
+  --tp-green: #6bbf59;
+  --tp-gray: #f4f6f8;
+  --tp-border: #d8dee6;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--tp-gray);
+  color: #1a1a1a;
+}
+
+a { color: var(--tp-blue-light); }
+
+button, .btn {
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  padding: 0.55rem 1rem;
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  background: var(--tp-blue-light);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #e9ecef;
+  color: #333;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--tp-border);
+  border-radius: 4px;
+  font: inherit;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.form-group { margin-bottom: 1rem; }
+
+.card {
+  background: #fff;
+  border: 1px solid var(--tp-border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .grid-2 { grid-template-columns: 1fr; }
+}

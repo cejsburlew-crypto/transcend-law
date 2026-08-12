@@ -1,0 +1,27 @@
+#--------------------------------------------------------------------
+# Bond Intelligence API - CodeIgniter 4 Environment
+#--------------------------------------------------------------------
+
+CI_ENVIRONMENT = development
+
+#--------------------------------------------------------------------
+# APP
+#--------------------------------------------------------------------
+app.baseURL = 'http://localhost:8080/'
+app.forceGlobalSecureRequests = false
+
+#--------------------------------------------------------------------
+# DATABASE - SQLite for MVP
+#--------------------------------------------------------------------
+database.default.hostname = localhost
+database.default.database = WRITEPATH/bond_intelligence.db
+database.default.username =
+database.default.password =
+database.default.DBDriver = SQLite3
+database.default.DBPrefix =
+database.default.port = 3306
+
+#--------------------------------------------------------------------
+# LOGGING
+#--------------------------------------------------------------------
+logger.threshold = 4

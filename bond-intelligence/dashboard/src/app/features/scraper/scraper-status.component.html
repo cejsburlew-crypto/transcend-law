@@ -1,0 +1,163 @@
+<div class="scraper-page">
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Scraper Control</h1>
+      <p class="page-subtitle">Select states on the map, then run targeted scrapers. Auto-refreshes every 30s.</p>
+    </div>
+    <div class="page-header__actions">
+      <button class="btn-run-selected" (click)="runSelected()" [disabled]="selectedStates.size === 0 || anyTriggering">
+        <span class="material-icons">play_circle</span>
+        Run {{ selectedStates.size > 0 ? selectedStates.size + ' State' + (selectedStates.size > 1 ? 's' : '') : 'Selected' }}
+      </button>
+      <button class="btn-run-all" (click)="runAll()" [disabled]="anyTriggering">
+        <span class="material-icons">play_arrow</span>
+        Run All
+      </button>
+    </div>
+  </div>
+
+  <!-- ── State Map ── -->
+  <div class="card map-card">
+    <div class="map-card__header">
+      <h2 class="card__title">Select States to Scrape</h2>
+      <div class="map-legend">
+        <span class="map-legend-item"><span class="map-dot map-dot--available"></span> Data source available</span>
+        <span class="map-legend-item"><span class="map-dot map-dot--selected"></span> Selected</span>
+        <span class="map-legend-item"><span class="map-dot map-dot--none"></span> No source yet</span>
+      </div>
+      <button class="btn-clear-states" (click)="clearSelection()" *ngIf="selectedStates.size > 0">
+        Clear selection
+      </button>
+    </div>
+
+    <!-- State grid map (geographic approximation) -->
+    <div class="state-map-grid">
+      <div *ngFor="let cell of mapGrid"
+           class="state-cell"
+           [class.state-cell--available]="hasSource(cell)"
+           [class.state-cell--selected]="!!cell && selectedStates.has(cell)"
+           [class.state-cell--empty]="!cell"
+           [class.state-cell--no-source]="cell && !hasSource(cell)"
+           (click)="cell && hasSource(cell) && toggleState(cell)"
+           [title]="cell ? stateLabel(cell) : ''">
+        {{ cell || '' }}
+      </div>
+    </div>
+
+    <!-- Selected state sources list -->
+    <div class="selected-sources" *ngIf="selectedStates.size > 0">
+      <h3 class="selected-sources__title">Sources for selected states:</h3>
+      <div class="selected-source-row" *ngFor="let st of selectedStatesList">
+        <span class="state-badge">{{ st }}</span>
+        <div class="selected-source-links">
+          <a *ngFor="let src of sourcesForState(st)"
+             [href]="src.url" target="_blank" class="source-portal-link">
+            <span class="material-icons">{{ src.icon }}</span>
+            {{ src.name }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── State Data Sources Directory ── -->
+  <div class="card">
+    <h2 class="card__title">State Government Data Sources</h2>
+    <p class="card__subtitle">Official portals that publish bond election results, authorized/unissued debt, and procurement opportunities.</p>
+    <div class="sources-directory">
+      <div class="sources-dir-row" *ngFor="let entry of stateSources">
+        <div class="sources-dir-state">
+          <span class="state-badge">{{ entry.state }}</span>
+          <span class="sources-dir-name">{{ entry.stateName }}</span>
+        </div>
+        <div class="sources-dir-links">
+          <a *ngFor="let s of entry.sources" [href]="s.url" target="_blank" class="dir-link">
+            <span class="material-icons">{{ s.icon }}</span>
+            <div class="dir-link__body">
+              <div class="dir-link__name">{{ s.name }}</div>
+              <div class="dir-link__desc">{{ s.description }}</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Active Scrapers ── -->
+  <div class="card">
+    <h2 class="card__title">Scraper Engines</h2>
+    <div class="scraper-grid">
+      <div class="scraper-card" *ngFor="let s of scrapers">
+        <div class="scraper-card__header">
+          <div class="scraper-card__icon">
+            <span class="material-icons">{{ s.icon }}</span>
+          </div>
+          <div class="scraper-card__info">
+            <h3 class="scraper-card__name">{{ s.label }}</h3>
+            <p class="scraper-card__desc">{{ s.description }}</p>
+          </div>
+          <span class="scraper-card__state">{{ s.state }}</span>
+        </div>
+
+        <div class="scraper-card__last-run" *ngIf="lastRun(s.key) as run">
+          <div class="last-run-row">
+            <span class="status-badge status-badge--{{ statusClass(run.status) }}">{{ run.status }}</span>
+            <span class="run-meta">{{ run.completed_at | date:'MMM d, h:mm a' }}</span>
+            <span class="run-meta">{{ formatDuration(run) }}</span>
+          </div>
+          <div class="run-stats">
+            <span class="run-stat"><strong>{{ run.records_found }}</strong> found</span>
+            <span class="run-stat"><strong>{{ run.records_created }}</strong> new</span>
+            <span class="run-stat"><strong>{{ run.records_updated }}</strong> updated</span>
+          </div>
+        </div>
+        <div class="scraper-card__no-run" *ngIf="!lastRun(s.key)">Never run</div>
+        <div class="scraper-card__message" *ngIf="messages[s.key]">{{ messages[s.key] }}</div>
+
+        <button class="btn-run" (click)="trigger(s)" [disabled]="triggering[s.key]">
+          <span class="material-icons">{{ triggering[s.key] ? 'hourglass_empty' : 'play_arrow' }}</span>
+          {{ triggering[s.key] ? 'Triggering…' : 'Run Now' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Run History ── -->
+  <div class="card">
+    <div class="card__header">
+      <h2 class="card__title">Run History</h2>
+      <span class="run-count">{{ runs.length }} runs</span>
+    </div>
+    <app-loading-spinner *ngIf="loading" />
+    <table class="data-table" *ngIf="!loading">
+      <thead>
+        <tr><th>Scraper</th><th>State</th><th>Status</th><th>Found</th><th>Created</th><th>Updated</th><th>Started</th><th>Duration</th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let run of runs">
+          <td><strong>{{ run.scraper_name }}</strong></td>
+          <td><span class="state-badge">{{ run.state }}</span></td>
+          <td><span class="status-badge status-badge--{{ statusClass(run.status) }}">{{ run.status }}</span></td>
+          <td>{{ run.records_found }}</td>
+          <td>{{ run.records_created }}</td>
+          <td>{{ run.records_updated }}</td>
+          <td>{{ run.started_at | date:'MMM d, h:mm a' }}</td>
+          <td>{{ formatDuration(run) }}</td>
+        </tr>
+        <tr *ngIf="runs.length === 0">
+          <td colspan="8" class="td-empty">No runs yet.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-box">
+    <span class="material-icons">info</span>
+    <div>
+      <strong>How it works:</strong> The dashboard queues a run record; the Python scraper picks it up.
+      Start it with <code>python scraper/main.py scrape --all</code> or <code>python scraper/scheduler.py</code> for continuous background collection.
+    </div>
+  </div>
+
+</div>

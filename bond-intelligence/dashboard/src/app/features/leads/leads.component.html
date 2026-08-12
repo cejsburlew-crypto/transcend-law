@@ -1,0 +1,117 @@
+<div class="leads-page">
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <div class="filter-bar__row">
+      <input class="filter-input filter-input--search" type="text" placeholder="Search agencies…"
+             [(ngModel)]="filters.search" (keyup.enter)="applyFilters()">
+
+      <select class="filter-select" [(ngModel)]="filters.state" (change)="applyFilters()">
+        <option value="">All States</option>
+        <option *ngFor="let s of states" [value]="s">{{ s }}</option>
+      </select>
+
+      <select class="filter-select" [(ngModel)]="filters.agency_type" (change)="applyFilters()">
+        <option value="">All Agency Types</option>
+        <option *ngFor="let t of agencyTypes" [value]="t">{{ t | agencyTypeLabel }}</option>
+      </select>
+
+      <select class="filter-select" [(ngModel)]="filters.opportunity_stage" (change)="applyFilters()">
+        <option value="">All Stages</option>
+        <option *ngFor="let s of stages" [value]="s">{{ s | stageLabel }}</option>
+      </select>
+
+      <select class="filter-select" [(ngModel)]="filters.sort" (change)="applyFilters()">
+        <option *ngFor="let s of sortOptions" [value]="s.value">Sort: {{ s.label }}</option>
+      </select>
+
+      <label class="filter-toggle">
+        <input type="checkbox" [(ngModel)]="filters.approach_now" (change)="applyFilters()">
+        <span class="filter-toggle__label">⚡ Approach Now</span>
+      </label>
+
+      <button class="btn-clear" (click)="clearFilters()">Clear</button>
+    </div>
+    <div class="filter-bar__meta">
+      Showing {{ leads.length }} of {{ total }} agencies
+    </div>
+  </div>
+
+  <app-loading-spinner *ngIf="loading" />
+
+  <!-- Lead Cards Grid -->
+  <div class="leads-grid" *ngIf="!loading">
+    <div class="lead-card" *ngFor="let lead of leads">
+      <div class="lead-card__header">
+        <div class="lead-card__score">
+          <app-score-badge [score]="lead.lead_score?.score || 0" size="md" />
+        </div>
+        <div class="lead-card__meta">
+          <h3 class="lead-card__name">{{ lead.name }}</h3>
+          <div class="lead-card__tags">
+            <span class="state-badge">{{ lead.state }}</span>
+            <span class="type-badge">{{ lead.agency_type | agencyTypeLabel }}</span>
+          </div>
+        </div>
+        <span *ngIf="lead.lead_score?.approach_now"
+              class="lead-card__hot has-tip"
+              data-tip="⚡ Approach Now — multiple strong signals align. This agency is actively procuring or a key deadline is imminent. Prioritize outreach this week.">⚡</span>
+      </div>
+
+      <div class="lead-card__body">
+        <span class="has-tip"
+              data-tip="Opportunity Stage — where this agency sits in the bond program lifecycle, from Bond Passed through active construction to closeout.">
+          <app-stage-badge [stage]="lead.lead_score?.opportunity_stage || ''" />
+        </span>
+
+        <div class="lead-card__stats">
+          <div class="lead-card__stat">
+            <span class="lead-card__stat-label has-tip"
+                  data-tip="Bond Amount — total voter-approved bond authorization for this agency's most recent measure. Reflects the overall program size, not what remains unissued.">
+              Bond Auth <span class="tip-icon">?</span>
+            </span>
+            <span class="lead-card__stat-value">{{ bondAmount(lead) | currencyMillions }}</span>
+          </div>
+          <div class="lead-card__stat lead-card__stat--highlight" *ngIf="remainingAmount(lead) > 0">
+            <span class="lead-card__stat-label has-tip"
+                  data-tip="Remaining Unissued — bond dollars not yet sold to investors. This is the available market for bond program management, construction management, and related services. Higher remaining = more future contract work ahead.">
+              Remaining <span class="tip-icon">?</span>
+            </span>
+            <span class="lead-card__stat-value lead-card__stat-value--green">{{ remainingAmount(lead) | currencyMillions }}</span>
+          </div>
+          <div class="lead-card__stat">
+            <span class="lead-card__stat-label has-tip"
+                  data-tip="Confidence — how complete the underlying data is. Higher % means more data points (bond results, procurement history, contacts) were available to score this agency. Low confidence = fewer data sources verified.">
+              Confidence <span class="tip-icon">?</span>
+            </span>
+            <span class="lead-card__stat-value">{{ lead.lead_score?.confidence || 0 }}%</span>
+          </div>
+        </div>
+
+        <p *ngIf="topFactor(lead)" class="lead-card__factor has-tip"
+           data-tip="Top Signal — the single highest-scoring factor driving this lead's overall score.">
+          <span class="material-icons">trending_up</span>
+          {{ topFactor(lead) }}
+        </p>
+      </div>
+
+      <div class="lead-card__footer">
+        <a [routerLink]="['/agencies', lead.id]" class="btn-view">View Details</a>
+      </div>
+    </div>
+  </div>
+
+  <app-empty-state *ngIf="!loading && leads.length === 0"
+    icon="search_off"
+    message="No leads match your filters."
+    actionLabel="Clear Filters"
+    (action)="clearFilters()" />
+
+  <!-- Pagination -->
+  <div class="pagination" *ngIf="!loading && lastPage > 1">
+    <button class="pagination__btn" (click)="prevPage()" [disabled]="page === 1">← Prev</button>
+    <span class="pagination__info">Page {{ page }} of {{ lastPage }}</span>
+    <button class="pagination__btn" (click)="nextPage()" [disabled]="page >= lastPage">Next →</button>
+  </div>
+
+</div>

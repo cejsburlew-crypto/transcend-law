@@ -1,0 +1,25 @@
+services:
+  api:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/app
+      - ssp-data:/app/data
+    environment:
+      DB_PATH: /app/data/ssp.sqlite
+
+  web:
+    build: ./frontend
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      API_URL: http://localhost:8080/api
+    depends_on:
+      - api
+
+volumes:
+  ssp-data:

@@ -1,0 +1,57 @@
+<div class="shell" [class.shell--collapsed]="!sidebarOpen()">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <div class="sidebar__logo">
+        <span class="sidebar__logo-mark">⚡</span>
+        <span class="sidebar__logo-text">Bond Intelligence</span>
+      </div>
+      <button class="sidebar__toggle" (click)="toggleSidebar()">
+        <span class="material-icons">{{ sidebarOpen() ? 'menu_open' : 'menu' }}</span>
+      </button>
+    </div>
+
+    <div class="sidebar__brand">Transcend PM</div>
+
+    <nav class="sidebar__nav">
+      <a
+        *ngFor="let item of navItems"
+        [routerLink]="item.path"
+        routerLinkActive="active"
+        class="sidebar__nav-item"
+      >
+        <span class="material-icons">{{ item.icon }}</span>
+        <span class="sidebar__nav-label">{{ item.label }}</span>
+        <span *ngIf="item.label === 'Leads' && approachNowCount() > 0" class="sidebar__badge">
+          {{ approachNowCount() }}
+        </span>
+      </a>
+    </nav>
+
+    <div class="sidebar__footer">
+      <span class="sidebar__version">v1.0 MVP</span>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="main">
+    <header class="topbar">
+      <button class="topbar__menu-btn" (click)="toggleSidebar()">
+        <span class="material-icons">menu</span>
+      </button>
+      <h1 class="topbar__title">Capital Program Opportunity Engine</h1>
+      <div class="topbar__actions">
+        <a routerLink="/leads" class="topbar__approach-btn" *ngIf="approachNowCount() > 0">
+          <span class="material-icons">bolt</span>
+          {{ approachNowCount() }} Approach Now
+        </a>
+      </div>
+    </header>
+
+    <main class="content">
+      <router-outlet />
+    </main>
+  </div>
+
+</div>

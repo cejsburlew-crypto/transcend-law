@@ -1,0 +1,24 @@
+@if (layers) {
+  <div class="map-toolbar">
+    <label><input type="checkbox" [checked]="serviceVisible('fire')" (change)="toggleService('fire')"> Fire (LFA)</label>
+    <label><input type="checkbox" [checked]="serviceVisible('hospital')" (change)="toggleService('hospital')"> Hospital</label>
+    <label><input type="checkbox" [checked]="serviceVisible('urgent_care')" (change)="toggleService('urgent_care')"> Urgent care</label>
+    <label><input type="checkbox" [checked]="serviceVisible('police')" (change)="toggleService('police')"> Police</label>
+
+    <div class="label-tools">
+      <select [(ngModel)]="labelType">
+        <option value="hydrant">Hydrant</option>
+        <option value="fdc">FDC</option>
+        <option value="extinguisher">Extinguisher</option>
+        <option value="route">Fire route</option>
+        <option value="other">Other</option>
+      </select>
+      <input [(ngModel)]="labelText" placeholder="Label text">
+      <button type="button" class="btn btn-secondary" (click)="startPlaceLabel()">Place label on map</button>
+    </div>
+  </div>
+}
+
+<div #mapHost class="map-host"></div>
+
+<p class="hint">Toggle service layers, then click <strong>Place label on map</strong> and click the plot to mark hydrants, FDCs, and routes.</p>
