@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing & Revenue Dashboard - TRANSCEND LAW Admin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2c5aa0 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .header-meta { font-size: 0.95rem; opacity: 0.9; }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-top: 4px solid #1e88e5;
+        }
+
+        .kpi-card.revenue { border-top-color: #4caf50; }
+        .kpi-card.tt-fee { border-top-color: #ff9800; }
+        .kpi-card.invoices { border-top-color: #2196f3; }
+        .kpi-card.disputes { border-top-color: #f44336; }
+
+        .kpi-label { color: #666; font-size: 0.85rem; text-transform: uppercase; }
+        .kpi-value { font-size: 2.5rem; font-weight: bold; margin-top: 0.5rem; }
+        .kpi-card.revenue .kpi-value { color: #4caf50; }
+        .kpi-card.tt-fee .kpi-value { color: #ff9800; }
+        .kpi-card.invoices .kpi-value { color: #2196f3; }
+        .kpi-card.disputes .kpi-value { color: #f44336; }
+
+        .kpi-meta { font-size: 0.85rem; color: #999; margin-top: 0.5rem; }
+
+        .filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .filter-group select, .filter-group input {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-primary { background: #1e88e5; color: white; }
+        .btn-primary:hover { background: #1565c0; }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .card h2 {
+            font-size: 1.3rem;
+            color: #1e3a5f;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #1e88e5;
+            padding-bottom: 1rem;
+        }
+
+        .revenue-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .revenue-table th {
+            background: #f5f5f5;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .revenue-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .revenue-table tr:hover { background: #f9f9f9; }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-pending { background: #fff3e0; color: #e65100; }
+        .badge-approved { background: #c8e6c9; color: #2e7d32; }
+        .badge-disputed { background: #ffcdd2; color: #c62828; }
+
+        .invoice-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+        }
+
+        .invoice-details { flex: 1; }
+        .invoice-firm { font-weight: 600; color: #1e3a5f; }
+        .invoice-amount { font-size: 0.9rem; color: #666; margin-top: 0.3rem; }
+        .invoice-tt-fee { font-size: 0.85rem; color: #ff9800; font-weight: 600; margin-top: 0.5rem; }
+
+        .invoice-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-edit { background: #2196f3; color: white; }
+        .btn-edit:hover { background: #1976d2; }
+
+        .btn-cancel { background: #f44336; color: white; }
+        .btn-cancel:hover { background: #d32f2f; }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-box h3 { color: #1e3a5f; margin-bottom: 1rem; font-size: 1.1rem; }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.95rem;
+        }
+
+        .stat-item:last-child { border-bottom: none; }
+        .stat-value { font-weight: 600; color: #1e88e5; }
+
+        .region-heatmap {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .region-box {
+            background: #f0f7ff;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+            border-left: 4px solid #1e88e5;
+        }
+
+        .region-name { font-weight: 600; color: #1e3a5f; }
+        .region-value { font-size: 1.5rem; font-weight: bold; color: #1e88e5; margin-top: 0.5rem; }
+        .region-label { font-size: 0.75rem; color: #999; margin-top: 0.3rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>💰 Billing & Revenue Dashboard</h1>
+            <p class="header-meta">1% TT Maintenance & Admin Fee Tracking | Invoice Management</p>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card revenue">
+                <div class="kpi-label">Total Platform Revenue</div>
+                <div class="kpi-value">$847,350</div>
+                <div class="kpi-meta">Last 30 days</div>
+            </div>
+            <div class="kpi-card tt-fee">
+                <div class="kpi-label">1% TT Maintenance Fee</div>
+                <div class="kpi-value">$8,474</div>
+                <div class="kpi-meta">Captured this month</div>
+            </div>
+            <div class="kpi-card invoices">
+                <div class="kpi-label">Total Invoices</div>
+                <div class="kpi-value">312</div>
+                <div class="kpi-meta">272 approved | 40 pending</div>
+            </div>
+            <div class="kpi-card disputes">
+                <div class="kpi-label">Disputed Invoices</div>
+                <div class="kpi-value">8</div>
+                <div class="kpi-meta">2.6% dispute rate</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <label>Time Period</label>
+                <select>
+                    <option>Last 30 Days</option>
+                    <option>Last 90 Days</option>
+                    <option>Last 6 Months</option>
+                    <option>Last 12 Months</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Region</label>
+                <select>
+                    <option>All Regions</option>
+                    <option>West Coast</option>
+                    <option>Midwest</option>
+                    <option>Northeast</option>
+                    <option>South</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Status</label>
+                <select>
+                    <option>All</option>
+                    <option>Approved</option>
+                    <option>Pending Approval</option>
+                    <option>Disputed</option>
+                </select>
+            </div>
+            <button class="btn btn-primary">Apply Filters</button>
+        </div>
+
+        <!-- Revenue by Region -->
+        <div class="card">
+            <h2>📊 Revenue Breakdown by Region</h2>
+            <div class="region-heatmap">
+                <div class="region-box">
+                    <div class="region-name">West Coast</div>
+                    <div class="region-value">$247,500</div>
+                    <div class="region-label">$2,475 TT Fee</div>
+                </div>
+                <div class="region-box">
+                    <div class="region-name">Midwest</div>
+                    <div class="region-value">$189,300</div>
+                    <div class="region-label">$1,893 TT Fee</div>
+                </div>
+                <div class="region-box">
+                    <div class="region-name">Northeast</div>
+                    <div class="region-value">$218,600</div>
+                    <div class="region-label">$2,186 TT Fee</div>
+                </div>
+                <div class="region-box">
+                    <div class="region-name">South</div>
+                    <div class="region-value">$191,950</div>
+                    <div class="region-label">$1,920 TT Fee</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Revenue by Subscription Tier -->
+        <div class="stats-section">
+            <div class="stat-box">
+                <h3>Subscription Tier Breakdown</h3>
+                <div class="stat-item">
+                    <span>Basic Firms ($29/mo)</span>
+                    <span class="stat-value">$8,700</span>
+                </div>
+                <div class="stat-item">
+                    <span>Professional Firms ($99/mo)</span>
+                    <span class="stat-value">$29,700</span>
+                </div>
+                <div class="stat-item">
+                    <span>Enterprise Firms ($299/mo)</span>
+                    <span class="stat-value">$89,700</span>
+                </div>
+                <div class="stat-item">
+                    <span style="font-weight: 600;">Total Subscriptions</span>
+                    <span class="stat-value" style="color: #4caf50;">$128,100</span>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <h3>SME Subscription Tier Breakdown</h3>
+                <div class="stat-item">
+                    <span>Basic SMEs ($15/mo)</span>
+                    <span class="stat-value">$2,850</span>
+                </div>
+                <div class="stat-item">
+                    <span>Professional SMEs ($60/mo)</span>
+                    <span class="stat-value">$17,100</span>
+                </div>
+                <div class="stat-item">
+                    <span>Enterprise SMEs ($150/mo)</span>
+                    <span class="stat-value">$8,250</span>
+                </div>
+                <div class="stat-item">
+                    <span style="font-weight: 600;">Total SME Subscriptions</span>
+                    <span class="stat-value" style="color: #4caf50;">$28,200</span>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <h3>Targeting Opportunities</h3>
+                <div class="stat-item">
+                    <span>🔥 Growth Region: West Coast</span>
+                    <span class="stat-value">+$45K/mo</span>
+                </div>
+                <div class="stat-item">
+                    <span>📈 Enterprise Tier Potential</span>
+                    <span class="stat-value">+$32K/mo</span>
+                </div>
+                <div class="stat-item">
+                    <span>🚀 SME Professional Tier</span>
+                    <span class="stat-value">+$12K/mo</span>
+                </div>
+                <div class="stat-item">
+                    <span style="font-weight: 600;">Total Opportunity</span>
+                    <span class="stat-value" style="color: #ff9800;">+$89K/mo</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Invoices for Approval -->
+        <div class="card">
+            <h2>⏳ Pending Invoice Approvals (Need Your Review)</h2>
+            <div class="invoice-card">
+                <div class="invoice-details">
+                    <div class="invoice-firm">Smith & Associates Law Firm</div>
+                    <div class="invoice-amount">Invoice #TL-2026-0847 | $12,500 (Client Retainer)</div>
+                    <div class="invoice-tt-fee">+ 1% TT Fee: $125.00</div>
+                </div>
+                <div class="invoice-actions">
+                    <button class="btn-small btn-edit">✓ Approve</button>
+                    <button class="btn-small btn-cancel">✕ Reject</button>
+                </div>
+            </div>
+
+            <div class="invoice-card">
+                <div class="invoice-details">
+                    <div class="invoice-firm">Johnson Law Group</div>
+                    <div class="invoice-amount">Invoice #TL-2026-0848 | $8,750 (Attorney Services)</div>
+                    <div class="invoice-tt-fee">+ 1% TT Fee: $87.50</div>
+                </div>
+                <div class="invoice-actions">
+                    <button class="btn-small btn-edit">✓ Approve</button>
+                    <button class="btn-small btn-cancel">✕ Reject</button>
+                </div>
+            </div>
+
+            <div class="invoice-card">
+                <div class="invoice-details">
+                    <div class="invoice-firm">Davis & Partners Legal</div>
+                    <div class="invoice-amount">Invoice #TL-2026-0849 | $15,200 (Case Management)</div>
+                    <div class="invoice-tt-fee">+ 1% TT Fee: $152.00</div>
+                </div>
+                <div class="invoice-actions">
+                    <button class="btn-small btn-edit">✓ Approve</button>
+                    <button class="btn-small btn-cancel">✕ Reject</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Disputed Invoices -->
+        <div class="card">
+            <h2>⚠️ Disputed Invoices (Awaiting Your Decision)</h2>
+            <div class="invoice-card" style="background: #fff3e0; border-color: #ff9800;">
+                <div class="invoice-details">
+                    <div class="invoice-firm">Brown & Co. Legal Services</div>
+                    <div class="invoice-amount">Invoice #TL-2026-0801 | $6,500 | <span class="badge badge-disputed">DISPUTED</span></div>
+                    <div class="invoice-tt-fee">+ 1% TT Fee: $65.00</div>
+                    <div style="color: #e65100; font-size: 0.9rem; margin-top: 0.5rem;">Dispute reason: "Rate was quoted at $95/hr, not $100/hr"</div>
+                </div>
+                <div class="invoice-actions">
+                    <button class="btn-small btn-edit">⚙️ Edit & Adjust</button>
+                    <button class="btn-small btn-cancel">❌ Cancel Fee</button>
+                </div>
+            </div>
+
+            <div class="invoice-card" style="background: #fff3e0; border-color: #ff9800;">
+                <div class="invoice-details">
+                    <div class="invoice-firm">Martinez & Associates</div>
+                    <div class="invoice-amount">Invoice #TL-2026-0812 | $9,200 | <span class="badge badge-disputed">DISPUTED</span></div>
+                    <div class="invoice-tt-fee">+ 1% TT Fee: $92.00</div>
+                    <div style="color: #e65100; font-size: 0.9rem; margin-top: 0.5rem;">Dispute reason: "Client refused to sign, no contract executed"</div>
+                </div>
+                <div class="invoice-actions">
+                    <button class="btn-small btn-edit">⚙️ Edit & Adjust</button>
+                    <button class="btn-small btn-cancel">❌ Cancel Fee</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Transactions Table -->
+        <div class="card">
+            <h2>📋 Recent Invoice Transactions</h2>
+            <table class="revenue-table">
+                <thead>
+                    <tr>
+                        <th>Invoice #</th>
+                        <th>Law Firm</th>
+                        <th>Amount</th>
+                        <th>1% TT Fee</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>TL-2026-0850</td>
+                        <td>Smith & Associates</td>
+                        <td>$12,500</td>
+                        <td>$125.00</td>
+                        <td><span class="badge badge-approved">APPROVED</span></td>
+                        <td>Aug 12, 2026</td>
+                        <td><button class="btn-small btn-edit">View</button></td>
+                    </tr>
+                    <tr>
+                        <td>TL-2026-0849</td>
+                        <td>Johnson Law Group</td>
+                        <td>$8,750</td>
+                        <td>$87.50</td>
+                        <td><span class="badge badge-approved">APPROVED</span></td>
+                        <td>Aug 11, 2026</td>
+                        <td><button class="btn-small btn-edit">View</button></td>
+                    </tr>
+                    <tr>
+                        <td>TL-2026-0848</td>
+                        <td>Davis & Partners</td>
+                        <td>$15,200</td>
+                        <td>$152.00</td>
+                        <td><span class="badge badge-approved">APPROVED</span></td>
+                        <td>Aug 10, 2026</td>
+                        <td><button class="btn-small btn-edit">View</button></td>
+                    </tr>
+                    <tr>
+                        <td>TL-2026-0847</td>
+                        <td>Brown & Co.</td>
+                        <td>$6,500</td>
+                        <td>$65.00 (CANCELLED)</td>
+                        <td><span class="badge badge-disputed">DISPUTED - RESOLVED</span></td>
+                        <td>Aug 9, 2026</td>
+                        <td><button class="btn-small btn-edit">View</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="stats-section">
+            <div class="stat-box">
+                <h3>💳 Payment Collection Rate</h3>
+                <div class="stat-item">
+                    <span>Approved Invoices Paid</span>
+                    <span class="stat-value">87%</span>
+                </div>
+                <div class="stat-item">
+                    <span>Pending Payment</span>
+                    <span class="stat-value">9%</span>
+                </div>
+                <div class="stat-item">
+                    <span>Overdue 30+ Days</span>
+                    <span class="stat-value">4%</span>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <h3>🎯 TT Fee Impact</h3>
+                <div class="stat-item">
+                    <span>Total Captured This Month</span>
+                    <span class="stat-value">$8,474</span>
+                </div>
+                <div class="stat-item">
+                    <span>Year-to-Date Total</span>
+                    <span class="stat-value">$76,266</span>
+                </div>
+                <div class="stat-item">
+                    <span>Avg. Fee per Invoice</span>
+                    <span class="stat-value">$27.14</span>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <h3>📊 Invoice Analytics</h3>
+                <div class="stat-item">
+                    <span>Avg. Invoice Amount</span>
+                    <span class="stat-value">$2,714</span>
+                </div>
+                <div class="stat-item">
+                    <span>Highest Single Invoice</span>
+                    <span class="stat-value">$45,000</span>
+                </div>
+                <div class="stat-item">
+                    <span>Dispute Resolution Time</span>
+                    <span class="stat-value">2.4 days</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function approveInvoice(invoiceId) {
+            alert(`✅ Invoice ${invoiceId} approved!\n1% TT fee captured and queued for payment processing.`);
+        }
+
+        function rejectInvoice(invoiceId) {
+            alert(`❌ Invoice ${invoiceId} rejected.\n1% TT fee cancelled. Review reason with law firm.`);
+        }
+
+        function editInvoice(invoiceId) {
+            alert(`⚙️ Edit invoice ${invoiceId}:\n- Adjust amount\n- Edit TT fee\n- Add notes\n- Send back to firm`);
+        }
+
+        function cancelFee(invoiceId) {
+            alert(`🚫 Cancelled 1% TT fee for invoice ${invoiceId}.\nFirm will be notified of fee removal.`);
+        }
+    </script>
+</body>
+</html>
