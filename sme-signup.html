@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SME Signup - Choose Your Plan - TRANSCEND LAW</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3a5f 0%, #2c5aa0 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .plan-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .plan-card:hover { transform: translateY(-10px); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+
+        .plan-card.featured { border: 3px solid #1e88e5; transform: scale(1.05); }
+
+        .badge-featured {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e88e5;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .plan-name { font-size: 1.5rem; color: #1e3a5f; margin-bottom: 0.5rem; font-weight: 600; }
+
+        .plan-price {
+            font-size: 2.5rem;
+            color: #1e88e5;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .plan-price small { font-size: 0.9rem; color: #666; }
+
+        .plan-description { color: #666; font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6; }
+
+        .features-list {
+            list-style: none;
+            flex: 1;
+            margin-bottom: 2rem;
+        }
+
+        .features-list li {
+            padding: 0.75rem 0;
+            color: #666;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+        }
+
+        .features-list li:before {
+            content: "✓";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        .cta-button {
+            background: #1e88e5;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cta-button:hover { background: #1565c0; }
+        .cta-button:active { transform: scale(0.98); }
+
+        .plan-card.featured .cta-button { background: #1e88e5; }
+
+        .auth-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .auth-section h2 { color: #1e3a5f; margin-bottom: 1.5rem; font-size: 1.5rem; }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-row.full { grid-template-columns: 1fr; }
+
+        .form-group { display: flex; flex-direction: column; }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1e88e5;
+            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+        }
+
+        .signup-button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 1rem;
+        }
+
+        .signup-button:hover { background: #388e3c; }
+
+        .clove-badge {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .pricing-note {
+            color: white;
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .pricing-note strong { display: block; margin-bottom: 0.5rem; }
+
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+            .plan-card.featured { transform: scale(1); }
+            .header h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎓 Join TRANSCEND LAW as an Expert Consultant</h1>
+            <p>Choose your subscription plan to start offering your expertise</p>
+        </div>
+
+        <!-- Pricing Plans -->
+        <div class="plans-grid">
+            <!-- Basic Plan -->
+            <div class="plan-card">
+                <div class="plan-name">Basic</div>
+                <div class="plan-price">
+                    $15<small>/month</small>
+                </div>
+                <p class="plan-description">Perfect for getting started as an SME</p>
+                <ul class="features-list">
+                    <li>1 active consultation</li>
+                    <li>Basic profile</li>
+                    <li>Email support</li>
+                    <li>Case documents access</li>
+                    <li>Document versioning</li>
+                </ul>
+                <button class="cta-button" onclick="selectPlan('basic')">Choose Basic</button>
+            </div>
+
+            <!-- Professional Plan -->
+            <div class="plan-card featured">
+                <span class="badge-featured">⭐ MOST POPULAR</span>
+                <div class="plan-name">Professional</div>
+                <div class="plan-price">
+                    $60<small>/month</small>
+                </div>
+                <p class="plan-description">Recommended for active SME consultants</p>
+                <ul class="features-list">
+                    <li>5 active consultations</li>
+                    <li>Featured profile</li>
+                    <li>Priority messaging</li>
+                    <li>Case analytics</li>
+                    <li>Document versioning</li>
+                    <li>Consultation fee proposals</li>
+                </ul>
+                <button class="cta-button" onclick="selectPlan('professional')">Choose Professional</button>
+            </div>
+
+            <!-- Enterprise Plan -->
+            <div class="plan-card">
+                <div class="plan-name">Enterprise</div>
+                <div class="plan-price">
+                    $150<small>/month</small>
+                </div>
+                <p class="plan-description">For full-time expert consultants</p>
+                <ul class="features-list">
+                    <li>Unlimited consultations</li>
+                    <li>Premium profile</li>
+                    <li>Direct booking link</li>
+                    <li>24/7 priority support</li>
+                    <li>Advanced analytics</li>
+                    <li>Custom branding</li>
+                </ul>
+                <button class="cta-button" onclick="selectPlan('enterprise')">Choose Enterprise</button>
+            </div>
+        </div>
+
+        <div class="pricing-note">
+            <strong>💳 Billing through Clove (Part of Transcend Tools)</strong>
+            <p>All payments securely processed through Clove. Cancel anytime with no penalties.</p>
+        </div>
+
+        <!-- Signup Form -->
+        <div class="auth-section">
+            <h2>Create Your SME Account</h2>
+            <form onsubmit="handleSignup(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="full-name">Full Name *</label>
+                        <input type="text" id="full-name" placeholder="Dr. Jane Smith" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="professional-title">Professional Title *</label>
+                        <input type="text" id="professional-title" placeholder="e.g., Dr., Professor, Consultant" required>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" placeholder="expert@example.com" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password *</label>
+                        <input type="password" id="confirm-password" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label for="subscription-plan">Select Your Plan *</label>
+                        <select id="subscription-plan" required>
+                            <option value="">-- Choose a subscription plan --</option>
+                            <option value="basic">Basic - $15/month (1 active consultation)</option>
+                            <option value="professional" selected>Professional - $60/month (5 active consultations)</option>
+                            <option value="enterprise">Enterprise - $150/month (Unlimited consultations)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group full">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                        <input type="checkbox" id="terms" required>
+                        <span>I agree to the Terms of Service and Privacy Policy</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="signup-button">Create Account & Subscribe</button>
+                <div class="clove-badge">
+                    🔒 Secure billing through Clove | Part of Transcend Tools
+                </div>
+            </form>
+
+            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e0e0e0; text-align: center;">
+                <p style="color: #666; margin-bottom: 1rem;">Already have an account?</p>
+                <a href="sme-login.html" style="color: #1e88e5; text-decoration: none; font-weight: 600;">Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedPlan = 'professional';
+
+        function selectPlan(plan) {
+            selectedPlan = plan;
+            document.getElementById('subscription-plan').value = plan;
+
+            // Scroll to form
+            document.querySelector('.auth-section').scrollIntoView({ behavior: 'smooth' });
+
+            // Highlight selected plan
+            document.querySelectorAll('.plan-card').forEach(card => {
+                card.style.opacity = '0.6';
+            });
+            event.target.closest('.plan-card').style.opacity = '1';
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('full-name').value;
+            const professionalTitle = document.getElementById('professional-title').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const subscriptionTier = document.getElementById('subscription-plan').value;
+
+            // Validation
+            if (password !== confirmPassword) {
+                alert('❌ Passwords do not match');
+                return;
+            }
+
+            if (password.length < 8) {
+                alert('❌ Password must be at least 8 characters');
+                return;
+            }
+
+            // Show Clove payment flow (demo)
+            alert(`✅ Ready to create SME account!\n\nName: ${name}\nEmail: ${email}\nPlan: ${subscriptionTier.toUpperCase()}\n\nNext step: Complete payment through Clove billing system.\n\nClove Subscription ID: clove_sme_${Date.now()}`);
+
+            // In production, this would integrate with Clove's payment flow
+            // For demo, store credentials and navigate to dashboard
+            localStorage.setItem('smeToken', 'demo-token-sme-new');
+            localStorage.setItem('smeId', 'sme-new-' + Date.now());
+            localStorage.setItem('smeName', name);
+            localStorage.setItem('smeEmail', email);
+            localStorage.setItem('smeSubscription', subscriptionTier);
+            localStorage.setItem('smeCloveId', `clove_sme_${Date.now()}`);
+
+            window.location.href = 'sme-dashboard.html';
+        }
+
+        // Reset opacity on page load
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.plan-card').forEach(card => {
+                card.style.opacity = '1';
+            });
+        });
+    </script>
+</body>
+</html>

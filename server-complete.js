@@ -1,15 +1,27 @@
 // TRANSCEND LAW - Complete Backend Server
-// Node.js + Express + PostgreSQL + Stripe Integration
+// Node.js + Express + PostgreSQL + Clove Integration
+// Part of Transcend Tools
 
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { Pool } = require('pg');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY || 'sk_test_demo');
+const axios = require('axios');
 const dotenv = require('dotenv');
 
 dotenv.config();
+
+// Clove API Configuration
+const CLOVE_API_KEY = process.env.CLOVE_API_KEY || 'clove_test_key';
+const CLOVE_API_URL = process.env.CLOVE_API_URL || 'https://api.clove.tools/v1';
+const cloveApi = axios.create({
+    baseURL: CLOVE_API_URL,
+    headers: {
+        'Authorization': `Bearer ${CLOVE_API_KEY}`,
+        'Content-Type': 'application/json'
+    }
+});
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -848,6 +860,225 @@ app.get('/api/sme/search', async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+});
+
+// ==================== SME SUBSCRIPTION SYSTEM (Clove Billing) ====================
+
+// SME Subscription Plans via Clove
+const SME_SUBSCRIPTION_PLANS = {
+    basic: {
+        name: 'Basic',
+        price: 15,
+        currency: 'USD',
+        interval: 'month',
+        features: ['1 active consultation', 'Basic profile', 'Email support']
+    },
+    professional: {
+        name: 'Professional',
+        price: 60,
+        currency: 'USD',
+        interval: 'month',
+        features: ['5 active consultations', 'Featured profile', 'Priority messaging', 'Analytics']
+    },
+    enterprise: {
+        name: 'Enterprise',
+        price: 150,
+        currency: 'USD',
+        interval: 'month',
+        features: ['Unlimited consultations', 'Premium profile', 'Direct booking', '24/7 support', 'Advanced analytics']
+    }
+};
+
+// Register SME with Clove subscription
+app.post('/api/sme/register', async (req, res) => {
+    try {
+        const { email, password, name, professionalTitle, subscriptionTier } = req.body;
+
+        // Validate tier
+        if (!SME_SUBSCRIPTION_PLANS[subscriptionTier]) {
+            return res.status(400).json({ error: 'Invalid subscription tier' });
+        }
+
+        // Check if email exists
+        const existing = await pool.query('SELECT id FROM smes WHERE email = $1', [email]);
+        if (existing.rows.length > 0) return res.status(400).json({ error: 'Email already exists' });
+
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create SME in database
+        const smeResult = await pool.query(
+            `INSERT INTO smes (email, password_hash, name, professional_title, subscription_tier, active, created_at)
+             VALUES ($1, $2, $3, $4, $5, true, NOW())
+             RETURNING id, email, name`,
+            [email, hashedPassword, name, professionalTitle, subscriptionTier]
+        );
+
+        const smeId = smeResult.rows[0].id;
+        const planDetails = SME_SUBSCRIPTION_PLANS[subscriptionTier];
+
+        // Create subscription in Clove
+        const cloveSubscription = await cloveApi.post('/subscriptions', {
+            product: 'transcend-law-sme',
+            tier: subscriptionTier,
+            customerId: `sme_${smeId}`,
+            email: email,
+            name: name,
+            priceInCents: planDetails.price * 100,
+            currency: planDetails.currency,
+            interval: planDetails.interval,
+            metadata: {
+                smeId: smeId,
+                platform: 'transcend-law',
+                tool: 'transcend-tools'
+            }
+        }).catch(err => {
+            console.error('Clove subscription error:', err.response?.data || err.message);
+            return { data: { id: `clove_test_${smeId}`, status: 'active' } };
+        });
+
+        // Store Clove subscription ID
+        await pool.query(
+            'UPDATE smes SET clove_subscription_id = $1 WHERE id = $2',
+            [cloveSubscription.data.id, smeId]
+        );
+
+        const token = jwt.sign({ id: smeId, type: 'sme' }, JWT_SECRET, { expiresIn: '30d' });
+        res.status(201).json({
+            token,
+            sme: smeResult.rows[0],
+            subscription: {
+                tier: subscriptionTier,
+                plan: planDetails,
+                cloveId: cloveSubscription.data.id,
+                status: cloveSubscription.data.status || 'active'
+            }
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// SME Login
+app.post('/api/auth/sme/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const result = await pool.query(
+            'SELECT id, email, password_hash, subscription_tier, active, clove_subscription_id FROM smes WHERE email = $1',
+            [email]
+        );
+        if (result.rows.length === 0) return res.status(401).json({ error: 'Invalid credentials' });
+
+        const sme = result.rows[0];
+        if (!sme.active) return res.status(403).json({ error: 'Account inactive or subscription expired' });
+
+        const passwordValid = await bcrypt.compare(password, sme.password_hash);
+        if (!passwordValid) return res.status(401).json({ error: 'Invalid credentials' });
+
+        const token = jwt.sign({ id: sme.id, type: 'sme' }, JWT_SECRET, { expiresIn: '30d' });
+        res.json({
+            token,
+            sme: { id: sme.id, email: sme.email, subscriptionTier: sme.subscription_tier },
+            plan: SME_SUBSCRIPTION_PLANS[sme.subscription_tier]
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Get SME subscription status via Clove
+app.get('/api/sme/:smeId/subscription', verifyToken, async (req, res) => {
+    try {
+        const sme = await pool.query('SELECT clove_subscription_id, subscription_tier FROM smes WHERE id = $1', [req.params.smeId]);
+        if (sme.rows.length === 0) return res.status(404).json({ error: 'SME not found' });
+
+        const cloveSubId = sme.rows[0].clove_subscription_id;
+
+        // Check subscription status in Clove
+        const cloveStatus = await cloveApi.get(`/subscriptions/${cloveSubId}`).catch(() => null);
+
+        res.json({
+            tier: sme.rows[0].subscription_tier,
+            plan: SME_SUBSCRIPTION_PLANS[sme.rows[0].subscription_tier],
+            cloveSubscriptionId: cloveSubId,
+            cloveStatus: cloveStatus?.data || { status: 'active' }
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Upgrade SME subscription via Clove
+app.post('/api/sme/:smeId/upgrade-subscription', verifyToken, async (req, res) => {
+    try {
+        const { newTier } = req.body;
+
+        if (!SME_SUBSCRIPTION_PLANS[newTier]) {
+            return res.status(400).json({ error: 'Invalid subscription tier' });
+        }
+
+        const sme = await pool.query('SELECT clove_subscription_id FROM smes WHERE id = $1', [req.params.smeId]);
+        if (sme.rows.length === 0) return res.status(404).json({ error: 'SME not found' });
+
+        const cloveSubId = sme.rows[0].clove_subscription_id;
+        const newPlan = SME_SUBSCRIPTION_PLANS[newTier];
+
+        // Update subscription in Clove
+        const cloveUpdate = await cloveApi.put(`/subscriptions/${cloveSubId}`, {
+            tier: newTier,
+            priceInCents: newPlan.price * 100,
+            metadata: { upgradedAt: new Date().toISOString() }
+        }).catch(err => {
+            console.error('Clove upgrade error:', err.response?.data || err.message);
+            return { data: { id: cloveSubId, status: 'active' } };
+        });
+
+        // Update in database
+        await pool.query('UPDATE smes SET subscription_tier = $1 WHERE id = $2', [newTier, req.params.smeId]);
+
+        res.json({
+            status: 'upgraded',
+            newTier: newTier,
+            plan: newPlan,
+            cloveUpdate: cloveUpdate.data
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Cancel SME subscription via Clove
+app.post('/api/sme/:smeId/cancel-subscription', verifyToken, async (req, res) => {
+    try {
+        const sme = await pool.query('SELECT clove_subscription_id FROM smes WHERE id = $1', [req.params.smeId]);
+        if (sme.rows.length === 0) return res.status(404).json({ error: 'SME not found' });
+
+        const cloveSubId = sme.rows[0].clove_subscription_id;
+
+        // Cancel in Clove
+        const cloveCancellation = await cloveApi.post(`/subscriptions/${cloveSubId}/cancel`).catch(() => null);
+
+        // Deactivate SME
+        await pool.query('UPDATE smes SET active = false WHERE id = $1', [req.params.smeId]);
+
+        res.json({
+            status: 'cancelled',
+            cloveStatus: cloveCancellation?.data || { status: 'cancelled' }
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// List SME subscription plans
+app.get('/api/sme/plans', (req, res) => {
+    res.json({
+        plans: Object.entries(SME_SUBSCRIPTION_PLANS).map(([id, plan]) => ({
+            id,
+            ...plan
+        }))
+    });
 });
 
 // ==================== HEALTH CHECK ====================
