@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Notary Service - TRANSCEND LAW</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3a5f 0%, #2c5aa0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .container { max-width: 1000px; width: 100%; }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .info-section h2 { color: #1e3a5f; margin-bottom: 1.5rem; font-size: 1.5rem; }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .feature-box {
+            background: #f5f5f5;
+            padding: 1.5rem;
+            border-left: 4px solid #1e88e5;
+            border-radius: 4px;
+        }
+
+        .feature-title { font-weight: 600; color: #1e3a5f; margin-bottom: 0.3rem; }
+        .feature-desc { color: #666; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .feature-price { color: #ff9800; font-weight: 600; }
+
+        .login-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 1rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #999;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-button.active {
+            color: #1e88e5;
+            border-bottom-color: #1e88e5;
+        }
+
+        .tab-button:hover { color: #1e88e5; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1e88e5;
+            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            background: #1e88e5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover { background: #1565c0; }
+
+        .info-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: #2e7d32;
+        }
+
+        .links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .links a {
+            color: #1e88e5;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .links a:hover { text-decoration: underline; }
+
+        .compliance-badge {
+            background: #f0f7ff;
+            border: 1px solid #1e88e5;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .compliance-badge strong { color: #1e3a5f; display: block; margin-bottom: 0.5rem; }
+
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .tabs { flex-direction: column; }
+            .tab-button { border-bottom: 2px solid #e0e0e0; border-left: 3px solid transparent; }
+            .tab-button.active { border-bottom: none; border-left-color: #1e88e5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📝 Online Notary Service</h1>
+            <p>Notarize documents securely, earn $30+ per page, stay compliant</p>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Features Section -->
+            <div class="info-section">
+                <h2>Why Join Our Network?</h2>
+                <div class="feature-grid">
+                    <div class="feature-box">
+                        <div class="feature-title">💰 Earn Per Page</div>
+                        <div class="feature-desc">Industry standard $30 per stamped page</div>
+                        <div class="feature-price">Higher for rush/complex notarizations</div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-title">🔐 Secure Platform</div>
+                        <div class="feature-desc">Bank-grade encryption & eSignature</div>
+                        <div class="feature-price">ESIGN Act compliant</div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-title">📋 Digital Journal</div>
+                        <div class="feature-desc">Automatic notary journal tracking</div>
+                        <div class="feature-price">State compliance built-in</div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-title">🌐 Multi-State</div>
+                        <div class="feature-desc">Serve clients across the country</div>
+                        <div class="feature-price">Remote notarization (where permitted)</div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-title">⚡ Instant Payments</div>
+                        <div class="feature-desc">Via Clove, no waiting</div>
+                        <div class="feature-price">Daily settlement available</div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-title">🎓 Support & Training</div>
+                        <div class="feature-desc">Compliance updates, best practices</div>
+                        <div class="feature-price">24/7 technical support</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login/Signup Section -->
+            <div class="login-section">
+                <div class="tabs">
+                    <button class="tab-button active" onclick="switchTab('login')">Sign In</button>
+                    <button class="tab-button" onclick="switchTab('signup')">Create Account</button>
+                </div>
+
+                <!-- Login Tab -->
+                <div id="login" class="tab-content active">
+                    <h2 style="color: #1e3a5f; margin-bottom: 1.5rem;">Notary Sign In</h2>
+
+                    <form onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" placeholder="your@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" placeholder="••••••••" required>
+                        </div>
+
+                        <button type="submit" class="btn">Sign In</button>
+                    </form>
+
+                    <div style="text-align: center; margin-top: 1.5rem;">
+                        <a href="#" onclick="switchTab('signup')" style="color: #1e88e5; text-decoration: none;">Don't have an account? Create one</a>
+                    </div>
+                </div>
+
+                <!-- Signup Tab -->
+                <div id="signup" class="tab-content">
+                    <h2 style="color: #1e3a5f; margin-bottom: 1.5rem;">Become a Notary</h2>
+
+                    <div class="compliance-badge">
+                        <strong>✓ Requirements</strong>
+                        Valid notary commission in at least 1 state. Current liability insurance recommended.
+                    </div>
+
+                    <form onsubmit="handleSignup(event)">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" placeholder="John Smith" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" placeholder="your@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Notary License #</label>
+                            <input type="text" placeholder="Enter your notary license number" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>State(s) Commissioned In</label>
+                            <select required>
+                                <option>-- Select State --</option>
+                                <option>California</option>
+                                <option>Texas</option>
+                                <option>Florida</option>
+                                <option>New York</option>
+                                <option>All States (Remote Notary)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Commission Expiration Date</label>
+                            <input type="date" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" placeholder="••••••••" required>
+                        </div>
+
+                        <div style="background: #f5f5f5; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; font-size: 0.9rem;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0;">
+                                <input type="checkbox" required>
+                                <span>I agree to Notary Terms of Service and Compliance Requirements</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn">Create Account</button>
+                    </form>
+                </div>
+
+                <div class="links">
+                    <a href="frontend-final.html">← Back Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            // Hide all tabs
+            document.getElementById('login').classList.remove('active');
+            document.getElementById('signup').classList.remove('active');
+
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+
+            // Show selected tab
+            document.getElementById(tab).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            alert('✅ Notary login successful!\n\nYou would now access your notary dashboard to:\n- View pending notarization requests\n- Manage your notary profile\n- View earnings & payments\n- Access digital journal\n- Set your rates');
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            alert('✅ Account creation in progress!\n\nNext steps:\n1. Verify your notary license\n2. Set up payment via Clove ($30/page standard)\n3. Create your notary profile\n4. Start accepting requests!\n\nYour account will be reviewed within 24 hours.');
+        }
+    </script>
+</body>
+</html>

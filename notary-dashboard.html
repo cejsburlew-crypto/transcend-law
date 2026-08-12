@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notary Dashboard - TRANSCEND LAW</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; }
+
+        .wrapper { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
+
+        .sidebar {
+            background: #1e3a5f;
+            color: white;
+            padding: 2rem 1rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand { font-size: 1.1rem; font-weight: bold; margin-bottom: 2rem; color: #64b5f6; }
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu li { margin-bottom: 0.5rem; }
+        .sidebar-menu a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #b0bec5;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sidebar-menu a:hover { background: rgba(100, 181, 246, 0.2); color: #64b5f6; }
+        .sidebar-menu a.active { background: #64b5f6; color: white; }
+
+        .main-content { background: #f5f5f5; overflow-y: auto; }
+
+        .topbar {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .topbar h1 { font-size: 1.5rem; }
+        .user-section { display: flex; gap: 1rem; align-items: center; }
+
+        .btn {
+            background: #1e88e5;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn:hover { background: #1565c0; }
+        .btn-primary { background: #4caf50; }
+        .btn-primary:hover { background: #388e3c; }
+
+        .content { padding: 2rem; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-label { color: #666; font-size: 0.85rem; text-transform: uppercase; }
+        .stat-value { font-size: 2.5rem; font-weight: bold; color: #1e88e5; margin-top: 0.5rem; }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .card h2 { margin-bottom: 1rem; border-bottom: 2px solid #1e88e5; padding-bottom: 0.5rem; }
+
+        .notarization-item {
+            background: #f9f9f9;
+            border-left: 4px solid #1e88e5;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notarization-details { flex: 1; }
+        .notarization-title { font-weight: 600; color: #1e3a5f; }
+        .notarization-meta { color: #666; font-size: 0.9rem; margin-top: 0.3rem; }
+        .notarization-fee { color: #4caf50; font-weight: 600; margin-top: 0.5rem; }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-pending { background: #fff3e0; color: #e65100; }
+        .badge-completed { background: #c8e6c9; color: #2e7d32; }
+        .badge-urgent { background: #ffcdd2; color: #c62828; }
+
+        .form-group {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .page { display: none; }
+        .page.active { display: block; }
+
+        @media (max-width: 768px) {
+            .wrapper { grid-template-columns: 1fr; }
+            .sidebar { position: relative; height: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-brand">📝 NOTARY PORTAL</div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="menu-link active" data-page="dashboard">📊 Dashboard</a></li>
+                <li><a href="#" class="menu-link" data-page="requests">📋 Pending Requests</a></li>
+                <li><a href="#" class="menu-link" data-page="completed">✓ Completed</a></li>
+                <li><a href="#" class="menu-link" data-page="profile">👤 My Profile</a></li>
+                <li><a href="#" class="menu-link" data-page="journal">📖 Digital Journal</a></li>
+                <li><a href="#" class="menu-link" data-page="billing">💰 Earnings</a></li>
+                <li><a href="#" class="menu-link" data-page="settings">⚙️ Settings</a></li>
+                <li style="margin-top: 2rem; border-top: 1px solid rgba(100,181,246,0.3); padding-top: 1rem;">
+                    <a href="frontend-final.html" style="color: #64b5f6;">← Go to All Services</a>
+                </li>
+                <li>
+                    <a href="frontend-final.html" onclick="logout()" style="color: #ff5722;">🚪 Logout</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Topbar -->
+            <div class="topbar">
+                <h1 id="page-title">Dashboard</h1>
+                <div class="user-section">
+                    <span id="notary-name">Notary Name</span>
+                    <button class="btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+
+                <!-- Dashboard Page -->
+                <div class="page active" id="dashboard">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Pending Requests</div>
+                            <div class="stat-value" id="stat-pending">3</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">This Month</div>
+                            <div class="stat-value" id="stat-month">$2,100</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total Completed</div>
+                            <div class="stat-value" id="stat-completed">47</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Rating</div>
+                            <div class="stat-value" id="stat-rating">4.9★</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>🎯 Your Notarization Rate</h2>
+                        <div style="background: #f0f7ff; padding: 1.5rem; border-radius: 4px; margin-bottom: 1rem;">
+                            <strong style="font-size: 1.2rem; color: #1e3a5f;">$30 per stamped page</strong>
+                            <p style="color: #666; margin-top: 0.5rem;">Industry standard rate. Increase to $35-50 for rush/notarized copies.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>📋 Recent Activity</h2>
+                        <div class="notarization-item">
+                            <div class="notarization-details">
+                                <div class="notarization-title">Power of Attorney (5 pages)</div>
+                                <div class="notarization-meta">Client: John Smith | Completed today</div>
+                                <div class="notarization-fee">$150 (5 × $30)</div>
+                            </div>
+                            <span class="badge badge-completed">COMPLETED</span>
+                        </div>
+
+                        <div class="notarization-item">
+                            <div class="notarization-details">
+                                <div class="notarization-title">Affidavit (3 pages)</div>
+                                <div class="notarization-meta">Client: Jane Doe | Completed yesterday</div>
+                                <div class="notarization-fee">$90 (3 × $30)</div>
+                            </div>
+                            <span class="badge badge-completed">COMPLETED</span>
+                        </div>
+
+                        <div class="notarization-item">
+                            <div class="notarization-details">
+                                <div class="notarization-title">Declaration (2 pages) - URGENT</div>
+                                <div class="notarization-meta">Client: Legal Team | Due in 2 hours</div>
+                                <div class="notarization-fee">$70 (2 × $30) + rush fee</div>
+                            </div>
+                            <span class="badge badge-urgent">RUSH ORDER</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Requests Page -->
+                <div class="page" id="requests">
+                    <div class="card">
+                        <h2>⏳ Pending Notarization Requests</h2>
+                        <p style="color: #666; margin-bottom: 1.5rem;">Accept requests from clients, lawyers, and SMEs in your service area.</p>
+
+                        <div class="notarization-item" style="display: block;">
+                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                <div class="notarization-details">
+                                    <div class="notarization-title">Medical Authorization Form (4 pages)</div>
+                                    <div class="notarization-meta">From: Client via SME Consultation | Medical Malpractice Case</div>
+                                    <div class="notarization-meta" style="margin-top: 0.5rem; color: #999;">Requested: 2 hours ago | Deadline: 6 hours</div>
+                                    <div class="notarization-fee">$120 (4 × $30)</div>
+                                </div>
+                                <button class="btn btn-primary">Accept & Notarize</button>
+                            </div>
+                        </div>
+
+                        <div class="notarization-item" style="display: block;">
+                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                <div class="notarization-details">
+                                    <div class="notarization-title">Contract Certification (2 pages)</div>
+                                    <div class="notarization-meta">From: Law Firm Smith & Associates | Contract Dispute Case</div>
+                                    <div class="notarization-meta" style="margin-top: 0.5rem; color: #999;">Requested: 30 minutes ago | Deadline: 24 hours</div>
+                                    <div class="notarization-fee">$60 (2 × $30)</div>
+                                </div>
+                                <button class="btn btn-primary">Accept & Notarize</button>
+                            </div>
+                        </div>
+
+                        <div class="notarization-item" style="display: block;">
+                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                <div class="notarization-details">
+                                    <div class="notarization-title">Vehicle Title Transfer (1 page)</div>
+                                    <div class="notarization-meta">From: Vehicle Registration Service | Fleet Management</div>
+                                    <div class="notarization-meta" style="margin-top: 0.5rem; color: #999;">Requested: Just now | Standard timeline</div>
+                                    <div class="notarization-fee">$30 (1 × $30)</div>
+                                </div>
+                                <button class="btn btn-primary">Accept & Notarize</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Completed Page -->
+                <div class="page" id="completed">
+                    <div class="card">
+                        <h2>✓ Completed Notarizations (This Month)</h2>
+                        <p style="color: #666; margin-bottom: 1.5rem;">70 pages notarized | $2,100 earned</p>
+
+                        <div style="background: #c8e6c9; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; color: #2e7d32;">
+                            <strong>Notarized documents are stored in client cases and shared across the platform.</strong>
+                            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Attorneys, SMEs, and other service providers in the case can access notarized docs.</p>
+                        </div>
+
+                        <div style="background: #f9f9f9; padding: 1rem; border-radius: 4px;">
+                            <strong>Recent completions:</strong>
+                            <ul style="margin-top: 1rem; margin-left: 1.5rem; color: #666; line-height: 1.8;">
+                                <li>Power of Attorney (5 pages) - $150</li>
+                                <li>Affidavit Declaration (3 pages) - $90</li>
+                                <li>Medical Authorization (4 pages) - $120</li>
+                                <li>Bank Account Certification (2 pages) - $60</li>
+                                <li>Contract Agreement (8 pages) - $240</li>
+                                <li>And 43 other documents...</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Page -->
+                <div class="page" id="profile">
+                    <div class="card">
+                        <h2>👤 Your Notary Profile</h2>
+                        <form onsubmit="saveProfile(event)">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" value="Sarah Johnson" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Notary License #</label>
+                                <input type="text" value="NPS-2024-0042" disabled>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Commission Expiration</label>
+                                <input type="date" value="2028-12-31" disabled>
+                            </div>
+
+                            <div class="form-group">
+                                <label>States of Service</label>
+                                <input type="text" value="California, Nevada" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Professional Bio</label>
+                                <textarea placeholder="Tell clients about your notary experience..." rows="4">15 years of notary experience. Specialize in legal documents, powers of attorney, and affidavits.</textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save Profile</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Journal Page -->
+                <div class="page" id="journal">
+                    <div class="card">
+                        <h2>📖 Digital Notary Journal</h2>
+                        <p style="color: #666; margin-bottom: 1.5rem;">Compliant with state notary laws. Automatically logged for every notarization.</p>
+
+                        <div style="background: #f0f7ff; border: 1px solid #1e88e5; border-radius: 4px; padding: 1rem; margin-bottom: 1.5rem;">
+                            <strong>Entry #47</strong>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; font-size: 0.9rem;">
+                                <div><strong>Date:</strong> August 11, 2026</div>
+                                <div><strong>Time:</strong> 2:45 PM</div>
+                                <div><strong>Document:</strong> Power of Attorney</div>
+                                <div><strong>Pages:</strong> 5</div>
+                                <div><strong>Signer:</strong> John Smith</div>
+                                <div><strong>Fee:</strong> $150</div>
+                                <div><strong>Type:</strong> Acknowledgment</div>
+                                <div><strong>Status:</strong> ✓ Recorded</div>
+                            </div>
+                        </div>
+
+                        <button class="btn" onclick="downloadJournal()">📥 Download Journal (PDF)</button>
+                    </div>
+                </div>
+
+                <!-- Billing Page -->
+                <div class="page" id="billing">
+                    <div class="card">
+                        <h2>💰 Earnings & Payments</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-label">August Earnings</div>
+                                <div class="stat-value">$2,100</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Year to Date</div>
+                                <div class="stat-value">$18,600</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Pending Payment</div>
+                                <div class="stat-value">$420</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Next Payout</div>
+                                <div class="stat-value">Aug 15</div>
+                            </div>
+                        </div>
+
+                        <div class="card" style="background: #f0f7ff; border: 1px solid #1e88e5;">
+                            <strong style="color: #1e3a5f;">Payment Method</strong>
+                            <p style="color: #666; margin-top: 0.5rem;">Via Clove - Daily settlement available. Fees are automatically calculated and invoiced.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div class="page" id="settings">
+                    <div class="card">
+                        <h2>⚙️ Settings</h2>
+                        <form onsubmit="saveSettings(event)">
+                            <div class="form-group">
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" checked>
+                                    <span>Email notifications for new requests</span>
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" checked>
+                                    <span>Text notifications for rush orders</span>
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Maximum Hours Per Day</label>
+                                <input type="number" value="8" min="1" max="24">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Service Area</label>
+                                <select>
+                                    <option>California, Nevada (Remote permitted)</option>
+                                    <option>National (Remote only)</option>
+                                    <option>In-person only</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save Settings</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            const token = localStorage.getItem('notaryToken');
+            if (!token) {
+                window.location.href = 'notary-login.html';
+                return;
+            }
+
+            document.getElementById('notary-name').textContent = 'Sarah Johnson';
+            setupMenuListeners();
+        });
+
+        function setupMenuListeners() {
+            document.querySelectorAll('.menu-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.dataset.page;
+                    renderPage(page);
+
+                    document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        }
+
+        function renderPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(page).classList.add('active');
+
+            const titles = {
+                dashboard: '📊 Dashboard',
+                requests: '📋 Pending Requests',
+                completed: '✓ Completed Notarizations',
+                profile: '👤 My Notary Profile',
+                journal: '📖 Digital Journal',
+                billing: '💰 Earnings & Payments',
+                settings: '⚙️ Settings'
+            };
+
+            document.getElementById('page-title').textContent = titles[page] || 'Dashboard';
+        }
+
+        function saveProfile(event) {
+            event.preventDefault();
+            alert('✓ Profile updated successfully!');
+        }
+
+        function saveSettings(event) {
+            event.preventDefault();
+            alert('✓ Settings saved successfully!');
+        }
+
+        function downloadJournal() {
+            alert('📥 Digital journal will be downloaded as PDF\n\nCompliant with state notary requirements.');
+        }
+
+        function logout() {
+            localStorage.removeItem('notaryToken');
+            window.location.href = 'frontend-final.html';
+        }
+    </script>
+</body>
+</html>
