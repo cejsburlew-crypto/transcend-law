@@ -13,6 +13,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const DOMAIN = process.env.DOMAIN || 'transcendlaw.com';
 
+// Trust proxy headers from Nginx
+app.set('trust proxy', true);
+
 // Import security middleware
 const {
   router: authRouter,
