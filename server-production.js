@@ -97,7 +97,9 @@ const limiter = rateLimit({
   max: 100,
   message: 'Too many requests from this IP',
   standardHeaders: true,
-  legacyHeaders: false
+  legacyHeaders: false,
+  keyGenerator: (req, res) => req.ip,
+  skip: (req, res) => false
 });
 app.use(limiter);
 
