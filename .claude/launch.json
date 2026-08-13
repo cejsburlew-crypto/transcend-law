@@ -2,23 +2,11 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "bond-intelligence",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["start", "--prefix", "bond-intelligence/dashboard"],
-      "port": 3000,
-      "autoPort": false
-    },
-    {
-      "name": "carrier-nexus",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8899", "--directory", "/Users/jbconsultingassociatesinc./Desktop/carrier-nexus"],
-      "port": 8899
-    },
-    {
       "name": "transcend-frontend",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8080", "--directory", "/private/tmp/claude-501/-Users-jbconsultingassociatesinc--code-transcend-ssp/9e95c4e3-aa1f-4687-affed-1131263d4443/scratchpad"],
-      "port": 8080
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "./transcend-frontend",
+      "port": 5173
     }
   ]
 }

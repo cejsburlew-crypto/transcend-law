@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Law Firm Profile - TRANSCEND LAW</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2c5aa0 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .header-meta { font-size: 0.95rem; color: rgba(255,255,255,0.9); }
+        .header-actions { display: flex; gap: 1rem; }
+        .header-actions a { color: white; text-decoration: underline; cursor: pointer; }
+
+        /* Firm Header Card */
+        .firm-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .firm-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1.5rem;
+        }
+
+        .firm-name-section h2 {
+            font-size: 2rem;
+            color: #1e3a5f;
+            margin-bottom: 0.5rem;
+        }
+
+        .tier-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .tier-premium { background: #ffd700; color: #333; }
+        .tier-featured { background: #cd7f32; color: white; }
+        .tier-basic { background: #999; color: white; }
+
+        .firm-contact {
+            text-align: right;
+        }
+
+        .firm-contact-item {
+            margin: 0.5rem 0;
+            color: #666;
+        }
+
+        .firm-contact-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .firm-contact a {
+            color: #1e88e5;
+            text-decoration: none;
+        }
+
+        .firm-contact a:hover { text-decoration: underline; }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .info-card h3 {
+            color: #1e3a5f;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            border-bottom: 2px solid #1e88e5;
+            padding-bottom: 0.5rem;
+        }
+
+        .info-card ul {
+            list-style: none;
+        }
+
+        .info-card li {
+            padding: 0.5rem 0;
+            color: #555;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-card li:last-child { border-bottom: none; }
+
+        /* Badges */
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            background: #e3f2fd;
+            color: #1e3a5f;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .badge-state {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .badge-case-type {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1e88e5;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        /* Section */
+        .section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            color: #1e3a5f;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #1e88e5;
+            padding-bottom: 1rem;
+        }
+
+        .attorney-card {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #1e88e5;
+        }
+
+        .attorney-name {
+            font-weight: 600;
+            color: #1e3a5f;
+            margin-bottom: 0.5rem;
+        }
+
+        .attorney-info {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0.3rem 0;
+        }
+
+        /* CTA Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #1e88e5;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1565c0;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e8e8e8;
+        }
+
+        .btn-outline {
+            background: white;
+            color: #1e88e5;
+            border: 2px solid #1e88e5;
+        }
+
+        .btn-outline:hover {
+            background: #f0f7ff;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .firm-header-top {
+                flex-direction: column;
+            }
+
+            .firm-contact {
+                text-align: left;
+                margin-top: 1rem;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-actions {
+                justify-content: center;
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>TRANSCEND LAW</h1>
+                <div class="header-meta">Law Firm Directory</div>
+            </div>
+            <div class="header-actions">
+                <a href="frontend-final.html">← Back Home</a>
+                <a href="firms-directory.html">All Firms</a>
+            </div>
+        </div>
+
+        <!-- Firm Profile Header -->
+        <div class="firm-header" id="firm-header">
+            <div class="firm-header-top">
+                <div class="firm-name-section">
+                    <span class="tier-badge" id="tier-badge"></span>
+                    <h2 id="firm-name"></h2>
+                    <p id="firm-tagline" style="color: #666; margin-top: 0.5rem;"></p>
+                </div>
+                <div class="firm-contact">
+                    <div class="firm-contact-item">
+                        <span class="firm-contact-label">📞 Phone:</span> <span id="firm-phone"></span>
+                    </div>
+                    <div class="firm-contact-item">
+                        <span class="firm-contact-label">📧 Email:</span> <span id="firm-email"></span>
+                    </div>
+                    <div class="firm-contact-item">
+                        <span class="firm-contact-label">🌐 Website:</span> <a href="#" id="firm-website" target="_blank">Visit Website</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid" id="stats-grid"></div>
+
+        <!-- Practice Areas -->
+        <div class="section">
+            <h2>⚖️ Practice Areas</h2>
+            <div class="badge-container" id="practice-areas"></div>
+            <p id="practice-description" style="margin-top: 1rem; color: #666;"></p>
+        </div>
+
+        <!-- Service Regions -->
+        <div class="section">
+            <h2>📍 Service Regions</h2>
+            <div class="badge-container" id="service-regions"></div>
+            <p id="region-description" style="margin-top: 1rem; color: #666;"></p>
+        </div>
+
+        <!-- About -->
+        <div class="section">
+            <h2>About This Firm</h2>
+            <p id="firm-about" style="line-height: 1.6; color: #555;"></p>
+        </div>
+
+        <!-- Lead Attorneys -->
+        <div class="section">
+            <h2>👨‍⚖️ Lead Attorneys</h2>
+            <div id="attorneys-list"></div>
+        </div>
+
+        <!-- Client Testimonials -->
+        <div class="section">
+            <h2>⭐ What Our Clients Say</h2>
+            <div id="testimonials-list"></div>
+        </div>
+
+        <!-- CTA -->
+        <div class="section" style="text-align: center; background: linear-gradient(135deg, #e3f2fd 0%, #f0f7ff 100%);">
+            <h2 style="border: none; color: #1e3a5f;">Ready to Work With Us?</h2>
+            <p style="color: #666; margin-bottom: 1.5rem;">Submit your legal intake through TRANSCEND LAW and we'll review your case right away.</p>
+            <div class="cta-buttons" style="justify-content: center;">
+                <a href="frontend-final.html?firm=<FIRM_ID>" class="btn btn-primary">Start Your Intake</a>
+                <a href="javascript:window.history.back()" class="btn btn-secondary">Back to Firms</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced demo firms data
+        const demoFirms = {
+            'smith-associates': {
+                id: 'smith-associates',
+                name: 'Smith & Associates',
+                tagline: 'Expert Personal Injury & Criminal Defense Specialists',
+                tier: 'premium',
+                phone: '(555) 123-4567',
+                email: 'intake@smithassociates.com',
+                website: 'https://smithassociates.example.com',
+                logo: '⚖️',
+                yearsFounded: 2005,
+                practiceAreas: ['personal-injury', 'criminal-defense'],
+                states: ['CA', 'TX', 'NV'],
+                counties: {
+                    CA: ['Los Angeles', 'San Francisco', 'San Diego'],
+                    TX: ['Harris', 'Dallas'],
+                    NV: ['Clark', 'Washoe']
+                },
+                casesSolved: 1240,
+                clientsRepresented: 850,
+                averageResolution: '18 months',
+                about: 'Smith & Associates has been serving clients in personal injury and criminal defense for nearly two decades. Our experienced team has recovered over $500 million for our clients and maintained a 92% satisfaction rating. We are committed to aggressive representation and client-focused service.',
+                attorneys: [
+                    {
+                        name: 'Sarah Johnson',
+                        title: 'Senior Partner',
+                        barLicense: 'CA#123456',
+                        specialties: ['Personal Injury', 'Medical Malpractice'],
+                        yearsExperience: 18,
+                        education: 'Stanford Law School'
+                    },
+                    {
+                        name: 'Michael Chen',
+                        title: 'Partner',
+                        barLicense: 'CA#234567',
+                        specialties: ['Criminal Defense', 'DUI'],
+                        yearsExperience: 15,
+                        education: 'UCLA School of Law'
+                    },
+                    {
+                        name: 'Jennifer Davis',
+                        title: 'Associate Attorney',
+                        barLicense: 'CA#345678',
+                        specialties: ['Personal Injury', 'Insurance Claims'],
+                        yearsExperience: 7,
+                        education: 'Hastings College of the Law'
+                    }
+                ],
+                testimonials: [
+                    {
+                        client: 'Robert Martinez',
+                        text: 'Smith & Associates handled my car accident case with professionalism and compassion. They got me a settlement 3x higher than the initial offer!',
+                        rating: 5
+                    },
+                    {
+                        client: 'Angela Thompson',
+                        text: 'Excellent representation. The team was responsive, knowledgeable, and truly cared about my outcome.',
+                        rating: 5
+                    }
+                ]
+            },
+            'jones-legal': {
+                id: 'jones-legal',
+                name: 'Jones Legal Group',
+                tagline: 'Business & Corporate Law Excellence',
+                tier: 'featured',
+                phone: '(555) 234-5678',
+                email: 'contact@joneslegal.com',
+                website: 'https://joneslegal.example.com',
+                logo: '🏢',
+                yearsFounded: 2010,
+                practiceAreas: ['business', 'corporate'],
+                states: ['CA', 'NY', 'TX'],
+                counties: {
+                    CA: ['San Francisco', 'Los Angeles'],
+                    NY: ['New York'],
+                    TX: ['Austin', 'Dallas']
+                },
+                casesSolved: 680,
+                clientsRepresented: 420,
+                averageResolution: '4-8 months',
+                about: 'Jones Legal Group specializes in business formation, corporate restructuring, and commercial transactions. With offices in major U.S. business hubs, we serve startups, mid-market companies, and Fortune 500 enterprises.',
+                attorneys: [
+                    {
+                        name: 'David Jones',
+                        title: 'Founding Partner',
+                        barLicense: 'CA#456789',
+                        specialties: ['Corporate Law', 'M&A'],
+                        yearsExperience: 22,
+                        education: 'Harvard Law School'
+                    },
+                    {
+                        name: 'Lisa Wong',
+                        title: 'Senior Counsel',
+                        barLicense: 'NY#567890',
+                        specialties: ['Securities Law', 'Compliance'],
+                        yearsExperience: 16,
+                        education: 'Yale Law School'
+                    }
+                ],
+                testimonials: [
+                    {
+                        client: 'TechStartup Inc.',
+                        text: 'Jones Legal guided us through Series B funding with expertise and strategic advice. They simplified complex legal matters.',
+                        rating: 5
+                    }
+                ]
+            },
+            'brown-llp': {
+                id: 'brown-llp',
+                name: 'Brown & Brown LLP',
+                tagline: 'Family Law, Estate Planning & Probate',
+                tier: 'featured',
+                phone: '(555) 345-6789',
+                email: 'hello@brownllp.com',
+                website: 'https://brownllp.example.com',
+                logo: '👨‍👩‍👧‍👦',
+                yearsFounded: 1998,
+                practiceAreas: ['family-law', 'estate-planning', 'probate'],
+                states: ['CA', 'OR', 'WA'],
+                counties: {
+                    CA: ['Sacramento', 'Orange'],
+                    OR: ['Multnomah'],
+                    WA: ['King']
+                },
+                casesSolved: 920,
+                clientsRepresented: 580,
+                averageResolution: '6-12 months',
+                about: 'Brown & Brown LLP has been helping families navigate life transitions for over 25 years. From divorce and custody disputes to estate planning and probate administration, we provide compassionate and comprehensive legal services.',
+                attorneys: [
+                    {
+                        name: 'Patricia Brown',
+                        title: 'Managing Partner',
+                        barLicense: 'CA#678901',
+                        specialties: ['Family Law', 'Divorce'],
+                        yearsExperience: 25,
+                        education: 'UC Davis School of Law'
+                    }
+                ],
+                testimonials: [
+                    {
+                        client: 'Elizabeth K.',
+                        text: 'During a difficult time, Brown & Brown treated our family with dignity and got us a fair custody arrangement.',
+                        rating: 5
+                    }
+                ]
+            }
+        };
+
+        // Get firm ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const firmId = urlParams.get('firm') || 'smith-associates';
+        const firm = demoFirms[firmId];
+
+        // Populate page
+        if (firm) {
+            // Header
+            document.getElementById('firm-name').textContent = firm.name;
+            document.getElementById('firm-tagline').textContent = firm.tagline;
+            document.getElementById('firm-phone').textContent = firm.phone;
+            document.getElementById('firm-email').textContent = firm.email;
+            document.getElementById('firm-website').href = firm.website;
+            document.getElementById('firm-website').textContent = firm.website.replace('https://', '');
+
+            // Tier badge
+            const tierBadge = document.getElementById('tier-badge');
+            tierBadge.textContent = firm.tier.charAt(0).toUpperCase() + firm.tier.slice(1);
+            tierBadge.className = `tier-badge tier-${firm.tier}`;
+
+            // Stats
+            const statsGrid = document.getElementById('stats-grid');
+            statsGrid.innerHTML = `
+                <div class="stat">
+                    <div class="stat-value">${firm.casesSolved}+</div>
+                    <div class="stat-label">Cases Solved</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">${firm.clientsRepresented}+</div>
+                    <div class="stat-label">Clients Represented</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">${firm.yearsFounded ? new Date().getFullYear() - firm.yearsFounded : 'Many'}+</div>
+                    <div class="stat-label">Years in Practice</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">${firm.averageResolution}</div>
+                    <div class="stat-label">Avg. Resolution Time</div>
+                </div>
+            `;
+
+            // Practice areas
+            const practiceAreasContainer = document.getElementById('practice-areas');
+            practiceAreasContainer.innerHTML = firm.practiceAreas.map(area =>
+                `<span class="badge badge-case-type">${area.replace('-', ' ').toUpperCase()}</span>`
+            ).join('');
+
+            // Service regions
+            const serviceRegionsContainer = document.getElementById('service-regions');
+            serviceRegionsContainer.innerHTML = firm.states.map(state =>
+                `<span class="badge badge-state">📍 ${state}</span>`
+            ).join('');
+
+            // About
+            document.getElementById('firm-about').textContent = firm.about;
+
+            // Attorneys
+            const attorneysList = document.getElementById('attorneys-list');
+            attorneysList.innerHTML = firm.attorneys.map(attorney => `
+                <div class="attorney-card">
+                    <div class="attorney-name">${attorney.name}</div>
+                    <div class="attorney-info"><strong>${attorney.title}</strong></div>
+                    <div class="attorney-info">🎓 ${attorney.education}</div>
+                    <div class="attorney-info">📜 Bar License: ${attorney.barLicense}</div>
+                    <div class="attorney-info">⏰ ${attorney.yearsExperience} years experience</div>
+                    <div class="attorney-info" style="margin-top: 0.5rem;">Specialties: ${attorney.specialties.join(', ')}</div>
+                </div>
+            `).join('');
+
+            // Testimonials
+            const testimonialsList = document.getElementById('testimonials-list');
+            testimonialsList.innerHTML = firm.testimonials.map(testimonial => `
+                <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 4px; margin-bottom: 1rem; border-left: 4px solid #ffc107;">
+                    <div style="font-weight: 600; color: #1e3a5f; margin-bottom: 0.5rem;">${testimonial.client}</div>
+                    <div style="color: #666; font-style: italic; margin-bottom: 0.5rem;">"${testimonial.text}"</div>
+                    <div style="color: #ffc107; font-size: 1.1rem;">${'⭐'.repeat(testimonial.rating)}</div>
+                </div>
+            `).join('');
+
+            // Update CTA button link
+            document.querySelector('.btn-primary').href = `frontend-final.html?firm=${firmId}`;
+        } else {
+            document.body.innerHTML = '<div style="text-align: center; padding: 4rem;"><h2>Firm not found</h2><a href="firms-directory.html">View All Firms</a></div>';
+        }
+    </script>
+</body>
+</html>

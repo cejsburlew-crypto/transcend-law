@@ -8,11 +8,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; }
 
-        .wrapper {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            min-height: 100vh;
-        }
+        .wrapper { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
 
         /* Sidebar */
         .sidebar {
@@ -25,28 +21,9 @@
             overflow-y: auto;
         }
 
-        .sidebar-brand {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
-            color: #64b5f6;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .sidebar-brand:hover {
-            color: white;
-            text-shadow: 0 0 10px rgba(100, 181, 246, 0.5);
-        }
-
-        .sidebar-menu {
-            list-style: none;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 0.5rem;
-        }
-
+        .sidebar-brand { font-size: 1.2rem; font-weight: bold; margin-bottom: 2rem; color: #64b5f6; }
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu li { margin-bottom: 0.5rem; }
         .sidebar-menu a {
             display: block;
             padding: 0.75rem 1rem;
@@ -57,21 +34,22 @@
             transition: all 0.2s;
         }
 
-        .sidebar-menu a:hover {
-            background: rgba(100, 181, 246, 0.2);
-            color: #64b5f6;
-        }
+        .sidebar-menu a:hover { background: rgba(100, 181, 246, 0.2); color: #64b5f6; }
+        .sidebar-menu a.active { background: #64b5f6; color: white; }
 
-        .sidebar-menu a.active {
-            background: #64b5f6;
+        /* Notification Badge */
+        .badge-notification {
+            display: inline-block;
+            background: #ff5722;
             color: white;
+            border-radius: 12px;
+            padding: 0.2rem 0.6rem;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
         }
 
         /* Main Content */
-        .main-content {
-            background: #f5f5f5;
-            overflow-y: auto;
-        }
+        .main-content { background: #f5f5f5; overflow-y: auto; }
 
         .topbar {
             background: white;
@@ -86,12 +64,7 @@
         }
 
         .topbar h1 { font-size: 1.5rem; }
-
-        .user-section {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
+        .user-section { display: flex; gap: 1rem; align-items: center; }
 
         .btn {
             background: #1e88e5;
@@ -101,17 +74,17 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 0.9rem;
+            transition: all 0.2s;
         }
 
         .btn:hover { background: #1565c0; }
         .btn-secondary { background: #757575; }
         .btn-secondary:hover { background: #616161; }
-        .btn-outline { background: white; color: #1e88e5; border: 1px solid #1e88e5; }
+        .btn-primary { background: #4caf50; }
+        .btn-primary:hover { background: #388e3c; }
+        .btn-small { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
 
-        .content {
-            padding: 2rem;
-        }
-
+        .content { padding: 2rem; }
         .page { display: none; }
         .page.active { display: block; }
 
@@ -142,96 +115,163 @@
             margin-bottom: 1.5rem;
         }
 
-        .card h2 {
+        .card h2 { margin-bottom: 1rem; border-bottom: 2px solid #1e88e5; padding-bottom: 0.5rem; }
+
+        /* Lead Status */
+        .lead-status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .status-unopened { background: #fff3e0; color: #e65100; }
+        .status-opened { background: #e3f2fd; color: #1e3a5f; }
+        .status-engaged { background: #c8e6c9; color: #2e7d32; }
+        .status-proposal-sent { background: #f3e5f5; color: #6a1b9a; }
+        .status-retained { background: #90caf9; color: white; }
+
+        /* Lead Item */
+        .lead-item {
+            background: white;
+            border-left: 4px solid #1e88e5;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .lead-item.urgent { border-left-color: #ff5722; }
+        .lead-item:hover { box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+
+        .lead-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .lead-title { font-size: 1.1rem; font-weight: 600; color: #1e3a5f; }
+        .lead-meta { font-size: 0.9rem; color: #999; margin-top: 0.3rem; }
+
+        .lead-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-item { font-size: 0.9rem; }
+        .detail-label { color: #999; margin-bottom: 0.2rem; }
+        .detail-value { font-weight: 600; color: #333; }
+
+        .lead-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            font-size: 1.3rem;
+            font-weight: bold;
             margin-bottom: 1rem;
             border-bottom: 2px solid #1e88e5;
             padding-bottom: 0.5rem;
         }
 
-        /* Tables */
-        .table {
-            width: 100%;
-            border-collapse: collapse;
+        .modal-close {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
         }
 
-        .table th {
-            background: #f5f5f5;
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-            border-bottom: 2px solid #e0e0e0;
-        }
-
-        .table td {
-            padding: 1rem;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .table tr:hover { background: #f9f9f9; }
-
-        /* Forms */
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
         }
 
         .form-group label {
-            display: block;
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            color: #333;
         }
 
         .form-group input,
         .form-group textarea,
         .form-group select {
-            width: 100%;
             padding: 0.75rem;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-family: inherit;
         }
 
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #1e88e5;
-            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .wrapper { grid-template-columns: 1fr; }
+            .sidebar { position: relative; height: auto; }
+            .lead-header { flex-direction: column; }
         }
-
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        .badge.active { background: #e8f5e9; color: #2e7d32; }
-        .badge.pending { background: #fff3e0; color: #e65100; }
-        .badge.closed { background: #f3e5f5; color: #6a1b9a; }
     </style>
 </head>
 <body>
     <div class="wrapper">
         <!-- Sidebar -->
         <div class="sidebar">
-            <div class="sidebar-brand" onclick="goHome()" title="Back to home">TRANSCEND LAW</div>
+            <div class="sidebar-brand">⚖️ FIRM DASH</div>
             <ul class="sidebar-menu">
-                <li><a onclick="showPage('dashboard')" class="nav-link active">📊 Dashboard</a></li>
-                <li><a onclick="showPage('cases')" class="nav-link">📋 Cases</a></li>
-                <li><a onclick="showPage('attorneys')" class="nav-link">⚖️ Attorneys</a></li>
-                <li><a onclick="showPage('clients')" class="nav-link">👥 Clients</a></li>
-                <li><a onclick="showPage('intakes')" class="nav-link">📝 Intakes</a></li>
-                <li><a onclick="showPage('settings')" class="nav-link">⚙️ Settings</a></li>
-                <li><a onclick="showPage('billing')" class="nav-link">💳 Billing</a></li>
-                <li style="margin-top: 2rem;"><a onclick="logout()" class="nav-link">🚪 Logout</a></li>
+                <li><a href="#" class="menu-link active" data-page="dashboard">📊 Dashboard</a></li>
+                <li><a href="#" class="menu-link" data-page="leads">
+                    🚀 New Leads
+                    <span class="badge-notification" id="leads-badge" style="display: none;">0</span>
+                </a></li>
+                <li><a href="#" class="menu-link" data-page="engaged">💬 Engaged</a></li>
+                <li><a href="#" class="menu-link" data-page="retained">✅ Retained Cases</a></li>
+                <li><a href="#" class="menu-link" data-page="archived">📁 Archived</a></li>
+                <li style="margin-top: 2rem; border-top: 1px solid rgba(100,181,246,0.3); padding-top: 1rem;">
+                    <a href="firms-directory.html" style="color: #64b5f6;">← Back to Directory</a>
+                </li>
+                <li>
+                    <a href="frontend-final.html" onclick="logout()" style="color: #ff5722;">🚪 Logout</a>
+                </li>
             </ul>
         </div>
 
@@ -241,569 +281,517 @@
             <div class="topbar">
                 <h1 id="page-title">Dashboard</h1>
                 <div class="user-section">
-                    <span id="firm-name">Smith & Associates</span>
-                    <span id="user-info">admin@acmelegal.com</span>
+                    <span id="firm-name">Law Firm Dashboard</span>
+                    <button class="btn btn-secondary" onclick="logout()">Logout</button>
                 </div>
             </div>
 
             <!-- Content -->
             <div class="content">
+
                 <!-- Dashboard Page -->
-                <div id="dashboard" class="page active">
+                <div class="page active" id="dashboard">
                     <div class="stats-grid">
                         <div class="stat-card">
-                            <div class="stat-label">Open Leads</div>
-                            <div class="stat-value">3</div>
+                            <div class="stat-label">Total Leads</div>
+                            <div class="stat-value" id="stat-leads">0</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-label">Active Cases</div>
-                            <div class="stat-value">12</div>
+                            <div class="stat-label">Unopened Leads</div>
+                            <div class="stat-value" id="stat-unopened">0</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-label">Licensed Attorneys</div>
-                            <div class="stat-value">5/5</div>
+                            <div class="stat-label">Engaged Clients</div>
+                            <div class="stat-value" id="stat-engaged">0</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-label">Current Plan</div>
-                            <div class="stat-value" style="font-size: 1.5rem;">Professional</div>
+                            <div class="stat-label">Retained Cases</div>
+                            <div class="stat-value" id="stat-retained">0</div>
                         </div>
                     </div>
 
                     <div class="card">
-                        <h2>Recent Cases</h2>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Case ID</th>
-                                    <th>Client Name</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th>Attorney</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>CS-2024-001</td>
-                                    <td>John Smith</td>
-                                    <td>Personal Injury</td>
-                                    <td><span class="badge active">Active</span></td>
-                                    <td>Sarah Johnson</td>
-                                </tr>
-                                <tr>
-                                    <td>CS-2024-002</td>
-                                    <td>Jane Doe</td>
-                                    <td>Estate Planning</td>
-                                    <td><span class="badge active">Active</span></td>
-                                    <td>Michael Chen</td>
-                                </tr>
-                                <tr>
-                                    <td>CS-2024-003</td>
-                                    <td>Bob Johnson</td>
-                                    <td>Business Law</td>
-                                    <td><span class="badge pending">Pending</span></td>
-                                    <td>Unassigned</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Cases Page -->
-                <div id="cases" class="page">
-                    <div class="card">
-                        <h2>Cases</h2>
-                        <button class="btn" style="margin-bottom: 1rem;">+ New Case</button>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Case ID</th>
-                                    <th>Client</th>
-                                    <th>Type</th>
-                                    <th>Lead Attorney</th>
-                                    <th>Status</th>
-                                    <th>Date Created</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>CS-2024-001</td>
-                                    <td>John Smith</td>
-                                    <td>Personal Injury</td>
-                                    <td>Sarah Johnson</td>
-                                    <td><span class="badge active">Active</span></td>
-                                    <td>2024-01-15</td>
-                                </tr>
-                                <tr>
-                                    <td>CS-2024-002</td>
-                                    <td>Jane Doe</td>
-                                    <td>Estate Planning</td>
-                                    <td>Michael Chen</td>
-                                    <td><span class="badge active">Active</span></td>
-                                    <td>2024-01-20</td>
-                                </tr>
-                                <tr>
-                                    <td>CS-2023-045</td>
-                                    <td>Alice Wilson</td>
-                                    <td>Corporate</td>
-                                    <td>Robert Martinez</td>
-                                    <td><span class="badge closed">Closed</span></td>
-                                    <td>2023-11-10</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Attorneys Page -->
-                <div id="attorneys" class="page">
-                    <div class="card">
-                        <h2>Attorneys</h2>
-                        <button class="btn" style="margin-bottom: 1rem;">+ Add Attorney</button>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>State Bar License</th>
-                                    <th>License Status</th>
-                                    <th>Practice Areas</th>
-                                    <th>Active Cases</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Sarah Johnson</td>
-                                    <td>CA #123456</td>
-                                    <td><span class="badge active">Active</span></td>
-                                    <td>Personal Injury, Medical Malpractice</td>
-                                    <td>5</td>
-                                </tr>
-                                <tr>
-                                    <td>Michael Chen</td>
-                                    <td>CA #234567</td>
-                                    <td><span class="badge active">Active</span></td>
-                                    <td>Estate Planning, Probate</td>
-                                    <td>3</td>
-                                </tr>
-                                <tr>
-                                    <td>Robert Martinez</td>
-                                    <td>CA #345678</td>
-                                    <td><span class="badge active">Active</span></td>
-                                    <td>Corporate, Business Law</td>
-                                    <td>4</td>
-                                </tr>
-                                <tr>
-                                    <td>Jennifer Lee</td>
-                                    <td>CA #456789</td>
-                                    <td><span class="badge active">Active</span></td>
-                                    <td>Family Law, Divorce</td>
-                                    <td>2</td>
-                                </tr>
-                                <tr>
-                                    <td>David Brown</td>
-                                    <td>CA #567890</td>
-                                    <td><span class="badge active">Active</span></td>
-                                    <td>Criminal Defense, White Collar</td>
-                                    <td>1</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Clients Page -->
-                <div id="clients" class="page">
-                    <div class="card">
-                        <h2>Client Directory</h2>
-                        <button class="btn" style="margin-bottom: 1rem;">+ Add Client</button>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Cases</th>
-                                    <th>Joined</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>John Smith</td>
-                                    <td>john@email.com</td>
-                                    <td>(555) 123-4567</td>
-                                    <td>1</td>
-                                    <td>2024-01-15</td>
-                                </tr>
-                                <tr>
-                                    <td>Jane Doe</td>
-                                    <td>jane@email.com</td>
-                                    <td>(555) 234-5678</td>
-                                    <td>1</td>
-                                    <td>2024-01-20</td>
-                                </tr>
-                                <tr>
-                                    <td>Bob Johnson</td>
-                                    <td>bob@email.com</td>
-                                    <td>(555) 345-6789</td>
-                                    <td>1</td>
-                                    <td>2024-02-01</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Intakes Page -->
-                <div id="intakes" class="page">
-                    <div class="card">
-                        <h2>📋 Client Intakes Queue</h2>
-                        <p style="margin-bottom: 1.5rem; color: #666; font-size: 0.9rem;">Review client intakes and assign to attorneys. Documents are automatically scoped to the case.</p>
-
-                        <div style="margin-bottom: 1.5rem;">
-                            <h3 style="margin-bottom: 1rem; color: #1e3a5f;">New Intakes (2)</h3>
-                            <div style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; margin-bottom: 1rem;">
-                                <div style="padding: 1.5rem; border-bottom: 1px solid #e0e0e0;">
-                                    <div style="display: flex; justify-content: space-between; align-items: start;">
-                                        <div>
-                                            <div style="font-weight: bold; font-size: 1.1rem; color: #1e3a5f;">Michael Brown</div>
-                                            <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">
-                                                📧 michael@email.com | 📱 (555) 123-4567
-                                            </div>
-                                            <div style="color: #999; font-size: 0.85rem; margin-top: 0.5rem;">
-                                                <strong>Case Type:</strong> Personal Injury | <strong>Received:</strong> Today 2:30 PM
-                                            </div>
-                                            <div style="color: #666; font-size: 0.9rem; margin-top: 0.75rem; line-height: 1.5;">
-                                                <strong>Description:</strong> Car accident on Highway 101, seeking representation for insurance claim
-                                            </div>
-                                            <div style="margin-top: 1rem; display: flex; gap: 1rem;">
-                                                <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">📄 View Documents (3)</button>
-                                                <select style="padding: 0.5rem 1rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-                                                    <option>Assign to Attorney...</option>
-                                                    <option>Sarah Johnson (Lead - Personal Injury)</option>
-                                                    <option>David Martinez (Senior - Personal Injury)</option>
-                                                </select>
-                                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">❌ Decline</button>
-                                            </div>
-                                        </div>
-                                        <span style="background: #ffd700; color: #333; padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; font-size: 0.85rem;">🆕 NEW</span>
-                                    </div>
-                                </div>
-                                <div style="padding: 1.5rem;">
-                                    <div style="display: flex; justify-content: space-between; align-items: start;">
-                                        <div>
-                                            <div style="font-weight: bold; font-size: 1.1rem; color: #1e3a5f;">Lisa Anderson</div>
-                                            <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">
-                                                📧 lisa@email.com | 📱 (555) 234-5678
-                                            </div>
-                                            <div style="color: #999; font-size: 0.85rem; margin-top: 0.5rem;">
-                                                <strong>Case Type:</strong> Estate Planning | <strong>Received:</strong> Yesterday 10:15 AM
-                                            </div>
-                                            <div style="color: #666; font-size: 0.9rem; margin-top: 0.75rem; line-height: 1.5;">
-                                                <strong>Description:</strong> Estate planning - will & trust setup. Multiple properties, asset protection
-                                            </div>
-                                            <div style="margin-top: 1rem; display: flex; gap: 1rem;">
-                                                <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">📄 View Documents (2)</button>
-                                                <select style="padding: 0.5rem 1rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-                                                    <option>Assign to Attorney...</option>
-                                                    <option>Jennifer Lee (Senior - Estate Planning)</option>
-                                                    <option>Robert Kim (Estate Planning)</option>
-                                                </select>
-                                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">❌ Decline</button>
-                                            </div>
-                                        </div>
-                                        <span style="background: #ffd700; color: #333; padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; font-size: 0.85rem;">🆕 NEW</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 style="margin-bottom: 1rem; color: #1e3a5f;">Reviewed (1)</h3>
-                            <div style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem;">
-                                <div style="display: flex; justify-content: space-between; align-items: start;">
-                                    <div>
-                                        <div style="font-weight: bold; font-size: 1.1rem; color: #1e3a5f;">Tom Wilson</div>
-                                        <div style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">
-                                            📧 tom@email.com | 📱 (555) 345-6789
-                                        </div>
-                                        <div style="color: #999; font-size: 0.85rem; margin-top: 0.5rem;">
-                                            <strong>Case Type:</strong> Business Law | <strong>Reviewed:</strong> 2 days ago
-                                        </div>
-                                        <div style="color: #666; font-size: 0.9rem; margin-top: 0.75rem; line-height: 1.5;">
-                                            <strong>Description:</strong> Contract review - business services agreement
-                                        </div>
-                                        <div style="margin-top: 1rem; display: flex; gap: 1rem;">
-                                            <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">📄 View Documents (2)</button>
-                                            <select style="padding: 0.5rem 1rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-                                                <option>Assign to Attorney...</option>
-                                                <option value="michael">Michael Chen (Lead - Corporate)</option>
-                                                <option value="susan">Susan Rodriguez (Co-counsel)</option>
-                                            </select>
-                                            <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">❌ Decline</button>
-                                        </div>
-                                    </div>
-                                    <span style="background: #4caf50; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; font-size: 0.85rem;">✓ REVIEWED</span>
-                                </div>
-                            </div>
+                        <h2>📌 Recent Activity</h2>
+                        <div id="recent-activity">
+                            <p style="color: #999;">No activity yet</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Settings Page -->
-                <div id="settings" class="page">
+                <!-- Leads Page -->
+                <div class="page" id="leads">
                     <div class="card">
-                        <h2>Firm Settings</h2>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Firm Name</label>
-                                <input type="text" value="Smith & Associates">
-                            </div>
-                            <div class="form-group">
-                                <label>Email Domain</label>
-                                <input type="text" value="acmelegal.com">
-                            </div>
+                        <h2>🚀 New Leads (Unopened)</h2>
+                        <p style="color: #666; margin-bottom: 1.5rem;">These leads have been submitted to your firm and are waiting for you to review. Click "Open" to view the intake details and decide if you want to engage.</p>
+                        <div id="leads-list">
+                            <p style="color: #999;">No new leads</p>
                         </div>
-                        <div class="form-group">
-                            <label>Address</label>
-                            <input type="text" value="123 Legal Street, Los Angeles, CA 90001">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Phone</label>
-                                <input type="tel" value="(555) 999-0000">
-                            </div>
-                            <div class="form-group">
-                                <label>Website</label>
-                                <input type="url" value="https://acmelegal.com">
-                            </div>
-                        </div>
-                        <button class="btn">Save Settings</button>
-                    </div>
-
-                    <div class="card">
-                        <h2>Practice Areas (Case Types)</h2>
-                        <p style="margin-bottom: 1.5rem; color: #666; font-size: 0.95rem;">Select all case types your firm handles. This helps match clients with the right attorneys.</p>
-
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox" checked> <span>1. Administrative Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>2. Alternative Dispute Resolution</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>3. Antitrust/Competition</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>4. Appellate Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>5. Arbitration</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>6. Bankruptcy</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>7. Business Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>8. Civil Rights</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>9. Commercial Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>10. Construction Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>11. Consumer Protection</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>12. Contract Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>13. Copyright/IP</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>14. Corporate Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox" checked> <span>15. Criminal Defense</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>16. Criminal Prosecution</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>17. Custody/Child Support</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>18. Debt Collection</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>19. Defamation/Libel</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>20. Disability Rights</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>21. Divorce/Family Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>22. Education Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>23. Elder Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>24. Employment Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>25. Environmental Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>26. Estate Planning</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>27. Eviction/Landlord-Tenant</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>28. Family Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>29. Financial Services</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>30. Franchise Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>31. Fraud</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>32. Government/Administrative</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>33. Health Care Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>34. Immigration</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>35. Insurance Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>36. Intellectual Property</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>37. International Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>38. Labor Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>39. Land Use/Zoning</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>40. Litigation/Dispute Resolution</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox" checked> <span>41. Medical Malpractice</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>42. Military Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>43. Municipal/Local Government</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>44. Nonprofit/Tax Exempt</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>45. Patent Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox" checked> <span>46. Personal Injury</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>47. Privacy Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>48. Probate/Estate Admin</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>49. Product Liability</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>50. Professional Liability</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>51. Property Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>52. Real Estate</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>53. Regulatory Compliance</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>54. Securities Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>55. Sexual Harassment/Discrimination</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>56. Shareholder Disputes</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>57. Social Security/Disability</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>58. Sports Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>59. Tax Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>60. Telecommunications</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>61. Trademark Law</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>62. Trade Secrets</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>63. Transportation/Aviation</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>64. Trust Administration</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>65. Unclaimed Property</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>66. Uniform Commercial Code</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>67. Veteran's Benefits</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>68. Wills/Trusts</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>69. Workers' Compensation</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem;"><input type="checkbox"> <span>70. Wrongful Termination</span></label>
-                        </div>
-
-                        <div style="background: #f5f5f5; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
-                            <strong>Selected Case Types:</strong> 1, 15, 41, 46 (4 selected)
-                        </div>
-
-                        <button class="btn">Save Practice Areas</button>
-                    </div>
-
-                    <div class="card">
-                        <h2>Service Areas (States & Counties)</h2>
-                        <p style="margin-bottom: 1.5rem; color: #666; font-size: 0.95rem;">Select which states and counties you serve. Clients must live in your service areas to be matched with your firm.</p>
-
-                        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox" checked> <span>CA (All)</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>TX (All)</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>NY (All)</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>FL (All)</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>IL (All)</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>PA (All)</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>OH (All)</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>GA (All)</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>NC (All)</span></label>
-                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox"> <span>MI (All)</span></label>
-                        </div>
-
-                        <div style="background: #f5f5f5; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
-                            <strong>Your Service Areas:</strong> California (All), New York (All)
-                        </div>
-
-                        <button class="btn">Save Service Areas</button>
-                    </div>
-
-                    <div class="card">
-                        <h2>Team Members</h2>
-                        <button class="btn" style="margin-bottom: 1rem;">+ Add Team Member</button>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>You</td>
-                                    <td>admin@acmelegal.com</td>
-                                    <td>Firm Admin</td>
-                                    <td><span class="badge active">Active</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Sarah Johnson</td>
-                                    <td>sarah@acmelegal.com</td>
-                                    <td>Attorney</td>
-                                    <td><span class="badge active">Active</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
 
-                <!-- Billing Page -->
-                <div id="billing" class="page">
+                <!-- Engaged Page -->
+                <div class="page" id="engaged">
                     <div class="card">
-                        <h2>Current Subscription</h2>
-                        <div style="padding: 1rem; background: #f5f5f5; border-radius: 4px; margin-bottom: 1rem;">
-                            <p><strong>Plan:</strong> Professional ($299/month)</p>
-                            <p><strong>Licensed Attorneys:</strong> 5 / 5</p>
-                            <p><strong>Monthly Lead Quota:</strong> 25 leads</p>
-                            <p><strong>Leads Used:</strong> 12 / 25</p>
-                            <p><strong>Billing Cycle:</strong> Feb 1, 2024 - Mar 1, 2024</p>
-                            <button class="btn" style="margin-top: 1rem;">Upgrade Plan</button>
+                        <h2>💬 Engaged Leads</h2>
+                        <p style="color: #666; margin-bottom: 1.5rem;">You've sent a message to these clients. They are now aware you're interested in their case. Next step: Send a retainer proposal to formalize the engagement.</p>
+                        <div id="engaged-list">
+                            <p style="color: #999;">No engaged leads</p>
                         </div>
                     </div>
+                </div>
 
+                <!-- Retained Cases Page -->
+                <div class="page" id="retained">
                     <div class="card">
-                        <h2>Payment History</h2>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Description</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>2024-02-01</td>
-                                    <td>Professional Plan - Monthly</td>
-                                    <td>$299.00</td>
-                                    <td><span class="badge active">Paid</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2024-01-01</td>
-                                    <td>Professional Plan - Monthly</td>
-                                    <td>$299.00</td>
-                                    <td><span class="badge active">Paid</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <h2>✅ Retained Cases</h2>
+                        <p style="color: #666; margin-bottom: 1.5rem;">These clients have signed retainer agreements and are now your retained clients. No other firm can see these cases.</p>
+                        <div id="retained-list">
+                            <p style="color: #999;">No retained cases</p>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Archived Page -->
+                <div class="page" id="archived">
+                    <div class="card">
+                        <h2>📁 Archived Leads</h2>
+                        <p style="color: #666; margin-bottom: 1.5rem;">Leads you've declined or completed.</p>
+                        <div id="archived-list">
+                            <p style="color: #999;">No archived leads</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
-    <script>
-        // Session check on page load
-        window.addEventListener('load', function() {
-            const firmToken = localStorage.getItem('firmToken');
-            const firmId = localStorage.getItem('firmId');
+    <!-- Lead Details Modal -->
+    <div class="modal" id="lead-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div class="modal-header">Lead Details</div>
+            <div id="lead-detail-content"></div>
+        </div>
+    </div>
 
-            if (!firmToken || !firmId) {
-                window.location.href = 'frontend-final.html';
+    <!-- Message Modal -->
+    <div class="modal" id="message-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div class="modal-header">Send Message to Client</div>
+            <form onsubmit="sendMessage(event)">
+                <div class="form-group">
+                    <label>Your Message</label>
+                    <textarea id="message-text" placeholder="Tell the client why you're interested in their case..." required></textarea>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Proposal Modal -->
+    <div class="modal" id="proposal-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div class="modal-header">Send Retainer Agreement</div>
+            <form onsubmit="sendProposal(event)">
+                <div class="form-group">
+                    <label>Retainer Fee</label>
+                    <input type="number" id="retainer-fee" placeholder="e.g., 5000" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Retainer Agreement</label>
+                    <textarea id="retainer-terms" placeholder="Terms of engagement, hourly rates, scope of work..." required></textarea>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button type="submit" class="btn btn-primary">Send Proposal</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Demo leads database (simulating database calls)
+        let leadsDB = [
+            {
+                id: 'lead-001',
+                clientName: 'John Smith',
+                clientEmail: 'john@example.com',
+                caseType: 'Personal Injury',
+                title: 'Car Accident - Back Injury',
+                state: 'CA',
+                county: 'Los Angeles',
+                urgency: 'High',
+                description: 'Hit by another vehicle at intersection. Experiencing severe back pain and medical bills.',
+                status: 'unopened',
+                submittedDate: '2026-08-12',
+                documents: ['incident_report.pdf', 'medical_records.pdf']
+            },
+            {
+                id: 'lead-002',
+                clientName: 'Sarah Johnson',
+                clientEmail: 'sarah@example.com',
+                caseType: 'Estate Planning',
+                title: 'Will & Trust Setup',
+                state: 'CA',
+                county: 'San Francisco',
+                urgency: 'Standard',
+                description: 'Need to set up estate planning documents for family protection.',
+                status: 'unopened',
+                submittedDate: '2026-08-11',
+                documents: []
             }
+        ];
+
+        // Current firm (demo)
+        const currentFirm = {
+            id: 'smith-associates',
+            name: 'Smith & Associates',
+            email: 'intake@smithassociates.com'
+        };
+
+        // Initialize
+        window.addEventListener('load', function() {
+            document.getElementById('firm-name').textContent = currentFirm.name;
+            updateStats();
+            renderPage('dashboard');
+            setupMenuListeners();
         });
 
-        function showPage(pageId) {
-            // Hide all pages
+        // Setup menu listeners
+        function setupMenuListeners() {
+            document.querySelectorAll('.menu-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.dataset.page;
+                    renderPage(page);
+
+                    document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        }
+
+        // Render page
+        function renderPage(pageName) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            document.getElementById(pageName).classList.add('active');
 
-            // Show selected page
-            document.getElementById(pageId).classList.add('active');
-            event.target.classList.add('active');
-
-            // Update title
             const titles = {
-                dashboard: 'Dashboard',
-                cases: 'Cases',
-                attorneys: 'Attorneys',
-                clients: 'Client Directory',
-                intakes: 'Client Intakes',
-                settings: 'Settings',
-                billing: 'Billing'
+                dashboard: '📊 Dashboard',
+                leads: '🚀 New Leads',
+                engaged: '💬 Engaged Leads',
+                retained: '✅ Retained Cases',
+                archived: '📁 Archived Leads'
             };
-            document.getElementById('page-title').textContent = titles[pageId] || 'Dashboard';
+
+            document.getElementById('page-title').textContent = titles[pageName] || 'Dashboard';
+
+            if (pageName === 'leads') renderLeads();
+            if (pageName === 'engaged') renderEngaged();
+            if (pageName === 'retained') renderRetained();
+            if (pageName === 'archived') renderArchived();
         }
 
-        function goHome() {
-            window.location.href = 'frontend-final.html';
+        // Update stats
+        function updateStats() {
+            const unopened = leadsDB.filter(l => l.status === 'unopened').length;
+            const engaged = leadsDB.filter(l => l.status === 'engaged').length;
+            const retained = leadsDB.filter(l => l.status === 'retained').length;
+
+            document.getElementById('stat-leads').textContent = leadsDB.length;
+            document.getElementById('stat-unopened').textContent = unopened;
+            document.getElementById('stat-engaged').textContent = engaged;
+            document.getElementById('stat-retained').textContent = retained;
+
+            const badge = document.getElementById('leads-badge');
+            if (unopened > 0) {
+                badge.style.display = 'inline-block';
+                badge.textContent = unopened;
+            }
         }
 
+        // Render unopened leads
+        function renderLeads() {
+            const leads = leadsDB.filter(l => l.status === 'unopened');
+            const container = document.getElementById('leads-list');
+
+            if (leads.length === 0) {
+                container.innerHTML = '<p style="color: #999;">No new leads</p>';
+                return;
+            }
+
+            container.innerHTML = leads.map(lead => `
+                <div class="lead-item urgent">
+                    <div class="lead-header">
+                        <div>
+                            <div class="lead-title">${lead.title}</div>
+                            <div class="lead-meta">Client: ${lead.clientName} | Submitted: ${lead.submittedDate}</div>
+                        </div>
+                        <span class="lead-status status-unopened">UNOPENED</span>
+                    </div>
+                    <div class="lead-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Case Type</div>
+                            <div class="detail-value">${lead.caseType}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Location</div>
+                            <div class="detail-value">${lead.county}, ${lead.state}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Urgency</div>
+                            <div class="detail-value">${lead.urgency}</div>
+                        </div>
+                    </div>
+                    <div class="lead-actions">
+                        <button class="btn btn-small" onclick="openLeadModal('${lead.id}')">🔍 Open & Review</button>
+                        <button class="btn btn-small btn-secondary" onclick="declineLead('${lead.id}')">📋 Decline</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render engaged leads
+        function renderEngaged() {
+            const leads = leadsDB.filter(l => l.status === 'engaged');
+            const container = document.getElementById('engaged-list');
+
+            if (leads.length === 0) {
+                container.innerHTML = '<p style="color: #999;">No engaged leads</p>';
+                return;
+            }
+
+            container.innerHTML = leads.map(lead => `
+                <div class="lead-item">
+                    <div class="lead-header">
+                        <div>
+                            <div class="lead-title">${lead.title}</div>
+                            <div class="lead-meta">Client: ${lead.clientName}</div>
+                        </div>
+                        <span class="lead-status status-engaged">ENGAGED</span>
+                    </div>
+                    <div class="lead-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Case Type</div>
+                            <div class="detail-value">${lead.caseType}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Location</div>
+                            <div class="detail-value">${lead.county}, ${lead.state}</div>
+                        </div>
+                    </div>
+                    <div class="lead-actions">
+                        <button class="btn btn-small btn-primary" onclick="openProposalModal('${lead.id}')">📝 Send Retainer Proposal</button>
+                        <button class="btn btn-small" onclick="openLeadModal('${lead.id}')">📄 View Details</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render retained cases
+        function renderRetained() {
+            const leads = leadsDB.filter(l => l.status === 'retained');
+            const container = document.getElementById('retained-list');
+
+            if (leads.length === 0) {
+                container.innerHTML = '<p style="color: #999;">No retained cases</p>';
+                return;
+            }
+
+            container.innerHTML = leads.map(lead => `
+                <div class="lead-item">
+                    <div class="lead-header">
+                        <div>
+                            <div class="lead-title">${lead.title}</div>
+                            <div class="lead-meta">Client: ${lead.clientName} | Case #: ${lead.caseNumber}</div>
+                        </div>
+                        <span class="lead-status status-retained">RETAINED</span>
+                    </div>
+                    <div class="lead-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Case Type</div>
+                            <div class="detail-value">${lead.caseType}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Retainer Fee</div>
+                            <div class="detail-value">$${lead.retainerFee}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Assigned Attorney</div>
+                            <div class="detail-value">${lead.assignedAttorney || 'Pending'}</div>
+                        </div>
+                    </div>
+                    <div class="lead-actions">
+                        <button class="btn btn-small" onclick="openLeadModal('${lead.id}')">📄 View Case</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render archived leads
+        function renderArchived() {
+            const archived = leadsDB.filter(l => l.status === 'archived');
+            const container = document.getElementById('archived-list');
+
+            if (archived.length === 0) {
+                container.innerHTML = '<p style="color: #999;">No archived leads</p>';
+                return;
+            }
+
+            container.innerHTML = archived.map(lead => `
+                <div class="lead-item" style="opacity: 0.7;">
+                    <div class="lead-header">
+                        <div>
+                            <div class="lead-title">${lead.title}</div>
+                            <div class="lead-meta">Client: ${lead.clientName}</div>
+                        </div>
+                        <span class="lead-status status-unopened">${lead.archivedReason || 'ARCHIVED'}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Open lead details modal
+        function openLeadModal(leadId) {
+            const lead = leadsDB.find(l => l.id === leadId);
+            if (!lead) return;
+
+            const content = `
+                <div style="margin-bottom: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <div style="color: #999; font-size: 0.85rem;">Client Name</div>
+                            <div style="font-weight: 600; font-size: 1.1rem;">${lead.clientName}</div>
+                        </div>
+                        <div>
+                            <div style="color: #999; font-size: 0.85rem;">Email</div>
+                            <div style="font-weight: 600;">${lead.clientEmail}</div>
+                        </div>
+                        <div>
+                            <div style="color: #999; font-size: 0.85rem;">Case Type</div>
+                            <div style="font-weight: 600;">${lead.caseType}</div>
+                        </div>
+                        <div>
+                            <div style="color: #999; font-size: 0.85rem;">Location</div>
+                            <div style="font-weight: 600;">${lead.county}, ${lead.state}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <div style="color: #999; font-size: 0.85rem; margin-bottom: 0.5rem;">Case Description</div>
+                    <p>${lead.description}</p>
+                </div>
+
+                ${lead.documents.length > 0 ? `
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="color: #999; font-size: 0.85rem; margin-bottom: 0.5rem;">Uploaded Documents</div>
+                        <ul style="list-style: none;">
+                            ${lead.documents.map(doc => `<li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">📄 ${doc}</li>`).join('')}
+                        </ul>
+                    </div>
+                ` : ''}
+
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    ${lead.status === 'unopened' ? `
+                        <button class="btn btn-primary" onclick="openMessageModal('${leadId}')">💬 Send Message & Engage</button>
+                        <button class="btn btn-secondary" onclick="declineLead('${leadId}')">Decline</button>
+                    ` : lead.status === 'engaged' ? `
+                        <button class="btn btn-primary" onclick="openProposalModal('${leadId}')">📝 Send Retainer Proposal</button>
+                    ` : ''}
+                    <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                </div>
+            `;
+
+            document.getElementById('lead-detail-content').innerHTML = content;
+            document.getElementById('lead-modal').classList.add('active');
+        }
+
+        // Open message modal
+        function openMessageModal(leadId) {
+            document.getElementById('message-modal').dataset.leadId = leadId;
+            document.getElementById('lead-modal').classList.remove('active');
+            document.getElementById('message-modal').classList.add('active');
+        }
+
+        // Send message
+        function sendMessage(event) {
+            event.preventDefault();
+            const leadId = document.getElementById('message-modal').dataset.leadId;
+            const lead = leadsDB.find(l => l.id === leadId);
+
+            if (lead) {
+                lead.status = 'engaged';
+                lead.messagesSent = [document.getElementById('message-text').value];
+                lead.firstMessageDate = new Date().toISOString().split('T')[0];
+
+                updateStats();
+                closeModal();
+                alert('✓ Message sent to ' + lead.clientName + '!\n\nThey now know you\'re interested in their case.');
+                renderPage('engaged');
+            }
+        }
+
+        // Open proposal modal
+        function openProposalModal(leadId) {
+            document.getElementById('proposal-modal').dataset.leadId = leadId;
+            document.getElementById('lead-modal').classList.remove('active');
+            document.getElementById('proposal-modal').classList.add('active');
+        }
+
+        // Send proposal
+        function sendProposal(event) {
+            event.preventDefault();
+            const leadId = document.getElementById('proposal-modal').dataset.leadId;
+            const lead = leadsDB.find(l => l.id === leadId);
+
+            if (lead) {
+                lead.status = 'retained';
+                lead.retainerFee = document.getElementById('retainer-fee').value;
+                lead.retainerTerms = document.getElementById('retainer-terms').value;
+                lead.caseNumber = 'CASE-' + Math.floor(Math.random() * 10000);
+                lead.proposalSentDate = new Date().toISOString().split('T')[0];
+                lead.assignedAttorney = 'Partner Review Pending';
+
+                updateStats();
+                closeModal();
+                alert('✓ Retainer proposal sent to ' + lead.clientName + '!\n\nOnce they accept, this will become a retained case.');
+                renderPage('retained');
+            }
+        }
+
+        // Decline lead
+        function declineLead(leadId) {
+            if (confirm('Decline this lead?')) {
+                const lead = leadsDB.find(l => l.id === leadId);
+                if (lead) {
+                    lead.status = 'archived';
+                    lead.archivedReason = 'DECLINED';
+                    updateStats();
+                    renderPage('leads');
+                }
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('lead-modal').classList.remove('active');
+            document.getElementById('message-modal').classList.remove('active');
+            document.getElementById('proposal-modal').classList.remove('active');
+            document.getElementById('message-text').value = '';
+            document.getElementById('retainer-fee').value = '';
+            document.getElementById('retainer-terms').value = '';
+        }
+
+        // Logout
         function logout() {
             localStorage.removeItem('firmToken');
-            localStorage.removeItem('firmId');
-            localStorage.removeItem('firmEmail');
             window.location.href = 'frontend-final.html';
         }
     </script>

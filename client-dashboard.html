@@ -3,330 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Dashboard - TRANSCEND LAW</title>
+    <title>Client Portal - TRANSCEND LAW</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; }
 
-        .collapsible-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
-            padding: 1rem;
-            background: #f9f9f9;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-            user-select: none;
-            border: 1px solid #e0e0e0;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
 
-        .collapsible-header:hover {
-            background: #f0f0f0;
-        }
-
-        .collapsible-header h3 {
-            margin: 0;
-            font-size: 1rem;
-            flex: 1;
-        }
-
-        .collapsible-toggle {
-            display: inline-block;
-            transition: transform 0.2s;
-            font-size: 1.2rem;
-        }
-
-        .collapsible-toggle.expanded {
-            transform: rotate(90deg);
-        }
-
-        .collapsible-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .collapsible-content.expanded {
-            max-height: 2000px;
-        }
-
-        .wrapper {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            min-height: 100vh;
-        }
-
-        .sidebar {
-            background: #1e3a5f;
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2c5aa0 100%);
             color: white;
-            padding: 2rem 1rem;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow-y: auto;
-        }
-
-        .sidebar-brand {
-            font-size: 1.2rem;
-            font-weight: bold;
+            padding: 2rem;
+            border-radius: 8px;
             margin-bottom: 2rem;
-            color: #64b5f6;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .sidebar-brand:hover {
-            color: white;
-            text-shadow: 0 0 10px rgba(100, 181, 246, 0.5);
-        }
-
-        .sidebar-menu {
-            list-style: none;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 0.5rem;
-        }
-
-        .sidebar-menu a {
-            display: block;
-            padding: 0.75rem 1rem;
-            color: #b0bec5;
-            text-decoration: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .sidebar-menu a:hover {
-            background: rgba(100, 181, 246, 0.2);
-            color: #64b5f6;
-        }
-
-        .sidebar-menu a.active {
-            background: #64b5f6;
-            color: white;
-        }
-
-        .main-content {
-            background: #f5f5f5;
-            overflow-y: auto;
-        }
-
-        .topbar {
-            background: white;
-            padding: 1rem 2rem;
-            border-bottom: 1px solid #e0e0e0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
-        .topbar h1 { font-size: 1.5rem; }
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .header-meta { font-size: 0.95rem; color: rgba(255,255,255,0.9); }
+        .header-actions { display: flex; gap: 1rem; }
+        .header-actions a { color: white; text-decoration: underline; cursor: pointer; }
 
-        .user-section {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .btn {
-            background: #1e88e5;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .btn:hover { background: #1565c0; }
-        .btn-secondary { background: #757575; }
-        .btn-secondary:hover { background: #616161; }
-
-        .content {
-            padding: 2rem;
-        }
-
-        .page { display: none; }
-        .page.active { display: block; }
-
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 1.5rem;
-        }
-
-        .card h2 {
-            margin-bottom: 1rem;
-            border-bottom: 2px solid #1e88e5;
-            padding-bottom: 0.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            font-family: inherit;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #1e88e5;
-            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .intake-card {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid #1e88e5;
-        }
-
-        .intake-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 1rem;
-        }
-
-        .intake-title {
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .intake-info {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 0.5rem;
-        }
-
-        .intake-status {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        .status-pending { background: #fff3e0; color: #e65100; }
-        .status-active { background: #e8f5e9; color: #2e7d32; }
-        .status-case { background: #e3f2fd; color: #1565c0; }
-
-        .intake-details {
-            background: #f9f9f9;
-            padding: 1rem;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .intake-details-row {
-            display: grid;
-            grid-template-columns: 150px 1fr;
-            margin-bottom: 0.5rem;
-        }
-
-        .intake-details-label {
-            font-weight: 600;
-            color: #666;
-        }
-
-        .documents-section {
-            background: #f5f5f5;
-            padding: 1rem;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-        }
-
-        .documents-section h4 {
-            margin-bottom: 0.75rem;
-            font-size: 0.95rem;
-        }
-
-        .file-item {
-            background: white;
-            padding: 0.75rem;
-            border-radius: 4px;
-            margin-bottom: 0.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 3px solid #1e88e5;
-        }
-
-        .file-info {
-            font-size: 0.9rem;
-        }
-
-        .file-name {
-            font-weight: 500;
-            margin-bottom: 0.25rem;
-        }
-
-        .file-meta {
-            font-size: 0.8rem;
-            color: #999;
-        }
-
-        .upload-box {
-            border: 2px dashed #1e88e5;
-            border-radius: 8px;
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            background: #f0f7ff;
-            transition: all 0.2s;
-            margin-bottom: 1rem;
-        }
-
-        .upload-box:hover {
-            background: #e3f2fd;
-            border-color: #1565c0;
-        }
-
-        .intake-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .intake-actions button {
-            padding: 0.5rem 1rem;
-            font-size: 0.85rem;
-        }
-
+        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -339,744 +40,470 @@
             padding: 1.5rem;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #1e88e5;
         }
 
         .stat-label { color: #666; font-size: 0.85rem; text-transform: uppercase; }
-        .stat-value { font-size: 2.5rem; font-weight: bold; color: #1e88e5; margin-top: 0.5rem; }
+        .stat-value { font-size: 2rem; font-weight: bold; color: #1e88e5; margin-top: 0.5rem; }
 
-        .firm-cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .firm-card {
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 1.5rem;
+        /* Section */
+        .section {
             background: white;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .firm-card:hover {
-            box-shadow: 0 4px 12px rgba(30, 136, 229, 0.15);
-            border-color: #1e88e5;
-        }
+        .section h2 { font-size: 1.5rem; color: #1e3a5f; margin-bottom: 1.5rem; border-bottom: 2px solid #1e88e5; padding-bottom: 1rem; }
 
-        .firm-card.selected {
-            background: #e3f2fd;
-            border: 2px solid #1e88e5;
-        }
-
-        .firm-tier {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 0.75rem;
-            font-weight: bold;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            text-transform: uppercase;
-        }
-
-        .firm-tier.premium { background: #ffd700; color: #333; }
-        .firm-tier.featured { background: #c0a080; color: white; }
-        .firm-tier.basic { background: #ccc; color: #333; }
-
-        .firm-name {
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: #1e3a5f;
-            padding-right: 100px;
-        }
-
-        .firm-location {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 0.75rem;
-        }
-
-        .firm-specialties {
-            font-size: 0.85rem;
-            color: #999;
-            margin-bottom: 1rem;
-        }
-
-        .firm-checkbox {
-            margin-top: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .firm-checkbox input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        .no-firms-message {
-            padding: 1.5rem;
-            background: #fff3e0;
-            border: 1px solid #ffe0b2;
+        /* Form Styles */
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-weight: 600; margin-bottom: 0.5rem; color: #333; }
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
             border-radius: 4px;
-            color: #e65100;
-            text-align: center;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+
+        /* Case Type Forms */
+        .case-type-forms { display: none; }
+        .case-type-forms.active { display: block; }
+
+        .case-form-section {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-top: 1.5rem;
+            border: 1px solid #e0e0e0;
+        }
+
+        .case-form-section h3 { color: #1e3a5f; margin-bottom: 1rem; font-size: 1.1rem; }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background: #1e88e5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn:hover { background: #1565c0; }
+        .btn-secondary { background: #999; }
+        .btn-secondary:hover { background: #777; }
+
+        /* Cards */
+        .card-list { display: grid; gap: 1.5rem; }
+        .card { background: #f9f9f9; padding: 1.5rem; border-radius: 4px; border-left: 4px solid #1e88e5; }
+        .card-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; }
+        .card-title { font-weight: bold; font-size: 1.1rem; color: #1e3a5f; }
+        .card-status { background: #ffd700; color: #333; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+        .card-meta { color: #999; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .card-row { display: grid; grid-template-columns: 150px 1fr; gap: 1rem; margin-bottom: 0.5rem; }
+        .card-label { font-weight: 600; color: #666; }
+        .card-value { color: #333; }
+
+        /* Message Thread */
+        .message-thread {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #1e88e5;
+        }
+
+        .message-header { font-weight: bold; color: #1e3a5f; margin-bottom: 0.75rem; }
+        .message-item { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #ddd; }
+        .message-item:last-child { border-bottom: none; }
+        .message-author { font-weight: 600; color: #1e3a5f; }
+        .message-text { color: #666; margin-top: 0.25rem; }
+        .message-time { color: #999; font-size: 0.8rem; margin-top: 0.5rem; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header { flex-direction: column; text-align: center; }
+            .header-actions { margin-top: 1rem; justify-content: center; }
+            .form-row { grid-template-columns: 1fr; }
+            .card-row { grid-template-columns: 1fr; gap: 0.5rem; }
         }
     </style>
 </head>
 <body>
-    <div class="wrapper">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="sidebar-brand" onclick="goHome()" title="Back to home">TRANSCEND LAW</div>
-            <ul class="sidebar-menu">
-                <li><a onclick="showPage('dashboard')" class="nav-link active">📊 Dashboard</a></li>
-                <li><a onclick="showPage('new-intake')" class="nav-link">📝 New Intake</a></li>
-                <li><a onclick="showPage('my-intakes')" class="nav-link">⏳ My Intakes</a></li>
-                <li><a onclick="showPage('my-cases')" class="nav-link">✅ My Cases</a></li>
-                <li><a onclick="showPage('messages')" class="nav-link">💬 Messages</a></li>
-                <li style="margin-top: 2rem;"><a onclick="logout()" class="nav-link">🚪 Logout</a></li>
-            </ul>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>TRANSCEND LAW</h1>
+                <div class="header-meta">Client Portal | <span id="client-email">Your Legal Assistant</span></div>
+            </div>
+            <div class="header-actions">
+                <a href="frontend-final.html">← Back Home</a>
+                <a onclick="logout()" style="color: #ffcccc;">Logout</a>
+            </div>
         </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="topbar">
-                <h1 id="page-title">Dashboard</h1>
-                <div class="user-section">
-                    <span id="client-email">client@email.com</span>
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Pending Intakes</div>
+                <div class="stat-value">2</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Active Cases</div>
+                <div class="stat-value">3</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">New Messages</div>
+                <div class="stat-value">5</div>
+            </div>
+        </div>
+
+        <!-- New Intake -->
+        <div class="section">
+            <h2>📋 Start New Intake</h2>
+            <form onsubmit="submitIntake(event)">
+                <!-- Common Information -->
+                <h3 style="color: #1e3a5f; margin-bottom: 1rem;">📝 General Information</h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Case Type *</label>
+                        <select required id="case-type-select" onchange="updateCaseTypeForm()">
+                            <option value="">Select case type...</option>
+                            <option value="personal-injury">Personal Injury</option>
+                            <option value="estate">Estate Planning</option>
+                            <option value="contract">Contract Review</option>
+                            <option value="employment">Employment Law</option>
+                            <option value="divorce">Divorce/Family Law</option>
+                            <option value="business">Business Law</option>
+                            <option value="real-estate">Real Estate</option>
+                            <option value="immigration">Immigration</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>State *</label>
+                        <select required id="state-select" onchange="updateCounties()">
+                            <option value="">Select state...</option>
+                            <option value="CA">California</option>
+                            <option value="TX">Texas</option>
+                            <option value="NY">New York</option>
+                            <option value="FL">Florida</option>
+                            <option value="IL">Illinois</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>County *</label>
+                        <select required id="county-select">
+                            <option value="">Select county...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Brief Title *</label>
+                        <input type="text" placeholder="e.g., Car accident claim" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Urgency Level</label>
+                        <select>
+                            <option value="standard">Standard</option>
+                            <option value="urgent">Urgent</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Case Description *</label>
+                    <textarea placeholder="Describe your case, what happened, and what you need help with..." required></textarea>
+                </div>
+
+                <!-- Case-Type Specific Forms -->
+                <div class="case-type-forms" id="case-type-forms"></div>
+
+                <!-- Matched Firms -->
+                <div style="margin-top: 2rem; padding: 1.5rem; background: #f0f7ff; border-radius: 4px; border: 1px solid #90caf9;">
+                    <h3 style="color: #1e3a5f; margin-bottom: 1rem;">🏢 Select Law Firms</h3>
+                    <div id="firms-container">
+                        <p style="color: #999;">Select case type and location above to see available firms.</p>
+                    </div>
+                </div>
+
+                <!-- Documents -->
+                <div style="margin-top: 2rem;">
+                    <h3 style="color: #1e3a5f; margin-bottom: 1rem;">📄 Upload Documents</h3>
+                    <div style="border: 2px dashed #1e88e5; border-radius: 8px; padding: 2rem; text-align: center; cursor: pointer; background: #f0f7ff;">
+                        <div style="font-size: 2rem; margin-bottom: 1rem;">📁</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Drag & drop files or click to upload</div>
+                        <div style="font-size: 0.9rem; color: #666;">PDF, DOC, DOCX, Images (Max 50MB each)</div>
+                        <input type="file" id="file-input" multiple style="display: none;">
+                    </div>
+                    <div id="file-list" style="margin-top: 1rem;"></div>
+                </div>
+
+                <button type="submit" class="btn" style="margin-top: 2rem; width: 100%;">Submit Intake</button>
+            </form>
+        </div>
+
+        <!-- My Intakes -->
+        <div class="section">
+            <h2>⏳ My Intakes (Pending Review)</h2>
+            <div class="card-list">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Personal Injury Claim - Car Accident</div>
+                            <div class="card-meta">Intake ID: INT-2024-001 • Created 2 days ago</div>
+                        </div>
+                        <div class="card-status">Pending Review</div>
+                    </div>
+                    <div class="card-row">
+                        <div class="card-label">Type:</div>
+                        <div class="card-value">Personal Injury</div>
+                    </div>
+                    <div class="card-row">
+                        <div class="card-label">Submitted To:</div>
+                        <div class="card-value"><span style="background: #ffd700; color: #333; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem; font-weight: bold;">Smith & Associates (PREMIUM)</span></div>
+                    </div>
+                    <div class="card-row">
+                        <div class="card-label">Status:</div>
+                        <div class="card-value" style="color: #ff9800; font-weight: bold;">🔄 Under Review by Sarah Johnson</div>
+                    </div>
+                    <div class="card-row">
+                        <div class="card-label">Latest Message:</div>
+                        <div class="card-value" style="color: #666; font-style: italic;">"Reviewing your documents. Will follow up by end of day."</div>
+                    </div>
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #ddd;">
+                        <button class="btn btn-secondary" style="margin-right: 0.5rem;">📄 Documents (2)</button>
+                        <button class="btn btn-secondary">Edit</button>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <div class="content">
-                <!-- Dashboard Page -->
-                <div id="dashboard" class="page active">
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-label">Pending Intakes</div>
-                            <div class="stat-value">2</div>
+        <!-- My Cases -->
+        <div class="section">
+            <h2>✅ My Cases (Active)</h2>
+            <div class="card-list">
+                <div class="card" style="border-left-color: #4caf50;">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Personal Injury Claim - Car Accident</div>
+                            <div class="card-meta">Case #: 2024-CS-00127 • Assigned to Sarah Johnson</div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-label">Active Cases</div>
-                            <div class="stat-value">3</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">Messages</div>
-                            <div class="stat-value">5</div>
-                        </div>
+                        <div class="card-status" style="background: #4caf50; color: white;">Active Case</div>
                     </div>
-
-                    <div class="card">
-                        <h2>Recent Activity</h2>
-                        <p style="margin-bottom: 1rem;">
-                            You have <strong>2 pending intakes</strong> waiting for attorney review and <strong>3 active cases</strong> with assigned attorneys.
-                        </p>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <button class="btn" onclick="showPage('my-intakes')" style="width: 100%; padding: 0.75rem;">View My Intakes</button>
-                            <button class="btn" onclick="showPage('my-cases')" style="width: 100%; padding: 0.75rem;">View My Cases</button>
-                        </div>
+                    <div class="card-row">
+                        <div class="card-label">Type:</div>
+                        <div class="card-value">Personal Injury</div>
                     </div>
-                </div>
-
-                <!-- New Intake Page -->
-                <div id="new-intake" class="page">
-                    <div class="card">
-                        <h2>Start New Intake</h2>
-                        <form onsubmit="submitIntake(event)">
-                            <!-- LOCATION SECTION -->
-                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                                <span class="collapsible-toggle expanded">▶</span>
-                                <h3>📍 Location & Case Details</h3>
-                            </div>
-                            <div class="collapsible-content expanded">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label>State *</label>
-                                    <select required id="state-select" onchange="updateCounties()">
-                                        <option value="">Select state...</option>
-                                        <option value="AL">Alabama</option>
-                                        <option value="AK">Alaska</option>
-                                        <option value="AZ">Arizona</option>
-                                        <option value="AR">Arkansas</option>
-                                        <option value="CA">California</option>
-                                        <option value="CO">Colorado</option>
-                                        <option value="CT">Connecticut</option>
-                                        <option value="DE">Delaware</option>
-                                        <option value="FL">Florida</option>
-                                        <option value="GA">Georgia</option>
-                                        <option value="HI">Hawaii</option>
-                                        <option value="ID">Idaho</option>
-                                        <option value="IL">Illinois</option>
-                                        <option value="IN">Indiana</option>
-                                        <option value="IA">Iowa</option>
-                                        <option value="KS">Kansas</option>
-                                        <option value="KY">Kentucky</option>
-                                        <option value="LA">Louisiana</option>
-                                        <option value="ME">Maine</option>
-                                        <option value="MD">Maryland</option>
-                                        <option value="MA">Massachusetts</option>
-                                        <option value="MI">Michigan</option>
-                                        <option value="MN">Minnesota</option>
-                                        <option value="MS">Mississippi</option>
-                                        <option value="MO">Missouri</option>
-                                        <option value="MT">Montana</option>
-                                        <option value="NE">Nebraska</option>
-                                        <option value="NV">Nevada</option>
-                                        <option value="NH">New Hampshire</option>
-                                        <option value="NJ">New Jersey</option>
-                                        <option value="NM">New Mexico</option>
-                                        <option value="NY">New York</option>
-                                        <option value="NC">North Carolina</option>
-                                        <option value="ND">North Dakota</option>
-                                        <option value="OH">Ohio</option>
-                                        <option value="OK">Oklahoma</option>
-                                        <option value="OR">Oregon</option>
-                                        <option value="PA">Pennsylvania</option>
-                                        <option value="RI">Rhode Island</option>
-                                        <option value="SC">South Carolina</option>
-                                        <option value="SD">South Dakota</option>
-                                        <option value="TN">Tennessee</option>
-                                        <option value="TX">Texas</option>
-                                        <option value="UT">Utah</option>
-                                        <option value="VT">Vermont</option>
-                                        <option value="VA">Virginia</option>
-                                        <option value="WA">Washington</option>
-                                        <option value="WV">West Virginia</option>
-                                        <option value="WI">Wisconsin</option>
-                                        <option value="WY">Wyoming</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>County *</label>
-                                    <select required id="county-select">
-                                        <option value="">Select county...</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                                <div class="form-group">
-                                    <label>Case Type *</label>
-                                    <select required id="case-type-select" onchange="updateMatchedFirms()">
-                                        <option value="">Select case type...</option>
-                                        <option value="administrative">Administrative Law</option>
-                                        <option value="adr">Alternative Dispute Resolution (ADR)</option>
-                                        <option value="antitrust">Antitrust/Competition Law</option>
-                                        <option value="appellate">Appellate Law</option>
-                                        <option value="arbitration">Arbitration</option>
-                                        <option value="bankruptcy">Bankruptcy</option>
-                                        <option value="business">Business Law</option>
-                                        <option value="civil-rights">Civil Rights</option>
-                                        <option value="commercial">Commercial Law</option>
-                                        <option value="construction">Construction Law</option>
-                                        <option value="consumer">Consumer Protection</option>
-                                        <option value="contract">Contract Law</option>
-                                        <option value="copyright">Copyright/Intellectual Property</option>
-                                        <option value="corporate">Corporate Law</option>
-                                        <option value="criminal-defense">Criminal Defense</option>
-                                        <option value="criminal-prosecution">Criminal Prosecution</option>
-                                        <option value="custody">Custody/Child Support</option>
-                                        <option value="debt-collection">Debt Collection</option>
-                                        <option value="defamation">Defamation/Libel</option>
-                                        <option value="disability">Disability Rights</option>
-                                        <option value="divorce">Divorce/Family Law</option>
-                                        <option value="education">Education Law</option>
-                                        <option value="elder">Elder Law</option>
-                                        <option value="employment">Employment Law</option>
-                                        <option value="environmental">Environmental Law</option>
-                                        <option value="estate">Estate Planning</option>
-                                        <option value="eviction">Eviction/Landlord-Tenant</option>
-                                        <option value="family">Family Law</option>
-                                        <option value="financial">Financial Services</option>
-                                        <option value="franchise">Franchise Law</option>
-                                        <option value="fraud">Fraud</option>
-                                        <option value="government">Government/Administrative</option>
-                                        <option value="healthcare">Health Care Law</option>
-                                        <option value="immigration">Immigration</option>
-                                        <option value="insurance">Insurance Law</option>
-                                        <option value="intellectual-property">Intellectual Property</option>
-                                        <option value="international">International Law</option>
-                                        <option value="labor">Labor Law</option>
-                                        <option value="land-use">Land Use/Zoning</option>
-                                        <option value="litigation">Litigation/Dispute Resolution</option>
-                                        <option value="medical-malpractice">Medical Malpractice</option>
-                                        <option value="military">Military Law</option>
-                                        <option value="municipal">Municipal/Local Government</option>
-                                        <option value="nonprofit">Nonprofit/Tax Exempt</option>
-                                        <option value="patent">Patent Law</option>
-                                        <option value="personal-injury">Personal Injury</option>
-                                        <option value="privacy">Privacy Law</option>
-                                        <option value="probate">Probate/Estate Administration</option>
-                                        <option value="product-liability">Product Liability</option>
-                                        <option value="professional-liability">Professional Liability</option>
-                                        <option value="property">Property Law</option>
-                                        <option value="real-estate">Real Estate</option>
-                                        <option value="regulatory">Regulatory Compliance</option>
-                                        <option value="securities">Securities Law</option>
-                                        <option value="sexual-harassment">Sexual Harassment/Discrimination</option>
-                                        <option value="shareholder">Shareholder Disputes</option>
-                                        <option value="social-security">Social Security/Disability Benefits</option>
-                                        <option value="sports">Sports Law</option>
-                                        <option value="tax">Tax Law</option>
-                                        <option value="telecommunications">Telecommunications</option>
-                                        <option value="trademark">Trademark Law</option>
-                                        <option value="trade-secrets">Trade Secrets</option>
-                                        <option value="transportation">Transportation/Aviation</option>
-                                        <option value="trust">Trust Administration</option>
-                                        <option value="unclaimed-property">Unclaimed Property</option>
-                                        <option value="ucc">Uniform Commercial Code (UCC)</option>
-                                        <option value="veterans">Veteran's Benefits</option>
-                                        <option value="wills">Wills/Trusts</option>
-                                        <option value="workers-comp">Workers' Compensation</option>
-                                        <option value="wrongful-termination">Wrongful Termination</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Brief Title *</label>
-                                    <input type="text" placeholder="e.g., Car accident claim" required>
-                                </div>
-                            </div>
-
-                                <div class="form-group">
-                                    <label>Case Description *</label>
-                                    <textarea placeholder="Describe your case, what happened, and what you need help with..." rows="6" required></textarea>
-                                </div>
-                            </div>
-
-                            <!-- ADDITIONAL OPTIONS SECTION -->
-                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                                <span class="collapsible-toggle">▶</span>
-                                <h3>⚙️ Additional Options</h3>
-                            </div>
-                            <div class="collapsible-content">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label>Urgency Level</label>
-                                    <select>
-                                        <option value="standard">Standard</option>
-                                        <option value="urgent">Urgent</option>
-                                        <option value="critical">Critical</option>
-                                    </select>
-                                </div>
-                                    <div class="form-group">
-                                        <label>Preferred Firm (Optional)</label>
-                                        <select>
-                                            <option value="">Open to recommendations</option>
-                                            <option value="smith">Smith & Associates</option>
-                                            <option value="jones">Jones Legal Group</option>
-                                            <option value="brown">Brown & Brown LLP</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- MATCHED FIRMS SECTION -->
-                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                                <span class="collapsible-toggle">▶</span>
-                                <h3>🏢 Available Law Firms</h3>
-                            </div>
-                            <div class="collapsible-content">
-                                <div id="firms-container" style="margin-bottom: 1.5rem;">
-                                    <div class="no-firms-message">Select your case type and location above to see available firms.</div>
-                                </div>
-                            </div>
-
-                            <!-- DOCUMENTS SECTION -->
-                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                                <span class="collapsible-toggle">▶</span>
-                                <h3>📄 Upload Documents</h3>
-                            </div>
-                            <div class="collapsible-content">
-                                <div class="form-group">
-                                    <label>Upload Documents for This Intake</label>
-                                <div class="upload-box" onclick="document.getElementById('file-input-intake').click()">
-                                    <div style="font-size: 2rem; margin-bottom: 1rem;">📁</div>
-                                    <div style="font-weight: 600; margin-bottom: 0.5rem;">Drag & drop files here or click to upload</div>
-                                    <div style="font-size: 0.9rem; color: #666;">Supported: PDF, DOC, DOCX, Images (Max 50MB each)</div>
-                                    <input type="file" id="file-input-intake" multiple style="display: none;">
-                                </div>
-                                    <div id="intake-files-list" style="margin-top: 1rem;"></div>
-                                </div>
-                            </div>
-
-                            <button type="submit" class="btn" style="margin-top: 2rem; width: 100%;">Submit Intake</button>
-                        </form>
+                    <div class="card-row">
+                        <div class="card-label">Status:</div>
+                        <div class="card-value">Active - Discovery Phase</div>
+                    </div>
+                    <div class="card-row">
+                        <div class="card-label">Filed:</div>
+                        <div class="card-value">January 15, 2024</div>
+                    </div>
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #ddd;">
+                        <button class="btn btn-secondary" style="margin-right: 0.5rem;">📄 Case Documents</button>
+                        <button class="btn btn-secondary">💬 Message Attorney</button>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <!-- My Intakes Page -->
-                <div id="my-intakes" class="page">
-                    <div class="card">
-                        <h2>My Intakes (Pending Attorney Review)</h2>
-                        <button class="btn" style="margin-bottom: 1rem;" onclick="showPage('new-intake')">+ New Intake</button>
-
-                        <div class="intake-card">
-                            <div class="intake-header">
-                                <div>
-                                    <div class="intake-title">Personal Injury Claim - Car Accident</div>
-                                    <div class="intake-info">Intake ID: INT-2024-001 • Created 2 days ago</div>
-                                </div>
-                                <div class="intake-status status-pending">Pending Review</div>
-                            </div>
-
-                            <div class="intake-details">
-                                <div class="intake-details-row">
-                                    <div class="intake-details-label">Type:</div>
-                                    <div>Personal Injury</div>
-                                </div>
-                                <div class="intake-details-row">
-                                    <div class="intake-details-label">Description:</div>
-                                    <div>Car accident on Highway 101. Other driver at fault. Need representation for insurance claim.</div>
-                                </div>
-                                <div class="intake-details-row">
-                                    <div class="intake-details-label">Urgency:</div>
-                                    <div>Standard</div>
-                                </div>
-                                <div class="intake-details-row">
-                                    <div class="intake-details-label">Submitted To:</div>
-                                    <div>
-                                        <span style="background: #ffd700; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; font-weight: bold;">Smith & Associates (PREMIUM)</span>
-                                    </div>
-                                </div>
-                                <div class="intake-details-row">
-                                    <div class="intake-details-label">Review Status:</div>
-                                    <div style="color: #ff9800; font-weight: bold;">🔄 Under Review by Sarah Johnson (Lead Attorney)</div>
-                                </div>
-                                <div class="intake-details-row">
-                                    <div class="intake-details-label">Latest Message:</div>
-                                    <div style="color: #666; font-size: 0.9rem; font-style: italic;">"Reviewing your documents. Will follow up with questions by end of day."</div>
-                                </div>
-                            </div>
-
-                            <div class="documents-section">
-                                <h4>📄 Documents for This Intake</h4>
-                                <div class="file-item">
-                                    <div class="file-info">
-                                        <div class="file-name">Police_Report.pdf</div>
-                                        <div class="file-meta">2.1 MB • Uploaded 2 days ago</div>
-                                    </div>
-                                    <button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Download</button>
-                                </div>
-                                <div class="file-item">
-                                    <div class="file-info">
-                                        <div class="file-name">Insurance_Claim_Form.pdf</div>
-                                        <div class="file-meta">1.8 MB • Uploaded 2 days ago</div>
-                                    </div>
-                                    <button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Download</button>
-                                </div>
-                            </div>
-
-                            <div class="documents-section" style="margin-top: 1.5rem; border-top: 1px solid #e0e0e0; padding-top: 1rem;">
-                                <h4>👥 Attorneys Reviewing</h4>
-                                <div style="display: grid; gap: 1rem;">
-                                    <div style="padding: 1rem; background: #f5f5f5; border-radius: 4px;">
-                                        <div style="font-weight: bold; color: #1e3a5f;">Sarah Johnson</div>
-                                        <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
-                                            Lead Attorney | CA Bar #234567 | Personal Injury Specialist
-                                        </div>
-                                        <div style="font-size: 0.8rem; color: #999; margin-top: 0.5rem;">
-                                            ✓ License verified • 15+ years experience
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="intake-actions">
-                                <button class="btn" onclick="showPage('messages')">💬 Message Attorney</button>
-                                <button class="btn btn-secondary">Add More Documents</button>
-                            </div>
-                        </div>
-
-                        <div class="intake-card">
-                            <div class="intake-header">
-                                <div>
-                                    <div class="intake-title">Estate Planning - Will & Trust Setup</div>
-                                    <div class="intake-info">Intake ID: INT-2024-002 • Created 5 days ago</div>
-                                </div>
-                                <div class="intake-status status-pending">Pending Review</div>
-                            </div>
-
-                            <div class="intake-details">
-                                <div class="intake-details-row">
-                                    <div class="intake-details-label">Type:</div>
-                                    <div>Estate Planning</div>
-                                </div>
-                                <div class="intake-details-row">
-                                    <div class="intake-details-label">Description:</div>
-                                    <div>Need to set up will and living trust. Have multiple properties and want to protect assets.</div>
-                                </div>
-                                <div class="intake-details-row">
-                                    <div class="intake-details-label">Urgency:</div>
-                                    <div>Standard</div>
-                                </div>
-                            </div>
-
-                            <div class="documents-section">
-                                <h4>📄 Documents for This Intake</h4>
-                                <div class="file-item">
-                                    <div class="file-info">
-                                        <div class="file-name">Property_List.pdf</div>
-                                        <div class="file-meta">0.8 MB • Uploaded 5 days ago</div>
-                                    </div>
-                                    <button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Download</button>
-                                </div>
-                            </div>
-
-                            <div class="intake-actions">
-                                <button class="btn">Edit</button>
-                                <button class="btn btn-secondary">Add More Documents</button>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Messages -->
+        <div class="section">
+            <h2>💬 Conversations with Your Attorneys</h2>
+            <div class="message-thread">
+                <div class="message-header">Sarah Johnson - Smith & Associates (PREMIUM) | Case #2024-CS-00127</div>
+                <div class="message-item">
+                    <div class="message-author">You:</div>
+                    <div class="message-text">Can you review my documents and let me know next steps?</div>
+                    <div class="message-time">Yesterday 2:45 PM</div>
                 </div>
-
-                <!-- My Cases Page -->
-                <div id="my-cases" class="page">
-                    <div class="card">
-                        <h2>My Cases (Assigned to Attorneys)</h2>
-
-                        <div class="intake-card" style="border-left-color: #4caf50;">
-                            <div class="intake-header">
-                                <div>
-                                    <div class="intake-title">Personal Injury Claim - Car Accident</div>
-                                    <div class="intake-info">Case #: 2024-CS-00127 • Assigned Attorney: <a href="#" style="color: #1e88e5;">Sarah Johnson</a></div>
-                                </div>
-                                <div class="intake-status status-case">Active Case</div>
-                            </div>
-
-                            <div class="intake-details">
-                                <div class="intake-details-row">
-                                    <div class="intake-details-label">Case Type:</div>
-                                    <div>Personal Injury</div>
-                                </div>
-                                <div class="intake-details-row">
-                                    <div class="intake-details-label">Status:</div>
-                                    <div>Active - Discovery Phase</div>
-                                </div>
-                                <div class="intake-details-row">
-                                    <div class="intake-details-label">Filed:</div>
-                                    <div>January 15, 2024</div>
-                                </div>
-                            </div>
-
-                            <div class="documents-section">
-                                <h4>📄 Case Documents</h4>
-                                <p style="font-size: 0.9rem; color: #666; margin-bottom: 0.75rem;">All documents for this case are stored here and cannot be accessed from other cases.</p>
-                                <div class="file-item">
-                                    <div class="file-info">
-                                        <div class="file-name">Police_Report.pdf</div>
-                                        <div class="file-meta">2.1 MB</div>
-                                    </div>
-                                    <button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Download</button>
-                                </div>
-                                <div class="file-item">
-                                    <div class="file-info">
-                                        <div class="file-name">Insurance_Claim_Form.pdf</div>
-                                        <div class="file-meta">1.8 MB</div>
-                                    </div>
-                                    <button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Download</button>
-                                </div>
-                                <div class="file-item">
-                                    <div class="file-info">
-                                        <div class="file-name">Discovery_Documents_Jan2024.pdf</div>
-                                        <div class="file-meta">5.2 MB • Added by Attorney</div>
-                                    </div>
-                                    <button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Download</button>
-                                </div>
-                            </div>
-
-                            <div class="intake-actions">
-                                <button class="btn">View Full Case</button>
-                                <button class="btn btn-secondary">Message Attorney</button>
-                            </div>
-                        </div>
-
-                        <div class="intake-card" style="border-left-color: #4caf50;">
-                            <div class="intake-header">
-                                <div>
-                                    <div class="intake-title">Contract Review - Business Services</div>
-                                    <div class="intake-info">Case #: 2024-CS-00098 • Assigned Attorney: <a href="#" style="color: #1e88e5;">Michael Chen</a></div>
-                                </div>
-                                <div class="intake-status status-case">Active Case</div>
-                            </div>
-
-                            <div class="intake-details">
-                                <div class="intake-details-row">
-                                    <div class="intake-details-label">Case Type:</div>
-                                    <div>Contract Law</div>
-                                </div>
-                                <div class="intake-details-row">
-                                    <div class="intake-details-label">Status:</div>
-                                    <div>Active - Pending Negotiation</div>
-                                </div>
-                                <div class="intake-details-row">
-                                    <div class="intake-details-label">Filed:</div>
-                                    <div>December 20, 2023</div>
-                                </div>
-                            </div>
-
-                            <div class="documents-section">
-                                <h4>📄 Case Documents</h4>
-                                <div class="file-item">
-                                    <div class="file-info">
-                                        <div class="file-name">Service_Agreement_Draft.pdf</div>
-                                        <div class="file-meta">1.5 MB</div>
-                                    </div>
-                                    <button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Download</button>
-                                </div>
-                                <div class="file-item">
-                                    <div class="file-info">
-                                        <div class="file-name">Attorney_Redline_v2.pdf</div>
-                                        <div class="file-meta">1.6 MB • Added by Attorney</div>
-                                    </div>
-                                    <button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">Download</button>
-                                </div>
-                            </div>
-
-                            <div class="intake-actions">
-                                <button class="btn">View Full Case</button>
-                                <button class="btn btn-secondary">Message Attorney</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="message-item">
+                    <div class="message-author">Sarah Johnson:</div>
+                    <div class="message-text">I've reviewed your documents. The insurance company requested a meeting. Can you come in next Tuesday at 2 PM?</div>
+                    <div class="message-time">3 hours ago</div>
                 </div>
-
-                <!-- Messages Page -->
-                <div id="messages" class="page">
-                    <div class="card">
-                        <h2>Conversations with Your Attorneys</h2>
-
-                        <!-- Thread 1: Sarah Johnson -->
-                        <div style="margin-bottom: 2rem; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
-                            <div style="background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); padding: 1rem; color: #333;">
-                                <div style="font-weight: bold; font-size: 1.1rem;">Sarah Johnson</div>
-                                <div style="font-size: 0.85rem; margin-top: 0.25rem;">
-                                    Lead Attorney • Smith & Associates (PREMIUM) • Case #2024-CS-00127
-                                </div>
-                                <div style="font-size: 0.8rem; color: #555; margin-top: 0.5rem;">
-                                    ✓ CA Bar #234567 • 15+ years • Personal Injury Specialist
-                                </div>
-                            </div>
-                            <div style="padding: 1.5rem;">
-                                <div style="margin-bottom: 1rem; padding: 1rem; background: #f0f7ff; border-radius: 4px; border-left: 3px solid #1e88e5;">
-                                    <div style="font-size: 0.9rem; color: #1e3a5f;"><strong>You:</strong> Can you review my documents and let me know next steps?</div>
-                                    <div style="font-size: 0.8rem; color: #999; margin-top: 0.5rem;">Yesterday 2:45 PM</div>
-                                </div>
-                                <div style="margin-bottom: 1rem; padding: 1rem; background: #f5f5f5; border-radius: 4px; border-left: 3px solid #1e88e5;">
-                                    <div style="font-size: 0.9rem; color: #666;"><strong>Sarah:</strong> I've reviewed your documents. The insurance company has requested a meeting. Can you come in next Tuesday at 2 PM?</div>
-                                    <div style="font-size: 0.8rem; color: #999; margin-top: 0.5rem;">3 hours ago</div>
-                                </div>
-                                <input type="text" placeholder="Type a message..." style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-                            </div>
-                        </div>
-
-                        <!-- Thread 2: Michael Chen -->
-                        <div style="margin-bottom: 2rem; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
-                            <div style="background: linear-gradient(135deg, #c0a080 0%, #d4b5a0 100%); padding: 1rem; color: white;">
-                                <div style="font-weight: bold; font-size: 1.1rem;">Michael Chen</div>
-                                <div style="font-size: 0.85rem; margin-top: 0.25rem;">
-                                    Attorney • Jones Legal Group (FEATURED) • Case #2024-CS-00098
-                                </div>
-                                <div style="font-size: 0.8rem; color: rgba(255,255,255,0.9); margin-top: 0.5rem;">
-                                    ✓ CA Bar #123456 • 8+ years • Corporate Law Specialist
-                                </div>
-                            </div>
-                            <div style="padding: 1.5rem;">
-                                <div style="margin-bottom: 1rem; padding: 1rem; background: #f0f7ff; border-radius: 4px; border-left: 3px solid #1e88e5;">
-                                    <div style="font-size: 0.9rem; color: #1e3a5f;"><strong>You:</strong> What's the timeline for the contract review?</div>
-                                    <div style="font-size: 0.8rem; color: #999; margin-top: 0.5rem;">2 days ago 10:30 AM</div>
-                                </div>
-                                <div style="margin-bottom: 1rem; padding: 1rem; background: #f5f5f5; border-radius: 4px; border-left: 3px solid #1e88e5;">
-                                    <div style="font-size: 0.9rem; color: #666;"><strong>Michael:</strong> The other party has accepted most of our revisions. Just waiting on clause 12. I'll send you the final version by end of day.</div>
-                                    <div style="font-size: 0.8rem; color: #999; margin-top: 0.5rem;">5 hours ago</div>
-                                </div>
-                                <input type="text" placeholder="Type a message..." style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <input type="text" placeholder="Type a message..." style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; margin-top: 1rem;">
             </div>
         </div>
     </div>
 
     <script>
-        // Demo law firms database
-        const demoFirms = [
-            {
-                id: 1,
-                name: 'Smith & Associates',
-                tier: 'premium',
-                website: 'https://smith-associates.local',
-                states: ['CA', 'TX', 'NY'],
-                specialties: ['personal-injury', 'criminal-defense', 'employment'],
-                counties: { CA: ['Los Angeles', 'San Francisco', 'San Diego'], TX: ['Harris', 'Dallas'], NY: ['New York', 'Kings'] }
-            },
-            {
-                id: 2,
-                name: 'Jones Legal Group',
-                tier: 'featured',
-                website: 'https://jones-legal.local',
-                states: ['CA', 'FL', 'IL'],
-                specialties: ['business', 'corporate', 'contract', 'real-estate'],
-                counties: { CA: ['Los Angeles', 'Orange'], FL: ['Miami-Dade', 'Broward'], IL: ['Cook'] }
-            },
-            {
-                id: 3,
-                name: 'Brown & Brown LLP',
-                tier: 'featured',
-                website: 'https://brown-brown.local',
-                states: ['TX', 'CA'],
-                specialties: ['family', 'divorce', 'estate', 'probate'],
-                counties: { TX: ['Harris', 'Travis'], CA: ['Los Angeles', 'Sacramento'] }
-            },
-            {
-                id: 4,
-                name: 'Wilson & Associates',
-                tier: 'basic',
-                website: 'https://wilson-associates.local',
-                states: ['NY', 'FL'],
-                specialties: ['bankruptcy', 'debt-collection', 'consumer'],
-                counties: { NY: ['Kings', 'New York'], FL: ['Miami-Dade'] }
-            },
-            {
-                id: 5,
-                name: 'Davis Law Firm',
-                tier: 'premium',
-                website: 'https://davis-law.local',
-                states: ['CA', 'TX', 'FL', 'NY'],
-                specialties: ['intellectual-property', 'patent', 'trademark', 'copyright'],
-                counties: { CA: ['Santa Clara', 'San Francisco'], TX: ['Harris', 'Dallas'], FL: ['Miami-Dade'], NY: ['New York'] }
-            },
-            {
-                id: 6,
-                name: 'Miller & Thompson',
-                tier: 'basic',
-                website: 'https://miller-thompson.local',
-                states: ['IL', 'CA'],
-                specialties: ['administrative', 'environmental', 'employment'],
-                counties: { IL: ['Cook', 'DuPage'], CA: ['Los Angeles'] }
-            }
-        ];
-
-        // County data by state
+        // County data
         const countyData = {
-            CA: ['Alameda', 'Alpine', 'Amador', 'Butte', 'Calaveras', 'Colusa', 'Contra Costa', 'Del Norte', 'El Dorado', 'Fresno', 'Kern', 'Kings', 'Lake', 'Lassen', 'Los Angeles', 'Madera', 'Marin', 'Mariposa', 'Mendocino', 'Merced', 'Mono', 'Monterey', 'Napa', 'Nevada', 'Orange', 'Placer', 'Plumas', 'Riverside', 'Sacramento', 'San Benito', 'San Bernardino', 'San Diego', 'San Francisco', 'San Joaquin', 'San Luis Obispo', 'San Mateo', 'Santa Barbara', 'Santa Clara', 'Santa Cruz', 'Shasta', 'Sierra', 'Siskiyou', 'Solano', 'Sonoma', 'Stanislaus', 'Sutter', 'Tehama', 'Trinity', 'Tulare', 'Tuolumne', 'Ventura', 'Yolo', 'Yuba'],
-            TX: ['Anderson', 'Andrews', 'Angelina', 'Aransas', 'Archer', 'Armstrong', 'Atascosa', 'Austin', 'Bailey', 'Bandera', 'Bastrop', 'Baylor', 'Bee', 'Bell', 'Bexar', 'Blanco', 'Borden', 'Bosque', 'Bowie', 'Brazoria', 'Brazos', 'Brewster', 'Briscoe', 'Brooks', 'Brown', 'Burleson', 'Burnet', 'Caldwell', 'Calhoun', 'Callahan', 'Cameron', 'Camp', 'Carson', 'Cass', 'Castro', 'Chambers', 'Cherokee', 'Cherryville', 'Cheves', 'Childress', 'Clay', 'Cochran', 'Coke', 'Coleman', 'Collin', 'Collingsworth', 'Colorado', 'Comal', 'Comanche', 'Concho', 'Cooke', 'Coryell', 'Cottle', 'Crane', 'Crary', 'Crockett', 'Crosby', 'Culberson', 'Dallam', 'Dallas', 'Dalwort', 'Dawson', 'Deaf Smith', 'DeWitt', 'Delta', 'Denton', 'Desoto', 'Dickens', 'Dickinson', 'Dimmit', 'Donley', 'Duval', 'Duvall', 'Eastland', 'Ector', 'Edwards', 'El Paso', 'Ellis', 'Erath', 'Ermatinger', 'Espy', 'Estelline', 'Evanston', 'Falls', 'Fannin', 'Farias', 'Fayette', 'Fcharles', 'Felder', 'Feliciana', 'Fence', 'Fentress', 'Fenton', 'Ferguson', 'Ferrell', 'Fettle', 'Feuille', 'Fiera', 'Fifes', 'Figh', 'Fike', 'Filbert', 'File', 'Filkins', 'Filor', 'Filroy', 'Filter', 'Filtt', 'Final', 'Findley', 'Fine', 'Finery', 'Finesse', 'Finestra', 'Finials', 'Finike', 'Finique', 'Finison', 'Fink', 'Finke', 'Finley', 'Finlin', 'Finn', 'Finned', 'Finnegan', 'Finnell', 'Finney', 'Finnia', 'Finnie', 'Finnig', 'Finnion', 'Finnish', 'Finnis', 'Finnity', 'Finnley', 'Finns', 'Finnsy', 'Finnur', 'Finny', 'Finola', 'Finolla', 'Finos', 'Finote', 'Finos', 'Finotti', 'Finous', 'Finover', 'Finowsky', 'Finoy', 'Finrat', 'Finred', 'Finre', 'Finric', 'Finridge', 'Finrier', 'Finrim', 'Finrit', 'Finrock', 'Finrog', 'Finron', 'Finrose', 'Finross', 'Finrow', 'Finrude', 'Finrush', 'Finrut', 'Finruth', 'Fins', 'Finsal', 'Finsall', 'Finsberg', 'Finsbo', 'Finsborough', 'Finsburgh', 'Finsby', 'Finseal', 'Finsear', 'Finseas', 'Finsell', 'Finsen', 'Finsent', 'Finser', 'Finsera', 'Finsero', 'Finserta', 'Finserte', 'Finsetti', 'Finshaw', 'Finshea', 'Finshee', 'Finshei', 'Finshel', 'Finshell', 'Finshem', 'Finshend', 'Finshep', 'Finshera', 'Finshere', 'Finsheri', 'Finsherl', 'Finsherm', 'Finshern', 'Finshero', 'Finsherra', 'Finsherre', 'Finshers', 'Finshert', 'Finshery', 'Finshes', 'Finshess', 'Finshest', 'Finshesy', 'Finsheta', 'Finshete', 'Finsheti', 'Finsheto', 'Finshets', 'Finshett', 'Finshety', 'Finsheu', 'Finshev', 'Finshew', 'Finshex', 'Finshey', 'Finshey', 'Finsheza', 'Finsheze', 'Finshi', 'Finshia', 'Finshib', 'Finshic', 'Finshid', 'Finshie', 'Finshif', 'Finshig', 'Finshih', 'Finshii', 'Finshij', 'Finshik', 'Finshil', 'Finshim', 'Finshin', 'Finshio', 'Finship', 'Finshiq', 'Finshir', 'Finshis', 'Finshit', 'Finshiu', 'Finshiv', 'Finshiw', 'Finshix', 'Finshiy', 'Finshiz'],
-            NY: ['Albany', 'Allegany', 'Bronx', 'Broome', 'Cattaraugus', 'Cayuga', 'Chautauqua', 'Chemung', 'Chenango', 'Clinton', 'Columbia', 'Cortland', 'Delaware', 'Dutchess', 'Erie', 'Essex', 'Franklin', 'Fulton', 'Genesee', 'Greene', 'Hamilton', 'Herkimer', 'Jefferson', 'Kings', 'Lewis', 'Livingston', 'Madison', 'Monroe', 'Montgomery', 'Nassau', 'New York', 'Niagara', 'Oneida', 'Onondaga', 'Ontario', 'Orange', 'Orleans', 'Oswego', 'Otsego', 'Putnam', 'Queens', 'Rensselaer', 'Richmond', 'Rockland', 'St. Lawrence', 'Saratoga', 'Schenectady', 'Schoharie', 'Schuyler', 'Seneca', 'Steuben', 'Suffolk', 'Sullivan', 'Tioga', 'Tompkins', 'Ulster', 'Warren', 'Washington', 'Wayne', 'Westchester', 'Wyoming', 'Yates'],
-            FL: ['Alachua', 'Baker', 'Bay', 'Bradford', 'Brevard', 'Broward', 'Calhoun', 'Charlotte', 'Citrus', 'Clay', 'Collier', 'Columbia', 'DeSoto', 'Dixie', 'Duval', 'Escambia', 'Flagler', 'Franklin', 'Gadsden', 'Gilchrist', 'Glades', 'Gulf', 'Hamilton', 'Hardee', 'Hendry', 'Hernando', 'Highlands', 'Hillsborough', 'Holmes', 'Indian River', 'Jackson', 'Jefferson', 'Lafayette', 'Lake', 'Lee', 'Leon', 'Levy', 'Liberty', 'Madison', 'Manatee', 'Marion', 'Martin', 'Miami-Dade', 'Monroe', 'Nassau', 'Okaloosa', 'Okeechobee', 'Orange', 'Osceola', 'Palm Beach', 'Pasco', 'Pinellas', 'Polk', 'Putnam', 'Santa Rosa', 'Sarasota', 'Seminole', 'St. Johns', 'St. Lucie', 'Sumter', 'Suwannee', 'Taylor', 'Union', 'Volusia', 'Wakulla', 'Walton', 'Washington'],
-            IL: ['Adams', 'Alexander', 'Bond', 'Boone', 'Brown', 'Bureau', 'Calhoun', 'Carroll', 'Cass', 'Champaign', 'Christian', 'Clark', 'Clay', 'Clinton', 'Coles', 'Cook', 'Crawford', 'Cumberland', 'DeKalb', 'DeWitt', 'Douglas', 'DuPage', 'Edgar', 'Edwards', 'Effingham', 'Elgin', 'Fayette', 'Ford', 'Franklin', 'Fulton', 'Gallatin', 'Greene', 'Grundy', 'Hamilton', 'Hancock', 'Hardin', 'Henry', 'Iroquois', 'Jackson', 'Jasper', 'Jefferson', 'Jersey', 'Jo Daviess', 'Johnson', 'Kane', 'Kankakee', 'Kendall', 'Knox', 'Lake', 'LaSalle', 'Lawrence', 'Lee', 'Livingston', 'Logan', 'Macon', 'Macoupin', 'Madison', 'Marion', 'Marshall', 'Mason', 'Massac', 'McDonough', 'McHenry', 'McLean', 'Menard', 'Mercer', 'Metro East', 'Montgomery', 'Morgan', 'Moultrie', 'Ogle', 'Peoria', 'Perry', 'Piatt', 'Pike', 'Pope', 'Pulaski', 'Putnam', 'Randolph', 'Richland', 'Rock Island', 'St. Clair', 'Saline', 'Sangamon', 'Sangue', 'Schuyler', 'Scott', 'Selle', 'Shelby', 'Southernmost', 'Stark', 'Stephenson', 'Tazewell', 'Union', 'Vermilion', 'Wabash', 'Warren', 'Washington', 'Wayne', 'White', 'Whiteside', 'Will', 'Williamson', 'Winnebago', 'Woodford']
+            CA: ['Los Angeles', 'San Francisco', 'San Diego', 'Sacramento', 'Orange'],
+            TX: ['Harris', 'Dallas', 'Travis', 'Bexar'],
+            NY: ['New York', 'Kings', 'Queens', 'Bronx'],
+            FL: ['Miami-Dade', 'Broward', 'Orange', 'Hillsborough'],
+            IL: ['Cook', 'DuPage', 'Lake']
+        };
+
+        // Case type specific forms
+        const caseTypeForms = {
+            'personal-injury': `
+                <div class="case-form-section">
+                    <h3>Personal Injury Specifics</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Type of Injury</label>
+                            <input type="text" placeholder="e.g., Car accident, Slip and fall, Workplace injury">
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Incident</label>
+                            <input type="date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Insurance Company (if applicable)</label>
+                        <input type="text" placeholder="Name of insurance company">
+                    </div>
+                </div>
+            `,
+            'estate': `
+                <div class="case-form-section">
+                    <h3>Estate Planning Specifics</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Approximate Estate Value</label>
+                            <input type="text" placeholder="e.g., $500,000 - $1,000,000">
+                        </div>
+                        <div class="form-group">
+                            <label>Number of Properties</label>
+                            <input type="number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Beneficiaries</label>
+                        <textarea placeholder="List intended beneficiaries and relationships"></textarea>
+                    </div>
+                </div>
+            `,
+            'contract': `
+                <div class="case-form-section">
+                    <h3>Contract Review Specifics</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Contract Type</label>
+                            <input type="text" placeholder="e.g., Service Agreement, Employment Contract">
+                        </div>
+                        <div class="form-group">
+                            <label>Other Party</label>
+                            <input type="text" placeholder="Name of the other party">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Specific Concerns</label>
+                        <textarea placeholder="What are you concerned about in this contract?"></textarea>
+                    </div>
+                </div>
+            `,
+            'employment': `
+                <div class="case-form-section">
+                    <h3>Employment Law Specifics</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Employment Type</label>
+                            <select>
+                                <option>Select...</option>
+                                <option>Wrongful Termination</option>
+                                <option>Discrimination</option>
+                                <option>Harassment</option>
+                                <option>Wage Dispute</option>
+                                <option>Contract Dispute</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Employer Name</label>
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+            `,
+            'divorce': `
+                <div class="case-form-section">
+                    <h3>Family Law Specifics</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Children Involved</label>
+                            <input type="number" placeholder="Number of children">
+                        </div>
+                        <div class="form-group">
+                            <label>Marriage Duration</label>
+                            <input type="text" placeholder="e.g., 10 years">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Primary Concerns</label>
+                        <textarea placeholder="Custody, support, property division, etc."></textarea>
+                    </div>
+                </div>
+            `,
+            'business': `
+                <div class="case-form-section">
+                    <h3>Business Law Specifics</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Business Type</label>
+                            <input type="text" placeholder="e.g., LLC, Corporation, Partnership">
+                        </div>
+                        <div class="form-group">
+                            <label>Years in Business</label>
+                            <input type="number">
+                        </div>
+                    </div>
+                </div>
+            `,
+            'real-estate': `
+                <div class="case-form-section">
+                    <h3>Real Estate Specifics</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Property Address</label>
+                            <input type="text">
+                        </div>
+                        <div class="form-group">
+                            <label>Property Value</label>
+                            <input type="text" placeholder="e.g., $500,000">
+                        </div>
+                    </div>
+                </div>
+            `,
+            'immigration': `
+                <div class="case-form-section">
+                    <h3>Immigration Specifics</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Current Immigration Status</label>
+                            <input type="text" placeholder="e.g., Visitor, Work permit, DACA">
+                        </div>
+                        <div class="form-group">
+                            <label>Desired Status</label>
+                            <input type="text" placeholder="e.g., Green Card, Citizenship">
+                        </div>
+                    </div>
+                </div>
+            `
         };
 
         function updateCounties() {
             const state = document.getElementById('state-select').value;
             const countySelect = document.getElementById('county-select');
-
             countySelect.innerHTML = '<option value="">Select county...</option>';
-
             if (state && countyData[state]) {
                 countyData[state].forEach(county => {
                     const option = document.createElement('option');
@@ -1085,120 +512,23 @@
                     countySelect.appendChild(option);
                 });
             }
-
-            updateMatchedFirms();
         }
 
-        function updateMatchedFirms() {
-            const state = document.getElementById('state-select').value;
+        function updateCaseTypeForm() {
             const caseType = document.getElementById('case-type-select').value;
-            const container = document.getElementById('firms-container');
-
-            if (!state || !caseType) {
-                container.innerHTML = '<div class="no-firms-message">Select your case type and location above to see available firms.</div>';
-                return;
+            const container = document.getElementById('case-type-forms');
+            if (caseType && caseTypeForms[caseType]) {
+                container.innerHTML = caseTypeForms[caseType];
+                container.classList.add('active');
+            } else {
+                container.innerHTML = '';
+                container.classList.remove('active');
             }
-
-            // Filter firms matching state and case type
-            const matchedFirms = demoFirms
-                .filter(firm => firm.states.includes(state) && firm.specialties.includes(caseType))
-                .sort((a, b) => {
-                    const tierOrder = { premium: 0, featured: 1, basic: 2 };
-                    return tierOrder[a.tier] - tierOrder[b.tier];
-                });
-
-            if (matchedFirms.length === 0) {
-                container.innerHTML = '<div class="no-firms-message">No firms found matching your case type in ' + state + '. Try a different case type or location.</div>';
-                return;
-            }
-
-            const html = '<div class="firm-cards-grid">' + matchedFirms.map(firm => `
-                <div class="firm-card" id="firm-${firm.id}">
-                    <div class="firm-tier ${firm.tier}">${firm.tier.toUpperCase()}</div>
-                    <div class="firm-name">${firm.name}</div>
-                    <div class="firm-location">📍 ${firm.states.join(', ')}</div>
-                    <div class="firm-specialties">${firm.specialties.slice(0, 2).join(', ')}</div>
-                    <div class="firm-checkbox">
-                        <input type="checkbox" name="firm-select" value="${firm.id}" onchange="toggleFirmSelection(${firm.id})">
-                        <label>Send intake to this firm</label>
-                    </div>
-                </div>
-            `).join('') + '</div>';
-
-            container.innerHTML = html;
-        }
-
-        function toggleFirmSelection(firmId) {
-            const card = document.getElementById('firm-' + firmId);
-            card.classList.toggle('selected');
-        }
-
-        function toggleCollapsible(header) {
-            const toggle = header.querySelector('.collapsible-toggle');
-            const content = header.nextElementSibling;
-
-            toggle.classList.toggle('expanded');
-            content.classList.toggle('expanded');
-        }
-
-        // Session check on page load
-        window.addEventListener('load', function() {
-            const clientToken = localStorage.getItem('clientToken');
-            const clientEmail = localStorage.getItem('clientEmail');
-
-            if (!clientToken || !clientEmail) {
-                window.location.href = 'frontend-final.html';
-            }
-        });
-
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-
-            document.getElementById(pageId).classList.add('active');
-            if (event && event.target) {
-                event.target.classList.add('active');
-            }
-
-            const titles = {
-                dashboard: 'Dashboard',
-                'new-intake': 'New Intake',
-                'my-intakes': 'My Intakes - Pending Review',
-                'my-cases': 'My Cases - Active Cases',
-                messages: 'Messages'
-            };
-            document.getElementById('page-title').textContent = titles[pageId] || 'Dashboard';
-        }
-
-        function goHome() {
-            window.location.href = 'frontend-final.html';
         }
 
         function submitIntake(event) {
             event.preventDefault();
-
-            // Get selected firms
-            const firmCheckboxes = document.querySelectorAll('input[name="firm-select"]:checked');
-            const selectedFirms = Array.from(firmCheckboxes).map(cb => cb.value);
-
-            if (selectedFirms.length === 0) {
-                alert('Please select at least one firm to submit your intake to.');
-                return;
-            }
-
-            // Store intake submission in localStorage
-            const intakeData = {
-                id: 'INT-' + Date.now(),
-                selectedFirms: selectedFirms,
-                submittedAt: new Date().toISOString(),
-                status: 'submitted-to-firms',
-                reviewed: {} // Will track which firms have reviewed
-            };
-
-            localStorage.setItem('intake-' + intakeData.id, JSON.stringify(intakeData));
-
-            alert('✓ Intake submitted to ' + selectedFirms.length + ' firm(s)!\n\nYour case is now pending their review. You can track the status in "My Intakes".\n\nYou\'ll receive updates as attorneys review your documents.');
-            showPage('my-intakes');
+            alert('✓ Intake submitted! Your case is now pending attorney review.');
         }
 
         function logout() {
@@ -1212,6 +542,17 @@
         if (email) {
             document.getElementById('client-email').textContent = email;
         }
+
+        // Session check
+        window.addEventListener('load', function() {
+            const clientToken = localStorage.getItem('clientToken');
+            if (!clientToken) {
+                // Auto-login for demo
+                localStorage.setItem('clientToken', 'demo-token-' + Date.now());
+                localStorage.setItem('clientEmail', 'jane@example.com');
+                document.getElementById('client-email').textContent = 'jane@example.com';
+            }
+        });
     </script>
 </body>
 </html>

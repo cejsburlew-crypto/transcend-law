@@ -143,6 +143,7 @@ protectedPaths.forEach(path => {
 // Import API routes
 try {
   const paymentsAPI = require('./api-payments-commissions');
+  const lawpayAPI = require('./api-lawpay-payments');
   const directoryAPI = require('./api-directory-search');
   const disputesAPI = require('./api-dispute-resolution');
   const adminAPI = require('./api-admin-dashboard');
@@ -150,6 +151,7 @@ try {
   const metricsAPI = require('./api-platform-metrics');
 
   app.use('/', paymentsAPI);
+  app.use('/', lawpayAPI);
   app.use('/', directoryAPI);
   app.use('/', disputesAPI);
   app.use('/', adminAPI);

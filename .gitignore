@@ -1,8 +1,88 @@
-node_modules/
-vendor/
-backend/data/*.sqlite
-backend/.env
-frontend/dist/
-frontend/.angular/
-.DS_Store
+# ============================================================================
+# TRANSCEND LAW - SECURE GITIGNORE
+# Prevents sensitive data and source code from being exposed
+# ============================================================================
+
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+.env.production
+secrets/
+credentials/
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Database
+*.sql.bak
+*.backup
+postgres_backup/
+database_dumps/
+
+# Logs
+logs/
 *.log
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build output
+dist/
+build/
+*.tgz
+*.tar.gz
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Private keys and certificates
+*.cert
+*.crt
+*.key
+*.pem
+private_key
+id_rsa
+
+# API Keys and Tokens
+*_api_key
+*_secret
+*_token
+
+# Stripe test files
+stripe_test_keys
+
+# AWS credentials
+.aws/
+
+# Git credentials
+.netrc

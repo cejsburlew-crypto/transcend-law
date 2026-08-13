@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Law Firms Directory - TRANSCEND LAW</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2c5aa0 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .header-meta { font-size: 0.95rem; color: rgba(255,255,255,0.9); }
+        .header-actions { display: flex; gap: 1rem; }
+        .header-actions a { color: white; text-decoration: underline; cursor: pointer; }
+
+        /* Filters */
+        .filters {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .filters h3 {
+            color: #1e3a5f;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .filter-group select, .filter-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #1e88e5;
+            color: white;
+        }
+
+        .btn-primary:hover { background: #1565c0; }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover { background: #e8e8e8; }
+
+        /* Sorting */
+        .sort-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .sort-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .sort-controls select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* Firms Grid */
+        .firms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .firm-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .firm-card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            transform: translateY(-4px);
+        }
+
+        .firm-card-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2c5aa0 100%);
+            color: white;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .tier-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.75rem;
+        }
+
+        .tier-premium { background: #ffd700; color: #333; }
+        .tier-featured { background: #cd7f32; color: white; }
+        .tier-basic { background: #999; color: white; }
+
+        .firm-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .firm-tagline {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .firm-card-body {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .firm-stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .firm-stat-value {
+            font-weight: 600;
+            color: #1e88e5;
+        }
+
+        .practice-areas {
+            margin: 1rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.7rem;
+            background: #e3f2fd;
+            color: #1e3a5f;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-state {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .firm-card-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #f0f0f0;
+            background: #f9f9f9;
+        }
+
+        .contact-info {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-view {
+            background: #1e88e5;
+            color: white;
+        }
+
+        .btn-view:hover { background: #1565c0; }
+
+        .btn-intake {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-intake:hover { background: #388e3c; }
+
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+
+            .sort-controls {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .firms-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-actions {
+                justify-content: center;
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>Law Firms Directory</h1>
+                <div class="header-meta">Find the Right Attorney for Your Case</div>
+            </div>
+            <div class="header-actions">
+                <a href="frontend-final.html">← Back Home</a>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <h3>🔍 Find Law Firms by Specialty & Location</h3>
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>Practice Area</label>
+                    <select id="practice-filter">
+                        <option value="">All Practice Areas</option>
+                        <option value="personal-injury">Personal Injury</option>
+                        <option value="estate-planning">Estate Planning</option>
+                        <option value="contract">Contract Review</option>
+                        <option value="employment">Employment Law</option>
+                        <option value="family-law">Family Law</option>
+                        <option value="business">Business Law</option>
+                        <option value="real-estate">Real Estate</option>
+                        <option value="immigration">Immigration</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>State</label>
+                    <select id="state-filter">
+                        <option value="">All States</option>
+                        <option value="CA">California</option>
+                        <option value="TX">Texas</option>
+                        <option value="NY">New York</option>
+                        <option value="FL">Florida</option>
+                        <option value="IL">Illinois</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Firm Tier</label>
+                    <select id="tier-filter">
+                        <option value="">All Tiers</option>
+                        <option value="premium">Premium</option>
+                        <option value="featured">Featured</option>
+                        <option value="basic">Basic</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-buttons">
+                <button class="btn btn-secondary" onclick="resetFilters()">Reset Filters</button>
+                <button class="btn btn-primary" onclick="applyFilters()">Apply Filters</button>
+            </div>
+        </div>
+
+        <!-- Sorting -->
+        <div class="sort-controls">
+            <span class="sort-label">Sort by:</span>
+            <select onchange="sortFirms(this.value)">
+                <option value="tier">Tier (Premium First)</option>
+                <option value="name">Name (A-Z)</option>
+                <option value="cases">Cases Solved (Most)</option>
+                <option value="experience">Experience (Most Years)</option>
+            </select>
+        </div>
+
+        <!-- Firms Grid -->
+        <div class="firms-grid" id="firms-grid"></div>
+
+        <div id="no-results" class="no-results" style="display: none;">
+            <h3>No firms match your criteria</h3>
+            <p>Try adjusting your filters or view all firms</p>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced demo firms
+        const demoFirms = [
+            {
+                id: 'smith-associates',
+                name: 'Smith & Associates',
+                tagline: 'Personal Injury & Criminal Defense',
+                tier: 'premium',
+                phone: '(555) 123-4567',
+                email: 'intake@smithassociates.com',
+                website: 'https://smithassociates.example.com',
+                practiceAreas: ['personal-injury', 'criminal-defense'],
+                states: ['CA', 'TX', 'NV'],
+                casesSolved: 1240,
+                yearsInBusiness: 19,
+                avgResolution: '18 months',
+                attorneys: 8
+            },
+            {
+                id: 'jones-legal',
+                name: 'Jones Legal Group',
+                tagline: 'Business & Corporate Law',
+                tier: 'featured',
+                phone: '(555) 234-5678',
+                email: 'contact@joneslegal.com',
+                website: 'https://joneslegal.example.com',
+                practiceAreas: ['business', 'contract'],
+                states: ['CA', 'NY', 'TX'],
+                casesSolved: 680,
+                yearsInBusiness: 14,
+                avgResolution: '4-8 months',
+                attorneys: 6
+            },
+            {
+                id: 'brown-llp',
+                name: 'Brown & Brown LLP',
+                tagline: 'Family Law & Estate Planning',
+                tier: 'featured',
+                phone: '(555) 345-6789',
+                email: 'hello@brownllp.com',
+                website: 'https://brownllp.example.com',
+                practiceAreas: ['family-law', 'estate-planning'],
+                states: ['CA', 'OR', 'WA'],
+                casesSolved: 920,
+                yearsInBusiness: 26,
+                avgResolution: '6-12 months',
+                attorneys: 5
+            },
+            {
+                id: 'wilson-associates',
+                name: 'Wilson & Associates',
+                tagline: 'Bankruptcy & Debt Collection',
+                tier: 'basic',
+                phone: '(555) 456-7890',
+                email: 'info@wilsonlaw.com',
+                website: 'https://wilsonlaw.example.com',
+                practiceAreas: ['bankruptcy', 'business'],
+                states: ['TX', 'FL', 'CA'],
+                casesSolved: 450,
+                yearsInBusiness: 11,
+                avgResolution: '8-14 months',
+                attorneys: 4
+            },
+            {
+                id: 'davis-law',
+                name: 'Davis Law Firm',
+                tagline: 'IP, Patent & Trademark',
+                tier: 'premium',
+                phone: '(555) 567-8901',
+                email: 'patents@davislaw.com',
+                website: 'https://davislaw.example.com',
+                practiceAreas: ['business', 'contract'],
+                states: ['CA', 'TX', 'NY'],
+                casesSolved: 540,
+                yearsInBusiness: 15,
+                avgResolution: '10-16 months',
+                attorneys: 7
+            },
+            {
+                id: 'miller-thompson',
+                name: 'Miller & Thompson',
+                tagline: 'Employment & Environmental Law',
+                tier: 'basic',
+                phone: '(555) 678-9012',
+                email: 'careers@millerthompson.com',
+                website: 'https://millerthompson.example.com',
+                practiceAreas: ['employment', 'business'],
+                states: ['CA', 'WA', 'OR'],
+                casesSolved: 380,
+                yearsInBusiness: 9,
+                avgResolution: '5-10 months',
+                attorneys: 3
+            }
+        ];
+
+        let filteredFirms = [...demoFirms];
+        let sortBy = 'tier';
+
+        function renderFirms() {
+            const grid = document.getElementById('firms-grid');
+            const noResults = document.getElementById('no-results');
+
+            if (filteredFirms.length === 0) {
+                grid.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            noResults.style.display = 'none';
+            grid.innerHTML = filteredFirms.map(firm => `
+                <div class="firm-card">
+                    <div class="firm-card-header">
+                        <span class="tier-badge tier-${firm.tier}">${firm.tier.toUpperCase()}</span>
+                        <div class="firm-name">${firm.name}</div>
+                        <div class="firm-tagline">${firm.tagline}</div>
+                    </div>
+                    <div class="firm-card-body">
+                        <div class="firm-stat">
+                            <span>Cases Solved:</span>
+                            <span class="firm-stat-value">${firm.casesSolved}</span>
+                        </div>
+                        <div class="firm-stat">
+                            <span>Years in Business:</span>
+                            <span class="firm-stat-value">${firm.yearsInBusiness}</span>
+                        </div>
+                        <div class="firm-stat">
+                            <span>Attorneys:</span>
+                            <span class="firm-stat-value">${firm.attorneys}</span>
+                        </div>
+                        <div class="firm-stat">
+                            <span>Avg. Resolution:</span>
+                            <span class="firm-stat-value">${firm.avgResolution}</span>
+                        </div>
+
+                        <div class="practice-areas" style="margin-top: 1rem;">
+                            ${firm.practiceAreas.map(area =>
+                                `<span class="badge">${area.replace('-', ' ').toUpperCase()}</span>`
+                            ).join('')}
+                        </div>
+
+                        <div class="practice-areas">
+                            ${firm.states.map(state =>
+                                `<span class="badge badge-state">📍 ${state}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                    <div class="firm-card-footer">
+                        <div class="contact-info">📧 ${firm.email}</div>
+                        <div class="contact-info">📞 ${firm.phone}</div>
+                        <div class="card-buttons">
+                            <a href="firm-profile.html?firm=${firm.id}" class="btn-small btn-view">View Profile</a>
+                            <a href="frontend-final.html?firm=${firm.id}" class="btn-small btn-intake">Start Intake</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function applyFilters() {
+            const practiceFilter = document.getElementById('practice-filter').value;
+            const stateFilter = document.getElementById('state-filter').value;
+            const tierFilter = document.getElementById('tier-filter').value;
+
+            filteredFirms = demoFirms.filter(firm => {
+                const matchesPractice = !practiceFilter || firm.practiceAreas.includes(practiceFilter);
+                const matchesState = !stateFilter || firm.states.includes(stateFilter);
+                const matchesTier = !tierFilter || firm.tier === tierFilter;
+                return matchesPractice && matchesState && matchesTier;
+            });
+
+            sortFirms(sortBy);
+        }
+
+        function sortFirms(sortOption) {
+            sortBy = sortOption;
+            filteredFirms.sort((a, b) => {
+                switch(sortOption) {
+                    case 'tier':
+                        const tierOrder = { premium: 0, featured: 1, basic: 2 };
+                        return tierOrder[a.tier] - tierOrder[b.tier] || a.name.localeCompare(b.name);
+                    case 'name':
+                        return a.name.localeCompare(b.name);
+                    case 'cases':
+                        return b.casesSolved - a.casesSolved;
+                    case 'experience':
+                        return b.yearsInBusiness - a.yearsInBusiness;
+                    default:
+                        return 0;
+                }
+            });
+            renderFirms();
+        }
+
+        function resetFilters() {
+            document.getElementById('practice-filter').value = '';
+            document.getElementById('state-filter').value = '';
+            document.getElementById('tier-filter').value = '';
+            filteredFirms = [...demoFirms];
+            sortFirms('tier');
+        }
+
+        // Initial render
+        renderFirms();
+    </script>
+</body>
+</html>

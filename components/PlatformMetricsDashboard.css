@@ -1,0 +1,585 @@
+/* TRANSCEND LAW - PLATFORM METRICS DASHBOARD STYLING */
+/* Live network reach and strength display */
+
+:root {
+  --primary: #0066cc;
+  --secondary: #00a3e0;
+  --success: #00a651;
+  --warning: #ffa500;
+  --danger: #d32f2f;
+  --dark: #1a1a1a;
+  --light: #f5f5f5;
+  --border: #e0e0e0;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --transition: all 0.3s ease;
+}
+
+.platform-metrics-dashboard {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
+}
+
+/* ============================================================================
+   HEADER
+   ============================================================================ */
+
+.metrics-header {
+  text-align: center;
+  margin-bottom: 50px;
+  animation: slideDown 0.6s ease;
+}
+
+.metrics-header h1 {
+  font-size: 3.5rem;
+  color: var(--dark);
+  margin: 0 0 15px 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.metrics-header .tagline {
+  font-size: 1.3rem;
+  color: var(--primary);
+  margin: 0 0 10px 0;
+  font-weight: 500;
+}
+
+.metrics-header .last-updated {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+  font-style: italic;
+}
+
+.metrics-loading,
+.metrics-error {
+  text-align: center;
+  padding: 100px 20px;
+  font-size: 1.2rem;
+  color: var(--dark);
+}
+
+/* ============================================================================
+   MAIN METRICS GRID - BIG NUMBERS
+   ============================================================================ */
+
+.metrics-grid-main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-bottom: 60px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.metric-card {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: var(--shadow-lg);
+  transition: var(--transition);
+  border-top: 4px solid var(--primary);
+}
+
+.metric-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.metric-card.large {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.metric-card.total-professionals {
+  border-top-color: #0066cc;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8f1ff 100%);
+}
+
+.metric-card.states-covered {
+  border-top-color: #00a651;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+}
+
+.metric-card.network-strength {
+  border-top-color: #ffa500;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+}
+
+.metric-card.referral-networks {
+  border-top-color: #00a3e0;
+  background: linear-gradient(135deg, #ecf9ff 0%, #d1f0ff 100%);
+}
+
+.metric-number {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 10px;
+  line-height: 1;
+}
+
+.metric-card.states-covered .metric-number {
+  color: var(--success);
+}
+
+.metric-card.network-strength .metric-number {
+  color: var(--warning);
+}
+
+.metric-card.referral-networks .metric-number {
+  color: var(--secondary);
+}
+
+.metric-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.metric-detail {
+  font-size: 0.95rem;
+  color: #666;
+  font-weight: 400;
+}
+
+/* ============================================================================
+   PROFESSIONALS BY TYPE SECTION
+   ============================================================================ */
+
+.metrics-section {
+  max-width: 1400px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.metrics-section h2 {
+  font-size: 2rem;
+  color: var(--dark);
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+.professions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.profession-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  border-left: 4px solid var(--primary);
+}
+
+.profession-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.profession-count {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.profession-name {
+  font-size: 0.95rem;
+  color: var(--dark);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.profession-bar {
+  height: 6px;
+  background: #f0f0f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.profession-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  transition: width 0.3s ease;
+}
+
+/* ============================================================================
+   TIER BREAKDOWN
+   ============================================================================ */
+
+.tier-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.tier-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  border-left: 6px solid var(--primary);
+}
+
+.tier-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.tier-card.tier-1 {
+  border-left-color: #0066cc;
+}
+
+.tier-card.tier-2 {
+  border-left-color: #00a3e0;
+}
+
+.tier-card.tier-3 {
+  border-left-color: #ffa500;
+}
+
+.tier-card h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin: 0 0 15px 0;
+}
+
+.tier-count {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 15px;
+}
+
+.tier-card.tier-2 .tier-count {
+  color: #00a3e0;
+}
+
+.tier-card.tier-3 .tier-count {
+  color: #ffa500;
+}
+
+.tier-professions {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.tier-revenue {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--success);
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* ============================================================================
+   NETWORK HEALTH
+   ============================================================================ */
+
+.network-health {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: var(--shadow-lg);
+}
+
+.health-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.health-card {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+  border: 2px solid #e0e0e0;
+}
+
+.health-label {
+  font-size: 0.95rem;
+  color: #666;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.health-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.health-status-good {
+  color: var(--success);
+}
+
+/* ============================================================================
+   CALL TO ACTION
+   ============================================================================ */
+
+.metrics-cta {
+  max-width: 1400px;
+  margin: 80px auto;
+  padding: 0 20px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: 16px;
+  padding: 60px 40px;
+  color: white;
+  box-shadow: var(--shadow-lg);
+}
+
+.metrics-cta h2 {
+  font-size: 2.5rem;
+  color: white;
+  margin: 0 0 20px 0;
+}
+
+.metrics-cta p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  opacity: 0.95;
+}
+
+.cta-button {
+  background: white;
+  color: var(--primary);
+  border: none;
+  padding: 15px 40px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================================================
+   FOOTER
+   ============================================================================ */
+
+.metrics-footer {
+  max-width: 1400px;
+  margin: 60px auto;
+  padding: 40px 20px;
+  text-align: center;
+  color: #666;
+  font-size: 1rem;
+  border-top: 2px solid var(--border);
+}
+
+.metrics-footer p {
+  margin: 0;
+}
+
+/* ============================================================================
+   ANIMATIONS
+   ============================================================================ */
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.metric-card {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.profession-card {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .metrics-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .metrics-header .tagline {
+    font-size: 1.1rem;
+  }
+
+  .metrics-grid-main {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .metric-number {
+    font-size: 2.5rem;
+  }
+
+  .metric-card.large {
+    min-height: 150px;
+  }
+
+  .professions-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  .tier-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .health-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+
+  .metrics-cta {
+    padding: 40px 30px;
+  }
+
+  .metrics-cta h2 {
+    font-size: 2rem;
+  }
+
+  .metrics-cta p {
+    font-size: 1rem;
+  }
+
+  .cta-button {
+    padding: 12px 30px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .platform-metrics-dashboard {
+    padding: 20px 10px;
+  }
+
+  .metrics-header h1 {
+    font-size: 2rem;
+  }
+
+  .metrics-header .tagline {
+    font-size: 1rem;
+  }
+
+  .metric-number {
+    font-size: 2rem;
+  }
+
+  .metric-label {
+    font-size: 1rem;
+  }
+
+  .metric-detail {
+    font-size: 0.85rem;
+  }
+
+  .professions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .profession-count {
+    font-size: 1.5rem;
+  }
+
+  .profession-name {
+    font-size: 0.85rem;
+  }
+
+  .tier-count {
+    font-size: 2rem;
+  }
+
+  .health-value {
+    font-size: 1.5rem;
+  }
+
+  .metrics-footer {
+    padding: 20px 10px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================================================================
+   DARK MODE SUPPORT
+   ============================================================================ */
+
+@media (prefers-color-scheme: dark) {
+  .platform-metrics-dashboard {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  }
+
+  .metrics-header h1 {
+    color: #ffffff;
+  }
+
+  .metric-card,
+  .profession-card,
+  .tier-card,
+  .health-card,
+  .network-health {
+    background: #2a2a2a;
+    border-color: #444;
+  }
+
+  .metric-label,
+  .profession-name,
+  .tier-card h3 {
+    color: #ffffff;
+  }
+
+  .metric-detail,
+  .tier-professions,
+  .health-label,
+  .metrics-footer p {
+    color: #b0b0b0;
+  }
+
+  .health-card {
+    background: #333;
+  }
+
+  .profession-bar {
+    background: #444;
+  }
+}
