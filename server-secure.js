@@ -84,17 +84,17 @@ app.get('/api/health', verifyToken, (req, res) => {
 
 // All protected endpoints - require verification token
 const protectedPaths = [
-  '/api/payments',
-  '/api/directory',
-  '/api/disputes',
-  '/api/admin',
-  '/api/notifications',
-  '/api/leaderboard',
-  '/api/professionals'
+  /^\/api\/payments/,
+  /^\/api\/directory/,
+  /^\/api\/disputes/,
+  /^\/api\/admin/,
+  /^\/api\/notifications/,
+  /^\/api\/leaderboard/,
+  /^\/api\/professionals/
 ];
 
 protectedPaths.forEach(path => {
-  app.all(`${path}*`, verifyToken);
+  app.all(path, verifyToken);
 });
 
 // Import actual API routes (after verifyToken middleware)
@@ -120,7 +120,7 @@ try {
 // CATCH-ALL - BLOCK EVERYTHING ELSE
 // ============================================================================
 
-app.all('*', blockPublicAccess);
+app.all(/.*/, blockPublicAccess);
 
 // ============================================================================
 // ERROR HANDLING
