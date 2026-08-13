@@ -55,13 +55,15 @@ app.use(helmet({
 // 2. Custom security headers
 app.use(securityHeaders);
 
-// 3. CORS for production domain
+// 3. CORS for production domain + localhost development
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   const allowedOrigins = [
     `https://${DOMAIN}`,
     `https://api.${DOMAIN}`,
-    `https://www.${DOMAIN}`
+    `https://www.${DOMAIN}`,
+    'http://localhost:5173',
+    'http://127.0.0.1:5173'
   ];
 
   if (allowedOrigins.includes(origin)) {
