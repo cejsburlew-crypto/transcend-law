@@ -436,7 +436,8 @@
       "Bash(scp -r -i ~/.ssh/transcend-law-key.pem dist/* ubuntu@184.72.77.238:/var/www/transcend-law/public/)",
       "Bash(rm -rf /var/www/transcend-law/public/*)",
       "Bash(scp -r dist/* ubuntu@184.72.77.238:/var/www/transcend-law/public/)",
-      "Bash(scp -i ~/.ssh/transcend-law-key.pem -r dist/* ubuntu@184.72.77.238:/var/www/transcend-law/public/)"
+      "Bash(scp -i ~/.ssh/transcend-law-key.pem -r dist/* ubuntu@184.72.77.238:/var/www/transcend-law/public/)",
+      "Bash(npx vite build 2>&1 | tail -10 && rm -rf /var/www/transcend-law/public/* && scp -r dist/* ubuntu@184.72.77.238:/var/www/transcend-law/public/ && echo \"✅ Deployed with 22 services + credential verification\" && git add -A && git commit -m \"✨ Add Tax Preparation services + Professional Credentials system *)"
     ]
   }
 }

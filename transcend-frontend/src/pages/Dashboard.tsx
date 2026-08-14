@@ -8,6 +8,7 @@ import { ClientServiceIntake } from './ClientServiceIntake';
 import { ClientDocuments } from './ClientDocuments';
 import { IdentificationVerification } from './IdentificationVerification';
 import { ServiceSelection } from './ServiceSelection';
+import { ProfessionalCredentials } from './ProfessionalCredentials';
 import './Dashboard.css';
 
 export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
@@ -368,6 +369,11 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
                   <p>7 days</p>
                 </div>
               </div>
+
+              <div className="settings-divider">
+                <h2 style={{marginTop: '40px'}}>🏆 Professional Credentials</h2>
+              </div>
+              <ProfessionalCredentials />
 
               <div className="settings-divider">
                 <h2 style={{marginTop: '40px'}}>🆔 Identification Verification</h2>

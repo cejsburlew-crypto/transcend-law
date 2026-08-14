@@ -26,6 +26,8 @@ const SERVICES = [
   { icon: '📚', name: 'Legal Researcher', description: 'Legal research services' },
   { icon: '📑', name: 'Contract Reviewer', description: 'Contract analysis and review' },
   { icon: '✅', name: 'Compliance Consultant', description: 'Regulatory compliance services' },
+  { icon: '📊', name: 'Tax Preparation Advisor', description: 'Tax format & analysis assistance' },
+  { icon: '📈', name: 'Tax Preparation & Filing', description: 'Complete tax prep & submission services' },
 ];
 
 export const ServiceSelection: React.FC<ServiceSelectionProps> = ({ onSelectService }) => {
