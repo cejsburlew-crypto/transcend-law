@@ -14,7 +14,7 @@ import './Dashboard.css';
 export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const { user, token } = useAuth();
   const [health, setHealth] = useState<HealthCheck | null>(null);
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState('services');
   const [loading, setLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [viewRole, setViewRole] = useState<'admin' | 'client' | 'firm' | 'attorney'>(() =>
