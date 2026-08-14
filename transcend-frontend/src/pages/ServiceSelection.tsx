@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import type { LawSpecialty } from './LawSpecialties';
+import { LawSpecialties } from './LawSpecialties';
+import { LawSpecialtyDetail } from './LawSpecialtyDetail';
 import './ServiceSelection.css';
 
 export interface ServiceSelectionProps {
@@ -31,6 +34,26 @@ const SERVICES = [
 ];
 
 export const ServiceSelection: React.FC<ServiceSelectionProps> = ({ onSelectService }) => {
+  const [selectedSpecialty, setSelectedSpecialty] = useState<LawSpecialty | null>(null);
+  const [showLawSpecialties, setShowLawSpecialties] = useState(false);
+
+  if (selectedSpecialty) {
+    return (
+      <LawSpecialtyDetail
+        specialty={selectedSpecialty}
+        onBack={() => setSelectedSpecialty(null)}
+      />
+    );
+  }
+
+  if (showLawSpecialties) {
+    return (
+      <LawSpecialties
+        onSelectSpecialty={(specialty) => setSelectedSpecialty(specialty)}
+      />
+    );
+  }
+
   return (
     <div className="service-selection-container">
       <div className="service-header">
@@ -43,7 +66,13 @@ export const ServiceSelection: React.FC<ServiceSelectionProps> = ({ onSelectServ
           <button
             key={service.name}
             className="service-card"
-            onClick={() => onSelectService(service.name)}
+            onClick={() => {
+              if (service.name === 'Lawyer') {
+                setShowLawSpecialties(true);
+              } else {
+                onSelectService(service.name);
+              }
+            }}
             title={service.description}
           >
             <div className="service-icon">{service.icon}</div>
