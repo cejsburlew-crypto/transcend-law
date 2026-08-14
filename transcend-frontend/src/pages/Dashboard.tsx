@@ -7,12 +7,13 @@ import { Directory } from './Directory';
 import { ClientServiceIntake } from './ClientServiceIntake';
 import { ClientDocuments } from './ClientDocuments';
 import { IdentificationVerification } from './IdentificationVerification';
+import { ServiceSelection } from './ServiceSelection';
 import './Dashboard.css';
 
 export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const { user, token } = useAuth();
   const [health, setHealth] = useState<HealthCheck | null>(null);
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('services');
   const [loading, setLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [viewRole, setViewRole] = useState<'admin' | 'client' | 'firm' | 'attorney'>(() =>
@@ -43,6 +44,7 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   }, [token]);
 
   const adminTabs = [
+    { id: 'services', label: '📚 Services', icon: '📚' },
     { id: 'overview', label: '📊 Overview', icon: '📊' },
     { id: 'directory', label: '👥 Directory', icon: '👥' },
     { id: 'referrals', label: '📋 Referrals', icon: '📋' },
@@ -54,6 +56,7 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   ];
 
   const firmTabs = [
+    { id: 'services', label: '📚 Services', icon: '📚' },
     { id: 'overview', label: '📊 Dashboard', icon: '📊' },
     { id: 'directory', label: '👨‍⚖️ Attorneys', icon: '👨‍⚖️' },
     { id: 'referrals', label: '📋 Cases', icon: '📋' },
@@ -63,6 +66,7 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   ];
 
   const attorneyTabs = [
+    { id: 'services', label: '📚 Services', icon: '📚' },
     { id: 'overview', label: '📊 Dashboard', icon: '📊' },
     { id: 'referrals', label: '📋 My Cases', icon: '📋' },
     { id: 'payments', label: '💰 Earnings', icon: '💰' },
@@ -71,6 +75,7 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   ];
 
   const clientTabs = [
+    { id: 'services', label: '📚 Services', icon: '📚' },
     { id: 'overview', label: '📝 Submit Case', icon: '📝' },
     { id: 'referrals', label: '📋 My Cases', icon: '📋' },
     { id: 'documents', label: '📁 Documents', icon: '📁' },
@@ -117,6 +122,14 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
         </aside>
 
         <main className="main-content">
+          {activeTab === 'services' && (
+            <div className="tab-content">
+              <ServiceSelection onSelectService={() => {
+                setActiveTab('overview');
+              }} />
+            </div>
+          )}
+
           {activeTab === 'overview' && viewRole === 'firm' && (
             <div className="tab-content">
               <h2>🏢 Law Firm Dashboard</h2>

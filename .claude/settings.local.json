@@ -431,7 +431,9 @@
       "Bash(curl -s https://transcend-law.com)",
       "Bash(scp -i ~/.ssh/transcend-law-key.pem /private/tmp/claude-501/-Users-jbconsultingassociatesinc--code-transcend-ssp/9e95c4e3-aa1f-4687-afed-1131263d4443/scratchpad/index.html ubuntu@184.72.77.238:/var/www/transcend-law/public/)",
       "Bash(curl -s https://transcend-law.com/health)",
-      "Bash(npx create-expo-app@latest transcend-law-mobile --yes)"
+      "Bash(npx create-expo-app@latest transcend-law-mobile --yes)",
+      "Bash(npx vite *)",
+      "Bash(scp -r -i ~/.ssh/transcend-law-key.pem dist/* ubuntu@184.72.77.238:/var/www/transcend-law/public/)"
     ]
   }
 }
