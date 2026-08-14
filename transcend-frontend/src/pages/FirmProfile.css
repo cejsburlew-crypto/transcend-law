@@ -1,0 +1,498 @@
+.firm-profile-page {
+  min-height: 100vh;
+  background: #f9fafb;
+  padding-bottom: 40px;
+}
+
+.firm-header {
+  background: white;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.back-btn {
+  padding: 8px 16px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  background: #e5e7eb;
+}
+
+.firm-hero {
+  background: white;
+  padding: 40px;
+  margin: 20px;
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 40px;
+  align-items: start;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.firm-logo {
+  font-size: 100px;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  color: white;
+}
+
+.firm-hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.firm-hero-content h1 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+  color: #333;
+}
+
+.firm-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+  color: #999;
+  font-weight: 500;
+}
+
+.firm-bio {
+  margin: 0;
+  color: #666;
+  line-height: 1.6;
+  max-width: 500px;
+}
+
+.firm-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-item {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.contact-label {
+  font-weight: 600;
+  color: #333;
+  min-width: 80px;
+}
+
+.contact-value {
+  color: #666;
+}
+
+.firm-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 200px;
+}
+
+.btn-visit-website,
+.btn-contact {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+
+.btn-visit-website {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-visit-website:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.btn-contact {
+  background: #f3f4f6;
+  color: #333;
+  border: 1px solid #e5e7eb;
+}
+
+.btn-contact:hover {
+  background: #e5e7eb;
+}
+
+.firm-tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 20px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  margin: 20px 20px 0;
+  border-radius: 12px 12px 0 0;
+}
+
+.tab-btn {
+  padding: 16px 24px;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #999;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+}
+
+.tab-btn:hover {
+  color: #667eea;
+}
+
+.tab-btn.active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+}
+
+.firm-content {
+  background: white;
+  margin: 0 20px 20px;
+  border-radius: 0 0 12px 12px;
+  padding: 40px;
+}
+
+.tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.content-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.content-section h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+}
+
+.content-section p {
+  margin: 0;
+  color: #666;
+  line-height: 1.6;
+}
+
+.practice-areas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.practice-area {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.practice-area:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+.practice-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.practice-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.benefits-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.benefits-list li {
+  color: #666;
+  font-size: 14px;
+  padding: 8px 0;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.team-card {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-color: #667eea;
+}
+
+.team-avatar {
+  font-size: 64px;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.team-card h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  color: #333;
+}
+
+.team-title {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: #667eea;
+  font-weight: 500;
+}
+
+.team-rating {
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.btn-view-profile {
+  width: 100%;
+  padding: 10px 16px;
+  background: #e0e7ff;
+  color: #667eea;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-view-profile:hover {
+  background: #667eea;
+  color: white;
+}
+
+.case-studies-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.case-study-card {
+  background: #f9fafb;
+  border-left: 4px solid #667eea;
+  border-radius: 8px;
+  padding: 24px;
+  transition: all 0.2s ease;
+}
+
+.case-study-card:hover {
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.15);
+  transform: translateY(-2px);
+}
+
+.case-study-card h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+}
+
+.case-description {
+  margin: 0 0 16px;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.case-outcome {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.outcome-label {
+  font-weight: 600;
+  color: #333;
+}
+
+.outcome-value {
+  color: #667eea;
+  font-weight: 500;
+}
+
+/* Dark Mode */
+:root[data-theme='dark'] .firm-profile-page {
+  background: #0f1117;
+}
+
+:root[data-theme='dark'] .firm-header,
+:root[data-theme='dark'] .firm-hero,
+:root[data-theme='dark'] .firm-tabs,
+:root[data-theme='dark'] .firm-content {
+  background: #1a1d23;
+  border-color: #2d3139;
+}
+
+:root[data-theme='dark'] .firm-hero-content h1,
+:root[data-theme='dark'] .content-section h2,
+:root[data-theme='dark'] .team-card h3,
+:root[data-theme='dark'] .case-study-card h3 {
+  color: #f5f7fa;
+}
+
+:root[data-theme='dark'] .firm-bio,
+:root[data-theme='dark'] .contact-value,
+:root[data-theme='dark'] .content-section p,
+:root[data-theme='dark'] .case-description {
+  color: #cbd5e0;
+}
+
+:root[data-theme='dark'] .practice-area,
+:root[data-theme='dark'] .team-card,
+:root[data-theme='dark'] .case-study-card {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+:root[data-theme='dark'] .practice-area:hover {
+  border-color: #667eea;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .firm-hero {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .firm-logo {
+    width: 120px;
+    height: 120px;
+    font-size: 60px;
+  }
+
+  .firm-actions {
+    flex-direction: row;
+    min-width: unset;
+  }
+}
+
+@media (max-width: 768px) {
+  .firm-hero {
+    padding: 24px;
+    margin: 16px;
+  }
+
+  .firm-logo {
+    width: 100px;
+    height: 100px;
+    font-size: 50px;
+  }
+
+  .firm-hero-content h1 {
+    font-size: 28px;
+  }
+
+  .firm-content {
+    padding: 24px;
+    margin: 0 16px 16px;
+  }
+
+  .tab-content {
+    gap: 24px;
+  }
+
+  .practice-areas {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  .case-studies-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .firm-hero {
+    padding: 16px;
+    margin: 12px;
+  }
+
+  .firm-hero-content h1 {
+    font-size: 24px;
+  }
+
+  .firm-tabs {
+    margin: 16px 12px 0;
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    padding: 12px 16px;
+    font-size: 12px;
+  }
+
+  .firm-content {
+    padding: 16px;
+    margin: 0 12px 12px;
+  }
+
+  .practice-areas {
+    grid-template-columns: 1fr;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -377,7 +377,29 @@
       "Bash(curl -v -X POST https://transcend-law.com/api/auth/login -H 'Content-Type: application/json' -d '{\"email\":\"cejsburlew@gmail.com\",\"password\":\"$Colombia\"}')",
       "Bash(curl -s -X POST https://transcend-law.com/api/auth/login -H 'Content-Type: application/json' -d '{\"email\":\"cejsburlew@gmail.com\",\"password\":\"$Colombia\"}')",
       "Bash(npx create-react-app *)",
-      "Bash(npm create *)"
+      "Bash(npm create *)",
+      "Bash(rm /Users/jbconsultingassociatesinc./code/transcend-ssp/transcend-frontend/src/pages/ClientDashboard.tsx /Users/jbconsultingassociatesinc./code/transcend-ssp/transcend-frontend/src/pages/ClientDashboard.css)",
+      "Bash(grep -E \"\\\\.\\(tsx|ts|jsx|js\\)$\")",
+      "Bash(xargs ls -la)",
+      "Bash(npx vercel *)",
+      "Bash(yarn workspace *)",
+      "Bash(open /Applications/Docker.app)",
+      "Bash(curl -s http://localhost:3000/health)",
+      "Bash(cp /Users/jbconsultingassociatesinc./code/transcend-ssp/transcend-law/.env /Users/jbconsultingassociatesinc./code/transcend-ssp/transcend-law/backend/.env && echo \"✓ .env copied to backend\")",
+      "Bash(docker run *)",
+      "Bash(npx tsc *)",
+      "Bash(docker exec *)",
+      "Bash(docker stop *)",
+      "Bash(docker rm *)",
+      "Bash(pkill -f \"node.*dist/index.js\")",
+      "Bash(pkill -f \"npm.*start\")",
+      "Bash(export DATABASE_URL=\"postgresql://transcend:transcend_dev_password@localhost:5432/transcend_law_dev\")",
+      "Bash(psql postgresql://transcend:transcend_dev_password@localhost:5432/transcend_law_dev -c 'SELECT VERSION\\(\\);')",
+      "Bash(sed -i '' 's/localhost/127.0.0.1/g' /Users/jbconsultingassociatesinc./code/transcend-ssp/transcend-law/backend/.env *)",
+      "Bash(vercel deploy *)",
+      "Bash(curl -s -I https://transcend-law-frontend.vercel.app)",
+      "Bash(vercel domains *)",
+      "Bash(xargs kill -9)"
     ]
   }
 }

@@ -1,0 +1,632 @@
+.contract-negotiation {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f9fafb;
+}
+
+.contract-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 24px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.back-btn {
+  margin-bottom: 12px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.contract-header h1 {
+  margin: 0 0 4px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.contract-header p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+.provider-info-bar {
+  background: white;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+}
+
+.provider-info {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.provider-avatar {
+  font-size: 48px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f4ff;
+  border-radius: 8px;
+}
+
+.provider-info h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+}
+
+.provider-info p {
+  margin: 0;
+  font-size: 13px;
+  color: #666;
+}
+
+.contract-tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 20px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tab-btn {
+  padding: 16px 20px;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #999;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+}
+
+.tab-btn:hover {
+  color: #667eea;
+}
+
+.tab-btn.active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+}
+
+.contract-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+.requests-list {
+  background: white;
+  border-right: 1px solid #e5e7eb;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.request-card {
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.request-card:hover {
+  background: #f9fafb;
+}
+
+.request-card.selected {
+  background: #f0f4ff;
+  border-left: 4px solid #667eea;
+  padding-left: 12px;
+}
+
+.request-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.client-info {
+  display: flex;
+  gap: 12px;
+}
+
+.client-avatar {
+  font-size: 36px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  border-radius: 6px;
+  line-height: 1;
+}
+
+.client-info h4 {
+  margin: 0 0 2px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+}
+
+.client-info p {
+  margin: 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.budget-badge {
+  font-size: 16px;
+  font-weight: 700;
+  color: #667eea;
+  background: #f0f4ff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.request-description {
+  margin: 0;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.request-status {
+  display: flex;
+  gap: 8px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.status-badge.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.negotiating {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-badge.accepted {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.details-panel {
+  background: white;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.details-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+}
+
+.close-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: #f3f4f6;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background: #e5e7eb;
+}
+
+.client-card {
+  background: #f9fafb;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.client-info-detailed {
+  display: flex;
+  gap: 12px;
+}
+
+.client-avatar-lg {
+  font-size: 48px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 6px;
+}
+
+.client-info-detailed h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+}
+
+.client-info-detailed p {
+  margin: 0;
+  font-size: 13px;
+  color: #666;
+}
+
+.project-details,
+.proposed-terms {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.project-details h4,
+.proposed-terms h4 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.project-details p {
+  margin: 0;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.terms-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.term {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.term-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+}
+
+.term-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.messages-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+.messages-section h4 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #333;
+}
+
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.message {
+  padding: 12px;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+.message.client {
+  align-self: flex-start;
+  max-width: 85%;
+  background: #e5e7eb;
+}
+
+.message.provider {
+  align-self: flex-end;
+  max-width: 85%;
+  background: #e0e7ff;
+}
+
+.message-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.message-meta strong {
+  color: #333;
+}
+
+.message-time {
+  font-size: 11px;
+  color: #999;
+}
+
+.message-text {
+  margin: 0;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.terms-notification {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 12px;
+  color: #667eea;
+  font-weight: 600;
+}
+
+.message-input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.message-input-section textarea {
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  resize: vertical;
+  transition: all 0.2s ease;
+}
+
+.message-input-section textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.btn-send {
+  padding: 10px 16px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-send:hover:not(:disabled) {
+  background: #5568d3;
+}
+
+.btn-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.btn-propose,
+.btn-accept,
+.btn-decline {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-propose {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-propose:hover {
+  background: #2563eb;
+}
+
+.btn-accept {
+  background: #10b981;
+  color: white;
+}
+
+.btn-accept:hover {
+  background: #059669;
+}
+
+.btn-decline {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-decline:hover {
+  background: #dc2626;
+}
+
+.accepted-info {
+  background: #d1fae5;
+  border: 1px solid #a7f3d0;
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.accepted-info p {
+  margin: 6px 0;
+  font-size: 13px;
+  color: #065f46;
+  font-weight: 500;
+}
+
+.accepted-info .fee-info {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #a7f3d0;
+  font-weight: 700;
+}
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: #999;
+  font-size: 14px;
+}
+
+/* Dark Mode */
+:root[data-theme='dark'] .contract-negotiation {
+  background: #0f1117;
+}
+
+:root[data-theme='dark'] .requests-list,
+:root[data-theme='dark'] .details-panel {
+  background: #1a1d23;
+  border-color: #2d3139;
+}
+
+:root[data-theme='dark'] .request-card,
+:root[data-theme='dark'] .project-details,
+:root[data-theme='dark'] .proposed-terms,
+:root[data-theme='dark'] .client-card {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+:root[data-theme='dark'] .client-info h4,
+:root[data-theme='dark'] .details-header h2 {
+  color: #f5f7fa;
+}
+
+:root[data-theme='dark'] .message {
+  background: #2a2a2a;
+}
+
+:root[data-theme='dark'] .message.client {
+  background: #3a3a3a;
+}
+
+:root[data-theme='dark'] .message.provider {
+  background: #2d3139;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .contract-content {
+    grid-template-columns: 1fr;
+  }
+
+  .requests-list {
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    max-height: 40vh;
+  }
+
+  .terms-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .contract-content {
+    grid-template-columns: 1fr;
+  }
+
+  .requests-list {
+    max-height: 50vh;
+    border-right: none;
+  }
+
+  .details-panel {
+    padding: 16px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .message {
+    max-width: 100% !important;
+  }
+}

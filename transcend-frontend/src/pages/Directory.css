@@ -1,0 +1,159 @@
+.directory-container {
+  padding: 20px;
+}
+
+.directory-container h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.directory-container > p {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.search-input,
+.filter-select {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus,
+.filter-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.results-info {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.professionals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.professional-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e1e8ed;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.professional-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.prof-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.prof-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.rating {
+  font-size: 16px;
+  color: #f59e0b;
+}
+
+.practice {
+  color: #667eea;
+  font-weight: 600;
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.location {
+  color: #666;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.cases {
+  color: #999;
+  font-size: 13px;
+  margin: 8px 0 16px 0;
+}
+
+.contact-btn {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.contact-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+:root[data-theme='dark'] .directory-container h2 {
+  color: #e0e0e0;
+}
+
+:root[data-theme='dark'] .directory-container > p {
+  color: #b0b0b0;
+}
+
+:root[data-theme='dark'] .search-input,
+:root[data-theme='dark'] .filter-select {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #e0e0e0;
+}
+
+:root[data-theme='dark'] .results-info {
+  color: #b0b0b0;
+}
+
+:root[data-theme='dark'] .professional-card {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+:root[data-theme='dark'] .prof-header h3 {
+  color: #e0e0e0;
+}
+
+:root[data-theme='dark'] .practice {
+  color: #a0aeff;
+}
+
+:root[data-theme='dark'] .location {
+  color: #999;
+}
+
+:root[data-theme='dark'] .cases {
+  color: #666;
+}

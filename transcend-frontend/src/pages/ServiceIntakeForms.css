@@ -1,0 +1,340 @@
+.service-intake-form {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.form-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px 30px 25px;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 6px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.form-header h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.provider-name {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.intake-form {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-section h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f0f4ff;
+}
+
+.section-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+  padding: 12px 14px;
+  border: 1px solid #e0e6ed;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  background: white;
+  color: #333;
+}
+
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-field input[readonly],
+.form-field textarea[readonly] {
+  background: #f9fafb;
+  color: #666;
+  cursor: not-allowed;
+  border-color: #e5e7eb;
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-footer {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 20px;
+}
+
+.btn-cancel,
+.btn-submit {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel {
+  background: #f3f4f6;
+  color: #333;
+  border: 1px solid #e5e7eb;
+}
+
+.btn-cancel:hover {
+  background: #e5e7eb;
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.form-confirmation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 30px;
+}
+
+.confirmation-card {
+  text-align: center;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.confirmation-card h2 {
+  margin: 0 0 12px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+}
+
+.confirmation-card p {
+  margin: 8px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.confirmation-subtext {
+  color: #999;
+  font-size: 12px;
+  margin-top: 16px !important;
+}
+
+/* Dark Mode */
+:root[data-theme='dark'] .service-intake-form {
+  background: #1a1d23;
+}
+
+:root[data-theme='dark'] .form-section h2 {
+  color: #f5f7fa;
+  border-bottom-color: #2d3139;
+}
+
+:root[data-theme='dark'] .form-field label {
+  color: #f5f7fa;
+}
+
+:root[data-theme='dark'] .form-field input,
+:root[data-theme='dark'] .form-field textarea,
+:root[data-theme='dark'] .form-field select {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #e0e0e0;
+}
+
+:root[data-theme='dark'] .form-field input:focus,
+:root[data-theme='dark'] .form-field textarea:focus,
+:root[data-theme='dark'] .form-field select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+:root[data-theme='dark'] .form-field input[readonly],
+:root[data-theme='dark'] .form-field textarea[readonly] {
+  background: #1a1a1a;
+  color: #999;
+  border-color: #2d3139;
+}
+
+:root[data-theme='dark'] .form-footer {
+  border-top-color: #2d3139;
+}
+
+:root[data-theme='dark'] .btn-cancel {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #e0e0e0;
+}
+
+:root[data-theme='dark'] .btn-cancel:hover {
+  background: #3a3a3a;
+}
+
+:root[data-theme='dark'] .confirmation-card {
+  background: #1a1d23;
+}
+
+:root[data-theme='dark'] .confirmation-card h2 {
+  color: #f5f7fa;
+}
+
+:root[data-theme='dark'] .confirmation-card p {
+  color: #cbd5e0;
+}
+
+:root[data-theme='dark'] .confirmation-subtext {
+  color: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .service-intake-form {
+    border-radius: 0;
+  }
+
+  .form-header {
+    padding: 24px 20px 20px;
+  }
+
+  .form-header h1 {
+    font-size: 24px;
+  }
+
+  .intake-form {
+    padding: 20px;
+    gap: 24px;
+  }
+
+  .section-fields {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .form-footer {
+    flex-direction: column-reverse;
+  }
+
+  .btn-cancel,
+  .btn-submit {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-header h1 {
+    font-size: 20px;
+  }
+
+  .intake-form {
+    padding: 16px;
+    gap: 20px;
+  }
+
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}

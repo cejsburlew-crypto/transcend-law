@@ -3,6 +3,10 @@ import type { HealthCheck } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
 import { Payments } from './Payments';
+import { Directory } from './Directory';
+import { ClientServiceIntake } from './ClientServiceIntake';
+import { ClientDocuments } from './ClientDocuments';
+import { IdentificationVerification } from './IdentificationVerification';
 import './Dashboard.css';
 
 export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
@@ -10,6 +14,24 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const [health, setHealth] = useState<HealthCheck | null>(null);
   const [activeTab, setActiveTab] = useState('overview');
   const [loading, setLoading] = useState(true);
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
+  const [viewRole, setViewRole] = useState<'admin' | 'client' | 'firm' | 'attorney'>(() =>
+    (localStorage.getItem('viewRole') as 'admin' | 'client' | 'firm' | 'attorney') || 'admin'
+  );
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    localStorage.setItem('darkMode', (!darkMode).toString());
+    document.documentElement.setAttribute('data-theme', !darkMode ? 'dark' : 'light');
+  };
+
+  const cycleRole = () => {
+    const roles: Array<'admin' | 'client' | 'firm' | 'attorney'> = ['admin', 'firm', 'attorney', 'client'];
+    const currentIndex = roles.indexOf(viewRole);
+    const newRole = roles[(currentIndex + 1) % roles.length];
+    setViewRole(newRole);
+    localStorage.setItem('viewRole', newRole);
+  };
 
   useEffect(() => {
     if (token) {
@@ -20,15 +42,44 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     }
   }, [token]);
 
-  const tabs = [
+  const adminTabs = [
     { id: 'overview', label: '📊 Overview', icon: '📊' },
     { id: 'directory', label: '👥 Directory', icon: '👥' },
     { id: 'referrals', label: '📋 Referrals', icon: '📋' },
     { id: 'payments', label: '💰 Payments', icon: '💰' },
     { id: 'disputes', label: '⚖️ Disputes', icon: '⚖️' },
     { id: 'notifications', label: '🔔 Notifications', icon: '🔔' },
+    { id: 'admin', label: '🛡️ Admin Panel', icon: '🛡️' },
     { id: 'settings', label: '⚙️ Settings', icon: '⚙️' },
   ];
+
+  const firmTabs = [
+    { id: 'overview', label: '📊 Dashboard', icon: '📊' },
+    { id: 'directory', label: '👨‍⚖️ Attorneys', icon: '👨‍⚖️' },
+    { id: 'referrals', label: '📋 Cases', icon: '📋' },
+    { id: 'payments', label: '💰 Payments', icon: '💰' },
+    { id: 'notifications', label: '🔔 Notifications', icon: '🔔' },
+    { id: 'settings', label: '⚙️ Settings', icon: '⚙️' },
+  ];
+
+  const attorneyTabs = [
+    { id: 'overview', label: '📊 Dashboard', icon: '📊' },
+    { id: 'referrals', label: '📋 My Cases', icon: '📋' },
+    { id: 'payments', label: '💰 Earnings', icon: '💰' },
+    { id: 'notifications', label: '🔔 Messages', icon: '🔔' },
+    { id: 'settings', label: '⚙️ Settings', icon: '⚙️' },
+  ];
+
+  const clientTabs = [
+    { id: 'overview', label: '📝 Submit Case', icon: '📝' },
+    { id: 'referrals', label: '📋 My Cases', icon: '📋' },
+    { id: 'documents', label: '📁 Documents', icon: '📁' },
+    { id: 'payments', label: '💰 Invoices', icon: '💰' },
+    { id: 'notifications', label: '🔔 Messages', icon: '🔔' },
+    { id: 'settings', label: '⚙️ Settings', icon: '⚙️' },
+  ];
+
+  const tabs = viewRole === 'admin' ? adminTabs : viewRole === 'firm' ? firmTabs : viewRole === 'attorney' ? attorneyTabs : clientTabs;
 
   return (
     <div className="dashboard-container">
@@ -38,6 +89,12 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           <p className="tagline">Global Legal Services Marketplace</p>
         </div>
         <div className="nav-right">
+          <button className="theme-toggle" onClick={toggleDarkMode} title="Toggle dark mode">
+            {darkMode ? '☀️' : '🌙'}
+          </button>
+          <button className="role-toggle" onClick={cycleRole} title="Switch view (Admin → Firm → Attorney → Client)">
+            {viewRole === 'admin' ? '👨‍💼 Admin' : viewRole === 'firm' ? '🏢 Firm' : viewRole === 'attorney' ? '👨‍⚖️ Attorney' : '👤 Client'}
+          </button>
           <span className="user-info">👤 {user?.email}</span>
           <button className="logout-btn" onClick={onLogout}>Sign Out</button>
         </div>
@@ -60,7 +117,99 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
         </aside>
 
         <main className="main-content">
-          {activeTab === 'overview' && (
+          {activeTab === 'overview' && viewRole === 'firm' && (
+            <div className="tab-content">
+              <h2>🏢 Law Firm Dashboard</h2>
+              <div className="stats-grid">
+                <div className="stat-card">
+                  <h3>Total Attorneys</h3>
+                  <p className="stat-number">12</p>
+                </div>
+                <div className="stat-card">
+                  <h3>Active Cases</h3>
+                  <p className="stat-number">47</p>
+                </div>
+                <div className="stat-card">
+                  <h3>Monthly Revenue</h3>
+                  <p className="stat-number">$124,500</p>
+                </div>
+                <div className="stat-card">
+                  <h3>Case Conversion Rate</h3>
+                  <p className="stat-number">68%</p>
+                </div>
+              </div>
+              <h3 style={{marginTop: '40px'}}>Attorneys Under Your Firm</h3>
+              <div className="attorneys-grid">
+                <div className="attorney-card">
+                  <h4>Sarah Johnson</h4>
+                  <p className="specialty">Corporate Law</p>
+                  <p className="stats">Cases: 24 | Rating: 4.9★</p>
+                  <button className="action-btn">View Profile</button>
+                </div>
+                <div className="attorney-card">
+                  <h4>Michael Chen</h4>
+                  <p className="specialty">Litigation</p>
+                  <p className="stats">Cases: 31 | Rating: 4.7★</p>
+                  <button className="action-btn">View Profile</button>
+                </div>
+                <div className="attorney-card">
+                  <h4>Emily Rodriguez</h4>
+                  <p className="specialty">Real Estate</p>
+                  <p className="stats">Cases: 19 | Rating: 4.8★</p>
+                  <button className="action-btn">View Profile</button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'overview' && viewRole === 'attorney' && (
+            <div className="tab-content">
+              <h2>👨‍⚖️ Attorney Dashboard</h2>
+              <div className="stats-grid">
+                <div className="stat-card">
+                  <h3>Active Cases</h3>
+                  <p className="stat-number">8</p>
+                </div>
+                <div className="stat-card">
+                  <h3>Monthly Earnings</h3>
+                  <p className="stat-number">$12,450</p>
+                </div>
+                <div className="stat-card">
+                  <h3>Client Rating</h3>
+                  <p className="stat-number">4.8★</p>
+                </div>
+                <div className="stat-card">
+                  <h3>Cases Completed</h3>
+                  <p className="stat-number">127</p>
+                </div>
+              </div>
+              <h3 style={{marginTop: '40px'}}>Recent Cases</h3>
+              <div className="cases-list">
+                <div className="case-item">
+                  <div className="case-header">
+                    <h4>Smith vs. ABC Corp</h4>
+                    <span className="status-badge active">Active</span>
+                  </div>
+                  <p className="case-type">Corporate Law • Filed 3 days ago</p>
+                  <p className="case-desc">Contract dispute resolution</p>
+                </div>
+                <div className="case-item">
+                  <div className="case-header">
+                    <h4>Johnson Property Dispute</h4>
+                    <span className="status-badge active">Active</span>
+                  </div>
+                  <p className="case-type">Real Estate • Filed 1 week ago</p>
+                  <p className="case-desc">Boundary line dispute between neighbors</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'overview' && viewRole === 'client' && (
+            <ClientServiceIntake />
+          )}
+
+          {activeTab === 'overview' && viewRole === 'admin' && (
             <div className="tab-content">
               <h2>Dashboard Overview</h2>
               {loading ? (
@@ -131,14 +280,10 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           )}
 
           {activeTab === 'directory' && (
-            <div className="tab-content">
-              <h2>👥 Professional Directory</h2>
-              <p>Browse and search 2.6M+ legal professionals by state, practice area, and experience.</p>
-              <div className="coming-soon">Coming Soon</div>
-            </div>
+            <Directory />
           )}
 
-          {activeTab === 'referrals' && (
+          {activeTab === 'referrals' && viewRole !== 'client' && (
             <div className="tab-content">
               <h2>📋 Case Referrals & Matching</h2>
               <p>Manage case referrals and intelligent professional matching.</p>
@@ -146,12 +291,20 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
             </div>
           )}
 
-          {activeTab === 'payments' && (
+          {activeTab === 'referrals' && viewRole === 'client' && (
             <div className="tab-content">
-              <h2>💰 Payment & Commissions</h2>
-              <p>Track payments, commissions, and financial transactions.</p>
+              <h2>📋 My Cases</h2>
+              <p>View all your submitted service requests and their status.</p>
               <div className="coming-soon">Coming Soon</div>
             </div>
+          )}
+
+          {activeTab === 'documents' && viewRole === 'client' && (
+            <ClientDocuments />
+          )}
+
+          {activeTab === 'payments' && (
+            <Payments />
           )}
 
           {activeTab === 'disputes' && (
@@ -159,6 +312,30 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
               <h2>⚖️ Dispute Resolution</h2>
               <p>Manage client-professional disputes and resolutions.</p>
               <div className="coming-soon">Coming Soon</div>
+            </div>
+          )}
+
+          {activeTab === 'admin' && (
+            <div className="tab-content">
+              <h2>🛡️ Admin Panel</h2>
+              <div className="admin-grid">
+                <div className="admin-card">
+                  <h3>👥 User Management</h3>
+                  <p>Manage users, roles, and permissions</p>
+                </div>
+                <div className="admin-card">
+                  <h3>📊 Analytics</h3>
+                  <p>View system metrics and usage statistics</p>
+                </div>
+                <div className="admin-card">
+                  <h3>🔧 System Config</h3>
+                  <p>Configure system settings and features</p>
+                </div>
+                <div className="admin-card">
+                  <h3>📋 Audit Logs</h3>
+                  <p>View all system activity and changes</p>
+                </div>
+              </div>
             </div>
           )}
 
@@ -173,6 +350,7 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           {activeTab === 'settings' && (
             <div className="tab-content">
               <h2>⚙️ Settings</h2>
+
               <div className="settings-section">
                 <h3>Account Information</h3>
                 <div className="setting-item">
@@ -188,6 +366,7 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
                   <p>{user?.authorized_at}</p>
                 </div>
               </div>
+
               <div className="settings-section">
                 <h3>API Information</h3>
                 <div className="setting-item">
@@ -199,6 +378,11 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
                   <p>7 days</p>
                 </div>
               </div>
+
+              <div className="settings-divider">
+                <h2 style={{marginTop: '40px'}}>🆔 Identification Verification</h2>
+              </div>
+              <IdentificationVerification />
             </div>
           )}
         </main>
