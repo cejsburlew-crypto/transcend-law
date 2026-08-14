@@ -13,7 +13,7 @@ import './Dashboard.css';
 export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const { user, token } = useAuth();
   const [health, setHealth] = useState<HealthCheck | null>(null);
-  const [activeTab, setActiveTab] = useState('services');
+  const [activeTab, setActiveTab] = useState('dashboard');
   const [loading, setLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [viewRole, setViewRole] = useState<'admin' | 'client' | 'firm' | 'attorney'>(() =>
@@ -44,21 +44,19 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   }, [token]);
 
   const adminTabs = [
+    { id: 'dashboard', label: '📊 Dashboard', icon: '📊' },
     { id: 'services', label: '📚 Services', icon: '📚' },
-    { id: 'overview', label: '📊 Overview', icon: '📊' },
     { id: 'directory', label: '👥 Directory', icon: '👥' },
     { id: 'referrals', label: '📋 Referrals', icon: '📋' },
-    { id: 'payments', label: '💰 Payments', icon: '💰' },
-    { id: 'disputes', label: '⚖️ Disputes', icon: '⚖️' },
+    { id: 'payments', label: '💰 Payments & Disputes', icon: '💰' },
     { id: 'notifications', label: '🔔 Notifications', icon: '🔔' },
-    { id: 'admin', label: '🛡️ Admin Panel', icon: '🛡️' },
     { id: 'settings', label: '⚙️ Settings', icon: '⚙️' },
   ];
 
   const firmTabs = [
+    { id: 'dashboard', label: '📊 Dashboard', icon: '📊' },
     { id: 'services', label: '📚 Services', icon: '📚' },
-    { id: 'overview', label: '📊 Dashboard', icon: '📊' },
-    { id: 'directory', label: '👨‍⚖️ Attorneys', icon: '👨‍⚖️' },
+    { id: 'directory', label: '👨‍⚖️ Directory', icon: '👨‍⚖️' },
     { id: 'referrals', label: '📋 Cases', icon: '📋' },
     { id: 'payments', label: '💰 Payments', icon: '💰' },
     { id: 'notifications', label: '🔔 Notifications', icon: '🔔' },
@@ -66,8 +64,9 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   ];
 
   const attorneyTabs = [
+    { id: 'dashboard', label: '📊 Dashboard', icon: '📊' },
     { id: 'services', label: '📚 Services', icon: '📚' },
-    { id: 'overview', label: '📊 Dashboard', icon: '📊' },
+    { id: 'directory', label: '👥 Directory', icon: '👥' },
     { id: 'referrals', label: '📋 My Cases', icon: '📋' },
     { id: 'payments', label: '💰 Earnings', icon: '💰' },
     { id: 'notifications', label: '🔔 Messages', icon: '🔔' },
@@ -75,8 +74,9 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   ];
 
   const clientTabs = [
+    { id: 'dashboard', label: '📊 Dashboard', icon: '📊' },
     { id: 'services', label: '📚 Services', icon: '📚' },
-    { id: 'overview', label: '📝 Submit Case', icon: '📝' },
+    { id: 'directory', label: '👥 Directory', icon: '👥' },
     { id: 'referrals', label: '📋 My Cases', icon: '📋' },
     { id: 'documents', label: '📁 Documents', icon: '📁' },
     { id: 'payments', label: '💰 Invoices', icon: '💰' },
@@ -125,12 +125,12 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           {activeTab === 'services' && (
             <div className="tab-content">
               <ServiceSelection onSelectService={() => {
-                setActiveTab('overview');
+                setActiveTab('dashboard');
               }} />
             </div>
           )}
 
-          {activeTab === 'overview' && viewRole === 'firm' && (
+          {activeTab === 'dashboard' && viewRole === 'firm' && (
             <div className="tab-content">
               <h2>🏢 Law Firm Dashboard</h2>
               <div className="stats-grid">
@@ -175,7 +175,7 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
             </div>
           )}
 
-          {activeTab === 'overview' && viewRole === 'attorney' && (
+          {activeTab === 'dashboard' && viewRole === 'attorney' && (
             <div className="tab-content">
               <h2>👨‍⚖️ Attorney Dashboard</h2>
               <div className="stats-grid">
@@ -218,11 +218,11 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
             </div>
           )}
 
-          {activeTab === 'overview' && viewRole === 'client' && (
+          {activeTab === 'dashboard' && viewRole === 'client' && (
             <ClientServiceIntake />
           )}
 
-          {activeTab === 'overview' && viewRole === 'admin' && (
+          {activeTab === 'dashboard' && viewRole === 'admin' && (
             <div className="tab-content">
               <h2>Dashboard Overview</h2>
               {loading ? (
@@ -317,38 +317,15 @@ export const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           )}
 
           {activeTab === 'payments' && (
-            <Payments />
-          )}
-
-          {activeTab === 'disputes' && (
-            <div className="tab-content">
-              <h2>⚖️ Dispute Resolution</h2>
-              <p>Manage client-professional disputes and resolutions.</p>
-              <div className="coming-soon">Coming Soon</div>
-            </div>
-          )}
-
-          {activeTab === 'admin' && (
-            <div className="tab-content">
-              <h2>🛡️ Admin Panel</h2>
-              <div className="admin-grid">
-                <div className="admin-card">
-                  <h3>👥 User Management</h3>
-                  <p>Manage users, roles, and permissions</p>
+            <div>
+              <Payments />
+              {viewRole === 'admin' && (
+                <div className="tab-content" style={{marginTop: '40px'}}>
+                  <h2>⚖️ Dispute Resolution</h2>
+                  <p>Manage client-professional disputes and resolutions.</p>
+                  <div className="coming-soon">Coming Soon</div>
                 </div>
-                <div className="admin-card">
-                  <h3>📊 Analytics</h3>
-                  <p>View system metrics and usage statistics</p>
-                </div>
-                <div className="admin-card">
-                  <h3>🔧 System Config</h3>
-                  <p>Configure system settings and features</p>
-                </div>
-                <div className="admin-card">
-                  <h3>📋 Audit Logs</h3>
-                  <p>View all system activity and changes</p>
-                </div>
-              </div>
+              )}
             </div>
           )}
 

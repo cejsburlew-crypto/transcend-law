@@ -433,7 +433,10 @@
       "Bash(curl -s https://transcend-law.com/health)",
       "Bash(npx create-expo-app@latest transcend-law-mobile --yes)",
       "Bash(npx vite *)",
-      "Bash(scp -r -i ~/.ssh/transcend-law-key.pem dist/* ubuntu@184.72.77.238:/var/www/transcend-law/public/)"
+      "Bash(scp -r -i ~/.ssh/transcend-law-key.pem dist/* ubuntu@184.72.77.238:/var/www/transcend-law/public/)",
+      "Bash(rm -rf /var/www/transcend-law/public/*)",
+      "Bash(scp -r dist/* ubuntu@184.72.77.238:/var/www/transcend-law/public/)",
+      "Bash(scp -i ~/.ssh/transcend-law-key.pem -r dist/* ubuntu@184.72.77.238:/var/www/transcend-law/public/)"
     ]
   }
 }
