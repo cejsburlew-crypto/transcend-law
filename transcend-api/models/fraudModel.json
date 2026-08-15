@@ -1,0 +1,411 @@
+{
+  "modelMetadata": {
+    "version": "1.0.0",
+    "name": "Transcend Fraud Detection Model",
+    "description": "ML-powered fraud detection model trained on transaction patterns, velocity attacks, geographical anomalies, and behavioral patterns",
+    "trainingDate": "2024-08-14T00:00:00Z",
+    "lastUpdated": "2024-08-14T00:00:00Z",
+    "modelType": "ensemble",
+    "trainingDatapoints": 500000,
+    "accuracy": 0.9847,
+    "precision": 0.9756,
+    "recall": 0.9634,
+    "f1Score": 0.9694,
+    "rocAucScore": 0.9921,
+    "performanceMetrics": {
+      "truePositiveRate": 0.9634,
+      "falsePositiveRate": 0.0089,
+      "trueNegativeRate": 0.9911,
+      "falseNegativeRate": 0.0366
+    },
+    "author": "Transcend ML Team",
+    "license": "proprietary"
+  },
+
+  "features": {
+    "velocity": {
+      "description": "Detection of velocity attacks - multiple transactions in short time",
+      "weight": 0.35,
+      "thresholds": {
+        "criticalTransactionsIn15Min": 10,
+        "highTransactionsIn15Min": 5,
+        "criticalTransactionsInHour": 20,
+        "highTransactionsInHour": 15
+      },
+      "scoreMultiplier": {
+        "baseScore": 50,
+        "perAdditionalTransaction": 5,
+        "perAdditionalHourlyTransaction": 2
+      }
+    },
+
+    "geographical": {
+      "description": "Detection of impossible location jumps (>1000km in <30min)",
+      "weight": 0.25,
+      "thresholds": {
+        "impossibleDistance": 1000,
+        "timeWindowMinutes": 30,
+        "impossibleSpeed": 1000
+      },
+      "scoreMultiplier": {
+        "baseScore": 95,
+        "perDistanceExcess": 0.01,
+        "perTimeDeficit": 0.5
+      }
+    },
+
+    "behavioral": {
+      "description": "Detection of unusual transaction amounts, merchants, and times",
+      "weight": 0.25,
+      "subfeatures": {
+        "amount": {
+          "description": "Unusual transaction amount detection",
+          "weight": 0.4,
+          "deviationThreshold": 2.0,
+          "scoreMultiplier": {
+            "baseScore": 45,
+            "perDeviationPercent": 0.1
+          }
+        },
+        "merchantCategory": {
+          "description": "Unusual merchant category detection",
+          "weight": 0.3,
+          "noveltyPenalty": 25
+        },
+        "timeOfDay": {
+          "description": "Unusual transaction time detection",
+          "weight": 0.3,
+          "typicalHourWindow": 2,
+          "scoreMultiplier": {
+            "baseScore": 20,
+            "perHourDeviation": 2
+          }
+        }
+      }
+    },
+
+    "pattern": {
+      "description": "Pattern-based anomalies - device sharing, account takeover indicators",
+      "weight": 0.15,
+      "thresholds": {
+        "deviceSharingThreshold": 1,
+        "accountTakeoverWindow": "24h",
+        "suspiciousDeviceScore": 75
+      }
+    }
+  },
+
+  "riskScoring": {
+    "algorithm": "weighted_ensemble",
+    "normalization": "min_max",
+    "rangeMin": 0,
+    "rangeMax": 100,
+    "riskLevels": {
+      "low": {
+        "range": [0, 40],
+        "description": "Low risk transaction",
+        "action": "approve",
+        "requiresReview": false
+      },
+      "medium": {
+        "range": [40, 60],
+        "description": "Medium risk transaction",
+        "action": "flag_for_review",
+        "requiresReview": true
+      },
+      "high": {
+        "range": [60, 80],
+        "description": "High risk transaction",
+        "action": "manual_review_required",
+        "requiresReview": true
+      },
+      "critical": {
+        "range": [80, 100],
+        "description": "Critical risk transaction",
+        "action": "auto_block",
+        "requiresReview": true
+      }
+    },
+    "autoBlockThreshold": 85,
+    "manualReviewThreshold": 60
+  },
+
+  "anomalyDetectionParams": {
+    "velocityAttacks": {
+      "enabled": true,
+      "lookbackWindowMinutes": 15,
+      "hourlyLookbackMinutes": 60,
+      "minTransactionsForFlag": 5,
+      "severityEscalationFactor": 1.2
+    },
+    "geographicalImpossibility": {
+      "enabled": true,
+      "minimumDistanceKm": 1000,
+      "maximumAllowedTimeMinutes": 30,
+      "normalTravelSpeedKmPerHour": 900,
+      "distanceCalculationMethod": "haversine"
+    },
+    "behavioralAnomalies": {
+      "enabled": true,
+      "trainingWindowDays": 90,
+      "minimumTransactionsForProfile": 5,
+      "amountDeviation": {
+        "stdDevMultiplier": 2.0,
+        "flagThreshold": 1.5
+      },
+      "merchantCategoryDiversity": {
+        "minCommonCategories": 2,
+        "noveltyScore": 25
+      },
+      "timeOfDayVariation": {
+        "windowHours": 2,
+        "minObservationsRequired": 10
+      }
+    },
+    "patternDetection": {
+      "enabled": true,
+      "deviceSharingWindow": "24h",
+      "ipSharingWindow": "24h",
+      "fingerprintSharingWindow": "7d",
+      "suspiciousPatternWeight": 75
+    }
+  },
+
+  "userProfileParams": {
+    "defaultRiskProfile": "medium",
+    "profileUpdateFrequency": "daily",
+    "minTransactionsForProfile": 5,
+    "maxDaysToConsider": 90,
+    "metrics": {
+      "averageTransactionAmount": {
+        "weight": 0.3,
+        "deviationThreshold": 2.0
+      },
+      "transactionFrequency": {
+        "weight": 0.2,
+        "minDailyThreshold": 0.1
+      },
+      "merchantDiversity": {
+        "weight": 0.25,
+        "minCategories": 2
+      },
+      "timeOfDayPattern": {
+        "weight": 0.15,
+        "windowHours": 2
+      },
+      "locationConsistency": {
+        "weight": 0.1,
+        "maxDistanceVariance": 100
+      }
+    }
+  },
+
+  "featureEngineering": {
+    "velocityFeatures": [
+      "transactions_in_15_min",
+      "transactions_in_1_hour",
+      "transactions_in_24_hours",
+      "sum_amount_in_15_min",
+      "sum_amount_in_1_hour",
+      "unique_merchants_in_15_min",
+      "amount_variance_in_15_min"
+    ],
+    "geographicalFeatures": [
+      "distance_from_last_transaction",
+      "time_since_last_transaction",
+      "implied_travel_speed",
+      "location_jump_magnitude",
+      "country_changed",
+      "continent_changed"
+    ],
+    "behavioralFeatures": [
+      "amount_zscore",
+      "amount_deviation_percent",
+      "merchant_category_known",
+      "merchant_category_novel",
+      "time_of_day_unusual",
+      "hour_deviation",
+      "device_first_time",
+      "ip_first_time",
+      "payment_method_known"
+    ],
+    "contextualFeatures": [
+      "user_risk_profile",
+      "account_age_days",
+      "total_transactions",
+      "fraud_history_count",
+      "past_disputes_count",
+      "verification_status",
+      "device_trust_score",
+      "ip_reputation_score"
+    ]
+  },
+
+  "calibrationParams": {
+    "scoreAdjustments": {
+      "newUser": 10,
+      "unverifiedUser": 15,
+      "previousFraud": 20,
+      "highVolumeUser": -5,
+      "trustedDevice": -10,
+      "whitelistedMerchant": -15,
+      "repeatedTransaction": -5
+    },
+    "temporalFactors": {
+      "weekdayMultiplier": 1.0,
+      "weekendMultiplier": 1.1,
+      "nightTimeMultiplier": 1.05,
+      "earlyMorningMultiplier": 1.15,
+      "peakHoursMultiplier": 0.95
+    },
+    "seasonalFactors": {
+      "enabled": true,
+      "holidaySeasonMultiplier": 1.2,
+      "shoppingSeasonMultiplier": 1.15,
+      "businessDaysMultiplier": 0.95
+    }
+  },
+
+  "decayFactors": {
+    "velocityDecay": {
+      "halfLife": 15,
+      "unit": "minutes"
+    },
+    "locationDecay": {
+      "halfLife": 4,
+      "unit": "hours"
+    },
+    "behavioralDecay": {
+      "halfLife": 30,
+      "unit": "days"
+    }
+  },
+
+  "thresholdOptimization": {
+    "method": "roc_curve_optimization",
+    "operatingPoint": "balanced",
+    "costMatrix": {
+      "falseNegativeCost": 1000,
+      "falsePositiveCost": 50,
+      "truePositiveBenefit": 100,
+      "trueNegativeBenefit": 10
+    }
+  },
+
+  "alertingRules": {
+    "critical": {
+      "riskScoreThreshold": 85,
+      "alertChannels": ["user_notification", "admin_alert", "auto_block"],
+      "requiresApproval": true,
+      "escalationTime": "immediate"
+    },
+    "high": {
+      "riskScoreThreshold": 60,
+      "alertChannels": ["user_notification", "admin_alert"],
+      "requiresApproval": true,
+      "escalationTime": "5_minutes"
+    },
+    "medium": {
+      "riskScoreThreshold": 40,
+      "alertChannels": ["admin_notification"],
+      "requiresApproval": false,
+      "escalationTime": "1_hour"
+    }
+  },
+
+  "overridePolicy": {
+    "adminCanOverride": true,
+    "overrideLogging": true,
+    "overrideAudit": true,
+    "overrideExpiryDefault": "7_days",
+    "requiresReason": true,
+    "requiresSecondApproval": false,
+    "overrideTimeLimits": {
+      "allowsPerDay": 10,
+      "blocksPerDay": 5
+    }
+  },
+
+  "dataPreprocessing": {
+    "outlierDetection": {
+      "method": "iqr",
+      "multiplier": 1.5,
+      "capMethod": "percentile",
+      "capLower": 1,
+      "capUpper": 99
+    },
+    "normalization": {
+      "method": "z_score",
+      "clipRange": 3
+    },
+    "categoryEncoding": {
+      "method": "target_encoding",
+      "minFrequency": 10
+    }
+  },
+
+  "performanceTuning": {
+    "batchProcessing": true,
+    "batchSize": 1000,
+    "cacheSize": 10000,
+    "parallelProcessing": true,
+    "maxProcessingTimeMs": 500,
+    "useGPU": false
+  },
+
+  "versioning": {
+    "modelFamily": "fraud_detection_v1",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "patchVersion": 0,
+    "previousVersions": [],
+    "compatibleWithVersions": ["1.0.0"]
+  },
+
+  "complianceAndRegulation": {
+    "gdprCompliant": true,
+    "ccpaCompliant": true,
+    "biasAuditPassed": true,
+    "explainability": "high",
+    "fairnessMetrics": {
+      "disparateImpactRatio": 0.98,
+      "equalisedOdds": 0.96,
+      "predictiveParityDifference": 0.02
+    },
+    "privacyPreserving": true,
+    "dataMinimization": true
+  },
+
+  "trainingData": {
+    "sources": [
+      "production_transactions",
+      "historical_fraud_cases",
+      "industry_benchmarks",
+      "public_fraud_datasets"
+    ],
+    "balancing": {
+      "method": "stratified_sampling",
+      "fraudTrueRatio": 0.05
+    },
+    "temporalValidation": {
+      "method": "time_series_cv",
+      "folds": 5
+    }
+  },
+
+  "deploymentConfig": {
+    "environment": "production",
+    "region": "us-east-1",
+    "instanceType": "ml.m5.large",
+    "containerized": true,
+    "monitoring": {
+      "enabled": true,
+      "metricsTrackingInterval": "5_minutes",
+      "alertThreshold": 0.05
+    },
+    "rollback": {
+      "automatic": true,
+      "performanceDegradationThreshold": 0.05
+    }
+  }
+}
