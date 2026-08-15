@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { PrimaryButton, Toast, ProgressBar } from '@/components/UI';
 import './Payments.css';
 
 interface PaymentForm {
@@ -21,8 +22,11 @@ export const Payments: React.FC = () => {
   const { token } = useAuth();
   const [activeTab, setActiveTab] = useState<'inbound' | 'outbound'>('inbound');
   const [loading, setLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [toast, setToast] = useState<any>(null);
+
+  const showToast = (type: 'success' | 'error' | 'info', message: string) => {
+    setToast({ type, message, duration: 4000, onClose: () => setToast(null) });
+  };
 
   const [paymentForm, setPaymentForm] = useState<PaymentForm>({
     caseId: '',
@@ -46,8 +50,6 @@ export const Payments: React.FC = () => {
   const handleCreatePaymentLink = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMessage('');
-    setSuccessMessage('');
 
     try {
       const response = await fetch('https://transcend-law.com/api/payments/create-payment-link', {
@@ -69,10 +71,11 @@ export const Payments: React.FC = () => {
 
       const data = await response.json();
 
-      setSuccessMessage(`✅ Payment link created! Amount: $${data.amount.toFixed(2)} | Commission: $${data.commission.toFixed(2)}`);
+      showToast('success', `Payment link created! $${data.amount.toFixed(2)} | Commission: $${data.commission.toFixed(2)}`);
 
       // Copy link to clipboard
       navigator.clipboard.writeText(data.paymentLink);
+      showToast('info', 'Payment link copied to clipboard');
 
       // Reset form
       setPaymentForm({
@@ -83,7 +86,8 @@ export const Payments: React.FC = () => {
         description: ''
       });
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : 'Error creating payment link');
+      const errorMsg = error instanceof Error ? error.message : 'Error creating payment link';
+      showToast('error', errorMsg);
     } finally {
       setLoading(false);
     }
@@ -96,8 +100,6 @@ export const Payments: React.FC = () => {
   const handleCreateDisbursement = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMessage('');
-    setSuccessMessage('');
 
     try {
       const response = await fetch('https://transcend-law.com/api/payments/disbursement', {
@@ -118,7 +120,7 @@ export const Payments: React.FC = () => {
 
       const data = await response.json();
 
-      setSuccessMessage(`✅ Disbursement initiated! Professional: ${data.professional} | Amount: $${data.amount.toFixed(2)}`);
+      showToast('success', `Disbursement sent to ${data.professional} for $${data.amount.toFixed(2)}`);
 
       // Reset form
       setDisbursementForm({
@@ -128,7 +130,8 @@ export const Payments: React.FC = () => {
         description: ''
       });
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : 'Error creating disbursement');
+      const errorMsg = error instanceof Error ? error.message : 'Error creating disbursement';
+      showToast('error', errorMsg);
     } finally {
       setLoading(false);
     }
@@ -152,9 +155,6 @@ export const Payments: React.FC = () => {
           📤 Outbound Payments (Professionals)
         </button>
       </div>
-
-      {successMessage && <div className="success-message">{successMessage}</div>}
-      {errorMessage && <div className="error-message">{errorMessage}</div>}
 
       {activeTab === 'inbound' && (
         <div className="payment-form">
@@ -232,13 +232,17 @@ export const Payments: React.FC = () => {
               )}
             </div>
 
-            <button
-              type="submit"
-              className="submit-btn"
-              disabled={loading}
-            >
+            <div style={{ marginTop: '16px', marginBottom: '12px' }}>
+              <ProgressBar
+                progress={paymentForm.caseId && paymentForm.amount && paymentForm.clientName ? 75 : 25}
+                label="Form Progress"
+                showPercentage={true}
+              />
+            </div>
+
+            <PrimaryButton type="submit" loading={loading} style={{ width: '100%' }}>
               {loading ? 'Creating Link...' : 'Create Payment Link'}
-            </button>
+            </PrimaryButton>
           </form>
         </div>
       )}
@@ -304,13 +308,17 @@ export const Payments: React.FC = () => {
               <p>✅ Status: Real-time processing</p>
             </div>
 
-            <button
-              type="submit"
-              className="submit-btn"
-              disabled={loading}
-            >
+            <div style={{ marginTop: '16px', marginBottom: '12px' }}>
+              <ProgressBar
+                progress={disbursementForm.professionalId && disbursementForm.amount && disbursementForm.caseId ? 75 : 25}
+                label="Form Progress"
+                showPercentage={true}
+              />
+            </div>
+
+            <PrimaryButton type="submit" loading={loading} style={{ width: '100%' }}>
               {loading ? 'Processing...' : 'Send Disbursement'}
-            </button>
+            </PrimaryButton>
           </form>
         </div>
       )}
@@ -360,6 +368,13 @@ export const Payments: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Toast Notification */}
+      {toast && (
+        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 1000 }}>
+          <Toast {...toast} />
+        </div>
+      )}
     </div>
   );
 };

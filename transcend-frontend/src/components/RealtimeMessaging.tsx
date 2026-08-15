@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useSocket } from '../hooks/useSocket';
+import { StatusIndicator, Toast } from '@/components/UI';
 import './RealtimeMessaging.css';
 
 interface Message {
@@ -34,7 +35,12 @@ export const RealtimeMessaging: React.FC<RealtimeMessagingProps> = ({
   const [isOtherUserTyping, setIsOtherUserTyping] = useState(false);
   const [isOtherUserOnline, setIsOtherUserOnline] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [toast, setToast] = useState<any>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const showToast = (type: 'success' | 'info', message: string) => {
+    setToast({ type, message, duration: 3000, onClose: () => setToast(null) });
+  };
 
   const {
     isConnected,
@@ -61,6 +67,7 @@ export const RealtimeMessaging: React.FC<RealtimeMessagingProps> = ({
         // Mark as read if from other user
         if (message.senderId !== currentUserId) {
           markMessageAsRead(message.id);
+          showToast('info', `New message from ${otherUserName}`);
         }
       });
 
@@ -130,6 +137,7 @@ export const RealtimeMessaging: React.FC<RealtimeMessagingProps> = ({
     }
 
     sendMessage(conversationId, inputValue);
+    showToast('success', 'Message sent');
     setInputValue('');
     setTyping(conversationId, false);
   };
@@ -152,12 +160,10 @@ export const RealtimeMessaging: React.FC<RealtimeMessagingProps> = ({
       <div className="messaging-header">
         <div className="header-content">
           <h2>{otherUserName}</h2>
-          <div className="status-indicator">
-            <span className={`status-dot ${isOtherUserOnline ? 'online' : 'offline'}`}></span>
-            <span className="status-text">
-              {isOtherUserOnline ? '🟢 Online' : '⚪ Offline'}
-            </span>
-          </div>
+          <StatusIndicator
+            status={isOtherUserOnline ? 'success' : 'pending'}
+            label={isOtherUserOnline ? 'Online now' : 'Typically responds within 2 hours'}
+          />
         </div>
         <span className="connection-status">
           {isConnected ? '✅ Connected' : '⏳ Connecting...'}
@@ -229,6 +235,13 @@ export const RealtimeMessaging: React.FC<RealtimeMessagingProps> = ({
       {!isConnected && (
         <div className="connection-warning">
           🔌 Reconnecting to messaging service...
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      {toast && (
+        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 1000 }}>
+          <Toast {...toast} />
         </div>
       )}
     </div>

@@ -18,6 +18,7 @@ interface PrimaryButtonProps {
   loading?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
@@ -27,6 +28,7 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
   loading = false,
   className = '',
   style,
+  type = 'button',
 }) => (
   <button
     className={`btn-primary ${loading ? 'loading' : ''} ${className}`}
@@ -34,6 +36,7 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
     disabled={disabled || loading}
     aria-busy={loading}
     style={style}
+    type={type}
   >
     {children}
   </button>

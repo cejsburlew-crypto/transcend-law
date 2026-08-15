@@ -584,7 +584,11 @@
       "Bash(k6 run *)",
       "Bash(pkill -f \"k6 run\")",
       "Bash(wait)",
-      "Bash(chmod +x /Users/jbconsultingassociatesinc./code/transcend-ssp/scripts/launch-day/*.sh)"
+      "Bash(chmod +x /Users/jbconsultingassociatesinc./code/transcend-ssp/scripts/launch-day/*.sh)",
+      "Bash(chmod +x /private/tmp/claude-501/-Users-jbconsultingassociatesinc--code-transcend-ssp/9e95c4e3-aa1f-4687-affed-1131263d4443/scratchpad/phase1_setup.sh)",
+      "Bash(bash /private/tmp/claude-501/-Users-jbconsultingassociatesinc--code-transcend-ssp/9e95c4e3-aa1f-4687-affed-1131263d4443/scratchpad/phase1_setup.sh)",
+      "Bash(chmod +x /private/tmp/claude-501/-Users-jbconsultingassociatesinc--code-transcend-ssp/9e95c4e3-aa1f-4687-affed-1131263d4443/scratchpad/execute_dry_run.sh)",
+      "Bash(bash /private/tmp/claude-501/-Users-jbconsultingassociatesinc--code-transcend-ssp/9e95c4e3-aa1f-4687-affed-1131263d4443/scratchpad/execute_dry_run.sh)"
     ]
   }
 }
