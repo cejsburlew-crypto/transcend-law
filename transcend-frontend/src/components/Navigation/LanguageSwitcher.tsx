@@ -1,34 +1,11 @@
-// Language Switcher
-// Toggle between English and Spanish
+// Language Switcher - Global Language Selector
+// Support for 16+ languages with search functionality
 
 import React from 'react';
-import { useLanguage } from '../../context/LanguageContext';
-import './LanguageSwitcher.css';
+import LanguageSelector from '../LanguageSelector';
 
 export const LanguageSwitcher: React.FC = () => {
-  const { language, setLanguage } = useLanguage();
-
-  return (
-    <div className="language-switcher">
-      <button
-        className={`lang-btn ${language === 'en' ? 'active' : ''}`}
-        onClick={() => setLanguage('en')}
-        title="English"
-        aria-label="Switch to English"
-      >
-        EN
-      </button>
-      <span className="lang-separator">/</span>
-      <button
-        className={`lang-btn ${language === 'es' ? 'active' : ''}`}
-        onClick={() => setLanguage('es')}
-        title="Español"
-        aria-label="Switch to Spanish"
-      >
-        ES
-      </button>
-    </div>
-  );
+  return <LanguageSelector />;
 };
 
 export default LanguageSwitcher;
