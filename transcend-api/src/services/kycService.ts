@@ -4,7 +4,9 @@
 
 import { query, transaction } from '../database/connection';
 import { sendEmail } from './emailService';
+import { sendSMS } from './smsService';
 import { randomBytes } from 'crypto';
+import kycSecurityService from './kycSecurityService';
 
 // Constants for KYC verification
 const KYC_STAGES = {
@@ -99,6 +101,14 @@ async function logKYCEvent(
 // 1. STAGE 1: EMAIL VERIFICATION
 export async function initiateEmailVerification(userId: string, email: string) {
   try {
+    // ERROR FIX 1.2: Validate email format
+    if (!kycSecurityService.validateEmailFormat(email)) {
+      return {
+        success: false,
+        message: 'Invalid email format. Please provide a valid email address.',
+      };
+    }
+
     // Check stage completion
     const stageResult = await query(
       `SELECT * FROM kyc_verification WHERE user_id = $1 AND stage = $2 AND status = 'verified'`,
@@ -107,6 +117,15 @@ export async function initiateEmailVerification(userId: string, email: string) {
 
     if (stageResult.rows.length > 0) {
       return { success: true, message: 'Email already verified', skipped: true };
+    }
+
+    // ERROR FIX 7: Check rate limit for email verification
+    const rateLimitCheck = await kycSecurityService.checkRateLimit(userId, 'email', 3, 60);
+    if (!rateLimitCheck.allowed) {
+      return {
+        success: false,
+        message: rateLimitCheck.reason,
+      };
     }
 
     // Check attempts
@@ -167,7 +186,7 @@ export async function initiateEmailVerification(userId: string, email: string) {
   }
 }
 
-export async function verifyEmail(token: string) {
+export async function verifyEmail(token: string, requestingUserId: string) {
   try {
     const result = await query(
       `SELECT * FROM kyc_verification
@@ -181,6 +200,14 @@ export async function verifyEmail(token: string) {
 
     const verification = result.rows[0];
     const userId = verification.user_id;
+
+    // ERROR FIX 1.1: Verify that the requesting user owns this verification
+    if (userId !== requestingUserId) {
+      await logKYCEvent(requestingUserId, KYC_STAGES.STAGE_1_EMAIL, 'failed_attempt', {
+        reason: 'unauthorized_token_use',
+      });
+      return { success: false, message: 'Invalid or expired verification token' };
+    }
 
     // Update verification status
     await query(
@@ -243,6 +270,9 @@ export async function initiatePhoneVerification(userId: string, phoneNumber: str
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
+    // ERROR FIX 2.1: Hash OTP before storing in database
+    const hashedOTP = await kycSecurityService.hashOTP(otp);
+
     const tokenResult = await query(
       `INSERT INTO kyc_verification
        (user_id, stage, phone_number, otp, status, expires_at, attempt_number)
@@ -252,16 +282,30 @@ export async function initiatePhoneVerification(userId: string, phoneNumber: str
         userId,
         KYC_STAGES.STAGE_2_PHONE,
         phoneNumber,
-        otp, // In production, hash this
+        hashedOTP, // Store hashed OTP
         'pending',
         expiresAt,
         attempts + 1,
       ]
     );
 
+    // ERROR FIX 2.3: Integrate with SMS service
     // Send SMS with OTP (via Twilio or similar)
-    // TODO: Integrate with SMS service
-    console.log(`OTP for ${phoneNumber}: ${otp}`);
+    try {
+      await sendSMS(phoneNumber, `Your verification code is: ${otp}. Valid for 10 minutes.`);
+    } catch (smsError) {
+      console.error('Failed to send SMS:', smsError);
+      // Log but continue - OTP is stored even if SMS fails
+      await logKYCEvent(userId, KYC_STAGES.STAGE_2_PHONE, 'sms_send_failed', {
+        phoneNumber,
+      });
+    }
+
+    // ERROR FIX 2.2: DO NOT log OTP to console
+    // Secure logging only
+    await logKYCEvent(userId, KYC_STAGES.STAGE_2_PHONE, 'otp_generated', {
+      phoneNumber: `***${phoneNumber.slice(-4)}`, // Only last 4 digits
+    });
 
     await logKYCEvent(userId, KYC_STAGES.STAGE_2_PHONE, 'initiated', {
       phone: phoneNumber,
@@ -282,14 +326,29 @@ export async function initiatePhoneVerification(userId: string, phoneNumber: str
 
 export async function verifyPhoneOTP(userId: string, otp: string) {
   try {
+    // ERROR FIX 2.4: Improve OTP verification query - fetch then compare hashed values
     const result = await query(
       `SELECT * FROM kyc_verification
-       WHERE user_id = $1 AND stage = $2 AND otp = $3 AND status = 'pending' AND expires_at > NOW()
+       WHERE user_id = $1 AND stage = $2 AND status = 'pending' AND expires_at > NOW()
        ORDER BY created_at DESC LIMIT 1`,
-      [userId, KYC_STAGES.STAGE_2_PHONE, otp]
+      [userId, KYC_STAGES.STAGE_2_PHONE]
     );
 
     if (result.rows.length === 0) {
+      // Log failed attempt
+      await logKYCEvent(userId, KYC_STAGES.STAGE_2_PHONE, 'failed_attempt', {
+        reason: 'no_pending_verification',
+      });
+
+      return { success: false, message: 'Invalid or expired OTP' };
+    }
+
+    const verification = result.rows[0];
+
+    // ERROR FIX 2.1: Use bcrypt to compare plaintext OTP with hashed version
+    const otpMatch = await kycSecurityService.verifyOTP(otp, verification.otp);
+
+    if (!otpMatch) {
       // Log failed attempt
       await logKYCEvent(userId, KYC_STAGES.STAGE_2_PHONE, 'failed_attempt', {
         reason: 'invalid_otp',
@@ -297,8 +356,6 @@ export async function verifyPhoneOTP(userId: string, otp: string) {
 
       return { success: false, message: 'Invalid or expired OTP' };
     }
-
-    const verification = result.rows[0];
 
     // Update verification status
     await query(
@@ -326,7 +383,8 @@ export async function verifyPhoneOTP(userId: string, otp: string) {
 export async function initiateGovernmentIDVerification(
   userId: string,
   idType: 'driver_license' | 'passport',
-  documentUrl: string
+  documentUrl: string,
+  expiryDate?: string
 ) {
   try {
     // Verify previous stage
@@ -358,13 +416,34 @@ export async function initiateGovernmentIDVerification(
       };
     }
 
+    // ERROR FIX 3.2: Validate ID expiration date if provided
+    if (expiryDate) {
+      const expirationCheck = kycSecurityService.validateIDExpiration(expiryDate);
+      if (!expirationCheck.valid) {
+        return {
+          success: false,
+          message: `ID validation failed: ${expirationCheck.reason}`,
+        };
+      }
+    }
+
+    // ERROR FIX 3.1: Extract ID data via OCR (placeholder for now)
+    // In production, this would use AWS Textract or similar
+    const extractionResult = await kycSecurityService.extractIDData(documentUrl);
+    if (!extractionResult.success) {
+      return {
+        success: false,
+        message: extractionResult.reason || 'Failed to extract ID data',
+      };
+    }
+
     // Store document and mark for manual review
     const token = generateToken();
 
     const result = await query(
       `INSERT INTO kyc_verification
-       (user_id, stage, id_type, document_url, status, expires_at, attempt_number, token)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+       (user_id, stage, id_type, document_url, status, expires_at, attempt_number, token, extracted_data)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
        RETURNING id`,
       [
         userId,
@@ -375,6 +454,7 @@ export async function initiateGovernmentIDVerification(
         new Date(Date.now() + 24 * 60 * 60 * 1000),
         attempts + 1,
         token,
+        expiryDate ? JSON.stringify({ expiryDate, validated: true }) : null,
       ]
     );
 
@@ -403,7 +483,8 @@ export async function initiateGovernmentIDVerification(
 export async function initiateAddressVerification(
   userId: string,
   address: string,
-  documentUrl: string
+  documentUrl: string,
+  documentType?: string
 ) {
   try {
     // Verify previous stage
@@ -435,22 +516,40 @@ export async function initiateAddressVerification(
       };
     }
 
+    // ERROR FIX 4.1: Validate address against USPS standards
+    const addressValidation = await kycSecurityService.validateUSPSAddress(address);
+    if (!addressValidation.valid) {
+      return {
+        success: false,
+        message: `Address validation failed: ${addressValidation.reason}`,
+      };
+    }
+
+    // ERROR FIX 4.2: Validate document type
+    if (documentType && !kycSecurityService.validateAddressDocumentType(documentType)) {
+      return {
+        success: false,
+        message: 'Invalid document type for address verification',
+      };
+    }
+
     const token = generateToken();
 
     const result = await query(
       `INSERT INTO kyc_verification
-       (user_id, stage, address, document_url, status, expires_at, attempt_number, token)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+       (user_id, stage, address, document_url, status, expires_at, attempt_number, token, document_type)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
        RETURNING id`,
       [
         userId,
         KYC_STAGES.STAGE_4_ADDRESS,
-        address,
+        addressValidation.standardizedAddress || address,
         documentUrl,
         'pending_review',
         new Date(Date.now() + 24 * 60 * 60 * 1000),
         attempts + 1,
         token,
+        documentType || 'utility_bill',
       ]
     );
 
@@ -458,7 +557,8 @@ export async function initiateAddressVerification(
     await addToAdminReviewQueue(userId, KYC_STAGES.STAGE_4_ADDRESS, result.rows[0].id);
 
     await logKYCEvent(userId, KYC_STAGES.STAGE_4_ADDRESS, 'initiated', {
-      address,
+      address: addressValidation.standardizedAddress || address,
+      documentType: documentType || 'utility_bill',
       attempt: attempts + 1,
     });
 
@@ -554,11 +654,18 @@ export async function verifyBankAccountMicrodeposits(userId: string, amounts: [n
       return { success: false, message: 'No pending bank verification found' };
     }
 
-    // Verify microdeposit amounts (simplified)
     const verification = result.rows[0];
 
-    // In production: Compare with actual microdeposit amounts
-    // TODO: Implement Plaid microdeposit verification
+    // ERROR FIX 5.1: Implement Plaid microdeposit verification
+    const microdepositsCheck = await kycSecurityService.verifyMicrodepositAmounts(userId, amounts);
+
+    if (!microdepositsCheck.valid) {
+      await logKYCEvent(userId, KYC_STAGES.STAGE_5_BANK_ACCOUNT, 'failed_attempt', {
+        reason: microdepositsCheck.reason,
+      });
+
+      return { success: false, message: microdepositsCheck.reason };
+    }
 
     await query(
       `UPDATE kyc_verification
@@ -595,29 +702,50 @@ export async function initiateVideoVerification(userId: string) {
       };
     }
 
+    // ERROR FIX 6.2: Assign available agent for video call
+    const agentAssignment = await kycSecurityService.assignAgentForVideoCall(userId);
+
+    if (!agentAssignment.agentId) {
+      return {
+        success: false,
+        message: agentAssignment.reason || 'No agents available at this time. Please try again later.',
+      };
+    }
+
+    // ERROR FIX 6.1: Generate video room with Twilio/Zoom integration
+    // TODO: Implement video platform integration
+    const videoRoomId = generateToken();
+
     // Schedule video call with available agent
     const result = await query(
       `INSERT INTO kyc_verification
-       (user_id, stage, status, expires_at)
-       VALUES ($1, $2, $3, $4)
+       (user_id, stage, status, expires_at, video_room_id, assigned_agent_id)
+       VALUES ($1, $2, $3, $4, $5, $6)
        RETURNING id`,
       [
         userId,
         KYC_STAGES.STAGE_6_VIDEO_CALL,
-        'scheduled', // Changed from pending_review
+        'scheduled',
         new Date(Date.now() + 24 * 60 * 60 * 1000),
+        videoRoomId,
+        agentAssignment.agentId,
       ]
     );
 
     // Add to video call queue
-    await addToVideoCallQueue(userId);
+    await addToVideoCallQueue(userId, agentAssignment.agentId);
 
-    await logKYCEvent(userId, KYC_STAGES.STAGE_6_VIDEO_CALL, 'scheduled', {});
+    await logKYCEvent(userId, KYC_STAGES.STAGE_6_VIDEO_CALL, 'scheduled', {
+      agentId: agentAssignment.agentId,
+      videoRoomId,
+    });
 
     return {
       success: true,
       message: 'Video verification scheduled',
       verificationId: result.rows[0].id,
+      videoRoomId, // Share with client
+      agentAssigned: true,
       estimatedWaitTime: '2-4 hours',
     };
   } catch (error) {
@@ -629,7 +757,15 @@ export async function initiateVideoVerification(userId: string) {
 export async function completeVideoVerification(
   userId: string,
   verificationId: string,
-  agentNotes: string
+  agentNotes: string,
+  callProof?: {
+    startTime: Date;
+    endTime: Date;
+    duration: number;
+    recordingUrl?: string;
+    livelinessCheckPassed: boolean;
+    facialRecognitionMatch: boolean;
+  }
 ) {
   try {
     const result = await query(
@@ -642,11 +778,33 @@ export async function completeVideoVerification(
       return { success: false, message: 'Video verification not found' };
     }
 
+    const verification = result.rows[0];
+
+    // ERROR FIX 6.3: Require proof that video call actually happened
+    if (!callProof) {
+      return {
+        success: false,
+        message: 'Call proof required (start time, end time, liveness check, facial recognition)',
+      };
+    }
+
+    const proofRecording = await kycSecurityService.recordVideoCallProof(
+      verificationId,
+      {
+        ...callProof,
+        agentId: verification.assigned_agent_id,
+      }
+    );
+
+    if (!proofRecording.success) {
+      return { success: false, message: proofRecording.reason };
+    }
+
     await query(
       `UPDATE kyc_verification
-       SET status = $1, verified_at = NOW(), notes = $2
-       WHERE id = $3`,
-      ['verified', agentNotes, verificationId]
+       SET status = $1, verified_at = NOW(), notes = $2, video_call_proof = $3
+       WHERE id = $4`,
+      ['verified', agentNotes, JSON.stringify(callProof), verificationId]
     );
 
     await updateUserKYCStatus(userId, KYC_STAGES.STAGE_6_VIDEO_CALL, true);
@@ -661,6 +819,8 @@ export async function completeVideoVerification(
 
     await logKYCEvent(userId, KYC_STAGES.STAGE_6_VIDEO_CALL, 'completed', {
       agentNotes,
+      callDuration: callProof.duration,
+      livelinessCheckPassed: callProof.livelinessCheckPassed,
     });
 
     return { success: true, message: 'Video verification completed successfully' };
@@ -904,12 +1064,12 @@ export async function rejectVerification(
 }
 
 // Add to video call queue
-async function addToVideoCallQueue(userId: string) {
+async function addToVideoCallQueue(userId: string, agentId?: string) {
   try {
     await query(
-      `INSERT INTO kyc_video_call_queue (user_id, status, created_at)
-       VALUES ($1, $2, NOW())`,
-      [userId, 'pending']
+      `INSERT INTO kyc_video_call_queue (user_id, status, assigned_agent_id, created_at)
+       VALUES ($1, $2, $3, NOW())`,
+      [userId, 'pending', agentId || null]
     );
   } catch (error) {
     console.error('Failed to add to video call queue:', error);

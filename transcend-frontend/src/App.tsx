@@ -5,6 +5,7 @@ import { DarkModeProvider } from './context/DarkModeContext';
 import { Landing } from './pages/Landing';
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
+import { LawyerWebsiteSetup } from './pages/LawyerWebsiteSetup';
 import Breadcrumbs from './components/Navigation/Breadcrumbs';
 import type { BreadcrumbItem } from './components/Navigation/Breadcrumbs';
 import './App.css';
@@ -12,7 +13,7 @@ import './App.css';
 const AppContent: React.FC = () => {
   const { t } = useLanguage();
   const { user, token, logout } = useAuth();
-  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard'>(
+  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website'>(
     token && user ? 'dashboard' : 'landing'
   );
 
@@ -43,6 +44,12 @@ const AppContent: React.FC = () => {
           { label: t('home'), icon: '⚖️', onClick: () => setCurrentView('landing') },
           { label: t('dashboard'), icon: '📊' },
         ];
+      case 'lawyer-website':
+        return [
+          { label: t('home'), icon: '⚖️', onClick: () => setCurrentView('landing') },
+          { label: 'Dashboard', icon: '📊', onClick: () => setCurrentView('dashboard') },
+          { label: 'My Website', icon: '🌐' },
+        ];
       default:
         return [];
     }
@@ -51,8 +58,10 @@ const AppContent: React.FC = () => {
   return (
     <div className="app">
       {currentView !== 'landing' && <Breadcrumbs items={getBreadcrumbs()} />}
-      {currentView === 'dashboard' && token && user ? (
-        <Dashboard onLogout={handleLogout} />
+      {currentView === 'lawyer-website' && token && user ? (
+        <LawyerWebsiteSetup onBack={() => setCurrentView('dashboard')} />
+      ) : currentView === 'dashboard' && token && user ? (
+        <Dashboard onLogout={handleLogout} onNavigateLawyerWebsite={() => setCurrentView('lawyer-website')} />
       ) : currentView === 'login' ? (
         <Login onSuccess={handleLoginSuccess} />
       ) : (

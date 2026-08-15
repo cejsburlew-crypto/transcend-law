@@ -7,6 +7,7 @@
 import { Router, Request, Response } from 'express';
 import axios from 'axios';
 import lawyerWebsiteService, { LawyerWebsite } from '../services/lawyerWebsiteService';
+import { query } from '../../../transcend-law/backend/src/db/connection.js';
 
 const CLOVER_API_BASE = 'https://api.clover.com';
 const CLOVER_API_KEY = process.env.CLOVER_API_KEY;
@@ -290,12 +291,31 @@ router.post('/:subdomain/contact', async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Website not found' });
     }
 
-    // TODO: Send email to lawyer
-    // TODO: Create contact lead in system
-    // TODO: Create task for lawyer to follow up
+    // Store contact submission in database
+    const submissionId = require('uuid').v4();
+    await query(
+      `INSERT INTO lawyer_website_contact_submissions (
+        id, website_id, client_name, client_email, client_phone,
+        service_interest, message, status, submitted_at
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, 'new', $8)`,
+      [submissionId, website.id, name, email, phone, serviceInterest, message, new Date()]
+    );
+
+    // TODO: Send email notification to lawyer
+    // This would integrate with email service (SendGrid, AWS SES, etc.)
+    // Email template: New contact form submission from {name}
+    // Recipient: website.email
+    // Include: name, email, phone, message, serviceInterest
+
+    // TODO: Create follow-up task for lawyer
+    // This would integrate with the tasks system
+    // Task: Follow up with {name} - {serviceInterest}
+    // Priority: Medium
+    // Assigned to: website.lawyerId
 
     res.json({
       success: true,
+      submissionId,
       message: 'Your message has been sent. The attorney will contact you soon.',
     });
   } catch (error) {

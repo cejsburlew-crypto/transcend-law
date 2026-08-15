@@ -6,6 +6,7 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import { query } from '../../../transcend-law/backend/src/db/connection.js';
 
 const CLOVER_API_BASE = 'https://api.clover.com';
 const CLOVER_API_KEY = process.env.CLOVER_API_KEY;
@@ -112,11 +113,22 @@ class LawyerWebsiteService {
   }): Promise<LawyerWebsite> {
     const id = uuidv4();
 
+    // Fetch existing websites to check for duplicates
+    const existingResult = await query(
+      'SELECT * FROM lawyer_websites ORDER BY created_at DESC LIMIT 100'
+    );
+    const existingWebsites = existingResult.rows.map((row: any) => ({
+      ...row,
+      id: row.id,
+      subdomain: row.subdomain,
+      companyName: row.company_name,
+    }));
+
     // Generate subdomain
     const subdomain = await this.generateSubdomain(
       data.companyName,
       data.city,
-      [] // In real app, fetch existing websites
+      existingWebsites
     );
 
     // Calculate included services (all except excluded)
@@ -124,36 +136,64 @@ class LawyerWebsiteService {
       (service) => !data.excludedServices.includes(service)
     );
 
+    // Save to database
+    const insertResult = await query(
+      `INSERT INTO lawyer_websites (
+        id, lawyer_id, company_name, lawyer_name, subdomain, bio,
+        email, phone, specializations, excluded_services, included_services,
+        subscription_status, subscription_start_date, website_bg_color,
+        website_accent_color, created_at, updated_at
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+      RETURNING *`,
+      [
+        id,
+        data.lawyerId,
+        data.companyName,
+        data.lawyerName,
+        subdomain,
+        data.bio,
+        data.email,
+        data.phone,
+        JSON.stringify(data.specializations),
+        JSON.stringify(data.excludedServices),
+        JSON.stringify(includedServices),
+        'active',
+        new Date(),
+        '#ffffff',
+        '#667eea',
+        new Date(),
+        new Date(),
+      ]
+    );
+
+    const row = insertResult.rows[0];
     const website: LawyerWebsite = {
-      id,
-      lawyerId: data.lawyerId,
-      companyName: data.companyName,
-      lawyerName: data.lawyerName,
-      subdomain,
-      bio: data.bio,
-      email: data.email,
-      phone: data.phone,
-      specializations: data.specializations,
-      excludedServices: data.excludedServices,
-      includedServices,
+      id: row.id,
+      lawyerId: row.lawyer_id,
+      companyName: row.company_name,
+      lawyerName: row.lawyer_name,
+      subdomain: row.subdomain,
+      bio: row.bio,
+      email: row.email,
+      phone: row.phone,
+      specializations: JSON.parse(row.specializations || '[]'),
+      excludedServices: JSON.parse(row.excluded_services || '[]'),
+      includedServices: JSON.parse(row.included_services || '[]'),
       testimonials: [],
       subscriptionStatus: 'active',
-      subscriptionStartDate: new Date(),
+      subscriptionStartDate: row.subscription_start_date,
       website: {
-        backgroundColor: '#ffffff',
-        accentColor: '#667eea',
+        backgroundColor: row.website_bg_color,
+        accentColor: row.website_accent_color,
       },
       analytics: {
-        pageViews: 0,
-        visitors: 0,
-        lastUpdated: new Date(),
+        pageViews: row.total_page_views || 0,
+        visitors: row.total_unique_visitors || 0,
+        lastUpdated: row.last_analytics_update || new Date(),
       },
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
     };
-
-    // TODO: Save to database
-    // await db.lawyerWebsites.insert(website);
 
     return website;
   }
@@ -165,21 +205,150 @@ class LawyerWebsiteService {
     websiteId: string,
     updates: Partial<LawyerWebsite>
   ): Promise<LawyerWebsite> {
-    // TODO: Update database
-    // const website = await db.lawyerWebsites.findById(websiteId);
-    // Object.assign(website, updates);
-    // await db.lawyerWebsites.update(website);
+    // Build dynamic SQL based on updates
+    const updateFields: string[] = [];
+    const updateValues: any[] = [];
+    let paramCount = 1;
 
-    return {} as LawyerWebsite;
+    if (updates.companyName) {
+      updateFields.push(`company_name = $${paramCount++}`);
+      updateValues.push(updates.companyName);
+    }
+    if (updates.bio) {
+      updateFields.push(`bio = $${paramCount++}`);
+      updateValues.push(updates.bio);
+    }
+    if (updates.email) {
+      updateFields.push(`email = $${paramCount++}`);
+      updateValues.push(updates.email);
+    }
+    if (updates.phone) {
+      updateFields.push(`phone = $${paramCount++}`);
+      updateValues.push(updates.phone);
+    }
+    if (updates.specializations) {
+      updateFields.push(`specializations = $${paramCount++}`);
+      updateValues.push(JSON.stringify(updates.specializations));
+    }
+    if (updates.website) {
+      if (updates.website.backgroundColor) {
+        updateFields.push(`website_bg_color = $${paramCount++}`);
+        updateValues.push(updates.website.backgroundColor);
+      }
+      if (updates.website.accentColor) {
+        updateFields.push(`website_accent_color = $${paramCount++}`);
+        updateValues.push(updates.website.accentColor);
+      }
+    }
+
+    updateFields.push(`updated_at = $${paramCount++}`);
+    updateValues.push(new Date());
+    updateValues.push(websiteId);
+
+    if (updateFields.length === 1) return {} as LawyerWebsite; // No updates
+
+    const updateResult = await query(
+      `UPDATE lawyer_websites SET ${updateFields.join(', ')} WHERE id = $${paramCount} RETURNING *`,
+      updateValues
+    );
+
+    const row = updateResult.rows[0];
+    if (!row) throw new Error('Website not found');
+
+    const website: LawyerWebsite = {
+      id: row.id,
+      lawyerId: row.lawyer_id,
+      companyName: row.company_name,
+      lawyerName: row.lawyer_name,
+      subdomain: row.subdomain,
+      bio: row.bio,
+      email: row.email,
+      phone: row.phone,
+      specializations: JSON.parse(row.specializations || '[]'),
+      excludedServices: JSON.parse(row.excluded_services || '[]'),
+      includedServices: JSON.parse(row.included_services || '[]'),
+      testimonials: [],
+      subscriptionStatus: row.subscription_status,
+      subscriptionStartDate: row.subscription_start_date,
+      subscriptionEndDate: row.subscription_end_date,
+      website: {
+        backgroundColor: row.website_bg_color,
+        accentColor: row.website_accent_color,
+      },
+      analytics: {
+        pageViews: row.total_page_views || 0,
+        visitors: row.total_unique_visitors || 0,
+        lastUpdated: row.last_analytics_update || new Date(),
+      },
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
+    };
+
+    return website;
   }
 
   /**
    * Get website by subdomain
    */
   async getWebsiteBySubdomain(subdomain: string): Promise<LawyerWebsite | null> {
-    // TODO: Query database
-    // return db.lawyerWebsites.findOne({ subdomain });
-    return null;
+    const result = await query(
+      'SELECT * FROM lawyer_websites WHERE subdomain = $1',
+      [subdomain]
+    );
+
+    if (result.rows.length === 0) return null;
+
+    const row = result.rows[0];
+
+    // Fetch testimonials
+    const testimonialsResult = await query(
+      'SELECT * FROM lawyer_website_testimonials WHERE website_id = $1 ORDER BY created_at DESC',
+      [row.id]
+    );
+
+    const testimonials = testimonialsResult.rows.map((t: any) => ({
+      clientName: t.client_name,
+      rating: t.rating,
+      review: t.review,
+      date: t.created_at,
+    }));
+
+    const website: LawyerWebsite = {
+      id: row.id,
+      lawyerId: row.lawyer_id,
+      companyName: row.company_name,
+      lawyerName: row.lawyer_name,
+      subdomain: row.subdomain,
+      bio: row.bio,
+      profilePicture: row.profile_picture_url,
+      officeAddress: row.office_address,
+      email: row.email,
+      phone: row.phone,
+      licenseNumber: row.license_number,
+      yearsExperience: row.years_experience,
+      specializations: JSON.parse(row.specializations || '[]'),
+      excludedServices: JSON.parse(row.excluded_services || '[]'),
+      includedServices: JSON.parse(row.included_services || '[]'),
+      testimonials,
+      subscriptionStatus: row.subscription_status,
+      subscriptionStartDate: row.subscription_start_date,
+      subscriptionEndDate: row.subscription_end_date,
+      website: {
+        backgroundColor: row.website_bg_color,
+        accentColor: row.website_accent_color,
+        logoUrl: row.website_logo_url,
+        headerImage: row.website_header_image_url,
+      },
+      analytics: {
+        pageViews: row.total_page_views || 0,
+        visitors: row.total_unique_visitors || 0,
+        lastUpdated: row.last_analytics_update || new Date(),
+      },
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
+    };
+
+    return website;
   }
 
   /**
@@ -193,13 +362,22 @@ class LawyerWebsiteService {
       review: string;
     }
   ): Promise<void> {
-    // TODO: Add to database
-    // const website = await db.lawyerWebsites.findById(websiteId);
-    // website.testimonials.push({
-    //   ...testimonial,
-    //   date: new Date().toISOString(),
-    // });
-    // await db.lawyerWebsites.update(website);
+    const id = uuidv4();
+
+    await query(
+      `INSERT INTO lawyer_website_testimonials (
+        id, website_id, client_name, rating, review, created_at
+      ) VALUES ($1, $2, $3, $4, $5, $6)`,
+      [id, websiteId, testimonial.clientName, testimonial.rating, testimonial.review, new Date()]
+    );
+
+    // Update audit log
+    await query(
+      `INSERT INTO lawyer_website_audit_log (
+        id, website_id, lawyer_id, action, created_at
+      ) SELECT $1, $2, lawyer_id, 'testimonial_added', $3 FROM lawyer_websites WHERE id = $2`,
+      [uuidv4(), websiteId, new Date()]
+    );
   }
 
   /**
@@ -212,28 +390,47 @@ class LawyerWebsiteService {
       visitorIp: string;
     }
   ): Promise<void> {
-    // TODO: Log analytics
-    // const analytics: WebsiteAnalytics = {
-    //   websiteId,
-    //   date: new Date(),
-    //   pageViews: 1,
-    //   uniqueVisitors: 1,
-    //   referralSource: data.referralSource,
-    //   serviceClicks: {},
-    //   contactFormSubmissions: 0,
-    // };
-    // await db.websiteAnalytics.insert(analytics);
+    try {
+      const today = new Date().toISOString().split('T')[0];
+
+      // Upsert analytics record (insert if not exists, increment if exists)
+      await query(
+        `INSERT INTO lawyer_website_analytics (
+          id, website_id, visit_date, page_views, unique_visitors, referral_source
+        ) VALUES ($1, $2, $3, 1, 1, $4)
+        ON CONFLICT (website_id, visit_date) DO UPDATE SET
+          page_views = lawyer_website_analytics.page_views + 1`,
+        [uuidv4(), websiteId, today, data.referralSource]
+      );
+
+      // Trigger stats update function
+      await query('SELECT update_lawyer_website_stats($1)', [websiteId]);
+    } catch (error) {
+      console.error('Failed to track page view:', error);
+      // Don't throw - analytics tracking should not block page loads
+    }
   }
 
   /**
    * Track service click
    */
   async trackServiceClick(websiteId: string, serviceId: string): Promise<void> {
-    // TODO: Log service click
-    // await db.websiteAnalytics.increment({
-    //   websiteId,
-    //   [`serviceClicks.${serviceId}`]: 1,
-    // });
+    try {
+      const today = new Date().toISOString().split('T')[0];
+
+      // Upsert service click tracking
+      await query(
+        `INSERT INTO lawyer_website_service_clicks (
+          id, website_id, service_name, click_date, click_count
+        ) VALUES ($1, $2, $3, $4, 1)
+        ON CONFLICT (website_id, service_name, click_date) DO UPDATE SET
+          click_count = lawyer_website_service_clicks.click_count + 1`,
+        [uuidv4(), websiteId, serviceId, today]
+      );
+    } catch (error) {
+      console.error('Failed to track service click:', error);
+      // Don't throw - analytics tracking should not block page loads
+    }
   }
 
   /**
@@ -327,33 +524,93 @@ class LawyerWebsiteService {
    */
   async renewSubscription(websiteId: string, months: number = 1): Promise<LawyerWebsite> {
     try {
-      // TODO: Get website from database
-      // const website = await db.lawyerWebsites.findById(websiteId);
+      // Get website from database
+      const result = await query('SELECT * FROM lawyer_websites WHERE id = $1', [websiteId]);
+      if (result.rows.length === 0) throw new Error('Website not found');
+
+      const website = result.rows[0];
 
       // Charge via Clover one-time charge
-      await axios.post(
-        `${CLOVER_API_BASE}/v3/merchants/${CLOVER_MERCHANT_ID}/charges`,
-        {
-          amount: 2500 * months, // $25 per month in cents
-          customerId: 'customer_id', // TODO: Get from website.cloverCustomerId
-          currency: 'USD',
-          description: `Lawyer Website Renewal - ${months} month(s)`,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${CLOVER_API_KEY}`,
+      if (website.stripe_subscription_id) {
+        await axios.post(
+          `${CLOVER_API_BASE}/v3/merchants/${CLOVER_MERCHANT_ID}/charges`,
+          {
+            amount: 2500 * months, // $25 per month in cents
+            customerId: website.stripe_subscription_id,
+            currency: 'USD',
+            description: `Lawyer Website Renewal - ${months} month(s)`,
           },
-        }
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${CLOVER_API_KEY}`,
+            },
+          }
+        );
+      }
 
       // Update end date
       const newEndDate = new Date();
       newEndDate.setMonth(newEndDate.getMonth() + months);
-      // TODO: Update database
-      // website.subscriptionEndDate = newEndDate;
-      // await db.lawyerWebsites.update(website);
 
-      return {} as LawyerWebsite;
+      const updateResult = await query(
+        `UPDATE lawyer_websites SET
+          subscription_end_date = $1,
+          subscription_status = 'active',
+          updated_at = $2
+        WHERE id = $3
+        RETURNING *`,
+        [newEndDate, new Date(), websiteId]
+      );
+
+      const row = updateResult.rows[0];
+
+      // Log billing
+      await query(
+        `INSERT INTO lawyer_website_billing (
+          id, website_id, lawyer_id, amount, billing_period_start,
+          billing_period_end, status, payment_method, created_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, 'paid', 'clover', $7)`,
+        [uuidv4(), websiteId, website.lawyer_id, 25.00 * months, new Date(), newEndDate, new Date()]
+      );
+
+      // Update audit log
+      await query(
+        `INSERT INTO lawyer_website_audit_log (
+          id, website_id, lawyer_id, action, new_value, created_at
+        ) VALUES ($1, $2, $3, 'subscription_renewed', $4, $5)`,
+        [uuidv4(), websiteId, website.lawyer_id, `Renewed for ${months} month(s)`, new Date()]
+      );
+
+      const renewedWebsite: LawyerWebsite = {
+        id: row.id,
+        lawyerId: row.lawyer_id,
+        companyName: row.company_name,
+        lawyerName: row.lawyer_name,
+        subdomain: row.subdomain,
+        bio: row.bio,
+        email: row.email,
+        phone: row.phone,
+        specializations: JSON.parse(row.specializations || '[]'),
+        excludedServices: JSON.parse(row.excluded_services || '[]'),
+        includedServices: JSON.parse(row.included_services || '[]'),
+        testimonials: [],
+        subscriptionStatus: 'active',
+        subscriptionStartDate: row.subscription_start_date,
+        subscriptionEndDate: newEndDate,
+        website: {
+          backgroundColor: row.website_bg_color,
+          accentColor: row.website_accent_color,
+        },
+        analytics: {
+          pageViews: row.total_page_views || 0,
+          visitors: row.total_unique_visitors || 0,
+          lastUpdated: row.last_analytics_update || new Date(),
+        },
+        createdAt: row.created_at,
+        updatedAt: row.updated_at,
+      };
+
+      return renewedWebsite;
     } catch (error) {
       console.error('Failed to renew subscription:', error);
       throw error;
@@ -365,24 +622,47 @@ class LawyerWebsiteService {
    */
   async cancelSubscription(websiteId: string, cloverSubscriptionId: string): Promise<void> {
     try {
-      // Cancel subscription in Clover
-      await axios.delete(
-        `${CLOVER_API_BASE}/v3/merchants/${CLOVER_MERCHANT_ID}/subscription_plans/${cloverSubscriptionId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${CLOVER_API_KEY}`,
-          },
+      // Get website from database
+      const result = await query('SELECT * FROM lawyer_websites WHERE id = $1', [websiteId]);
+      if (result.rows.length === 0) throw new Error('Website not found');
+
+      const website = result.rows[0];
+
+      // Cancel subscription in Clover if subscription ID exists
+      if (cloverSubscriptionId) {
+        try {
+          await axios.delete(
+            `${CLOVER_API_BASE}/v3/merchants/${CLOVER_MERCHANT_ID}/subscription_plans/${cloverSubscriptionId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${CLOVER_API_KEY}`,
+              },
+            }
+          );
+        } catch (cloverError) {
+          console.error('Clover cancellation failed:', cloverError);
+          // Continue with local cancellation even if Clover fails
         }
+      }
+
+      // Update database - set status to cancelled
+      await query(
+        `UPDATE lawyer_websites SET
+          subscription_status = 'cancelled',
+          updated_at = $1
+        WHERE id = $2`,
+        [new Date(), websiteId]
       );
 
-      // Update database
-      // TODO: Update database
-      // await db.lawyerWebsites.updateOne(
-      //   { id: websiteId },
-      //   { subscriptionStatus: 'cancelled' }
-      // );
+      // Update audit log
+      await query(
+        `INSERT INTO lawyer_website_audit_log (
+          id, website_id, lawyer_id, action, created_at
+        ) VALUES ($1, $2, $3, 'cancelled', $4)`,
+        [uuidv4(), websiteId, website.lawyer_id, new Date()]
+      );
     } catch (error) {
-      console.error('Failed to cancel Clover subscription:', error);
+      console.error('Failed to cancel subscription:', error);
       throw error;
     }
   }

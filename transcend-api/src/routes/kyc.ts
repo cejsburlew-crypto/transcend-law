@@ -3,16 +3,20 @@
 
 import express, { Request, Response } from 'express';
 import { authenticateToken, isAdmin } from '../middleware/auth';
+import { kycRateLimit, detectSuspiciousActivity } from '../middleware/kycRateLimit';
 import kycService from '../services/kycService';
 
 const router = express.Router();
+
+// Apply suspicious activity detection to all KYC routes
+router.use(detectSuspiciousActivity);
 
 // ============================================
 // STAGE 1: EMAIL VERIFICATION
 // ============================================
 
-// Initiate email verification
-router.post('/email/initiate', authenticateToken, async (req: Request, res: Response) => {
+// Initiate email verification (with rate limiting)
+router.post('/email/initiate', authenticateToken, kycRateLimit('email'), async (req: Request, res: Response) => {
   try {
     const { email } = req.body;
 
@@ -32,7 +36,7 @@ router.post('/email/initiate', authenticateToken, async (req: Request, res: Resp
 });
 
 // Verify email token
-router.post('/email/verify/:token', async (req: Request, res: Response) => {
+router.post('/email/verify/:token', authenticateToken, async (req: Request, res: Response) => {
   try {
     const { token } = req.params;
 
@@ -40,7 +44,8 @@ router.post('/email/verify/:token', async (req: Request, res: Response) => {
       return res.status(400).json({ success: false, message: 'Token is required' });
     }
 
-    const result = await kycService.verifyEmail(token);
+    // Only allow user to verify their own email
+    const result = await kycService.verifyEmail(token, req.user?.id as string);
     res.json(result);
   } catch (error) {
     console.error('Error verifying email:', error);
@@ -55,8 +60,8 @@ router.post('/email/verify/:token', async (req: Request, res: Response) => {
 // STAGE 2: PHONE VERIFICATION
 // ============================================
 
-// Initiate phone verification
-router.post('/phone/initiate', authenticateToken, async (req: Request, res: Response) => {
+// Initiate phone verification (with rate limiting)
+router.post('/phone/initiate', authenticateToken, kycRateLimit('sms'), async (req: Request, res: Response) => {
   try {
     const { phoneNumber } = req.body;
 

@@ -35,7 +35,7 @@ interface DashboardMetrics {
   averageRating: number;
 }
 
-export const Dashboard: React.FC<{ onLogout?: () => void }> = ({ onLogout }) => {
+export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsite?: () => void }> = ({ onLogout, onNavigateLawyerWebsite }) => {
   const [currentPage, setCurrentPage] = useState<'home' | 'cases' | 'profile'>('home');
   const [user, setUser] = useState<UserProfile | null>(null);
   const [metrics] = useState<DashboardMetrics>({

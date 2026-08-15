@@ -66,10 +66,48 @@ router.post('/screen', authenticateToken, async (req: Request, res: Response): P
     const { firstName, lastName, email, phone, address, dateOfBirth, passportNumber, taxId, companyName, checkType } = req.body;
     const userId = (req as any).user?.userId;
 
-    // Validate required fields
+    // FIX #4: Enhanced validation for required fields
     if (!firstName || !lastName || !checkType) {
       res.status(400).json({
         error: 'Missing required fields: firstName, lastName, checkType',
+      });
+      return;
+    }
+
+    // FIX #4: Validate field types and lengths
+    if (typeof firstName !== 'string' || firstName.trim().length === 0 || firstName.length > 100) {
+      res.status(400).json({
+        error: 'Invalid firstName: must be non-empty string (max 100 chars)',
+      });
+      return;
+    }
+
+    if (typeof lastName !== 'string' || lastName.trim().length === 0 || lastName.length > 100) {
+      res.status(400).json({
+        error: 'Invalid lastName: must be non-empty string (max 100 chars)',
+      });
+      return;
+    }
+
+    if (typeof checkType !== 'string') {
+      res.status(400).json({
+        error: 'Invalid checkType: must be string',
+      });
+      return;
+    }
+
+    // FIX #4: Validate email format if provided
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      res.status(400).json({
+        error: 'Invalid email format',
+      });
+      return;
+    }
+
+    // FIX #4: Validate date format if provided
+    if (dateOfBirth && !/^\d{4}-\d{2}-\d{2}$/.test(dateOfBirth)) {
+      res.status(400).json({
+        error: 'Invalid dateOfBirth format: must be YYYY-MM-DD',
       });
       return;
     }

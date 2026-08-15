@@ -61,6 +61,20 @@ CREATE TABLE IF NOT EXISTS kyc_verification (
   rejection_reason TEXT,
   notes TEXT,
 
+  -- Video call fields (ERROR FIX 6.1, 6.2, 6.3)
+  video_room_id VARCHAR(255),
+  assigned_agent_id UUID REFERENCES users(id) ON DELETE SET NULL,
+  video_call_proof JSONB, -- {startTime, endTime, duration, recordingUrl, livelinessCheckPassed, facialRecognitionMatch}
+
+  -- OCR extraction data (ERROR FIX 3.1)
+  extracted_data JSONB, -- {fullName, dateOfBirth, idNumber, issueDate, expiryDate, etc}
+
+  -- Address verification (ERROR FIX 4.2)
+  document_type VARCHAR(50), -- utility_bill, bank_statement, government_document, etc
+
+  -- Microdeposits (ERROR FIX 5.1)
+  microdeposit_amounts NUMERIC[2],
+
   -- Indexing for queries
   CONSTRAINT kyc_stage_expires ON (stage, expires_at),
   CONSTRAINT kyc_user_stage_unique UNIQUE NULLS NOT DISTINCT (user_id, stage, status)

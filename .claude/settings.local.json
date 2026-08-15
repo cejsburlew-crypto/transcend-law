@@ -598,7 +598,13 @@
       "Bash(npx jest *)",
       "Bash(tee /private/tmp/claude-501/-Users-jbconsultingassociatesinc--code-transcend-ssp/9e95c4e3-aa1f-4687-afed-1131263d4443/scratchpad/test-results.txt)",
       "Bash(tee /private/tmp/claude-501/-Users-jbconsultingassociatesinc--code-transcend-ssp/9e95c4e3-aa1f-4687-afed-1131263d4443/scratchpad/test-results-2.txt)",
-      "Bash(sed -i 's/req\\\\.sessionID/\\(req as any\\).sessionId/g' /Users/jbconsultingassociatesinc./code/transcend-ssp/transcend-api/src/routes/deployment.ts)"
+      "Bash(sed -i 's/req\\\\.sessionID/\\(req as any\\).sessionId/g' /Users/jbconsultingassociatesinc./code/transcend-ssp/transcend-api/src/routes/deployment.ts)",
+      "Bash(grep -E \"^[A-Z_]+.*\\\\.md$\")",
+      "Bash(grep -E \"\\\\.md$\")",
+      "Bash(curl -X POST http://localhost:3000/api/lawyer-websites -H 'Content-Type: application/json' -d '{ *)",
+      "Bash(npx ts-node *)",
+      "Bash(node /Users/jbconsultingassociatesinc./code/transcend-ssp/scripts/test-security-scan.js)",
+      "Bash(git diff *)"
     ]
   }
 }

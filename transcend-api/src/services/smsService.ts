@@ -1,103 +1,81 @@
-// SMS Service
-// Send SMS messages via Twilio or other SMS provider
+// SMS Service - Sends SMS via Twilio or similar provider
+// ERROR FIX 2.3: Implements SMS integration for OTP delivery
 
-import axios from 'axios';
+import { Twilio } from 'twilio';
 
-const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
-const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
-const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const fromPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
 
-// ============================================
-// SMS SENDING
-// ============================================
+let twilioClient: Twilio | null = null;
 
-export async function sendSMS(phoneNumber: string, message: string): Promise<boolean> {
+// Initialize Twilio client
+function getTwilioClient(): Twilio {
+  if (!twilioClient && accountSid && authToken) {
+    twilioClient = new Twilio(accountSid, authToken);
+  }
+  return twilioClient as Twilio;
+}
+
+/**
+ * Send SMS message via Twilio
+ * @param phoneNumber - Phone number to send to (E.164 format)
+ * @param message - Message content
+ */
+export async function sendSMS(phoneNumber: string, message: string): Promise<{ success: boolean; sid?: string; reason?: string }> {
   try {
-    if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_PHONE_NUMBER) {
-      console.warn('Twilio credentials not configured. SMS not sent.');
-      // In development, log the message instead
-      console.log(`SMS to ${phoneNumber}: ${message}`);
-      return true;
+    if (!accountSid || !authToken || !fromPhoneNumber) {
+      console.warn('Twilio credentials not configured. SMS sending disabled.');
+      return {
+        success: false,
+        reason: 'SMS service not configured'
+      };
     }
 
-    const response = await axios.post(
-      `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`,
-      {
-        From: TWILIO_PHONE_NUMBER,
-        To: phoneNumber,
-        Body: message,
-      },
-      {
-        auth: {
-          username: TWILIO_ACCOUNT_SID,
-          password: TWILIO_AUTH_TOKEN,
-        },
-      }
-    );
+    const client = getTwilioClient();
 
-    return response.status === 201;
+    const result = await client.messages.create({
+      to: phoneNumber,
+      from: fromPhoneNumber,
+      body: message,
+    });
+
+    return {
+      success: true,
+      sid: result.sid,
+    };
   } catch (error) {
-    console.error('Error sending SMS:', error);
-    return false;
+    console.error('Failed to send SMS:', error);
+    return {
+      success: false,
+      reason: error instanceof Error ? error.message : 'Failed to send SMS'
+    };
   }
 }
 
-export async function validatePhoneNumber(phoneNumber: string): Promise<boolean> {
+/**
+ * Verify SMS was received (for testing)
+ */
+export async function verifySMSDelivery(sid: string): Promise<{ success: boolean; status?: string }> {
   try {
-    if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN) {
-      console.warn('Twilio credentials not configured. Phone validation skipped.');
-      // Basic validation
-      return /^\+?[1-9]\d{1,14}$/.test(phoneNumber);
+    if (!accountSid || !authToken) {
+      return { success: false };
     }
 
-    const response = await axios.get(
-      `https://lookups.twilio.com/v1/PhoneNumbers/${encodeURIComponent(phoneNumber)}`,
-      {
-        auth: {
-          username: TWILIO_ACCOUNT_SID,
-          password: TWILIO_AUTH_TOKEN,
-        },
-      }
-    );
+    const client = getTwilioClient();
+    const message = await client.messages(sid).fetch();
 
-    return response.status === 200;
+    return {
+      success: true,
+      status: message.status
+    };
   } catch (error) {
-    console.error('Error validating phone number:', error);
-    return false;
+    console.error('Failed to verify SMS delivery:', error);
+    return { success: false };
   }
 }
 
-export async function formatPhoneNumber(phoneNumber: string): Promise<string> {
-  try {
-    if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN) {
-      // Basic formatting for E.164 format
-      const cleaned = phoneNumber.replace(/\D/g, '');
-      if (cleaned.length === 10) {
-        return `+1${cleaned}`;
-      } else if (cleaned.length === 11 && cleaned.startsWith('1')) {
-        return `+${cleaned}`;
-      }
-      return `+${cleaned}`;
-    }
-
-    const response = await axios.get(
-      `https://lookups.twilio.com/v1/PhoneNumbers/${encodeURIComponent(phoneNumber)}?CountryCode=US`,
-      {
-        auth: {
-          username: TWILIO_ACCOUNT_SID,
-          password: TWILIO_AUTH_TOKEN,
-        },
-      }
-    );
-
-    return response.data.phone_number;
-  } catch (error) {
-    console.error('Error formatting phone number:', error);
-    // Fallback formatting
-    const cleaned = phoneNumber.replace(/\D/g, '');
-    if (cleaned.length === 10) {
-      return `+1${cleaned}`;
-    }
-    return `+${cleaned}`;
-  }
-}
+export default {
+  sendSMS,
+  verifySMSDelivery,
+};

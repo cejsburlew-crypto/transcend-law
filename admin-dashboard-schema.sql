@@ -190,6 +190,60 @@ CREATE TABLE IF NOT EXISTS referral_monitoring (
 );
 
 -- ============================================================================
+-- ADMIN REQUESTS TABLE - Feature requests, bug reports, enhancements
+-- ============================================================================
+
+CREATE TABLE IF NOT EXISTS admin_requests (
+  id UUID PRIMARY KEY,
+
+  -- Request metadata
+  title VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
+  type VARCHAR(50) NOT NULL,  -- feature, bug, enhancement, infrastructure
+  priority VARCHAR(50) NOT NULL,  -- low, medium, high, critical
+
+  -- Requester info
+  requested_by VARCHAR(255),
+  requested_at TIMESTAMP NOT NULL,
+
+  -- Status tracking
+  status VARCHAR(50) DEFAULT 'pending',  -- pending, in_progress, completed, cancelled, on_hold
+  completion_percentage INT DEFAULT 0,
+
+  -- Timeline
+  estimated_completion TIMESTAMP,
+  completed_at TIMESTAMP,
+
+  -- Metadata
+  assigned_to INT REFERENCES admin_users(id),
+  tags JSONB,  -- Array of tags for categorization
+  archived BOOLEAN DEFAULT FALSE,
+
+  -- Timestamps
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- ============================================================================
+-- ADMIN REQUEST AUDIT LOG TABLE - Track changes to requests
+-- ============================================================================
+
+CREATE TABLE IF NOT EXISTS admin_request_audit_log (
+  id SERIAL PRIMARY KEY,
+
+  request_id UUID NOT NULL REFERENCES admin_requests(id) ON DELETE CASCADE,
+  admin_id INT REFERENCES admin_users(id),
+
+  -- What changed
+  action_type VARCHAR(100),  -- CREATED, STATUS_CHANGED, PROGRESS_UPDATE, COMPLETED
+  old_values JSONB,
+  new_values JSONB,
+
+  -- Timeline
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- ============================================================================
 -- CREATE INDEXES
 -- ============================================================================
 
@@ -202,6 +256,13 @@ CREATE INDEX IF NOT EXISTS idx_audit_admin ON audit_logs(admin_id);
 CREATE INDEX IF NOT EXISTS idx_audit_action ON audit_logs(action_type);
 CREATE INDEX IF NOT EXISTS idx_alert_status ON operational_alerts(status);
 CREATE INDEX IF NOT EXISTS idx_monitoring_referral ON referral_monitoring(transaction_id);
+CREATE INDEX IF NOT EXISTS idx_admin_request_status ON admin_requests(status);
+CREATE INDEX IF NOT EXISTS idx_admin_request_type ON admin_requests(type);
+CREATE INDEX IF NOT EXISTS idx_admin_request_priority ON admin_requests(priority);
+CREATE INDEX IF NOT EXISTS idx_admin_request_created ON admin_requests(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_admin_request_assigned ON admin_requests(assigned_to);
+CREATE INDEX IF NOT EXISTS idx_admin_request_archived ON admin_requests(archived);
+CREATE INDEX IF NOT EXISTS idx_audit_log_request ON admin_request_audit_log(request_id);
 
 -- ============================================================================
 -- VIEWS FOR DASHBOARDS
