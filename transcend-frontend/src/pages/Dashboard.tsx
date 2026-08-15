@@ -8,6 +8,8 @@ import {
   Toast,
   SupportButton
 } from '@/components/UI';
+import AdminRequestPanel from '../components/AdminRequestPanel';
+import AdminHealthCheck from '../components/AdminHealthCheck';
 import './Dashboard.css';
 
 interface UserProfile {
@@ -97,8 +99,19 @@ export const Dashboard: React.FC<{ onLogout?: () => void }> = ({ onLogout }) => 
     return 'U';
   };
 
+  // Check if user is admin
+  const isAdmin = user?.userType === 'admin' || localStorage.getItem('userRole') === 'admin';
+
   return (
     <div className="dashboard-container">
+      {/* Admin Systems - Request Panel & Health Check */}
+      {isAdmin && (
+        <div className="admin-systems">
+          <AdminRequestPanel isOpen={true} />
+          <AdminHealthCheck autoRun={true} checkInterval={300000} />
+        </div>
+      )}
+
       {/* Privacy Disclaimer */}
       <div className="privacy-banner">
         <div className="privacy-banner-content">

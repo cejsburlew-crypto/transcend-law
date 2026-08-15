@@ -22,6 +22,9 @@ import subscriptionsRoutes from './routes/subscriptions';
 import translationRoutes from './routes/translation';
 import paymentsRoutes from './routes/payments';
 import documentsRoutes from './routes/documents';
+import adminRequestsRoutes from './routes/adminRequests';
+import adminHealthCheckRoutes from './routes/adminHealthCheck';
+import adminSecurityScanRoutes from './routes/adminSecurityScan';
 
 // Import services
 import { initializeClover } from './services/cloverService';
@@ -71,6 +74,11 @@ app.use('/api/v2/subscriptions', subscriptionsRoutes);
 app.use('/api/v2/payments', paymentsRoutes);
 app.use('/api/v2/documents', documentsRoutes);
 app.use('/api/v2/translate', translationRoutes);
+
+// Admin routes (request panel, health check, security scan)
+app.use('/api', adminRequestsRoutes);
+app.use('/api', adminHealthCheckRoutes);
+app.use('/api', adminSecurityScanRoutes);
 
 // ============================================
 // ERROR HANDLING
