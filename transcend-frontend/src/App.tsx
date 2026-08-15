@@ -1,28 +1,61 @@
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
+import { Landing } from './pages/Landing';
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
+import Breadcrumbs from './components/Navigation/Breadcrumbs';
+import type { BreadcrumbItem } from './components/Navigation/Breadcrumbs';
 import './App.css';
 
 const AppContent: React.FC = () => {
+  const { t } = useLanguage();
   const { user, token, logout } = useAuth();
-  const [showDashboard, setShowDashboard] = useState(!!token && !!user);
+  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard'>(
+    token && user ? 'dashboard' : 'landing'
+  );
+
+  const handleGetStarted = () => {
+    setCurrentView('login');
+  };
 
   const handleLoginSuccess = () => {
-    setShowDashboard(true);
+    setCurrentView('dashboard');
   };
 
   const handleLogout = () => {
     logout();
-    setShowDashboard(false);
+    setCurrentView('landing');
+  };
+
+  const getBreadcrumbs = (): BreadcrumbItem[] => {
+    switch (currentView) {
+      case 'landing':
+        return [{ label: t('home'), icon: '⚖️', onClick: () => {} }];
+      case 'login':
+        return [
+          { label: t('home'), icon: '⚖️', onClick: () => setCurrentView('landing') },
+          { label: t('signIn'), icon: '🔑' },
+        ];
+      case 'dashboard':
+        return [
+          { label: t('home'), icon: '⚖️', onClick: () => setCurrentView('landing') },
+          { label: t('dashboard'), icon: '📊' },
+        ];
+      default:
+        return [];
+    }
   };
 
   return (
     <div className="app">
-      {showDashboard && token && user ? (
+      {currentView !== 'landing' && <Breadcrumbs items={getBreadcrumbs()} />}
+      {currentView === 'dashboard' && token && user ? (
         <Dashboard onLogout={handleLogout} />
-      ) : (
+      ) : currentView === 'login' ? (
         <Login onSuccess={handleLoginSuccess} />
+      ) : (
+        <Landing onGetStarted={handleGetStarted} />
       )}
     </div>
   );
@@ -30,9 +63,11 @@ const AppContent: React.FC = () => {
 
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <LanguageProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </LanguageProvider>
   );
 }
 

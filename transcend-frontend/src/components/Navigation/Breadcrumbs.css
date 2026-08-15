@@ -1,0 +1,256 @@
+/* Breadcrumbs Navigation */
+
+:root {
+  --primary: #4ade80;
+  --primary-dark: #22c55e;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --border: #e5e7eb;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --primary: #4ade80;
+    --primary-dark: #22c55e;
+    --text-primary: #f3f4f6;
+    --text-secondary: #d1d5db;
+    --bg-primary: #1f2937;
+    --bg-secondary: #111827;
+    --border: #374151;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  }
+}
+
+:root[data-theme="dark"] {
+  --primary: #4ade80;
+  --primary-dark: #22c55e;
+  --text-primary: #f3f4f6;
+  --text-secondary: #d1d5db;
+  --bg-primary: #1f2937;
+  --bg-secondary: #111827;
+  --border: #374151;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.breadcrumbs-nav {
+  position: sticky;
+  top: 0;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+  z-index: 999;
+  box-shadow: var(--shadow-sm);
+}
+
+.breadcrumbs-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 44px;
+}
+
+.breadcrumbs-list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumb-home {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-separator {
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin: 0 4px;
+  opacity: 0.5;
+}
+
+/* Breadcrumb Links */
+.breadcrumb-link {
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 200ms ease;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.breadcrumb-link:hover:not(:disabled) {
+  background: rgba(74, 222, 128, 0.1);
+  color: var(--primary-dark);
+}
+
+.breadcrumb-link:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.2);
+}
+
+.breadcrumb-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.home-btn {
+  padding: 4px 8px;
+  font-size: 16px;
+}
+
+/* Breadcrumb Current */
+.breadcrumb-current {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 6px 8px;
+}
+
+.breadcrumb-icon {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+/* Back Button */
+.breadcrumb-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.back-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 200ms ease;
+  font-family: inherit;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 32px;
+}
+
+.back-btn:hover:not(:disabled) {
+  background: var(--bg-secondary);
+  border-color: var(--text-secondary);
+  color: var(--primary);
+}
+
+.back-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.2);
+}
+
+.back-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .breadcrumbs-container {
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .breadcrumbs-list {
+    gap: 4px;
+  }
+
+  .breadcrumb-separator {
+    display: none;
+  }
+
+  .breadcrumb-link,
+  .breadcrumb-current {
+    font-size: 13px;
+    padding: 4px 6px;
+  }
+
+  .breadcrumb-text {
+    max-width: 120px;
+  }
+
+  .back-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .breadcrumbs-container {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .breadcrumbs-list {
+    gap: 2px;
+  }
+
+  .breadcrumb-link,
+  .breadcrumb-current {
+    font-size: 12px;
+    padding: 3px 4px;
+  }
+
+  .breadcrumb-icon {
+    font-size: 14px;
+  }
+
+  .breadcrumb-text {
+    max-width: 80px;
+  }
+
+  .home-btn {
+    padding: 2px 4px;
+    font-size: 14px;
+  }
+
+  .back-btn {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+}
