@@ -7,6 +7,13 @@
       "runtimeArgs": ["run", "dev"],
       "cwd": "./transcend-frontend",
       "port": 5173
+    },
+    {
+      "name": "transcend-backend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "./transcend-law/backend",
+      "port": 3000
     }
   ]
 }

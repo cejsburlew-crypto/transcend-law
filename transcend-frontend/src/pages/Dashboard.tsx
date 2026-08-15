@@ -2,6 +2,12 @@
 // Main hub for accessing legal services
 
 import React, { useState, useEffect } from 'react';
+import {
+  CaseStatusCard,
+  PrimaryButton,
+  Toast,
+  SupportButton
+} from '@/components/UI';
 import './Dashboard.css';
 
 interface UserProfile {
@@ -30,12 +36,13 @@ interface DashboardMetrics {
 export const Dashboard: React.FC<{ onLogout?: () => void }> = ({ onLogout }) => {
   const [currentPage, setCurrentPage] = useState<'home' | 'cases' | 'profile'>('home');
   const [user, setUser] = useState<UserProfile | null>(null);
-  const [metrics, setMetrics] = useState<DashboardMetrics>({
+  const [metrics] = useState<DashboardMetrics>({
     activeCases: 3,
     completedCases: 12,
     totalSpent: 4850,
     averageRating: 4.8,
   });
+  const [toast, setToast] = useState<any>(null);
   const [activeCases] = useState<ActiveCase[]>([
     {
       id: '1',
@@ -58,7 +65,10 @@ export const Dashboard: React.FC<{ onLogout?: () => void }> = ({ onLogout }) => 
       createdAt: '2026-08-10',
     },
   ]);
-  const [loading, setLoading] = useState(false);
+
+  const showToast = (type: 'success' | 'error' | 'warning' | 'info', message: string) => {
+    setToast({ type, message, duration: 3000, onClose: () => setToast(null) });
+  };
 
   useEffect(() => {
     const email = localStorage.getItem('userEmail');
@@ -86,15 +96,6 @@ export const Dashboard: React.FC<{ onLogout?: () => void }> = ({ onLogout }) => 
     }
     return 'U';
   };
-
-  if (loading) {
-    return (
-      <div className="dashboard-loading">
-        <div className="loading-spinner">🔄</div>
-        <p>Loading your dashboard...</p>
-      </div>
-    );
-  }
 
   return (
     <div className="dashboard-container">
@@ -162,7 +163,9 @@ export const Dashboard: React.FC<{ onLogout?: () => void }> = ({ onLogout }) => 
                 <h1>Welcome back, {user?.firstName}! 👋</h1>
                 <p>Your legal services hub - Find attorneys, manage cases, and track progress</p>
               </div>
-              <button className="cta-button primary-large">+ New Case</button>
+              <PrimaryButton onClick={() => showToast('success', 'Starting new case...')}>
+                + New Case
+              </PrimaryButton>
             </section>
 
             {/* Metrics Cards */}
@@ -233,32 +236,51 @@ export const Dashboard: React.FC<{ onLogout?: () => void }> = ({ onLogout }) => 
               </div>
             </section>
 
-            {/* Active Cases */}
+            {/* Active Cases - Psychology Optimized */}
             <section className="active-cases-section">
               <div className="section-header">
                 <h2>Your Active Cases</h2>
                 <button className="view-all-btn">View All →</button>
               </div>
-              <div className="cases-list">
-                {activeCases.map(caseItem => (
-                  <div key={caseItem.id} className="case-item">
-                    <div className="case-info">
-                      <div className="case-service">{caseItem.service}</div>
-                      <div className="case-date">Started {new Date(caseItem.createdAt).toLocaleDateString()}</div>
-                    </div>
-                    {caseItem.provider && (
-                      <div className="provider-info">
-                        <div className="provider-name">{caseItem.provider.name}</div>
-                        <div className="provider-rating">⭐ {caseItem.provider.rating}</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '16px' }}>
+                {activeCases.map(caseItem => {
+                  const progressMap: { [key: string]: number } = {
+                    '1': 65,
+                    '2': 40,
+                    '3': 10,
+                  };
+                  const statusMap: { [key: string]: 'pending' | 'in-progress' | 'review' | 'complete' } = {
+                    'pending': 'pending',
+                    'active': 'in-progress',
+                    'completed': 'complete',
+                  };
+                  return (
+                    <div key={caseItem.id}>
+                      <CaseStatusCard
+                        title={caseItem.service}
+                        status={statusMap[caseItem.status] || 'pending'}
+                        progress={progressMap[caseItem.id] || 0}
+                        lastUpdate={new Date(caseItem.createdAt).toLocaleDateString()}
+                        nextStep={caseItem.provider ? `Waiting for attorney response` : 'Waiting for attorney assignment'}
+                      />
+                      <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
+                        <PrimaryButton
+                          onClick={() => showToast('info', `Opening ${caseItem.service}...`)}
+                          style={{ flex: 1 }}
+                        >
+                          View Details
+                        </PrimaryButton>
+                        <button
+                          className="btn-secondary"
+                          onClick={() => showToast('info', 'Opening messages...')}
+                          style={{ flex: 1, padding: '10px' }}
+                        >
+                          Message
+                        </button>
                       </div>
-                    )}
-                    <div className={`case-status ${caseItem.status}`}>
-                      {caseItem.status === 'pending' && '⏳ Pending'}
-                      {caseItem.status === 'active' && '🔄 Active'}
-                      {caseItem.status === 'completed' && '✅ Completed'}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </section>
 
@@ -349,6 +371,16 @@ export const Dashboard: React.FC<{ onLogout?: () => void }> = ({ onLogout }) => 
           </section>
         )}
       </main>
+
+      {/* Toast Notification */}
+      {toast && (
+        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 1000 }}>
+          <Toast {...toast} />
+        </div>
+      )}
+
+      {/* Support Button - Always Visible */}
+      <SupportButton onClick={() => showToast('info', 'Support panel opening...')} />
     </div>
   );
 };

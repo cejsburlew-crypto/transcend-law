@@ -10,6 +10,7 @@ interface Attorney {
   reviews: number;
   yearsExperience: number;
   firmId: string;
+  hourlyRate?: number;
 }
 
 interface Firm {
@@ -18,6 +19,7 @@ interface Firm {
   location: string;
   state: string;
   attorneys: Attorney[];
+  averageHourlyRate?: number;
 }
 
 // Sample data - in production this would come from backend
@@ -28,9 +30,10 @@ const FIRMS_BY_STATE: Record<string, Firm[]> = {
       name: 'California Legal Partners',
       location: 'San Francisco, CA',
       state: 'CA',
+      averageHourlyRate: 350,
       attorneys: [
-        { id: 'a1', name: 'Sarah Johnson', specialization: 'Family Law', rating: 4.9, reviews: 127, yearsExperience: 15, firmId: 'f1' },
-        { id: 'a2', name: 'Michael Chen', specialization: 'Litigation', rating: 4.7, reviews: 98, yearsExperience: 12, firmId: 'f1' },
+        { id: 'a1', name: 'Sarah Johnson', specialization: 'Family Law', rating: 4.9, reviews: 127, yearsExperience: 15, firmId: 'f1', hourlyRate: 350 },
+        { id: 'a2', name: 'Michael Chen', specialization: 'Litigation', rating: 4.7, reviews: 98, yearsExperience: 12, firmId: 'f1', hourlyRate: 300 },
       ],
     },
     {
@@ -38,8 +41,9 @@ const FIRMS_BY_STATE: Record<string, Firm[]> = {
       name: 'West Coast Law Group',
       location: 'Los Angeles, CA',
       state: 'CA',
+      averageHourlyRate: 275,
       attorneys: [
-        { id: 'a3', name: 'Emily Rodriguez', specialization: 'Corporate Law', rating: 4.8, reviews: 156, yearsExperience: 18, firmId: 'f2' },
+        { id: 'a3', name: 'Emily Rodriguez', specialization: 'Corporate Law', rating: 4.8, reviews: 156, yearsExperience: 18, firmId: 'f2', hourlyRate: 400 },
       ],
     },
   ],
@@ -49,9 +53,10 @@ const FIRMS_BY_STATE: Record<string, Firm[]> = {
       name: 'Manhattan Legal Associates',
       location: 'New York, NY',
       state: 'NY',
+      averageHourlyRate: 450,
       attorneys: [
-        { id: 'a4', name: 'David Thompson', specialization: 'Securities Law', rating: 4.9, reviews: 203, yearsExperience: 20, firmId: 'f3' },
-        { id: 'a5', name: 'Jennifer Lee', specialization: 'Tax Law', rating: 4.8, reviews: 145, yearsExperience: 16, firmId: 'f3' },
+        { id: 'a4', name: 'David Thompson', specialization: 'Securities Law', rating: 4.9, reviews: 203, yearsExperience: 20, firmId: 'f3', hourlyRate: 500 },
+        { id: 'a5', name: 'Jennifer Lee', specialization: 'Tax Law', rating: 4.8, reviews: 145, yearsExperience: 16, firmId: 'f3', hourlyRate: 400 },
       ],
     },
   ],
@@ -61,8 +66,9 @@ const FIRMS_BY_STATE: Record<string, Firm[]> = {
       name: 'Texas Legal Center',
       location: 'Houston, TX',
       state: 'TX',
+      averageHourlyRate: 225,
       attorneys: [
-        { id: 'a6', name: 'James Wilson', specialization: 'Personal Injury', rating: 4.7, reviews: 189, yearsExperience: 14, firmId: 'f4' },
+        { id: 'a6', name: 'James Wilson', specialization: 'Personal Injury', rating: 4.7, reviews: 189, yearsExperience: 14, firmId: 'f4', hourlyRate: 225 },
       ],
     },
   ],
@@ -79,8 +85,28 @@ export const LawSpecialtyDetail: React.FC<LawSpecialtyDetailProps> = ({ specialt
   const [selectedState, setSelectedState] = useState<string | null>(null);
   const [selectedFirm, setSelectedFirm] = useState<Firm | null>(null);
   const [showIntakeForm, setShowIntakeForm] = useState(false);
+  const [costFilter, setCostFilter] = useState<'all' | 'budget' | 'moderate' | 'premium'>('all');
 
   const availableFirms = selectedState ? (FIRMS_BY_STATE[selectedState] || []) : [];
+
+  const getCostRange = (filter: string): { min: number; max: number } | null => {
+    switch (filter) {
+      case 'budget': return { min: 0, max: 200 };
+      case 'moderate': return { min: 200, max: 400 };
+      case 'premium': return { min: 400, max: 10000 };
+      default: return null;
+    }
+  };
+
+  const filterAttorneysByCost = (attorneys: Attorney[]) => {
+    if (costFilter === 'all') return attorneys;
+    const range = getCostRange(costFilter);
+    if (!range) return attorneys;
+    return attorneys.filter(a => {
+      const rate = a.hourlyRate || 250;
+      return rate >= range.min && rate <= range.max;
+    });
+  };
 
   return (
     <div className="specialty-detail-container">
@@ -190,6 +216,41 @@ export const LawSpecialtyDetail: React.FC<LawSpecialtyDetailProps> = ({ specialt
           </div>
         </div>
 
+        {/* Cost Filter */}
+        {selectedState && (
+          <div className="filter-step">
+            <div className="step-header">
+              <h3>💰 Filter by Hourly Rate</h3>
+            </div>
+            <div className="cost-filter-buttons">
+              <button
+                className={`cost-btn ${costFilter === 'all' ? 'active' : ''}`}
+                onClick={() => setCostFilter('all')}
+              >
+                All Rates
+              </button>
+              <button
+                className={`cost-btn budget ${costFilter === 'budget' ? 'active' : ''}`}
+                onClick={() => setCostFilter('budget')}
+              >
+                💰 Budget-Friendly ($0-$200/hr)
+              </button>
+              <button
+                className={`cost-btn moderate ${costFilter === 'moderate' ? 'active' : ''}`}
+                onClick={() => setCostFilter('moderate')}
+              >
+                💵 Moderate ($200-$400/hr)
+              </button>
+              <button
+                className={`cost-btn premium ${costFilter === 'premium' ? 'active' : ''}`}
+                onClick={() => setCostFilter('premium')}
+              >
+                💎 Premium ($400+/hr)
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Step 2: Select Firm */}
         {selectedState && availableFirms.length > 0 && (
           <div className="filter-step">
@@ -226,7 +287,7 @@ export const LawSpecialtyDetail: React.FC<LawSpecialtyDetailProps> = ({ specialt
               <h3>Attorneys at {selectedFirm.name}</h3>
             </div>
             <div className="attorneys-grid">
-              {selectedFirm.attorneys.map(attorney => (
+              {filterAttorneysByCost(selectedFirm.attorneys).map(attorney => (
                 <div key={attorney.id} className="attorney-profile">
                   <div className="attorney-avatar">
                     {attorney.name.split(' ').map(n => n[0]).join('')}
@@ -241,10 +302,21 @@ export const LawSpecialtyDetail: React.FC<LawSpecialtyDetailProps> = ({ specialt
                     <p className="experience">
                       {attorney.yearsExperience}+ years experience
                     </p>
+                    {attorney.hourlyRate && (
+                      <p className="hourly-rate">
+                        <span className="rate-label">Hourly Rate:</span>
+                        <span className="rate-value">${attorney.hourlyRate}/hr</span>
+                      </p>
+                    )}
                   </div>
                   <button className="contact-btn">View Profile & Contact</button>
                 </div>
               ))}
+              {filterAttorneysByCost(selectedFirm.attorneys).length === 0 && (
+                <div className="no-attorneys">
+                  <p>No attorneys available in the selected price range.</p>
+                </div>
+              )}
             </div>
           </div>
         )}

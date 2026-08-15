@@ -1,0 +1,766 @@
+/* Find Attorney - Step 1 & Step 2 Styling */
+
+:root {
+  --primary-color: #667eea;
+  --primary-dark: #5568d3;
+  --primary-light: #f0f4ff;
+  --success-color: #48bb78;
+  --secondary-color: #4299e1;
+  --text-primary: #1a202c;
+  --text-secondary: #718096;
+  --text-tertiary: #cbd5e0;
+  --bg-surface: #ffffff;
+  --bg-hover: #f7fafc;
+  --border-color: #e2e8f0;
+  --transition: all 0.2s ease-in-out;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-primary: #e2e8f0;
+    --text-secondary: #a0aec0;
+    --text-tertiary: #718096;
+    --bg-surface: #1a202c;
+    --bg-hover: #2d3748;
+    --border-color: #2d3748;
+    --primary-light: #1e3a8a;
+  }
+}
+
+/* Find Attorney Container */
+.find-attorney-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Step 1 - State Selection */
+.find-attorney-step-1 {
+  width: 100%;
+}
+
+.state-search-container {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.state-search-input {
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-family: inherit;
+  transition: var(--transition);
+}
+
+.state-search-input:hover:not(:disabled) {
+  border-color: var(--primary-color);
+}
+
+.state-search-input:focus:not(:disabled) {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.state-search-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.search-clear-button {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 6px;
+  opacity: 0.6;
+  transition: var(--transition);
+}
+
+.search-clear-button:hover {
+  opacity: 1;
+}
+
+/* States Grid */
+.states-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+  min-height: 200px;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-secondary);
+}
+
+.no-results p {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* State Button */
+.state-button {
+  padding: 16px 12px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.state-button:hover:not(:disabled) {
+  border-color: var(--primary-color);
+  background: var(--primary-light);
+  transform: translateY(-2px);
+}
+
+.state-button:focus:not(:disabled) {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.state-button.active {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.state-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.state-code {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.state-name {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.state-button.active .state-name {
+  opacity: 0.9;
+}
+
+/* Selected State Summary */
+.selected-state-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(102, 126, 234, 0.05);
+  border: 1px solid var(--primary-light);
+  border-radius: 8px;
+  margin-top: 16px;
+}
+
+.summary-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.find-attorney-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.find-attorney-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.find-attorney-subtitle {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Step Container */
+.find-attorney-step {
+  background: var(--bg-surface);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.step-header {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.step-number {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.step-info {
+  flex: 1;
+}
+
+.step-info h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 4px 0;
+}
+
+.step-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* State Selection */
+.state-selection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.state-button {
+  padding: 12px 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.state-button:hover {
+  border-color: var(--primary-color);
+  background: var(--primary-light);
+}
+
+.state-button.active {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.state-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Send to All Section */
+.send-to-all-section {
+  margin-bottom: 24px;
+}
+
+.send-to-all-button {
+  width: 100%;
+  padding: 20px 24px;
+  border: 2px solid var(--success-color);
+  border-radius: 12px;
+  background: rgba(72, 187, 120, 0.05);
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+}
+
+.send-to-all-button:hover:not(:disabled) {
+  background: rgba(72, 187, 120, 0.1);
+  border-color: var(--success-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.2);
+}
+
+.send-to-all-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.button-content {
+  text-align: left;
+  flex: 1;
+}
+
+.button-label {
+  display: block;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.button-desc {
+  display: block;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+.sending-indicator {
+  font-size: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 32px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-color);
+}
+
+.divider-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Firm Selection Section */
+.firm-selection-section {
+  margin-bottom: 24px;
+}
+
+.selection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.selection-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.select-all-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.select-all-checkbox input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+}
+
+.select-all-checkbox:hover {
+  color: var(--text-primary);
+}
+
+/* Firms Grid */
+.firms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.firm-card {
+  padding: 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--bg-surface);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.firm-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+.firm-card.selected {
+  border-color: var(--primary-color);
+  background: var(--primary-light);
+}
+
+.firm-card:focus-within {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.firm-checkbox {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  margin-top: 2px;
+}
+
+.firm-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.firm-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 6px 0;
+  word-break: break-word;
+}
+
+.firm-location {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0 0 4px 0;
+}
+
+.firm-attorneys {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.selection-checkmark {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.firm-card.selected .selection-checkmark {
+  display: flex;
+}
+
+/* Selected Count */
+.selected-count {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(102, 126, 234, 0.05);
+  border: 1px solid var(--primary-light);
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.count-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.count-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.form-actions .btn-secondary,
+.form-actions .btn-primary {
+  flex: 1;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--border-color);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Info Box */
+.info-box {
+  padding: 12px 16px;
+  background: rgba(102, 126, 234, 0.05);
+  border: 1px solid var(--primary-light);
+  border-radius: 8px;
+}
+
+.info-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.info-text strong {
+  color: var(--text-primary);
+}
+
+/* Find Attorney Flow */
+.find-attorney-flow {
+  width: 100%;
+  position: relative;
+}
+
+.flow-error-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(245, 101, 101, 0.1);
+  border: 1px solid var(--error-color);
+  border-radius: 8px;
+  color: var(--error-color);
+  font-size: 14px;
+  margin-bottom: 24px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.error-icon {
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+.error-close {
+  background: none;
+  border: none;
+  color: var(--error-color);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  opacity: 0.7;
+  transition: var(--transition);
+  margin-left: auto;
+}
+
+.error-close:hover {
+  opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .find-attorney-container {
+    padding: 16px;
+  }
+
+  .find-attorney-step {
+    padding: 20px;
+  }
+
+  .step-header {
+    gap: 12px;
+  }
+
+  .step-info h2 {
+    font-size: 20px;
+  }
+
+  .firms-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .firm-card {
+    padding: 12px;
+  }
+
+  .send-to-all-button {
+    padding: 16px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .button-content {
+    text-align: center;
+  }
+
+  .selection-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .state-selection {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn-secondary,
+  .form-actions .btn-primary {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .find-attorney-title {
+    font-size: 24px;
+  }
+
+  .step-info h2 {
+    font-size: 18px;
+  }
+
+  .firms-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .state-selection {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .send-to-all-button {
+    padding: 12px;
+  }
+
+  .button-icon {
+    font-size: 20px;
+  }
+
+  .button-label {
+    font-size: 14px;
+  }
+
+  .button-desc {
+    font-size: 12px;
+  }
+}

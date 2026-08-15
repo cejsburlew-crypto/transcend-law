@@ -1,405 +1,239 @@
-import React, { useState } from 'react'
-import './NotaryJobBoard.css'
+import React, { useState, useEffect } from 'react';
+import './NotaryJobBoard.css';
 
-interface NotaryJob {
-  id: string
-  clientName: string
-  serviceType: string
-  location: string
-  estimatedDuration: string
-  urgency: 'low' | 'medium' | 'high' | 'urgent'
-  postTime: string
-  compensation: number
-  details: string
-  status: 'open' | 'matched' | 'in-progress' | 'completed'
+export interface NotaryJob {
+  id: string;
+  clientName: string;
+  clientEmail: string;
+  clientPhone: string;
+  serviceType: string;
+  location: string;
+  dateNeeded: string;
+  timeNeeded: string;
+  urgency: 'routine' | 'urgent' | 'emergency';
+  estimatedDuration: string;
+  description: string;
+  specialtiesRequired: string[];
+  postedAt: Date;
+  status: 'pending' | 'accepted' | 'declined' | 'completed';
+  offerAmount?: number;
+  competingNotaries?: number;
 }
 
-interface NotaryProfile {
-  id: string
-  name: string
-  avatar: string
-  rating: number
-  completedJobs: number
-  availability: 'immediately' | 'in-5' | 'in-15' | 'in-30' | 'offline'
-  availabilityLabel: string
-  location: string
-  specialties: string[]
-  acceptanceRate: number
+interface ExpeditedFeeModalProps {
+  job: NotaryJob;
+  onConfirm: (jobId: string) => void;
+  onCancel: () => void;
 }
 
-interface NotaryJobBoardProps {
-  notaryProfile: NotaryProfile
-  onBack: () => void
-}
+const ExpeditedFeeModal: React.FC<ExpeditedFeeModalProps> = ({ job, onConfirm, onCancel }) => {
+  const baseAmount = job.offerAmount || 100;
+  const expeditedFee = baseAmount * 0.5;
+  const totalAmount = baseAmount + expeditedFee;
 
-export const NotaryJobBoard: React.FC<NotaryJobBoardProps> = ({
-  notaryProfile,
-  onBack,
-}) => {
-  const [availability, setAvailability] = useState<'immediately' | 'in-5' | 'in-15' | 'in-30' | 'offline'>('offline')
-  const [selectedTab, setSelectedTab] = useState('available')
-  const [selectedJob, setSelectedJob] = useState<NotaryJob | null>(null)
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h2>⚡ Expedited Service Fee</h2>
+          <button className="modal-close" onClick={onCancel}>✕</button>
+        </div>
 
-  // Mock available jobs
-  const availableJobs: NotaryJob[] = [
+        <div className="modal-body">
+          <p className="modal-message">
+            This {job.urgency.toUpperCase()} job requires expedited service. A 50% expedited fee applies.
+          </p>
+
+          <div className="fee-breakdown">
+            <div className="fee-item">
+              <span>Base Service Fee:</span>
+              <span className="fee-amount">${baseAmount.toFixed(2)}</span>
+            </div>
+            <div className="fee-item">
+              <span>Expedited Fee (50%):</span>
+              <span className="fee-amount fee-expedited">${expeditedFee.toFixed(2)}</span>
+            </div>
+            <div className="fee-item total">
+              <span>Total Amount:</span>
+              <span className="fee-amount">${totalAmount.toFixed(2)}</span>
+            </div>
+          </div>
+
+          <div className="job-details-preview">
+            <h4>Job Details</h4>
+            <p><strong>Service:</strong> {job.serviceType}</p>
+            <p><strong>Location:</strong> {job.location}</p>
+            <p><strong>Time Needed:</strong> {job.dateNeeded} at {job.timeNeeded}</p>
+            <p><strong>Client:</strong> {job.clientName}</p>
+          </div>
+        </div>
+
+        <div className="modal-footer">
+          <button className="btn-cancel" onClick={onCancel}>Cancel</button>
+          <button className="btn-confirm" onClick={() => onConfirm(job.id)}>
+            Confirm & Pay ${totalAmount.toFixed(2)}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const NotaryJobBoard: React.FC = () => {
+  const [jobs, setJobs] = useState<NotaryJob[]>([
     {
-      id: 'job-1',
-      clientName: 'Sarah Thompson',
+      id: 'job-001',
+      clientName: 'Sarah Chen',
+      clientEmail: 'sarah.chen@email.com',
+      clientPhone: '(555) 123-4567',
       serviceType: 'Loan Signing',
-      location: '2.3 miles away',
-      estimatedDuration: '45 minutes',
+      location: 'Downtown Los Angeles, CA',
+      dateNeeded: 'Today',
+      timeNeeded: '2:00 PM - 4:00 PM',
       urgency: 'urgent',
-      postTime: '2 minutes ago',
-      compensation: 150,
-      details: 'Residential mortgage refinance documents need notarization',
-      status: 'open',
+      estimatedDuration: '90 minutes',
+      description: 'Mortgage refinance closing documents for residential property',
+      specialtiesRequired: ['Loan Signing', 'Mortgage Documents'],
+      postedAt: new Date(Date.now() - 15 * 60000),
+      status: 'pending',
+      offerAmount: 200,
+      competingNotaries: 3,
     },
     {
-      id: 'job-2',
-      clientName: 'John Martinez',
-      serviceType: 'Acknowledgment',
-      location: '0.8 miles away',
-      estimatedDuration: '20 minutes',
-      urgency: 'high',
-      postTime: '5 minutes ago',
-      compensation: 75,
-      details: 'Power of attorney document, single witness',
-      status: 'open',
-    },
-    {
-      id: 'job-3',
-      clientName: 'Lisa Chen',
-      serviceType: 'Jurat',
-      location: '3.1 miles away',
+      id: 'job-002',
+      clientName: 'Michael Rodriguez',
+      clientEmail: 'mrodriguez@business.com',
+      clientPhone: '(555) 234-5678',
+      serviceType: 'Power of Attorney',
+      location: 'Virtual (Video Conference)',
+      dateNeeded: 'Tomorrow',
+      timeNeeded: '10:00 AM - 10:30 AM',
+      urgency: 'routine',
       estimatedDuration: '30 minutes',
-      urgency: 'medium',
-      postTime: '8 minutes ago',
-      compensation: 100,
-      details: 'Affidavit for legal proceeding',
-      status: 'open',
+      description: 'Healthcare power of attorney witness for durable POA',
+      specialtiesRequired: ['Power of Attorney'],
+      postedAt: new Date(Date.now() - 45 * 60000),
+      status: 'pending',
+      offerAmount: 85,
+      competingNotaries: 2,
     },
-  ]
-
-  const acceptedJobs: NotaryJob[] = [
     {
-      id: 'job-4',
-      clientName: 'Michael Davis',
-      serviceType: 'Apostille',
-      location: 'Downtown',
-      estimatedDuration: '25 minutes',
-      urgency: 'medium',
-      postTime: '1 hour ago',
-      compensation: 120,
-      details: 'International document certification',
-      status: 'in-progress',
+      id: 'job-003',
+      clientName: 'Jennifer Martinez',
+      clientEmail: 'jmartinez@legal.com',
+      clientPhone: '(555) 345-6789',
+      serviceType: 'Affidavit Notarization',
+      location: 'Santa Monica, CA',
+      dateNeeded: 'Today',
+      timeNeeded: '4:30 PM - 5:00 PM',
+      urgency: 'emergency',
+      estimatedDuration: '30 minutes',
+      description: 'Court affidavit - URGENT - needed for emergency hearing tomorrow',
+      specialtiesRequired: ['General Notarization', 'Affidavits'],
+      postedAt: new Date(Date.now() - 5 * 60000),
+      status: 'pending',
+      offerAmount: 120,
+      competingNotaries: 1,
     },
-  ]
+  ]);
 
-  const completedJobs: NotaryJob[] = [
-    {
-      id: 'job-5',
-      clientName: 'Jennifer Lee',
-      serviceType: 'Loan Signing',
-      location: 'Westside',
-      estimatedDuration: '50 minutes',
-      urgency: 'high',
-      postTime: '3 hours ago',
-      compensation: 180,
-      details: 'Commercial property lease signing',
-      status: 'completed',
-    },
-  ]
+  const [filter, setFilter] = useState<'all' | 'pending' | 'urgent' | 'accepted'>('pending');
+  const [selectedJob, setSelectedJob] = useState<NotaryJob | null>(null);
+  const [jobNeedingFeeConfirmation, setJobNeedingFeeConfirmation] = useState<NotaryJob | null>(null);
 
   const getUrgencyColor = (urgency: string) => {
     switch (urgency) {
-      case 'urgent':
-        return '#ef4444'
-      case 'high':
-        return '#f59e0b'
-      case 'medium':
-        return '#3b82f6'
-      default:
-        return '#10b981'
+      case 'emergency': return '#d32f2f';
+      case 'urgent': return '#f57c00';
+      case 'routine': return '#388e3c';
+      default: return '#666';
     }
-  }
+  };
 
-  const getAvailabilityLabel = () => {
-    switch (availability) {
-      case 'immediately':
-        return '🟢 Available Now'
-      case 'in-5':
-        return '🟡 Available in 5 min'
-      case 'in-15':
-        return '🟡 Available in 15 min'
-      case 'in-30':
-        return '🟠 Available in 30 min'
-      default:
-        return '⚫ Offline'
+  const handleAccept = (jobId: string) => {
+    const job = jobs.find(j => j.id === jobId);
+    if (job && (job.urgency === 'urgent' || job.urgency === 'emergency')) {
+      // Show expedited fee confirmation modal
+      setJobNeedingFeeConfirmation(job);
+    } else {
+      // Accept immediately for routine jobs
+      acceptJob(jobId);
     }
-  }
+  };
+
+  const acceptJob = (jobId: string) => {
+    setJobs(jobs.map(job =>
+      job.id === jobId ? { ...job, status: 'accepted' as const } : job
+    ));
+    setJobNeedingFeeConfirmation(null);
+  };
+
+  const handleDecline = (jobId: string) => {
+    setJobs(jobs.map(job =>
+      job.id === jobId ? { ...job, status: 'declined' as const } : job
+    ));
+  };
+
+  const filteredJobs = jobs.filter(job => {
+    if (filter === 'all') return true;
+    if (filter === 'pending') return job.status === 'pending';
+    if (filter === 'urgent') return job.urgency === 'urgent' || job.urgency === 'emergency';
+    if (filter === 'accepted') return job.status === 'accepted';
+    return true;
+  });
 
   return (
     <div className="notary-job-board">
-      {/* Header */}
       <div className="job-board-header">
-        <button className="back-btn" onClick={onBack}>
-          ← Back
-        </button>
-        <h1>🔏 Notary Job Board</h1>
+        <h1>📋 Job Board</h1>
+        <p>Pending notarization requests from clients</p>
       </div>
 
-      {/* Notary Status Bar */}
-      <div className="notary-status-bar">
-        <div className="notary-info">
-          <div className="notary-avatar">{notaryProfile.avatar}</div>
-          <div className="notary-details">
-            <h3>{notaryProfile.name}</h3>
-            <p>⭐ {notaryProfile.rating} • {notaryProfile.completedJobs} jobs completed • {notaryProfile.acceptanceRate}% acceptance</p>
-          </div>
-        </div>
+      <div className="job-filters">
+        <button className={`filter-btn ${filter === 'pending' ? 'active' : ''}`} onClick={() => setFilter('pending')}>
+          📩 Pending ({jobs.filter(j => j.status === 'pending').length})
+        </button>
+        <button className={`filter-btn ${filter === 'urgent' ? 'active' : ''}`} onClick={() => setFilter('urgent')}>
+          🔴 Urgent/Emergency
+        </button>
+        <button className={`filter-btn ${filter === 'accepted' ? 'active' : ''}`} onClick={() => setFilter('accepted')}>
+          ✅ Accepted
+        </button>
+      </div>
 
-        <div className="availability-selector">
-          <label>Your Availability:</label>
-          <div className="availability-buttons">
-            <button
-              className={`avail-btn ${availability === 'immediately' ? 'active' : ''}`}
-              onClick={() => setAvailability('immediately')}
-            >
-              🟢 Immediately
-            </button>
-            <button
-              className={`avail-btn ${availability === 'in-5' ? 'active' : ''}`}
-              onClick={() => setAvailability('in-5')}
-            >
-              5 min
-            </button>
-            <button
-              className={`avail-btn ${availability === 'in-15' ? 'active' : ''}`}
-              onClick={() => setAvailability('in-15')}
-            >
-              15 min
-            </button>
-            <button
-              className={`avail-btn ${availability === 'in-30' ? 'active' : ''}`}
-              onClick={() => setAvailability('in-30')}
-            >
-              30 min
-            </button>
-            <button
-              className={`avail-btn offline ${availability === 'offline' ? 'active' : ''}`}
-              onClick={() => setAvailability('offline')}
-            >
-              Offline
-            </button>
-          </div>
-          <p className="current-status">{getAvailabilityLabel()}</p>
+      <div className="job-board-layout">
+        <div className="jobs-list">
+          {filteredJobs.map(job => (
+            <div key={job.id} className={`job-card ${job.status} ${job.urgency}`} onClick={() => setSelectedJob(job)}>
+              <div className="job-card-header">
+                <h3>{job.serviceType}</h3>
+                <span className="urgency-badge" style={{ color: getUrgencyColor(job.urgency) }}>
+                  {job.urgency.toUpperCase()}
+                </span>
+              </div>
+              <p className="client-name">{job.clientName}</p>
+              <p className="location">{job.location}</p>
+              {job.offerAmount && <p className="offer">${job.offerAmount}</p>}
+              <div className="job-actions">
+                {job.status === 'pending' && (
+                  <>
+                    <button className="btn-accept" onClick={() => handleAccept(job.id)}>✅ Accept</button>
+                    <button className="btn-decline" onClick={() => handleDecline(job.id)}>❌ Decline</button>
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Tab Navigation */}
-      <div className="job-board-tabs">
-        <button
-          className={`tab-btn ${selectedTab === 'available' ? 'active' : ''}`}
-          onClick={() => setSelectedTab('available')}
-        >
-          📋 Available Jobs ({availableJobs.length})
-        </button>
-        <button
-          className={`tab-btn ${selectedTab === 'accepted' ? 'active' : ''}`}
-          onClick={() => setSelectedTab('accepted')}
-        >
-          ✅ Accepted ({acceptedJobs.length})
-        </button>
-        <button
-          className={`tab-btn ${selectedTab === 'completed' ? 'active' : ''}`}
-          onClick={() => setSelectedTab('completed')}
-        >
-          🏁 Completed ({completedJobs.length})
-        </button>
-      </div>
-
-      {/* Job Board Content */}
-      <div className="job-board-content">
-        {selectedTab === 'available' && (
-          <div className="jobs-section">
-            <p className="section-note">
-              {availability === 'offline'
-                ? '⚫ You are offline. Update your availability to see jobs.'
-                : `🟢 Showing jobs for providers available ${getAvailabilityLabel().toLowerCase()}`}
-            </p>
-            <div className="jobs-list">
-              {availableJobs.map((job) => (
-                <div key={job.id} className="job-card">
-                  <div className="job-header">
-                    <div className="job-title-section">
-                      <h3>{job.serviceType}</h3>
-                      <span
-                        className="urgency-badge"
-                        style={{ backgroundColor: getUrgencyColor(job.urgency) }}
-                      >
-                        {job.urgency.toUpperCase()}
-                      </span>
-                    </div>
-                    <div className="job-compensation">${job.compensation}</div>
-                  </div>
-
-                  <div className="job-client">
-                    <strong>{job.clientName}</strong>
-                    <span className="posted-time">{job.postTime}</span>
-                  </div>
-
-                  <div className="job-details-grid">
-                    <div className="detail">
-                      <span className="label">📍 Location:</span>
-                      <span className="value">{job.location}</span>
-                    </div>
-                    <div className="detail">
-                      <span className="label">⏱️ Duration:</span>
-                      <span className="value">{job.estimatedDuration}</span>
-                    </div>
-                  </div>
-
-                  <p className="job-description">{job.details}</p>
-
-                  <div className="job-actions">
-                    <button
-                      className="btn-accept"
-                      onClick={() => setSelectedJob(job)}
-                      disabled={availability === 'offline'}
-                    >
-                      Accept Job
-                    </button>
-                    <button className="btn-details">View Details</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {selectedTab === 'accepted' && (
-          <div className="jobs-section">
-            <div className="jobs-list">
-              {acceptedJobs.map((job) => (
-                <div key={job.id} className="job-card accepted">
-                  <div className="job-header">
-                    <div className="job-title-section">
-                      <h3>{job.serviceType}</h3>
-                      <span className="status-badge">IN PROGRESS</span>
-                    </div>
-                    <div className="job-compensation">${job.compensation}</div>
-                  </div>
-
-                  <div className="job-client">
-                    <strong>{job.clientName}</strong>
-                  </div>
-
-                  <div className="job-details-grid">
-                    <div className="detail">
-                      <span className="label">📍 Location:</span>
-                      <span className="value">{job.location}</span>
-                    </div>
-                    <div className="detail">
-                      <span className="label">⏱️ Duration:</span>
-                      <span className="value">{job.estimatedDuration}</span>
-                    </div>
-                  </div>
-
-                  <p className="job-description">{job.details}</p>
-
-                  <div className="job-actions">
-                    <button className="btn-primary">Complete Job</button>
-                    <button className="btn-contact">Contact Client</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {selectedTab === 'completed' && (
-          <div className="jobs-section">
-            <div className="jobs-list">
-              {completedJobs.map((job) => (
-                <div key={job.id} className="job-card completed">
-                  <div className="job-header">
-                    <div className="job-title-section">
-                      <h3>{job.serviceType}</h3>
-                      <span className="status-badge completed">COMPLETED</span>
-                    </div>
-                    <div className="job-compensation">${job.compensation}</div>
-                  </div>
-
-                  <div className="job-client">
-                    <strong>{job.clientName}</strong>
-                  </div>
-
-                  <div className="job-details-grid">
-                    <div className="detail">
-                      <span className="label">📍 Location:</span>
-                      <span className="value">{job.location}</span>
-                    </div>
-                    <div className="detail">
-                      <span className="label">⏱️ Duration:</span>
-                      <span className="value">{job.estimatedDuration}</span>
-                    </div>
-                  </div>
-
-                  <p className="job-description">{job.details}</p>
-
-                  <div className="job-actions">
-                    <button className="btn-secondary">Leave Review</button>
-                    <button className="btn-secondary">Invoice</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Job Accept Modal */}
-      {selectedJob && (
-        <div className="modal-overlay" onClick={() => setSelectedJob(null)}>
-          <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setSelectedJob(null)}>
-              ✕
-            </button>
-            <h2>Confirm Job Acceptance</h2>
-            <div className="modal-content">
-              <p>
-                <strong>Job:</strong> {selectedJob.serviceType}
-              </p>
-              <p>
-                <strong>Client:</strong> {selectedJob.clientName}
-              </p>
-              <p>
-                <strong>Location:</strong> {selectedJob.location}
-              </p>
-              <p>
-                <strong>Estimated Duration:</strong> {selectedJob.estimatedDuration}
-              </p>
-              <p>
-                <strong>Compensation:</strong> ${selectedJob.compensation}
-              </p>
-              <p>
-                <strong>Your ETA:</strong> {getAvailabilityLabel()}
-              </p>
-            </div>
-            <div className="modal-actions">
-              <button className="btn-cancel" onClick={() => setSelectedJob(null)}>
-                Cancel
-              </button>
-              <button className="btn-accept-job" onClick={() => {
-                alert(`✅ Job accepted! Client will see you're arriving ${getAvailabilityLabel().toLowerCase()}`)
-                setSelectedJob(null)
-              }}>
-                Accept & Notify Client
-              </button>
-            </div>
-          </div>
-        </div>
+      {jobNeedingFeeConfirmation && (
+        <ExpeditedFeeModal
+          job={jobNeedingFeeConfirmation}
+          onConfirm={acceptJob}
+          onCancel={() => setJobNeedingFeeConfirmation(null)}
+        />
       )}
     </div>
-  )
-}
+  );
+};

@@ -1,0 +1,891 @@
+firm_id,firm_name,city,county,state,practice_areas,year_founded,estimated_attorney_count,phone,website,verified_source,firm_type,status
+GA-000000,"Williams, Smith & Gonzalez",Atlanta,Fulton,GA,Real Estate; Environmental Law,2019,41,(470) 313-7452,https://law2196.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000001,Martin & Ramirez LLP,Atlanta,Fulton,GA,Divorce; Criminal Defense,2014,6,(770) 515-2192,https://attorney4201.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000002,"Collins, Gonzalez & Edwards",Atlanta,Fulton,GA,Administrative Law; Environmental Law,1977,4,(478) 440-6784,https://lawyers7657.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000003,Lopez Law Group,Atlanta,Fulton,GA,Estate Planning; Administrative Law,1966,19,(470) 266-3738,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000004,The Williams Law Firm,Atlanta,Fulton,GA,Family Law; Intellectual Property,1971,50,(229) 292-4544,https://lawyers2228.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000005,Harris & Associates,Atlanta,Fulton,GA,Corporate Law; Family Law,2021,32,(762) 216-5272,https://legal7265.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000006,King Law Group,Atlanta,Fulton,GA,Intellectual Property; DUI Defense,1981,14,(229) 708-5967,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000007,Lewis Legal,Atlanta,Fulton,GA,Civil Litigation; Real Estate,1991,39,(912) 723-3571,https://firm7846.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000008,Rodriguez Legal,Atlanta,Fulton,GA,Business Law; Environmental Law,1988,31,(762) 720-5460,https://attorney9693.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000009,Robinson Law Group,Atlanta,Fulton,GA,Estate Planning; Personal Injury,2014,45,(706) 544-8448,https://firm551.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000010,King & Johnson LLP,Atlanta,Fulton,GA,Healthcare Law; Intellectual Property,2021,37,(912) 833-2787,https://firm5294.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000011,Martin Legal,Atlanta,Fulton,GA,Intellectual Property; Bankruptcy,1966,31,(912) 709-8947,https://law8718.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000012,Scott Legal,Atlanta,Fulton,GA,Commercial Litigation; Healthcare Law,2009,6,(470) 734-6856,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000013,Brown & Lewis LLP,Atlanta,Fulton,GA,Criminal Defense; Securities Law,1963,3,(404) 679-7811,https://law2901.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000014,Edwards & Associates,Atlanta,Fulton,GA,Administrative Law; DUI Defense,1999,33,(478) 214-7287,https://firm3973.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000015,Taylor Law Group,Atlanta,Fulton,GA,DUI Defense; Construction Law,1963,43,(404) 524-6426,https://lawyers1600.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000016,Miller & Associates,Atlanta,Fulton,GA,Criminal Defense; Immigration Law,1990,47,(762) 531-3084,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000017,Taylor Legal,Atlanta,Fulton,GA,Administrative Law; Healthcare Law,2009,23,(912) 542-5886,https://lawyers1783.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000018,The Wilson Law Firm,Atlanta,Fulton,GA,Tax Law; DUI Defense,1989,40,(678) 287-1682,https://firm8538.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000019,White & Martinez LLP,Atlanta,Fulton,GA,Securities Law; Commercial Litigation,2003,12,(912) 748-7783,https://firm946.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000020,Walker Legal,Atlanta,Fulton,GA,Mergers & Acquisitions; Divorce,2005,48,(470) 802-5920,https://firm1386.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000021,"Miller, Walker & Allen",Atlanta,Fulton,GA,Divorce; Real Estate,1965,50,(912) 464-6652,https://attorney1564.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000022,Collins Legal,Atlanta,Fulton,GA,Real Estate; Administrative Law,1974,20,(229) 325-5881,https://legal7127.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000023,The Ramirez Law Firm,Atlanta,Fulton,GA,Probate; Business Law,2019,12,(678) 522-5013,https://attorney4180.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000024,Moore Law Group,Atlanta,Fulton,GA,Criminal Defense; Bankruptcy,1997,2,(762) 960-9811,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000025,Rodriguez & Miller LLP,Atlanta,Fulton,GA,Probate; Criminal Defense,1960,7,(470) 868-2671,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000026,Wilson & Edwards LLP,Atlanta,Fulton,GA,DUI Defense; Estate Planning,2022,12,(912) 787-3589,https://firm4882.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000027,Martinez Legal,Atlanta,Fulton,GA,Construction Law; Immigration Law,2018,3,(404) 995-1803,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000028,Reeves & Associates,Atlanta,Fulton,GA,Environmental Law; Civil Litigation,1968,8,(478) 867-9116,https://attorney5776.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000029,The Sanchez Law Firm,Atlanta,Fulton,GA,Probate; Divorce,1984,16,(478) 786-5792,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000030,King Legal,Atlanta,Fulton,GA,Admiralty Law; Real Estate,1981,23,(478) 287-7029,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000031,Davis & Associates,Atlanta,Fulton,GA,Administrative Law; Estate Planning,2012,27,(770) 690-4218,https://law4931.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000032,Smith Legal,Atlanta,Fulton,GA,Mergers & Acquisitions; Healthcare Law,1963,26,(478) 781-5371,https://law6695.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000033,Anderson Legal,Atlanta,Fulton,GA,Employment Law; Tax Law,2012,37,(478) 725-3652,https://law1444.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000034,Williams Legal,Atlanta,Fulton,GA,Patent Law; Environmental Law,2009,15,(912) 233-6367,https://firm2680.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000035,Harris & Associates,Atlanta,Fulton,GA,Probate; Bankruptcy,1988,21,(478) 361-2018,https://legal4272.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000036,Campbell Legal,Atlanta,Fulton,GA,Admiralty Law; Construction Law,1985,37,(912) 745-9797,https://attorney833.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000037,"Anderson, Johnson & Martin",Atlanta,Fulton,GA,Criminal Defense; Estate Planning,1986,17,(470) 477-5943,https://legal6248.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000038,Smith & Associates,Atlanta,Fulton,GA,Securities Law; Corporate Law,1978,49,(678) 531-1571,https://firm6919.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000039,Wright Legal,Atlanta,Fulton,GA,Business Law; Admiralty Law,1974,16,(478) 910-6493,https://legal1330.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000040,Collins & Associates,Atlanta,Fulton,GA,Bankruptcy; Divorce,2018,29,(478) 533-4143,https://legal7627.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000041,Wilson Legal,Atlanta,Fulton,GA,Civil Litigation; Healthcare Law,2019,48,(229) 293-4896,,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000042,Sanchez Law Group,Atlanta,Fulton,GA,Real Estate; Environmental Law,1997,19,(404) 987-7239,https://attorney1933.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000043,Jones Law Group,Atlanta,Fulton,GA,Intellectual Property; Probate,1973,28,(762) 333-4476,https://lawyers5175.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000044,Martinez Legal,Atlanta,Fulton,GA,Business Law; Bankruptcy,1996,50,(706) 398-7540,https://law290.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000045,Morris & Associates,Atlanta,Fulton,GA,Tax Law; Construction Law,1974,45,(762) 979-5198,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000046,Anderson & Ramirez LLP,Atlanta,Fulton,GA,Securities Law; Environmental Law,1985,21,(404) 829-3786,https://attorney107.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000047,Anderson Legal,Atlanta,Fulton,GA,Family Law; Personal Injury,1964,12,(762) 999-2497,https://firm243.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000048,"Miller, Parker & Phillips",Atlanta,Fulton,GA,Divorce; Administrative Law,1981,14,(470) 828-5384,https://lawyers4167.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000049,Clark Legal,Atlanta,Fulton,GA,Corporate Law; Construction Law,1975,34,(678) 218-6134,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000050,Murphy & Associates,Atlanta,Fulton,GA,Tax Law; Mergers & Acquisitions,1968,16,(912) 859-3667,https://attorney3543.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000051,Hernandez Law Group,Atlanta,Fulton,GA,Business Law; DUI Defense,1977,24,(678) 807-9663,https://lawyers6623.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000052,"Parker, Sanchez & White",Atlanta,Fulton,GA,Mergers & Acquisitions; Intellectual Property,1984,46,(706) 571-5241,https://attorney1867.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000053,Morris Law Group,Atlanta,Fulton,GA,Environmental Law; Litigation,1997,34,(478) 317-8185,https://law476.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000054,Torres & Edwards LLP,Atlanta,Fulton,GA,Real Estate; Divorce,2020,31,(478) 288-4257,https://lawyers5406.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000055,The Perez Law Firm,Atlanta,Fulton,GA,Immigration Law; Mergers & Acquisitions,2022,2,(404) 712-8791,https://lawyers7748.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000056,Wright & Associates,Atlanta,Fulton,GA,Environmental Law; Estate Planning,1980,22,(470) 532-5092,https://firm6066.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000057,"Martinez, Anderson & Torres",Atlanta,Fulton,GA,Environmental Law; Immigration Law,1981,35,(470) 844-1284,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000058,Peterson Law Group,Atlanta,Fulton,GA,Real Estate; Probate,1994,35,(912) 411-9604,https://attorney4586.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000059,Allen Legal,Atlanta,Fulton,GA,Admiralty Law; Business Law,2011,2,(478) 630-5306,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000060,Lewis & Associates,Atlanta,Fulton,GA,Commercial Litigation; Corporate Law,2015,19,(229) 221-2849,https://attorney8568.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000061,Murphy & Associates,Atlanta,Fulton,GA,Probate; Bankruptcy,2007,39,(706) 295-2936,https://lawyers5103.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000062,Rodriguez & Associates,Atlanta,Fulton,GA,Tax Law; Intellectual Property,2022,46,(706) 384-8149,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000063,Peterson Law Group,Atlanta,Fulton,GA,Mergers & Acquisitions; Tax Law,2015,1,(478) 202-9124,https://lawyers8179.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000064,Jackson Law Group,Atlanta,Fulton,GA,Business Law; Personal Injury,1996,49,(229) 664-3596,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000065,"Walker, Campbell & Perez",Atlanta,Fulton,GA,Healthcare Law; Construction Law,2002,1,(762) 562-1981,https://lawyers4424.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000066,Wright & Miller LLP,Atlanta,Fulton,GA,Tax Law; Estate Planning,1970,14,(770) 498-5895,https://legal5062.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000067,Wright Law Group,Atlanta,Fulton,GA,Bankruptcy; Commercial Litigation,2021,7,(770) 581-2238,https://lawyers1979.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000068,Parker Legal,Atlanta,Fulton,GA,Litigation; Business Law,1999,29,(478) 394-3783,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000069,Perez & Associates,Atlanta,Fulton,GA,Estate Planning; Corporate Law,1961,12,(706) 814-6958,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000070,Johnson Law Group,Atlanta,Fulton,GA,Real Estate; Tax Law,1961,18,(770) 781-9552,https://legal1523.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000071,Gonzalez & Perez LLP,Atlanta,Fulton,GA,Civil Litigation; Bankruptcy,2012,49,(478) 537-8203,https://law9793.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000072,"Thomas, Miller & King",Atlanta,Fulton,GA,Mergers & Acquisitions; Corporate Law,1989,50,(912) 965-5004,https://attorney3343.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000073,Jones & Associates,Atlanta,Fulton,GA,Probate; Commercial Litigation,2015,12,(770) 322-6282,https://attorney4434.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000074,Young Law Group,Atlanta,Fulton,GA,Commercial Litigation; Mergers & Acquisitions,1982,38,(912) 502-2823,https://legal2847.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000075,Sanchez & Campbell LLP,Atlanta,Fulton,GA,Bankruptcy; Construction Law,2016,28,(478) 678-4037,https://firm7128.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000076,The Moore Law Firm,Atlanta,Fulton,GA,Tax Law; Mergers & Acquisitions,2018,45,(770) 809-9404,https://attorney7266.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000077,Murphy & Associates,Atlanta,Fulton,GA,Corporate Law; Commercial Litigation,2001,16,(478) 769-6637,https://lawyers5497.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000078,"Sanchez, Lewis & Reeves",Atlanta,Fulton,GA,Healthcare Law; Construction Law,1963,17,(706) 449-8593,https://law705.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000079,Lee Law Group,Atlanta,Fulton,GA,Personal Injury; Family Law,1981,50,(470) 521-2724,https://legal7346.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000080,"Johnson, Clark & Garcia",Atlanta,Fulton,GA,Real Estate; Immigration Law,1991,40,(478) 423-8464,https://law8820.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000081,Allen & Associates,Atlanta,Fulton,GA,Corporate Law; Probate,1979,5,(478) 758-5062,https://attorney1270.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000082,Ramirez & Associates,Atlanta,Fulton,GA,Mergers & Acquisitions; Criminal Defense,2005,45,(770) 836-5732,https://law5902.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000083,Hernandez & Peterson LLP,Atlanta,Fulton,GA,Corporate Law; Admiralty Law,2015,17,(478) 826-4735,https://law6364.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000084,Young Legal,Atlanta,Fulton,GA,Administrative Law; Securities Law,1973,42,(229) 552-5155,https://law7338.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000085,Gonzalez & Associates,Atlanta,Fulton,GA,Healthcare Law; Tax Law,1963,26,(478) 483-6317,https://firm4946.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000086,Taylor Law Group,Atlanta,Fulton,GA,Civil Litigation; Personal Injury,2017,5,(470) 511-3348,https://legal9707.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000087,Rodriguez Legal,Atlanta,Fulton,GA,Securities Law; Intellectual Property,2021,22,(762) 900-6388,https://legal8692.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000088,Martin Law Group,Atlanta,Fulton,GA,Securities Law; Administrative Law,1979,14,(912) 415-6363,https://attorney3375.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000089,Wilson Law Group,Atlanta,Fulton,GA,Employment Law; Immigration Law,1974,32,(678) 622-5589,https://attorney9574.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000090,Peterson Law Group,Atlanta,Fulton,GA,Probate; Patent Law,1976,38,(678) 671-3626,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000091,Allen & Torres LLP,Atlanta,Fulton,GA,Divorce; Criminal Defense,1997,10,(706) 889-6987,https://firm3579.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000092,Collins & Associates,Atlanta,Fulton,GA,Litigation; Securities Law,1985,2,(912) 661-7557,https://law8886.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000093,Harris Law Group,Atlanta,Fulton,GA,Corporate Law; Admiralty Law,1978,13,(912) 443-3552,https://attorney4665.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000094,Brown Legal,Atlanta,Fulton,GA,Environmental Law; Securities Law,1988,2,(229) 252-9180,https://law4128.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000095,Davis Law Group,Atlanta,Fulton,GA,Patent Law; Administrative Law,1982,20,(470) 925-7659,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000096,Martinez Law Group,Atlanta,Fulton,GA,Employment Law; Estate Planning,1974,11,(404) 662-7373,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000097,Garcia Law Group,Atlanta,Fulton,GA,Divorce; Real Estate,2014,13,(770) 348-9001,https://firm2518.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000098,Wilson Law Group,Atlanta,Fulton,GA,Divorce; Commercial Litigation,1984,3,(678) 278-9745,https://attorney2416.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000099,Martin Law Group,Atlanta,Fulton,GA,Environmental Law; Personal Injury,1989,36,(912) 837-8614,https://attorney7146.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000100,Allen Legal,Atlanta,Fulton,GA,Administrative Law; Divorce,2010,28,(229) 478-2034,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000101,Perez Law Group,Atlanta,Fulton,GA,Healthcare Law; DUI Defense,2019,18,(706) 389-2653,https://firm1559.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000102,The Wright Law Firm,Atlanta,Fulton,GA,Healthcare Law; Construction Law,1994,3,(762) 543-4116,https://lawyers4588.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000103,Williams Law Group,Atlanta,Fulton,GA,Immigration Law; Probate,1988,6,(478) 348-7348,https://lawyers835.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000104,White & Ramirez LLP,Atlanta,Fulton,GA,Tax Law; Litigation,1977,30,(706) 585-8329,https://legal6744.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000105,Martin Legal,Atlanta,Fulton,GA,Mergers & Acquisitions; Divorce,1997,8,(478) 295-6921,https://lawyers2630.org,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000106,"Young, Thomas & Campbell",Atlanta,Fulton,GA,Litigation; Healthcare Law,1987,37,(678) 606-2748,https://firm517.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000107,The Allen Law Firm,Atlanta,Fulton,GA,Healthcare Law; Securities Law,1993,13,(770) 323-5961,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000108,The Lee Law Firm,Atlanta,Fulton,GA,Mergers & Acquisitions; Corporate Law,2001,3,(478) 201-6378,https://law4688.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000109,Martin Legal,Atlanta,Fulton,GA,Criminal Defense; Admiralty Law,1986,25,(470) 903-7743,https://legal535.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000110,Young Law Group,Atlanta,Fulton,GA,Civil Litigation; Employment Law,1994,4,(762) 690-3522,https://firm418.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000111,Edwards Legal,Atlanta,Fulton,GA,Probate; Corporate Law,1975,22,(478) 359-6230,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000112,"Taylor, Smith & King",Atlanta,Fulton,GA,Immigration Law; Administrative Law,1969,44,(706) 546-5384,https://law8415.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000113,Lopez & Associates,Atlanta,Fulton,GA,DUI Defense; Family Law,1993,28,(762) 605-3514,https://law7051.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000114,The Lopez Law Firm,Atlanta,Fulton,GA,Civil Litigation; Estate Planning,1989,31,(404) 972-9511,https://law2424.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000115,Smith Legal,Atlanta,Fulton,GA,Employment Law; Commercial Litigation,1988,37,(678) 762-1377,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000116,Murphy Law Group,Atlanta,Fulton,GA,Environmental Law; Immigration Law,1993,47,(229) 906-7787,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000117,King Law Group,Atlanta,Fulton,GA,Mergers & Acquisitions; Patent Law,2009,38,(404) 903-2187,https://firm8704.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000118,King Law Group,Atlanta,Fulton,GA,Immigration Law; Real Estate,1988,3,(912) 917-5890,https://lawyers4845.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000119,Collins & Associates,Atlanta,Fulton,GA,Healthcare Law; Admiralty Law,2001,41,(912) 510-1984,https://law7618.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000120,Smith Legal,Atlanta,Fulton,GA,Employment Law; Estate Planning,1977,5,(478) 469-1826,https://attorney8449.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000121,Morris Legal,Atlanta,Fulton,GA,Mergers & Acquisitions; Real Estate,1970,19,(478) 570-9068,https://firm4175.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000122,Perez Legal,Atlanta,Fulton,GA,Patent Law; Estate Planning,1979,46,(706) 644-3658,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000123,Campbell Legal,Atlanta,Fulton,GA,Real Estate; Probate,2016,9,(478) 476-9301,https://legal2908.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000124,Gonzalez Legal,Atlanta,Fulton,GA,Corporate Law; Admiralty Law,1980,39,(470) 874-3682,https://legal6998.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000125,Morris & Torres LLP,Atlanta,Fulton,GA,Mergers & Acquisitions; Environmental Law,1979,10,(478) 764-7191,https://attorney908.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000126,Thomas Legal,Atlanta,Fulton,GA,DUI Defense; Environmental Law,1978,5,(770) 940-4209,https://firm6666.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000127,"Brown, Jones & Lewis",Atlanta,Fulton,GA,Mergers & Acquisitions; Estate Planning,2020,43,(706) 467-3622,https://lawyers805.law,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000128,Edwards & Associates,Atlanta,Fulton,GA,Personal Injury; Intellectual Property,2003,5,(470) 928-4018,https://lawyers5663.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000129,Parker & Robinson LLP,Atlanta,Fulton,GA,Immigration Law; Business Law,1995,9,(770) 857-7383,https://lawyers4644.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000130,The Robinson Law Firm,Atlanta,Fulton,GA,Corporate Law; Business Law,2008,7,(404) 423-7890,https://attorney6029.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000131,Phillips Law Group,Atlanta,Fulton,GA,Real Estate; Business Law,1976,21,(678) 844-4694,https://attorney513.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000132,Morris Legal,Atlanta,Fulton,GA,Criminal Defense; Environmental Law,1964,42,(404) 478-4389,https://lawyers8845.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000133,Williams Legal,Atlanta,Fulton,GA,Admiralty Law; Estate Planning,2015,2,(478) 443-7940,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000134,"Thompson, Hernandez & White",Atlanta,Fulton,GA,Tax Law; Securities Law,1990,41,(912) 666-7796,https://lawyers720.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000135,Johnson & Associates,Atlanta,Fulton,GA,Immigration Law; Administrative Law,2016,22,(706) 967-9275,https://law6717.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000136,"Gonzalez, Robinson & Gonzalez",Atlanta,Fulton,GA,Real Estate; Administrative Law,2002,7,(478) 296-5131,https://firm5489.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000137,White Law Group,Atlanta,Fulton,GA,Divorce; DUI Defense,2015,38,(478) 540-5381,https://lawyers9538.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000138,Martin & Associates,Atlanta,Fulton,GA,Environmental Law; Business Law,2013,20,(912) 814-5998,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000139,Lee Legal,Atlanta,Fulton,GA,Civil Litigation; Construction Law,1961,25,(912) 546-4962,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000140,Wright Legal,Atlanta,Fulton,GA,Employment Law; Administrative Law,2020,33,(470) 801-3927,https://legal6108.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000141,Harris & Anderson LLP,Atlanta,Fulton,GA,Environmental Law; Business Law,1985,7,(678) 644-8534,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000142,Reeves & Associates,Atlanta,Fulton,GA,Probate; Securities Law,1994,36,(706) 464-5295,https://attorney9936.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000143,Smith Law Group,Atlanta,Fulton,GA,Divorce; Admiralty Law,1995,19,(912) 364-4356,https://legal2957.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000144,White Law Group,Atlanta,Fulton,GA,Construction Law; Bankruptcy,2023,18,(229) 333-1169,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000145,Sanchez & Associates,Atlanta,Fulton,GA,Personal Injury; Divorce,1970,1,(478) 349-5211,https://attorney6504.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000146,Williams & Associates,Atlanta,Fulton,GA,Litigation; Personal Injury,1977,25,(706) 980-3993,https://law7083.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000147,Thomas Law Group,Atlanta,Fulton,GA,Employment Law; Commercial Litigation,2004,2,(470) 387-5290,https://lawyers1577.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000148,Torres Legal,Atlanta,Fulton,GA,Commercial Litigation; Employment Law,1993,37,(912) 399-7465,https://lawyers2381.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000149,Moore Legal,Atlanta,Fulton,GA,Admiralty Law; Divorce,1961,18,(762) 803-3419,https://legal5035.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000150,Gonzalez & Parker LLP,Atlanta,Fulton,GA,Securities Law; Real Estate,2008,21,(678) 945-7703,https://firm9904.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000151,Thomas Law Group,Atlanta,Fulton,GA,Healthcare Law; Bankruptcy,2022,34,(678) 378-2032,https://lawyers5187.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000152,King Legal,Atlanta,Fulton,GA,Business Law; Securities Law,1974,13,(404) 661-7346,https://legal9813.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000153,Ramirez Legal,Atlanta,Fulton,GA,Real Estate; Business Law,1987,13,(762) 718-2766,https://legal9686.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000154,Brown Law Group,Atlanta,Fulton,GA,Corporate Law; Bankruptcy,2000,23,(470) 326-8521,https://lawyers6416.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000155,Collins Law Group,Atlanta,Fulton,GA,Construction Law; Tax Law,1999,1,(912) 289-7914,https://lawyers4163.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000156,"Wilson, Martinez & Davis",Atlanta,Fulton,GA,Business Law; DUI Defense,1984,7,(770) 765-2500,https://law2527.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000157,Wilson Legal,Atlanta,Fulton,GA,Mergers & Acquisitions; Divorce,1999,15,(229) 311-7664,https://firm5319.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000158,"King, Thompson & Hernandez",Atlanta,Fulton,GA,Intellectual Property; DUI Defense,2014,41,(404) 207-3281,https://legal7583.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000159,Miller Legal,Atlanta,Fulton,GA,Family Law; Litigation,1966,18,(478) 835-2896,https://law6560.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000160,Garcia Legal,Atlanta,Fulton,GA,Healthcare Law; Civil Litigation,2021,18,(478) 897-4265,https://attorney8044.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000161,The King Law Firm,Atlanta,Fulton,GA,Personal Injury; Admiralty Law,1983,17,(678) 841-3124,https://law3308.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000162,Parker Legal,Atlanta,Fulton,GA,Commercial Litigation; Intellectual Property,2007,19,(706) 678-4125,https://attorney4387.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000163,Lopez Legal,Atlanta,Fulton,GA,DUI Defense; Divorce,1961,31,(678) 568-1504,https://law4058.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000164,Parker Law Group,Atlanta,Fulton,GA,Securities Law; Bankruptcy,1988,18,(770) 559-8206,https://lawyers7897.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000165,Campbell & Associates,Atlanta,Fulton,GA,Divorce; Construction Law,2017,10,(706) 907-1617,https://law9086.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000166,Edwards & Associates,Atlanta,Fulton,GA,Employment Law; Probate,1976,14,(470) 778-7927,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000167,White & Hernandez LLP,Atlanta,Fulton,GA,Immigration Law; Healthcare Law,1979,43,(229) 607-6941,https://legal5712.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000168,Campbell Legal,Atlanta,Fulton,GA,Immigration Law; Divorce,1976,35,(404) 977-5953,https://firm4563.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000169,Johnson & Associates,Atlanta,Fulton,GA,Corporate Law; Intellectual Property,2011,40,(478) 520-6214,https://attorney8203.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000170,Lewis Legal,Atlanta,Fulton,GA,Construction Law; Corporate Law,2003,15,(678) 860-1635,https://lawyers1364.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000171,"Murphy, Allen & King",Atlanta,Fulton,GA,Commercial Litigation; Real Estate,1969,17,(762) 470-4469,https://firm7450.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000172,Gonzalez Law Group,Atlanta,Fulton,GA,Personal Injury; Commercial Litigation,1960,18,(229) 836-7410,https://legal7341.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000173,Lee Legal,Atlanta,Fulton,GA,Securities Law; Real Estate,1988,26,(478) 510-4780,https://law7526.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000174,Smith Legal,Atlanta,Fulton,GA,Corporate Law; Tax Law,2023,32,(478) 862-9202,https://legal5631.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000175,King & Associates,Atlanta,Fulton,GA,Family Law; DUI Defense,1970,26,(770) 874-6549,https://attorney8688.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000176,Martinez Law Group,Atlanta,Fulton,GA,Estate Planning; Probate,1965,47,(678) 526-7852,https://lawyers2585.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000177,Martinez & Associates,Atlanta,Fulton,GA,Patent Law; Personal Injury,1976,41,(762) 799-9354,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000178,Martinez Legal,Atlanta,Fulton,GA,Criminal Defense; Corporate Law,1969,14,(470) 578-1244,https://attorney8962.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000179,King & Associates,Atlanta,Fulton,GA,Intellectual Property; Patent Law,2010,8,(912) 388-1746,https://law1273.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000180,Torres & Associates,Atlanta,Fulton,GA,Bankruptcy; Environmental Law,2000,32,(478) 664-3760,https://firm7271.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000181,Scott & Associates,Atlanta,Fulton,GA,Estate Planning; Patent Law,2017,3,(478) 869-4090,https://law8180.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000182,Moore Legal,Atlanta,Fulton,GA,Business Law; Tax Law,2021,39,(770) 955-8777,https://legal9101.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000183,Young Legal,Atlanta,Fulton,GA,Securities Law; Estate Planning,2015,11,(770) 715-8561,https://legal7341.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000184,Morris Legal,Atlanta,Fulton,GA,DUI Defense; Real Estate,1960,26,(706) 569-5540,https://lawyers6326.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000185,Collins Legal,Atlanta,Fulton,GA,DUI Defense; Tax Law,1962,48,(706) 704-9326,https://firm8521.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000186,Edwards & Associates,Atlanta,Fulton,GA,Healthcare Law; Personal Injury,1977,12,(478) 300-2922,https://legal6695.law,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000187,Anderson & Williams LLP,Atlanta,Fulton,GA,Family Law; Construction Law,2004,12,(478) 770-4825,https://law263.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000188,Moore Law Group,Atlanta,Fulton,GA,Administrative Law; Commercial Litigation,1992,41,(706) 637-2539,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000189,Garcia & Associates,Atlanta,Fulton,GA,Immigration Law; Tax Law,1966,37,(912) 661-8038,https://legal4351.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000190,Walker & Associates,Atlanta,Fulton,GA,Criminal Defense; Estate Planning,1970,29,(678) 491-4758,https://legal2210.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000191,Morris & Associates,Atlanta,Fulton,GA,Bankruptcy; Intellectual Property,1968,16,(912) 351-4325,https://legal2745.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000192,Edwards Law Group,Atlanta,Fulton,GA,Probate; Healthcare Law,2011,41,(404) 468-4303,https://firm7119.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000193,King & Associates,Atlanta,Fulton,GA,Administrative Law; Family Law,2016,28,(770) 516-9992,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000194,Miller & Associates,Atlanta,Fulton,GA,Probate; Patent Law,1984,41,(470) 330-7268,https://law7235.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000195,Brown Law Group,Atlanta,Fulton,GA,Litigation; Employment Law,2020,44,(912) 720-6949,https://law5750.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000196,The Morris Law Firm,Atlanta,Fulton,GA,Patent Law; Administrative Law,2011,21,(404) 888-9672,https://attorney9707.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000197,Martin Law Group,Atlanta,Fulton,GA,Immigration Law; Administrative Law,1991,44,(470) 859-1361,https://legal5502.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000198,Scott Law Group,Atlanta,Fulton,GA,Tax Law; Corporate Law,1975,10,(770) 808-8943,https://attorney1452.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000199,Edwards & Phillips LLP,Atlanta,Fulton,GA,Criminal Defense; Environmental Law,2003,45,(762) 410-2172,https://attorney6921.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000200,White & Associates,Atlanta,Fulton,GA,Family Law; Criminal Defense,2023,23,(706) 279-7002,https://law7745.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000201,Jones & Associates,Atlanta,Fulton,GA,Litigation; Commercial Litigation,2020,25,(478) 887-8616,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000202,Anderson & Young LLP,Atlanta,Fulton,GA,Immigration Law; Tax Law,2017,37,(678) 666-4060,https://law5153.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000203,Martin Law Group,Atlanta,Fulton,GA,Corporate Law; Personal Injury,1972,22,(478) 758-4700,https://law7248.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000204,Wilson & Edwards LLP,Atlanta,Fulton,GA,Bankruptcy; Construction Law,2015,31,(706) 374-8799,https://firm4691.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000205,Thompson & Associates,Atlanta,Fulton,GA,Mergers & Acquisitions; Admiralty Law,1994,28,(762) 518-1463,https://attorney2414.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000206,King Legal,Atlanta,Fulton,GA,Bankruptcy; Criminal Defense,1988,40,(478) 752-8854,https://firm7177.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000207,"Moore, Young & Robinson",Atlanta,Fulton,GA,Tax Law; Corporate Law,1985,46,(470) 339-6889,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000208,Miller & Associates,Atlanta,Fulton,GA,Patent Law; Mergers & Acquisitions,2013,23,(762) 841-4921,https://attorney6081.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000209,Gonzalez & Associates,Atlanta,Fulton,GA,Business Law; Construction Law,2022,26,(678) 631-1458,https://firm5589.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000210,Johnson & Associates,Atlanta,Fulton,GA,Divorce; Securities Law,1967,29,(229) 415-1919,https://law847.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000211,Lee & Associates,Atlanta,Fulton,GA,Tax Law; Commercial Litigation,1986,48,(478) 580-2481,https://legal439.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000212,The Miller Law Firm,Atlanta,Fulton,GA,Estate Planning; Bankruptcy,2015,49,(770) 814-9751,https://law7809.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000213,Collins Legal,Atlanta,Fulton,GA,Personal Injury; Litigation,2017,46,(678) 212-4986,https://law9626.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000214,Collins & Associates,Atlanta,Fulton,GA,Patent Law; Administrative Law,1970,5,(478) 635-4680,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000215,Garcia & Brown LLP,Atlanta,Fulton,GA,Probate; Litigation,1988,42,(762) 835-7092,https://legal8258.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000216,"Smith, Moore & Williams",Atlanta,Fulton,GA,Corporate Law; Construction Law,1985,10,(762) 364-7714,https://legal9000.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000217,Williams Law Group,Atlanta,Fulton,GA,Admiralty Law; Securities Law,1983,1,(478) 595-4088,https://law2381.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000218,Perez Law Group,Atlanta,Fulton,GA,Environmental Law; Bankruptcy,2004,31,(478) 303-7709,https://legal6868.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000219,Smith Legal,Atlanta,Fulton,GA,Construction Law; Civil Litigation,2003,8,(404) 391-2769,https://law6222.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000220,Peterson & Johnson LLP,Atlanta,Fulton,GA,Intellectual Property; Mergers & Acquisitions,1979,30,(770) 385-4605,https://lawyers3347.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000221,The Walker Law Firm,Atlanta,Fulton,GA,Litigation; Healthcare Law,1979,44,(762) 874-4269,https://firm3888.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000222,Murphy & Associates,Atlanta,Fulton,GA,Civil Litigation; Mergers & Acquisitions,2019,43,(912) 429-9194,https://firm4040.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000223,Lewis & Associates,Atlanta,Fulton,GA,Bankruptcy; DUI Defense,1971,34,(470) 482-7742,https://lawyers866.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000224,Reeves Legal,Atlanta,Fulton,GA,Divorce; Admiralty Law,2010,5,(912) 688-2079,https://lawyers7388.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000225,Martinez & Associates,Atlanta,Fulton,GA,Commercial Litigation; Admiralty Law,1963,16,(229) 243-7399,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000226,Allen Law Group,Atlanta,Fulton,GA,Commercial Litigation; Immigration Law,2015,44,(404) 948-3934,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000227,King Legal,Atlanta,Fulton,GA,Bankruptcy; Probate,1962,35,(470) 783-6301,https://law8233.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000228,Jackson Law Group,Atlanta,Fulton,GA,Family Law; DUI Defense,1988,43,(678) 555-7554,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000229,Thompson & Johnson LLP,Atlanta,Fulton,GA,Bankruptcy; Business Law,1991,43,(706) 257-6979,https://legal1432.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000230,Phillips & Associates,Atlanta,Fulton,GA,DUI Defense; Corporate Law,2006,21,(404) 270-8025,https://attorney3097.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000231,Torres Law Group,Atlanta,Fulton,GA,Employment Law; Bankruptcy,1979,11,(706) 677-3418,https://firm6659.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000232,Walker Legal,Atlanta,Fulton,GA,Business Law; Criminal Defense,1989,29,(770) 802-8910,https://attorney3456.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000233,Anderson Law Group,Atlanta,Fulton,GA,Divorce; Employment Law,1968,29,(706) 726-1752,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000234,Murphy & Associates,Atlanta,Fulton,GA,Business Law; Criminal Defense,1978,45,(706) 346-4315,https://lawyers7559.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000235,Morris Law Group,Atlanta,Fulton,GA,Criminal Defense; Probate,1977,47,(706) 366-3393,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000236,Lewis Law Group,Atlanta,Fulton,GA,Bankruptcy; Tax Law,1990,1,(770) 776-6549,https://firm9457.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000237,The Wright Law Firm,Atlanta,Fulton,GA,Commercial Litigation; Civil Litigation,1968,3,(912) 388-1722,https://lawyers6349.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000238,Morris Legal,Atlanta,Fulton,GA,Estate Planning; Civil Litigation,2014,7,(470) 890-1124,https://lawyers4498.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000239,"Davis, Garcia & King",Atlanta,Fulton,GA,Admiralty Law; Construction Law,1980,17,(762) 750-5795,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000240,Peterson Legal,Atlanta,Fulton,GA,Probate; Real Estate,1992,45,(478) 303-5951,https://firm5565.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000241,Peterson & Associates,Atlanta,Fulton,GA,Bankruptcy; Estate Planning,1982,13,(478) 464-6878,https://law8950.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000242,The White Law Firm,Atlanta,Fulton,GA,Commercial Litigation; Construction Law,1963,48,(912) 791-4296,https://lawyers4293.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000243,Lewis Legal,Atlanta,Fulton,GA,Civil Litigation; Corporate Law,1969,26,(478) 434-3287,https://firm8632.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000244,Davis Legal,Atlanta,Fulton,GA,Patent Law; Intellectual Property,1962,6,(770) 606-9720,https://firm5146.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000245,Ramirez Legal,Atlanta,Fulton,GA,Business Law; Construction Law,1976,3,(470) 625-3038,https://attorney9321.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000246,Campbell & Jones LLP,Atlanta,Fulton,GA,Personal Injury; Family Law,2006,35,(404) 982-3157,https://lawyers2397.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000247,Anderson Law Group,Savannah,Chatham,GA,Real Estate; Tax Law,1998,8,(706) 494-6541,https://legal3197.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000248,Reeves Law Group,Savannah,Chatham,GA,Criminal Defense; Bankruptcy,1997,45,(470) 958-8650,https://attorney2373.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000249,Wilson & Associates,Savannah,Chatham,GA,Probate; Commercial Litigation,2017,25,(706) 824-7401,https://firm7403.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000250,The Rodriguez Law Firm,Savannah,Chatham,GA,Real Estate; Mergers & Acquisitions,1998,3,(762) 216-7634,https://legal6084.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000251,"Martin, Murphy & Phillips",Savannah,Chatham,GA,Construction Law; Corporate Law,1998,37,(706) 973-6665,https://firm4202.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000252,Reeves Law Group,Savannah,Chatham,GA,Employment Law; Litigation,2015,37,(470) 772-9723,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000253,Torres & Associates,Savannah,Chatham,GA,Mergers & Acquisitions; Construction Law,2015,37,(678) 408-4089,https://lawyers5124.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000254,Clark & Associates,Savannah,Chatham,GA,Securities Law; Litigation,2018,49,(912) 475-7336,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000255,Peterson & Thompson LLP,Savannah,Chatham,GA,Family Law; Civil Litigation,2022,1,(912) 876-7949,https://legal607.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000256,Peterson & Johnson LLP,Savannah,Chatham,GA,Probate; DUI Defense,2020,44,(912) 935-4604,https://law7944.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000257,Peterson & Rodriguez LLP,Savannah,Chatham,GA,Intellectual Property; Employment Law,1993,32,(470) 287-3454,https://firm2454.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000258,Peterson & Associates,Savannah,Chatham,GA,Healthcare Law; Intellectual Property,1974,41,(478) 631-4347,https://attorney7551.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000259,Williams & Harris LLP,Savannah,Chatham,GA,Real Estate; Estate Planning,1976,7,(470) 554-9496,https://law2942.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000260,The Sanchez Law Firm,Savannah,Chatham,GA,Employment Law; Immigration Law,1962,7,(404) 836-7895,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000261,"Jones, Collins & White",Savannah,Chatham,GA,Mergers & Acquisitions; Construction Law,2020,6,(762) 229-8502,https://attorney1005.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000262,The Edwards Law Firm,Savannah,Chatham,GA,Corporate Law; Employment Law,1967,4,(478) 838-7200,https://attorney7762.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000263,Anderson & Associates,Savannah,Chatham,GA,Securities Law; Construction Law,1969,23,(706) 584-9385,https://firm3548.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000264,Reeves Legal,Savannah,Chatham,GA,Securities Law; Litigation,1964,7,(706) 706-5317,https://legal3454.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000265,Wilson & Associates,Savannah,Chatham,GA,Immigration Law; Litigation,1988,3,(678) 354-3180,https://lawyers2481.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000266,Perez Law Group,Savannah,Chatham,GA,Administrative Law; Probate,1972,8,(770) 617-7027,https://law4055.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000267,Martin & Young LLP,Savannah,Chatham,GA,Litigation; DUI Defense,2021,47,(770) 922-1204,https://legal3069.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000268,Peterson & Associates,Savannah,Chatham,GA,Construction Law; Securities Law,1978,12,(678) 297-2894,https://firm1515.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000269,Sanchez & Associates,Savannah,Chatham,GA,Divorce; Civil Litigation,1987,40,(478) 561-9037,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000270,"Rodriguez, Williams & Wright",Savannah,Chatham,GA,Tax Law; Probate,1964,21,(912) 295-2357,https://firm8485.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000271,"Campbell, Ramirez & Torres",Savannah,Chatham,GA,Civil Litigation; Securities Law,1992,10,(706) 804-3655,https://firm861.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000272,Anderson Law Group,Savannah,Chatham,GA,Divorce; Environmental Law,1974,12,(229) 730-9752,https://lawyers2488.org,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000273,Phillips Legal,Savannah,Chatham,GA,Personal Injury; Admiralty Law,1977,6,(678) 912-1114,https://law1103.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000274,Jones Law Group,Savannah,Chatham,GA,Bankruptcy; Family Law,2019,43,(762) 344-9792,https://attorney2971.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000275,"Anderson, Anderson & Miller",Savannah,Chatham,GA,Immigration Law; Administrative Law,2005,19,(762) 796-5795,https://law789.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000276,Davis & Associates,Savannah,Chatham,GA,Criminal Defense; Divorce,2021,4,(770) 598-9815,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000277,Gonzalez Law Group,Savannah,Chatham,GA,Criminal Defense; Bankruptcy,1980,4,(478) 677-8138,https://law6378.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000278,Williams Legal,Savannah,Chatham,GA,Patent Law; Family Law,1986,20,(478) 805-8503,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000279,Scott & Associates,Savannah,Chatham,GA,Intellectual Property; Securities Law,1988,31,(404) 279-1310,https://legal8815.org,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000280,The Garcia Law Firm,Savannah,Chatham,GA,Employment Law; Estate Planning,1990,47,(470) 934-7682,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000281,Lee Legal,Savannah,Chatham,GA,Intellectual Property; Administrative Law,2019,49,(706) 667-6182,https://attorney8203.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000282,"Lewis, Rodriguez & Lopez",Savannah,Chatham,GA,Divorce; Securities Law,2014,30,(404) 792-9825,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000283,Parker Law Group,Savannah,Chatham,GA,Business Law; Securities Law,1993,34,(470) 257-3317,https://attorney1060.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000284,Hernandez Law Group,Savannah,Chatham,GA,Tax Law; Administrative Law,1961,26,(470) 211-2529,https://law4176.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000285,The Collins Law Firm,Savannah,Chatham,GA,Securities Law; Administrative Law,1964,22,(478) 829-3173,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000286,Wright Legal,Savannah,Chatham,GA,Estate Planning; Business Law,1995,37,(470) 441-2527,https://firm4846.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000287,Morris & Associates,Savannah,Chatham,GA,Tax Law; Bankruptcy,1990,21,(762) 434-8494,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000288,"Sanchez, Miller & Murphy",Augusta,Richmond,GA,Patent Law; Tax Law,1972,31,(678) 587-5465,https://firm5539.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000289,Thompson & Associates,Augusta,Richmond,GA,Real Estate; Estate Planning,1991,3,(706) 392-4305,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000290,Hernandez Law Group,Augusta,Richmond,GA,Probate; Administrative Law,2001,40,(678) 619-4345,https://law1820.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000291,Anderson & Associates,Augusta,Richmond,GA,Divorce; Admiralty Law,1980,47,(678) 675-5093,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000292,The Rodriguez Law Firm,Augusta,Richmond,GA,Bankruptcy; Employment Law,1978,4,(678) 301-6233,https://legal7982.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000293,Murphy Law Group,Augusta,Richmond,GA,Administrative Law; Litigation,1963,8,(478) 870-7288,https://attorney5423.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000294,Lewis Law Group,Augusta,Richmond,GA,Securities Law; Probate,1960,45,(478) 517-1395,https://legal4708.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000295,Thomas Law Group,Augusta,Richmond,GA,Personal Injury; Environmental Law,2005,41,(912) 461-7890,https://attorney9455.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000296,Hernandez Law Group,Augusta,Richmond,GA,Business Law; Employment Law,2012,49,(706) 438-6453,https://attorney4119.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000297,Walker Law Group,Augusta,Richmond,GA,Family Law; Personal Injury,1985,40,(229) 327-9637,https://attorney9938.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000298,Torres Law Group,Augusta,Richmond,GA,Civil Litigation; Admiralty Law,1990,36,(478) 385-1130,https://lawyers2131.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000299,Robinson & Young LLP,Augusta,Richmond,GA,Tax Law; Mergers & Acquisitions,1969,27,(762) 480-7606,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000300,The Lewis Law Firm,Augusta,Richmond,GA,Employment Law; Estate Planning,2022,49,(678) 444-4386,https://legal6826.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000301,Parker & Associates,Augusta,Richmond,GA,Healthcare Law; Personal Injury,1993,37,(404) 438-4648,https://firm8490.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000302,White & Associates,Augusta,Richmond,GA,Corporate Law; Real Estate,1980,49,(762) 452-1285,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000303,Robinson & Associates,Augusta,Richmond,GA,Litigation; Commercial Litigation,1998,13,(706) 258-1323,https://legal4386.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000304,Phillips & Associates,Augusta,Richmond,GA,Estate Planning; Probate,1992,13,(770) 320-7489,,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000305,Sanchez & Associates,Augusta,Richmond,GA,Tax Law; Administrative Law,2003,44,(770) 242-3041,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000306,Martinez Law Group,Augusta,Richmond,GA,Criminal Defense; Corporate Law,2002,47,(478) 498-7664,https://lawyers2631.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000307,Garcia Legal,Augusta,Richmond,GA,Civil Litigation; Tax Law,2010,18,(478) 791-3912,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000308,Wright Law Group,Augusta,Richmond,GA,Administrative Law; Civil Litigation,2019,2,(678) 502-5802,https://attorney3711.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000309,Wilson Law Group,Augusta,Richmond,GA,Admiralty Law; DUI Defense,2003,8,(470) 822-9695,https://law3316.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000310,Thomas & Associates,Augusta,Richmond,GA,Admiralty Law; Mergers & Acquisitions,1960,43,(470) 987-4083,https://attorney9217.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000311,The Martin Law Firm,Augusta,Richmond,GA,Litigation; Administrative Law,1976,26,(706) 905-8181,https://firm9969.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000312,Johnson & Moore LLP,Augusta,Richmond,GA,Divorce; Business Law,1967,36,(678) 938-5915,https://law6024.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000313,Campbell & Associates,Augusta,Richmond,GA,Construction Law; Healthcare Law,2015,37,(478) 276-5636,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000314,Thomas & Young LLP,Augusta,Richmond,GA,Probate; Civil Litigation,1996,8,(229) 536-4483,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000315,The Parker Law Firm,Augusta,Richmond,GA,Litigation; Civil Litigation,1969,39,(470) 326-7449,https://legal5638.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000316,Edwards Law Group,Augusta,Richmond,GA,Mergers & Acquisitions; Business Law,1971,32,(478) 598-9013,https://lawyers7815.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000317,Allen Law Group,Augusta,Richmond,GA,Personal Injury; Securities Law,1994,7,(912) 637-7112,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000318,The Walker Law Firm,Augusta,Richmond,GA,Corporate Law; Estate Planning,2019,32,(706) 258-3637,https://attorney9593.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000319,Brown & Associates,Augusta,Richmond,GA,DUI Defense; Estate Planning,1964,4,(470) 544-1018,https://law8039.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000320,White Legal,Augusta,Richmond,GA,Construction Law; Probate,2016,45,(762) 657-1144,https://firm8041.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000321,Campbell Legal,Augusta,Richmond,GA,Litigation; Securities Law,1985,5,(478) 516-5898,https://law7940.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000322,Martinez & Harris LLP,Augusta,Richmond,GA,Divorce; Corporate Law,1975,15,(762) 951-4465,https://attorney3541.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000323,Jackson & Rodriguez LLP,Augusta,Richmond,GA,Business Law; Healthcare Law,2021,43,(478) 676-9432,https://lawyers1320.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000324,Perez & Gonzalez LLP,Augusta,Richmond,GA,Litigation; Probate,1996,28,(470) 663-5169,https://firm4448.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000325,The Miller Law Firm,Augusta,Richmond,GA,Patent Law; Construction Law,2011,16,(229) 292-4855,https://law5559.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000326,Lewis Legal,Augusta,Richmond,GA,Construction Law; Employment Law,2009,12,(478) 630-5675,https://lawyers7485.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000327,Morris Legal,Augusta,Richmond,GA,Healthcare Law; Environmental Law,2008,35,(478) 624-4252,https://attorney9717.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000328,Brown & Murphy LLP,Columbus,Muscogee,GA,Bankruptcy; Administrative Law,1974,43,(770) 537-5307,https://attorney3260.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000329,Jones & Associates,Columbus,Muscogee,GA,Construction Law; Litigation,2003,30,(470) 591-3841,https://firm4893.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000330,Wilson Law Group,Columbus,Muscogee,GA,Mergers & Acquisitions; Probate,1966,31,(478) 921-7600,https://legal1757.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000331,"Gonzalez, Peterson & Murphy",Columbus,Muscogee,GA,Environmental Law; Criminal Defense,2010,3,(478) 206-8127,https://firm2733.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000332,Davis Law Group,Columbus,Muscogee,GA,Immigration Law; Real Estate,1969,16,(229) 404-1144,https://law288.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000333,Harris & White LLP,Columbus,Muscogee,GA,Construction Law; Probate,1987,20,(229) 360-6907,https://legal893.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000334,Murphy Legal,Columbus,Muscogee,GA,Securities Law; Family Law,2019,5,(912) 908-7324,https://law3958.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000335,Gonzalez & Associates,Columbus,Muscogee,GA,Criminal Defense; Commercial Litigation,1974,50,(404) 761-3043,https://attorney5901.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000336,Collins & Associates,Columbus,Muscogee,GA,Real Estate; Patent Law,1997,41,(404) 205-7748,https://legal3107.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000337,The Scott Law Firm,Columbus,Muscogee,GA,Civil Litigation; Corporate Law,1963,21,(706) 220-5835,https://firm1952.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000338,Taylor Legal,Columbus,Muscogee,GA,Corporate Law; Commercial Litigation,1977,23,(478) 518-2751,https://legal825.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000339,Wilson Legal,Columbus,Muscogee,GA,Corporate Law; Real Estate,2017,32,(678) 881-9579,https://legal2964.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000340,Jones & Associates,Columbus,Muscogee,GA,Family Law; Personal Injury,1995,30,(678) 274-7175,https://lawyers7629.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000341,The Harris Law Firm,Columbus,Muscogee,GA,Commercial Litigation; Family Law,2016,15,(229) 504-5885,https://law1302.org,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000342,Morris & Associates,Columbus,Muscogee,GA,Litigation; Immigration Law,1981,30,(470) 741-3847,https://lawyers2945.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000343,"Smith, White & Phillips",Columbus,Muscogee,GA,Commercial Litigation; Employment Law,2012,12,(706) 416-4277,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000344,Smith Legal,Columbus,Muscogee,GA,DUI Defense; Environmental Law,1971,29,(478) 326-2755,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000345,Torres Law Group,Columbus,Muscogee,GA,Environmental Law; Tax Law,1961,14,(470) 367-9144,https://law7634.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000346,Anderson Law Group,Columbus,Muscogee,GA,Business Law; Corporate Law,2013,3,(770) 529-8772,https://lawyers1103.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000347,Clark Law Group,Columbus,Muscogee,GA,Business Law; Environmental Law,2005,20,(706) 450-2948,https://legal3414.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000348,Taylor Law Group,Columbus,Muscogee,GA,Personal Injury; Healthcare Law,1963,10,(678) 431-7163,https://legal5083.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000349,Wright Legal,Columbus,Muscogee,GA,Admiralty Law; Bankruptcy,2006,27,(762) 631-2690,https://attorney8864.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000350,Jones & Associates,Columbus,Muscogee,GA,Commercial Litigation; Mergers & Acquisitions,1983,31,(678) 585-7198,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000351,Thomas Legal,Columbus,Muscogee,GA,Mergers & Acquisitions; Administrative Law,1986,7,(229) 904-2460,https://legal788.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000352,Collins & Thompson LLP,Columbus,Muscogee,GA,Securities Law; Litigation,2002,37,(229) 351-6662,https://legal8126.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000353,Clark & Associates,Macon,Bibb,GA,DUI Defense; Real Estate,2020,21,(478) 261-2615,https://legal4163.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000354,"Jones, Harris & Torres",Macon,Bibb,GA,Mergers & Acquisitions; Probate,1981,39,(229) 691-8225,https://lawyers9770.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000355,"Hernandez, Moore & Sanchez",Macon,Bibb,GA,Civil Litigation; Immigration Law,1965,5,(770) 272-6612,https://law6082.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000356,Young Law Group,Macon,Bibb,GA,Tax Law; Estate Planning,2006,36,(706) 610-1817,https://attorney3811.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000357,Perez Law Group,Macon,Bibb,GA,Securities Law; Commercial Litigation,1970,30,(706) 886-1078,https://firm7128.net,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000358,Robinson Law Group,Macon,Bibb,GA,Intellectual Property; Commercial Litigation,1981,31,(229) 895-4439,https://firm754.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000359,Ramirez Law Group,Macon,Bibb,GA,Criminal Defense; Healthcare Law,1991,34,(478) 746-5716,https://legal197.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000360,Scott & Robinson LLP,Macon,Bibb,GA,Estate Planning; Patent Law,2022,6,(229) 234-4876,https://attorney5629.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000361,The Harris Law Firm,Macon,Bibb,GA,Estate Planning; Admiralty Law,2003,19,(478) 244-4252,https://legal1050.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000362,The Torres Law Firm,Macon,Bibb,GA,Environmental Law; Corporate Law,1988,29,(770) 626-7861,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000363,"Garcia, Clark & Brown",Macon,Bibb,GA,Admiralty Law; Immigration Law,2006,46,(706) 538-7988,https://legal9518.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000364,Morris Legal,Macon,Bibb,GA,Tax Law; Corporate Law,1965,29,(762) 694-6843,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000365,Phillips & Associates,Macon,Bibb,GA,Environmental Law; Immigration Law,1991,43,(706) 246-3076,https://lawyers2153.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000366,"Reeves, King & Thomas",Macon,Bibb,GA,Healthcare Law; DUI Defense,1965,11,(762) 762-4278,https://legal8685.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000367,Wright & Associates,Macon,Bibb,GA,Family Law; Business Law,1967,39,(912) 790-6071,https://lawyers1636.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000368,Jones & Associates,Macon,Bibb,GA,Criminal Defense; Admiralty Law,1994,8,(706) 623-4671,https://attorney7332.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000369,White Law Group,Macon,Bibb,GA,Intellectual Property; Environmental Law,1988,7,(478) 897-6586,https://law299.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000370,Lopez Legal,Macon,Bibb,GA,Mergers & Acquisitions; Admiralty Law,2000,11,(404) 454-4000,https://attorney1804.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000371,The Wright Law Firm,Macon,Bibb,GA,Criminal Defense; DUI Defense,2016,40,(912) 906-4408,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000372,The Walker Law Firm,Macon,Bibb,GA,Criminal Defense; Environmental Law,1967,41,(478) 726-9180,https://attorney4194.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000373,Martin Law Group,Macon,Bibb,GA,Tax Law; Mergers & Acquisitions,2005,6,(770) 801-9453,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000374,Torres Legal,Macon,Bibb,GA,Tax Law; Construction Law,1993,41,(706) 268-4253,https://firm781.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000375,Garcia & Associates,Macon,Bibb,GA,Criminal Defense; Employment Law,1980,50,(229) 811-6606,https://firm9392.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000376,Taylor Legal,Macon,Bibb,GA,Employment Law; Bankruptcy,2018,3,(678) 299-8312,https://law613.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000377,"Brown, Taylor & Martinez",Macon,Bibb,GA,Estate Planning; Employment Law,2014,9,(404) 216-9237,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000378,Ramirez & Associates,Macon,Bibb,GA,Real Estate; Civil Litigation,2016,48,(229) 962-2952,https://attorney8492.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000379,Ramirez Law Group,Macon,Bibb,GA,Real Estate; DUI Defense,1989,35,(478) 415-7087,https://legal2303.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000380,King & Associates,Macon,Bibb,GA,Corporate Law; Criminal Defense,1990,44,(478) 742-5221,https://attorney2942.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000381,"Taylor, Moore & Davis",Macon,Bibb,GA,Litigation; Admiralty Law,1974,32,(478) 988-6414,https://firm1380.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000382,The Rodriguez Law Firm,Athens,Clarke,GA,Corporate Law; Immigration Law,2011,5,(229) 576-8019,https://law9321.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000383,Allen Legal,Athens,Clarke,GA,Real Estate; Construction Law,1998,5,(470) 415-8376,https://law436.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000384,Thomas & Associates,Athens,Clarke,GA,Securities Law; Estate Planning,2003,12,(762) 949-6712,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000385,Thomas Legal,Athens,Clarke,GA,Civil Litigation; Healthcare Law,2002,38,(478) 646-8116,https://attorney2937.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000386,Moore Law Group,Athens,Clarke,GA,Commercial Litigation; Business Law,2009,9,(706) 873-5323,https://lawyers9725.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000387,Collins & Associates,Athens,Clarke,GA,Personal Injury; Bankruptcy,1969,16,(470) 853-6544,https://law5973.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000388,King Legal,Athens,Clarke,GA,Corporate Law; Intellectual Property,1973,17,(229) 491-2117,https://firm8433.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000389,Allen Law Group,Athens,Clarke,GA,Intellectual Property; Patent Law,2017,6,(762) 547-5537,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000390,"Martin, Williams & Peterson",Athens,Clarke,GA,Construction Law; Tax Law,1963,45,(404) 557-4338,https://legal1460.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000391,Morris Legal,Athens,Clarke,GA,Admiralty Law; Family Law,1983,2,(912) 367-2189,https://law2940.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000392,Hernandez & Ramirez LLP,Athens,Clarke,GA,Bankruptcy; Family Law,1975,9,(678) 264-1611,https://lawyers1937.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000393,Allen Law Group,Athens,Clarke,GA,Admiralty Law; Mergers & Acquisitions,2019,47,(706) 842-2340,https://attorney286.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000394,White Law Group,Athens,Clarke,GA,Criminal Defense; Healthcare Law,1990,1,(404) 928-2308,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000395,The Campbell Law Firm,Athens,Clarke,GA,DUI Defense; Tax Law,1975,46,(478) 746-5222,https://lawyers7303.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000396,Lewis & Allen LLP,Athens,Clarke,GA,Patent Law; Corporate Law,2006,1,(478) 511-5161,https://legal666.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000397,Reeves & Lewis LLP,Athens,Clarke,GA,Construction Law; Intellectual Property,1972,29,(404) 593-7477,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000398,The King Law Firm,Athens,Clarke,GA,Administrative Law; Mergers & Acquisitions,1961,6,(478) 670-6670,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000399,The Robinson Law Firm,Athens,Clarke,GA,Securities Law; Family Law,2004,29,(229) 706-8641,https://law2905.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000400,Garcia Legal,Athens,Clarke,GA,Securities Law; Personal Injury,2015,8,(678) 326-4081,https://firm1175.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000401,The Lopez Law Firm,Athens,Clarke,GA,Criminal Defense; Construction Law,1987,10,(912) 557-6760,https://legal5429.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000402,Rodriguez Law Group,Marietta,Cobb,GA,Real Estate; Tax Law,2017,38,(404) 328-2511,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000403,"Lewis, Gonzalez & Morris",Marietta,Cobb,GA,Business Law; Securities Law,2005,18,(770) 635-6850,https://law3629.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000404,"Allen, Miller & Morris",Marietta,Cobb,GA,Healthcare Law; Estate Planning,1993,49,(770) 431-5756,https://firm762.org,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000405,Rodriguez Legal,Marietta,Cobb,GA,Real Estate; Tax Law,2001,20,(706) 346-3379,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000406,Lopez & Davis LLP,Marietta,Cobb,GA,Estate Planning; Environmental Law,1962,23,(478) 552-9338,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000407,Allen & Associates,Marietta,Cobb,GA,DUI Defense; Construction Law,1980,27,(478) 518-5019,https://attorney2640.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000408,"Murphy, Campbell & Lee",Marietta,Cobb,GA,Admiralty Law; Family Law,2015,4,(478) 257-9397,https://legal5008.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000409,"Phillips, Walker & Robinson",Marietta,Cobb,GA,Personal Injury; Intellectual Property,1982,17,(912) 582-6162,https://lawyers2878.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000410,Edwards & Associates,Marietta,Cobb,GA,Securities Law; Real Estate,1978,19,(404) 680-8097,https://firm9713.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000411,The Brown Law Firm,Marietta,Cobb,GA,Estate Planning; Employment Law,1997,10,(912) 201-5905,https://attorney8588.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000412,Hernandez Legal,Marietta,Cobb,GA,Bankruptcy; Securities Law,2004,2,(762) 381-4344,https://lawyers3519.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000413,Miller & Associates,Marietta,Cobb,GA,Environmental Law; Patent Law,1995,49,(706) 975-5531,https://law9943.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000414,Hernandez Law Group,Marietta,Cobb,GA,Personal Injury; Corporate Law,2007,45,(770) 718-6700,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000415,Thompson Legal,Marietta,Cobb,GA,Intellectual Property; Estate Planning,1980,45,(470) 385-1641,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000416,Lopez Legal,Marietta,Cobb,GA,Family Law; Admiralty Law,2008,20,(762) 999-8902,https://firm9423.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000417,The Garcia Law Firm,Marietta,Cobb,GA,Patent Law; Real Estate,1985,20,(678) 844-6739,https://attorney8883.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000418,Hernandez Legal,Marietta,Cobb,GA,Environmental Law; Civil Litigation,1968,33,(478) 424-9357,https://lawyers4505.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000419,Davis Law Group,Marietta,Cobb,GA,Immigration Law; Corporate Law,1977,19,(478) 580-2362,https://lawyers5811.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000420,Murphy & Associates,Marietta,Cobb,GA,Healthcare Law; Intellectual Property,1999,26,(678) 531-3917,https://legal8446.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000421,Martin & Associates,Marietta,Cobb,GA,Intellectual Property; Criminal Defense,1971,30,(404) 384-4665,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000422,"Murphy, Brown & Wilson",Marietta,Cobb,GA,Tax Law; Admiralty Law,1999,17,(478) 612-7670,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000423,Rodriguez & Murphy LLP,Marietta,Cobb,GA,Personal Injury; Administrative Law,2005,14,(470) 753-8290,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000424,Rodriguez Law Group,Marietta,Cobb,GA,Tax Law; Civil Litigation,1986,20,(770) 464-5377,https://law1451.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000425,The Brown Law Firm,Marietta,Cobb,GA,Personal Injury; Litigation,2000,5,(678) 203-3805,https://lawyers601.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000426,Wright & Robinson LLP,Marietta,Cobb,GA,Divorce; Criminal Defense,2014,46,(229) 938-1901,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000427,Ramirez Legal,Marietta,Cobb,GA,Admiralty Law; Securities Law,2015,2,(229) 800-8759,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000428,Brown & Associates,Marietta,Cobb,GA,Employment Law; Family Law,2008,26,(678) 444-1746,https://firm3405.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000429,Miller & Associates,Marietta,Cobb,GA,Employment Law; Healthcare Law,1972,41,(770) 662-5773,https://firm1833.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000430,Anderson Law Group,Marietta,Cobb,GA,Employment Law; Divorce,2013,26,(404) 369-7441,https://law6801.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000431,The Collins Law Firm,Marietta,Cobb,GA,Patent Law; DUI Defense,2017,21,(478) 481-5350,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000432,Clark & Allen LLP,Marietta,Cobb,GA,Immigration Law; Employment Law,2023,33,(478) 698-5787,https://lawyers4563.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000433,Rodriguez Legal,Marietta,Cobb,GA,Environmental Law; Construction Law,2017,18,(404) 858-4911,https://lawyers1060.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000434,The Wright Law Firm,Marietta,Cobb,GA,Litigation; Construction Law,1966,21,(912) 592-3082,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000435,Campbell Legal,Marietta,Cobb,GA,Personal Injury; Estate Planning,2006,26,(470) 355-6729,https://legal6604.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000436,Clark & Associates,Marietta,Cobb,GA,Litigation; Probate,1989,25,(478) 893-8419,https://law7596.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000437,Davis & Associates,Marietta,Cobb,GA,Employment Law; Immigration Law,2013,33,(478) 864-7278,https://law1202.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000438,"Lopez, Moore & Williams",Marietta,Cobb,GA,Administrative Law; Family Law,1973,25,(229) 978-1913,https://legal1137.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000439,Rodriguez Legal,Marietta,Cobb,GA,DUI Defense; Real Estate,1990,46,(770) 464-5530,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000440,Harris Legal,Marietta,Cobb,GA,Litigation; Commercial Litigation,1973,15,(762) 978-7691,https://law8793.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000441,"Young, Collins & Garcia",Marietta,Cobb,GA,Intellectual Property; Employment Law,1989,4,(470) 623-9048,https://law5992.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000442,Perez & Brown LLP,Marietta,Cobb,GA,Employment Law; Civil Litigation,2015,39,(478) 779-3408,https://law8335.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000443,Thompson & Associates,Marietta,Cobb,GA,Bankruptcy; Personal Injury,1973,1,(912) 811-7130,https://firm6775.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000444,Johnson & Smith LLP,Marietta,Cobb,GA,Litigation; Personal Injury,2005,15,(478) 381-8404,https://legal1023.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000445,The Robinson Law Firm,Sandy Springs,Fulton,GA,Bankruptcy; Corporate Law,2006,27,(478) 329-3260,https://attorney616.law,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000446,Lee & Taylor LLP,Sandy Springs,Fulton,GA,Estate Planning; Healthcare Law,1976,13,(478) 849-9611,https://law8051.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000447,Hernandez Legal,Sandy Springs,Fulton,GA,Civil Litigation; Mergers & Acquisitions,1990,10,(762) 690-8195,https://lawyers2059.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000448,Martin Legal,Sandy Springs,Fulton,GA,Intellectual Property; Criminal Defense,2010,29,(912) 335-1068,https://lawyers4302.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000449,Miller & Associates,Sandy Springs,Fulton,GA,Divorce; Litigation,1968,32,(478) 600-9050,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000450,Murphy Law Group,Sandy Springs,Fulton,GA,Environmental Law; Estate Planning,1978,45,(470) 241-1782,https://legal5750.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000451,Moore Legal,Sandy Springs,Fulton,GA,Litigation; Administrative Law,1986,13,(478) 274-4477,https://attorney6943.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000452,The Williams Law Firm,Sandy Springs,Fulton,GA,Securities Law; Civil Litigation,2015,40,(678) 429-4411,https://lawyers8083.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000453,"Robinson, White & Lewis",Sandy Springs,Fulton,GA,Mergers & Acquisitions; Administrative Law,1973,45,(404) 707-8508,https://attorney6318.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000454,King Law Group,Sandy Springs,Fulton,GA,Mergers & Acquisitions; Probate,1982,1,(404) 726-9554,https://lawyers5882.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000455,Young Legal,Sandy Springs,Fulton,GA,Admiralty Law; Commercial Litigation,1981,23,(404) 241-6325,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000456,"Martinez, Clark & Walker",Sandy Springs,Fulton,GA,Real Estate; Probate,1981,47,(404) 474-5035,https://firm1724.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000457,Wilson Law Group,Sandy Springs,Fulton,GA,Healthcare Law; Family Law,1999,7,(678) 901-4244,https://lawyers2585.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000458,"Walker, Campbell & Lewis",Sandy Springs,Fulton,GA,Securities Law; Litigation,1990,30,(478) 753-1672,https://attorney9522.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000459,"Parker, Parker & Parker",Sandy Springs,Fulton,GA,Personal Injury; Immigration Law,1990,45,(478) 737-8773,https://law1574.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000460,Sanchez Legal,Sandy Springs,Fulton,GA,DUI Defense; Administrative Law,1974,46,(678) 594-4934,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000461,Martin & Associates,Sandy Springs,Fulton,GA,Probate; Securities Law,1965,20,(770) 690-3454,https://attorney1879.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000462,Moore Legal,Sandy Springs,Fulton,GA,Commercial Litigation; Patent Law,1969,34,(478) 514-6921,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000463,Wilson & Associates,Sandy Springs,Fulton,GA,Admiralty Law; Environmental Law,1992,12,(478) 802-4202,https://attorney753.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000464,Perez Law Group,Sandy Springs,Fulton,GA,Criminal Defense; Admiralty Law,1977,16,(678) 893-9646,https://firm8234.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000465,Hernandez Law Group,Sandy Springs,Fulton,GA,Estate Planning; Real Estate,1968,5,(404) 962-2022,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000466,Martin & Associates,Sandy Springs,Fulton,GA,Criminal Defense; Securities Law,1980,3,(404) 966-9176,https://attorney6898.org,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000467,Thomas Legal,Sandy Springs,Fulton,GA,Litigation; Business Law,1981,8,(229) 304-9341,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000468,Thompson & Associates,Sandy Springs,Fulton,GA,Employment Law; Corporate Law,1993,20,(478) 658-5204,https://law9888.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000469,Wilson Law Group,Sandy Springs,Fulton,GA,Administrative Law; Real Estate,1967,46,(706) 431-6680,https://firm3176.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000470,Ramirez & Associates,Sandy Springs,Fulton,GA,Personal Injury; Tax Law,1963,6,(762) 830-8524,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000471,Taylor Legal,Sandy Springs,Fulton,GA,Litigation; Securities Law,2018,2,(912) 231-5724,https://lawyers5235.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000472,Lewis Law Group,Sandy Springs,Fulton,GA,Real Estate; Bankruptcy,2010,37,(770) 991-3115,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000473,Smith Law Group,Sandy Springs,Fulton,GA,Healthcare Law; DUI Defense,2008,18,(404) 338-8934,https://law1831.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000474,The Morris Law Firm,Sandy Springs,Fulton,GA,Administrative Law; Civil Litigation,1971,9,(912) 909-9692,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000475,Phillips Law Group,Sandy Springs,Fulton,GA,DUI Defense; Real Estate,1976,7,(470) 224-9160,https://attorney4213.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000476,Martinez & Associates,Roswell,Fulton,GA,Healthcare Law; Corporate Law,1989,5,(912) 786-2103,https://lawyers9599.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000477,The Jackson Law Firm,Roswell,Fulton,GA,Employment Law; Commercial Litigation,1998,32,(762) 429-6557,https://legal5271.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000478,Gonzalez Law Group,Roswell,Fulton,GA,Tax Law; Probate,2000,8,(478) 777-3765,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000479,Brown & White LLP,Roswell,Fulton,GA,Tax Law; Patent Law,1968,5,(478) 472-3588,https://lawyers1817.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000480,Thomas & Associates,Roswell,Fulton,GA,Bankruptcy; Divorce,1990,44,(470) 284-1035,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000481,Thomas Law Group,Roswell,Fulton,GA,Employment Law; Litigation,2001,40,(229) 968-5837,https://lawyers2482.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000482,Edwards & Allen LLP,Roswell,Fulton,GA,Mergers & Acquisitions; Probate,1995,37,(770) 441-1320,https://firm4668.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000483,The Morris Law Firm,Roswell,Fulton,GA,DUI Defense; Criminal Defense,2014,6,(470) 521-3510,https://firm5595.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000484,Walker & Associates,Roswell,Fulton,GA,Healthcare Law; Estate Planning,1974,24,(762) 309-2381,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000485,Rodriguez Law Group,Roswell,Fulton,GA,Mergers & Acquisitions; Administrative Law,1972,31,(404) 744-7050,https://firm6093.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000486,The Collins Law Firm,Roswell,Fulton,GA,Healthcare Law; Criminal Defense,1986,37,(478) 976-5268,https://lawyers2915.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000487,The Torres Law Firm,Roswell,Fulton,GA,Immigration Law; Business Law,1974,2,(912) 517-8935,https://legal5185.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000488,Collins Legal,Roswell,Fulton,GA,Corporate Law; Mergers & Acquisitions,1995,41,(478) 674-6114,https://law2569.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000489,Wilson Legal,Roswell,Fulton,GA,Bankruptcy; Probate,1993,1,(478) 513-8056,https://law4759.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000490,Murphy Legal,Roswell,Fulton,GA,Administrative Law; Family Law,1969,7,(229) 717-9526,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000491,Young & King LLP,Roswell,Fulton,GA,Mergers & Acquisitions; Bankruptcy,1992,28,(478) 990-7056,https://law2512.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000492,Sanchez & Associates,Roswell,Fulton,GA,Civil Litigation; Patent Law,1984,7,(762) 704-2569,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000493,"Allen, Ramirez & King",Roswell,Fulton,GA,DUI Defense; Criminal Defense,1978,34,(229) 660-3019,https://law7777.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000494,Clark & Associates,Roswell,Fulton,GA,DUI Defense; Business Law,2013,35,(470) 612-8391,https://legal9358.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000495,Allen Law Group,Roswell,Fulton,GA,Mergers & Acquisitions; Personal Injury,2013,48,(478) 685-5978,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000496,The Brown Law Firm,Roswell,Fulton,GA,Family Law; Patent Law,1978,32,(678) 476-1267,https://lawyers5330.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000497,Taylor Legal,Alpharetta,Fulton,GA,Civil Litigation; Administrative Law,2018,24,(470) 622-9653,https://firm5865.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000498,"King, Gonzalez & Johnson",Alpharetta,Fulton,GA,Litigation; Mergers & Acquisitions,2018,7,(229) 848-3586,https://legal932.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000499,Gonzalez & Associates,Alpharetta,Fulton,GA,Intellectual Property; Divorce,2019,23,(770) 575-6953,https://lawyers8847.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000500,Clark & Associates,Alpharetta,Fulton,GA,Intellectual Property; Construction Law,2014,15,(404) 593-6267,https://legal7269.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000501,Torres Law Group,Alpharetta,Fulton,GA,Business Law; Employment Law,1963,9,(229) 775-2511,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000502,The Collins Law Firm,Alpharetta,Fulton,GA,Divorce; Personal Injury,1993,1,(762) 611-6046,https://firm1724.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000503,Walker & Associates,Alpharetta,Fulton,GA,Administrative Law; Commercial Litigation,2006,45,(912) 504-3508,https://attorney2122.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000504,"Ramirez, Moore & Young",Alpharetta,Fulton,GA,Probate; Litigation,1980,35,(229) 900-9519,https://legal381.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000505,Perez Law Group,Alpharetta,Fulton,GA,Mergers & Acquisitions; Bankruptcy,1999,11,(678) 881-9611,https://attorney3681.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000506,Clark Legal,Alpharetta,Fulton,GA,Immigration Law; Environmental Law,1988,23,(678) 444-6979,https://firm7537.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000507,Moore & Associates,Alpharetta,Fulton,GA,Intellectual Property; Civil Litigation,2000,9,(229) 739-7874,https://law9056.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000508,Williams Legal,Alpharetta,Fulton,GA,Probate; Personal Injury,2008,26,(478) 936-4186,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000509,Perez & Associates,Alpharetta,Fulton,GA,Tax Law; Litigation,1983,42,(404) 888-4898,https://law2501.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000510,Scott Law Group,Alpharetta,Fulton,GA,Real Estate; Intellectual Property,2012,6,(404) 448-7728,https://lawyers6720.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000511,Martin & Harris LLP,Alpharetta,Fulton,GA,Probate; Administrative Law,1964,15,(229) 667-1725,https://legal1245.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000512,Perez Law Group,Alpharetta,Fulton,GA,DUI Defense; Divorce,1975,22,(706) 701-2852,https://firm9101.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000513,Wright Law Group,Alpharetta,Fulton,GA,Immigration Law; DUI Defense,2011,11,(770) 865-7788,https://lawyers5515.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000514,"Young, Rodriguez & Campbell",Alpharetta,Fulton,GA,Tax Law; Probate,2006,48,(404) 897-3527,https://lawyers1152.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000515,White Law Group,Alpharetta,Fulton,GA,Construction Law; Business Law,2016,37,(470) 430-6737,https://firm6163.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000516,Reeves Law Group,Alpharetta,Fulton,GA,Commercial Litigation; Personal Injury,1970,42,(470) 644-9447,https://attorney2450.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000517,Moore & Associates,Alpharetta,Fulton,GA,Bankruptcy; Environmental Law,1966,32,(478) 883-4202,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000518,Torres & Associates,Alpharetta,Fulton,GA,Environmental Law; Business Law,2019,39,(404) 741-8865,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000519,Wilson Legal,Alpharetta,Fulton,GA,Construction Law; Divorce,1965,10,(229) 628-9913,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000520,Wright Law Group,Alpharetta,Fulton,GA,Civil Litigation; Employment Law,2002,19,(478) 729-8500,https://law7326.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000521,Davis Law Group,Alpharetta,Fulton,GA,Personal Injury; Administrative Law,2005,21,(706) 869-9264,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000522,Scott Law Group,Alpharetta,Fulton,GA,Criminal Defense; Estate Planning,1981,21,(229) 335-4095,https://legal1056.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000523,Parker Legal,Alpharetta,Fulton,GA,Patent Law; Probate,1998,16,(404) 269-5513,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000524,Jackson Legal,Dunwoody,DeKalb,GA,Intellectual Property; Estate Planning,1992,31,(678) 223-7885,https://law9518.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000525,Peterson & Harris LLP,Dunwoody,DeKalb,GA,Intellectual Property; Litigation,2017,22,(678) 938-8358,https://legal711.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000526,Scott Legal,Dunwoody,DeKalb,GA,Construction Law; Estate Planning,1963,17,(678) 822-5528,https://firm6510.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000527,"Lewis, Reeves & Walker",Dunwoody,DeKalb,GA,Real Estate; Tax Law,1991,10,(770) 571-4277,https://legal1818.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000528,Wilson Legal,Dunwoody,DeKalb,GA,Mergers & Acquisitions; Intellectual Property,2005,11,(912) 622-5042,https://firm4494.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000529,Phillips Law Group,Dunwoody,DeKalb,GA,Mergers & Acquisitions; Intellectual Property,1966,35,(470) 674-7917,https://law8705.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000530,Lopez Law Group,Dunwoody,DeKalb,GA,Mergers & Acquisitions; Securities Law,1996,25,(470) 494-5237,https://attorney3602.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000531,Ramirez Law Group,Dunwoody,DeKalb,GA,Commercial Litigation; Probate,1970,50,(762) 927-8768,https://attorney3505.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000532,Phillips Legal,Dunwoody,DeKalb,GA,Real Estate; Construction Law,2010,31,(478) 219-8120,https://lawyers453.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000533,Harris Legal,Dunwoody,DeKalb,GA,Litigation; Criminal Defense,2009,20,(404) 411-5110,https://legal1751.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000534,Moore & Associates,Dunwoody,DeKalb,GA,Divorce; Probate,2015,38,(478) 483-1540,https://law1293.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000535,Anderson & Associates,Dunwoody,DeKalb,GA,Immigration Law; Environmental Law,1981,13,(470) 357-7231,https://attorney506.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000536,Taylor & Robinson LLP,Dunwoody,DeKalb,GA,Estate Planning; Divorce,1996,8,(470) 897-4827,https://legal1986.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000537,Robinson & Associates,Dunwoody,DeKalb,GA,Securities Law; Civil Litigation,1997,1,(229) 842-2253,https://law6274.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000538,The Rodriguez Law Firm,Dunwoody,DeKalb,GA,Litigation; Tax Law,1989,18,(770) 604-9810,https://firm2588.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000539,Gonzalez Law Group,Decatur,DeKalb,GA,Commercial Litigation; DUI Defense,2011,22,(706) 400-7121,https://firm3849.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000540,Gonzalez & Associates,Decatur,DeKalb,GA,Litigation; Patent Law,2002,7,(912) 818-6853,https://attorney851.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000541,Walker Law Group,Decatur,DeKalb,GA,Intellectual Property; Commercial Litigation,1983,18,(478) 485-9192,https://law2995.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000542,Hernandez Legal,Decatur,DeKalb,GA,Real Estate; Admiralty Law,2009,36,(770) 533-8098,https://law6917.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000543,The Reeves Law Firm,Decatur,DeKalb,GA,Patent Law; Probate,2021,32,(912) 269-9141,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000544,The Phillips Law Firm,Decatur,DeKalb,GA,Real Estate; Healthcare Law,2018,9,(478) 661-4064,https://firm7047.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000545,The Lopez Law Firm,Decatur,DeKalb,GA,Admiralty Law; Bankruptcy,1977,44,(770) 299-4355,https://attorney8678.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000546,Thomas & Associates,Decatur,DeKalb,GA,Immigration Law; Estate Planning,2009,19,(404) 870-2714,https://attorney6875.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000547,Rodriguez & Jackson LLP,Decatur,DeKalb,GA,Corporate Law; Personal Injury,1992,10,(404) 736-7606,https://lawyers6529.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000548,Anderson & Associates,Decatur,DeKalb,GA,Business Law; Mergers & Acquisitions,1965,8,(478) 615-6358,https://attorney8447.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000549,Johnson Legal,Decatur,DeKalb,GA,Securities Law; Real Estate,2010,34,(470) 759-3840,https://law7586.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000550,Miller & Associates,Decatur,DeKalb,GA,Commercial Litigation; Immigration Law,1970,21,(470) 538-8059,https://law1301.org,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000551,Lopez & Associates,Decatur,DeKalb,GA,Environmental Law; Admiralty Law,2016,38,(470) 984-1557,https://firm912.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000552,The Campbell Law Firm,Decatur,DeKalb,GA,Tax Law; Intellectual Property,1980,4,(678) 606-5914,https://firm923.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000553,"Ramirez, Torres & Torres",Decatur,DeKalb,GA,Admiralty Law; Commercial Litigation,2008,10,(470) 916-1819,https://firm9868.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000554,"Martinez, Martin & Martin",Decatur,DeKalb,GA,Corporate Law; Healthcare Law,1988,30,(229) 496-9371,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000555,Campbell & Associates,Decatur,DeKalb,GA,Corporate Law; Admiralty Law,2009,21,(470) 915-2237,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000556,Allen Law Group,Decatur,DeKalb,GA,Intellectual Property; Construction Law,2001,8,(678) 311-6126,https://attorney3723.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000557,Williams Legal,Decatur,DeKalb,GA,Administrative Law; Criminal Defense,1994,14,(762) 650-9186,https://attorney4344.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000558,Parker Law Group,Decatur,DeKalb,GA,Business Law; Personal Injury,2018,38,(404) 687-8193,https://lawyers2216.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000559,Davis & Jones LLP,Decatur,DeKalb,GA,DUI Defense; Litigation,2021,15,(470) 655-4735,https://lawyers2447.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000560,Smith Law Group,Decatur,DeKalb,GA,Litigation; Corporate Law,2021,31,(404) 458-2180,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000561,Walker Legal,Duluth,Gwinnett,GA,Securities Law; Administrative Law,1974,20,(470) 239-6689,https://attorney6674.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000562,Thompson & Brown LLP,Duluth,Gwinnett,GA,Probate; Construction Law,2018,19,(706) 310-6794,https://lawyers2421.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000563,Johnson Legal,Duluth,Gwinnett,GA,Criminal Defense; Bankruptcy,1968,29,(478) 273-5963,https://law6557.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000564,Smith Law Group,Duluth,Gwinnett,GA,Estate Planning; Healthcare Law,1998,46,(706) 710-1764,https://legal7231.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000565,Johnson & Wilson LLP,Duluth,Gwinnett,GA,Intellectual Property; Immigration Law,1964,29,(470) 930-1404,https://attorney7888.law,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000566,Thomas Law Group,Duluth,Gwinnett,GA,Divorce; Litigation,1992,5,(912) 641-5636,https://legal744.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000567,Hernandez Legal,Duluth,Gwinnett,GA,Healthcare Law; Mergers & Acquisitions,1962,18,(912) 833-3984,https://lawyers6616.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000568,Phillips & Jones LLP,Duluth,Gwinnett,GA,Bankruptcy; Business Law,1988,33,(912) 626-4528,https://law5134.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000569,Garcia Law Group,Duluth,Gwinnett,GA,Employment Law; Admiralty Law,1991,11,(770) 645-3693,https://attorney4084.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000570,Gonzalez Legal,Duluth,Gwinnett,GA,Tax Law; Immigration Law,1981,4,(229) 269-9568,https://lawyers7815.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000571,Garcia Law Group,Duluth,Gwinnett,GA,Tax Law; Divorce,2022,41,(229) 216-3167,https://firm8098.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000572,Williams & Associates,Duluth,Gwinnett,GA,Bankruptcy; Healthcare Law,1960,40,(478) 697-5298,https://attorney2303.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000573,Campbell Legal,Duluth,Gwinnett,GA,Securities Law; Estate Planning,2004,7,(229) 789-4239,https://firm2005.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000574,"Harris, Robinson & Moore",Duluth,Gwinnett,GA,Divorce; Construction Law,1977,39,(229) 630-5197,https://firm8827.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000575,Allen Law Group,Duluth,Gwinnett,GA,Civil Litigation; Commercial Litigation,1981,48,(478) 309-2842,https://attorney1725.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000576,Harris & Associates,Suwanee,Gwinnett,GA,Civil Litigation; Healthcare Law,1999,29,(470) 722-6205,https://attorney6836.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000577,Moore Legal,Suwanee,Gwinnett,GA,Commercial Litigation; Admiralty Law,2004,27,(706) 692-3543,https://legal301.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000578,Johnson Law Group,Suwanee,Gwinnett,GA,Mergers & Acquisitions; Bankruptcy,2009,39,(770) 607-6691,https://lawyers9804.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000579,Davis Legal,Suwanee,Gwinnett,GA,Criminal Defense; Real Estate,1981,1,(678) 440-1329,https://firm2534.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000580,Morris Legal,Suwanee,Gwinnett,GA,Personal Injury; Civil Litigation,1960,1,(404) 677-3078,https://law328.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000581,Garcia Legal,Suwanee,Gwinnett,GA,Family Law; Civil Litigation,1982,48,(478) 811-1204,https://legal7201.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000582,Garcia Legal,Suwanee,Gwinnett,GA,Healthcare Law; Civil Litigation,2004,15,(762) 662-9089,https://legal7009.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000583,Campbell Legal,Suwanee,Gwinnett,GA,Probate; Divorce,2008,14,(912) 831-5536,https://firm4518.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000584,Wilson Legal,Suwanee,Gwinnett,GA,Healthcare Law; Employment Law,1986,20,(762) 949-1269,https://firm9713.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000585,"Lewis, Wilson & Jackson",Suwanee,Gwinnett,GA,Family Law; DUI Defense,1990,7,(912) 795-8609,https://firm5794.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000586,"Taylor, Reeves & Lee",Suwanee,Gwinnett,GA,Family Law; Bankruptcy,1984,2,(762) 627-6951,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000587,King & Associates,Suwanee,Gwinnett,GA,Patent Law; Admiralty Law,2008,44,(770) 606-8391,https://firm8194.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000588,Williams Law Group,Suwanee,Gwinnett,GA,Tax Law; DUI Defense,1990,14,(912) 935-8585,https://firm111.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000589,Davis Legal,Suwanee,Gwinnett,GA,Criminal Defense; Business Law,1975,6,(706) 243-7459,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000590,Peterson Law Group,Suwanee,Gwinnett,GA,Tax Law; DUI Defense,2009,5,(229) 769-2967,https://legal5972.net,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000591,Lee Law Group,Suwanee,Gwinnett,GA,Divorce; Commercial Litigation,1983,37,(229) 531-5673,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000592,Smith & Associates,Suwanee,Gwinnett,GA,Commercial Litigation; Admiralty Law,2023,44,(770) 601-5545,https://lawyers8661.org,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000593,"Taylor, Smith & Thomas",Suwanee,Gwinnett,GA,Administrative Law; Securities Law,1984,23,(762) 462-7091,https://lawyers5851.org,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000594,"Hernandez, Parker & Jackson",Lawrenceville,Gwinnett,GA,Immigration Law; Probate,1990,41,(762) 825-4425,https://firm3168.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000595,"Allen, Smith & Miller",Lawrenceville,Gwinnett,GA,Administrative Law; Litigation,1964,23,(478) 487-6412,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000596,Taylor Law Group,Lawrenceville,Gwinnett,GA,Business Law; Securities Law,2011,18,(678) 291-9826,https://law5592.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000597,Rodriguez & Associates,Lawrenceville,Gwinnett,GA,Estate Planning; Personal Injury,1966,36,(706) 888-6363,https://firm239.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000598,Taylor Legal,Lawrenceville,Gwinnett,GA,Tax Law; Criminal Defense,1996,21,(229) 940-9369,https://law5813.org,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000599,Wright & Associates,Lawrenceville,Gwinnett,GA,Civil Litigation; Patent Law,1969,11,(478) 616-2925,https://attorney478.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000600,Harris Legal,Lawrenceville,Gwinnett,GA,Criminal Defense; Corporate Law,1981,9,(678) 950-4531,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000601,Lee Legal,Lawrenceville,Gwinnett,GA,Construction Law; Mergers & Acquisitions,2015,50,(470) 845-3931,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000602,Phillips & Associates,Lawrenceville,Gwinnett,GA,Environmental Law; DUI Defense,2001,20,(678) 916-3536,https://attorney6754.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000603,Morris Law Group,Lawrenceville,Gwinnett,GA,DUI Defense; Probate,2010,36,(912) 577-2693,https://attorney4848.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000604,Parker Law Group,Lawrenceville,Gwinnett,GA,Intellectual Property; Mergers & Acquisitions,1979,24,(478) 230-1027,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000605,Reeves Legal,Lawrenceville,Gwinnett,GA,Probate; Intellectual Property,1977,17,(470) 297-5123,https://firm2961.org,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000606,Campbell Law Group,Lawrenceville,Gwinnett,GA,Immigration Law; Estate Planning,2008,19,(770) 639-9843,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000607,Campbell Law Group,Lawrenceville,Gwinnett,GA,Divorce; Construction Law,1972,2,(678) 306-8300,https://attorney6714.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000608,King Law Group,Lawrenceville,Gwinnett,GA,Criminal Defense; Divorce,1962,36,(478) 779-9863,https://attorney291.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000609,Morris & Associates,Lawrenceville,Gwinnett,GA,Litigation; Civil Litigation,1965,36,(404) 518-2542,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000610,The Williams Law Firm,Lawrenceville,Gwinnett,GA,Healthcare Law; Litigation,1965,47,(706) 708-3944,https://attorney6961.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000611,Phillips Law Group,Lawrenceville,Gwinnett,GA,Personal Injury; Construction Law,1965,34,(404) 810-9092,https://attorney3846.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000612,Brown Law Group,Lawrenceville,Gwinnett,GA,Employment Law; Securities Law,2000,47,(762) 314-7062,https://law9767.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000613,Reeves Legal,Lawrenceville,Gwinnett,GA,Securities Law; Real Estate,1969,11,(770) 664-9872,https://attorney3764.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000614,Harris Law Group,Lawrenceville,Gwinnett,GA,Criminal Defense; Commercial Litigation,1977,41,(404) 754-2332,https://legal2872.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000615,"Phillips, Taylor & Murphy",Lawrenceville,Gwinnett,GA,Personal Injury; Divorce,1998,21,(912) 346-6937,https://firm4817.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000616,Clark & Collins LLP,Lawrenceville,Gwinnett,GA,Mergers & Acquisitions; Patent Law,1968,38,(404) 690-4684,https://law2128.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000617,Ramirez Law Group,Lawrenceville,Gwinnett,GA,Litigation; Corporate Law,2023,45,(706) 481-4334,https://law1952.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000618,"Murphy, Williams & Hernandez",Lawrenceville,Gwinnett,GA,Healthcare Law; Bankruptcy,1976,7,(404) 269-2412,https://legal159.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000619,Miller Legal,Kennesaw,Cobb,GA,Intellectual Property; Securities Law,1964,19,(478) 958-9992,https://law7942.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000620,Jackson & Associates,Kennesaw,Cobb,GA,Divorce; Securities Law,1992,14,(404) 612-6487,https://attorney9415.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000621,"Brown, Hernandez & Thomas",Kennesaw,Cobb,GA,Bankruptcy; Environmental Law,1966,31,(404) 523-1778,https://lawyers150.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000622,Lopez Legal,Kennesaw,Cobb,GA,Administrative Law; Mergers & Acquisitions,1985,10,(770) 374-6523,https://attorney7289.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000623,"Martinez, Torres & Harris",Kennesaw,Cobb,GA,Civil Litigation; Litigation,2023,49,(706) 507-8726,https://law7347.org,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000624,The Walker Law Firm,Kennesaw,Cobb,GA,Patent Law; Corporate Law,1973,15,(706) 814-8823,https://law6877.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000625,Anderson Law Group,Kennesaw,Cobb,GA,Patent Law; Real Estate,2010,2,(678) 479-7486,https://legal5964.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000626,Smith & Associates,Kennesaw,Cobb,GA,Bankruptcy; Real Estate,1969,47,(678) 202-3024,https://firm1426.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000627,Smith Law Group,Kennesaw,Cobb,GA,Securities Law; Mergers & Acquisitions,1984,15,(770) 664-2677,https://attorney7823.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000628,Rodriguez & Lopez LLP,Kennesaw,Cobb,GA,Divorce; Healthcare Law,2008,2,(404) 822-5395,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000629,Edwards & Associates,Kennesaw,Cobb,GA,Personal Injury; Family Law,2017,48,(229) 965-7645,https://law6100.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000630,Gonzalez Law Group,Kennesaw,Cobb,GA,Family Law; Estate Planning,1998,2,(404) 238-6968,https://firm9088.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000631,"Anderson, Parker & Reeves",Kennesaw,Cobb,GA,Healthcare Law; Immigration Law,1983,32,(404) 894-2287,https://law7187.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000632,"Collins, Thompson & Gonzalez",Kennesaw,Cobb,GA,Construction Law; Healthcare Law,1990,5,(706) 252-4402,https://legal5365.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000633,Allen & Young LLP,Kennesaw,Cobb,GA,Environmental Law; Mergers & Acquisitions,2016,38,(762) 584-5124,https://attorney6941.org,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000634,Young Legal,Kennesaw,Cobb,GA,Patent Law; Personal Injury,1980,45,(478) 962-7931,https://law3266.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000635,Rodriguez Law Group,Kennesaw,Cobb,GA,Corporate Law; Intellectual Property,2013,17,(404) 635-6579,https://firm4954.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000636,Anderson Legal,Kennesaw,Cobb,GA,Intellectual Property; Mergers & Acquisitions,2016,17,(478) 706-9880,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000637,Wright Legal,Kennesaw,Cobb,GA,Employment Law; Mergers & Acquisitions,1968,4,(706) 333-5345,https://firm1903.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000638,Martinez & Associates,Kennesaw,Cobb,GA,Probate; Divorce,2022,23,(762) 891-2925,https://law8458.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000639,Rodriguez Law Group,Acworth,Cobb,GA,Corporate Law; Immigration Law,1997,45,(470) 634-3105,https://attorney2553.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000640,Wright Law Group,Acworth,Cobb,GA,Patent Law; DUI Defense,2001,6,(706) 552-9017,https://law5004.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000641,Clark & Associates,Acworth,Cobb,GA,Family Law; Business Law,1988,30,(770) 840-8173,https://law6016.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000642,Lee & Associates,Acworth,Cobb,GA,Business Law; Tax Law,1972,21,(706) 541-7857,https://lawyers2190.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000643,Davis & Associates,Acworth,Cobb,GA,Tax Law; Employment Law,2014,30,(678) 561-9705,https://law2934.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000644,Murphy Legal,Acworth,Cobb,GA,Personal Injury; Real Estate,1994,49,(770) 499-2212,https://firm5853.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000645,Clark & Associates,Acworth,Cobb,GA,Family Law; Patent Law,1998,12,(912) 872-4248,https://attorney9261.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000646,Parker Legal,Acworth,Cobb,GA,Employment Law; Civil Litigation,1989,24,(912) 659-9371,https://legal1415.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000647,Miller Law Group,Acworth,Cobb,GA,Mergers & Acquisitions; Construction Law,1997,33,(478) 900-5319,https://firm4934.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000648,Young Law Group,Acworth,Cobb,GA,Intellectual Property; Criminal Defense,1979,14,(770) 813-6406,https://lawyers9282.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000649,Johnson & Associates,Acworth,Cobb,GA,Commercial Litigation; Business Law,1961,37,(770) 665-1054,https://law9576.org,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000650,Ramirez & Harris LLP,Acworth,Cobb,GA,Corporate Law; Immigration Law,1997,17,(478) 471-3264,https://legal2651.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000651,Edwards & Associates,Acworth,Cobb,GA,Family Law; Estate Planning,1999,1,(478) 797-8582,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000652,The Phillips Law Firm,Acworth,Cobb,GA,Patent Law; Probate,2009,6,(762) 907-2890,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000653,Sanchez & Parker LLP,Acworth,Cobb,GA,Patent Law; Mergers & Acquisitions,1977,27,(706) 202-6650,https://attorney9551.law,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000654,The Thompson Law Firm,Acworth,Cobb,GA,Divorce; Intellectual Property,1971,16,(678) 248-9805,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000655,Sanchez Legal,Acworth,Cobb,GA,Securities Law; Probate,2002,34,(770) 660-9928,https://law4039.legal,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000656,Hernandez & Associates,Acworth,Cobb,GA,Environmental Law; Healthcare Law,1991,42,(762) 424-6561,https://law7825.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000657,Jones Law Group,Cumming,Forsyth,GA,Bankruptcy; Personal Injury,2020,34,(762) 500-6293,https://legal4676.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000658,Allen Legal,Cumming,Forsyth,GA,Tax Law; Personal Injury,1962,13,(478) 255-2372,https://attorney3029.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000659,Walker Law Group,Cumming,Forsyth,GA,Intellectual Property; Employment Law,1992,40,(706) 772-3249,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000660,Clark Law Group,Cumming,Forsyth,GA,Healthcare Law; Mergers & Acquisitions,2006,16,(678) 968-9980,https://law3612.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000661,White & Associates,Cumming,Forsyth,GA,Admiralty Law; Bankruptcy,1967,2,(770) 395-2195,https://legal9355.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000662,The Lopez Law Firm,Cumming,Forsyth,GA,Immigration Law; Family Law,1999,45,(678) 420-2094,https://attorney4054.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000663,Thomas Legal,Cumming,Forsyth,GA,Family Law; Criminal Defense,2011,50,(762) 717-7176,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000664,Taylor & Associates,Cumming,Forsyth,GA,Business Law; Commercial Litigation,1998,47,(762) 921-5875,https://legal8507.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000665,Moore Legal,Cumming,Forsyth,GA,Patent Law; Family Law,2007,7,(404) 855-7446,https://legal452.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000666,Walker Law Group,Cumming,Forsyth,GA,Employment Law; Healthcare Law,2008,50,(229) 437-4573,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000667,Jackson Law Group,Cumming,Forsyth,GA,Construction Law; Tax Law,1997,36,(762) 459-8154,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000668,Sanchez & Associates,Cumming,Forsyth,GA,Mergers & Acquisitions; Immigration Law,1995,1,(478) 438-7356,https://firm9907.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000669,Gonzalez & Associates,Cumming,Forsyth,GA,Tax Law; Family Law,1987,9,(912) 887-9588,https://law4482.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000670,Ramirez Law Group,Cumming,Forsyth,GA,Healthcare Law; Divorce,1969,17,(470) 570-5278,https://attorney2065.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000671,Walker & Associates,Cumming,Forsyth,GA,Admiralty Law; Probate,2021,15,(912) 829-7493,https://firm7727.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000672,Lewis Legal,Cumming,Forsyth,GA,Intellectual Property; DUI Defense,2018,12,(762) 274-6522,https://attorney5325.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000673,The King Law Firm,Cumming,Forsyth,GA,Criminal Defense; Construction Law,2015,7,(470) 227-9298,https://lawyers4245.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000674,Garcia & Associates,Cumming,Forsyth,GA,Healthcare Law; Family Law,1995,47,(678) 365-2719,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000675,Harris Legal,Dacula,Gwinnett,GA,Securities Law; Family Law,1965,2,(404) 442-6667,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000676,Lee & Associates,Dacula,Gwinnett,GA,Environmental Law; Healthcare Law,2022,36,(762) 657-1519,https://attorney9402.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000677,Anderson Legal,Dacula,Gwinnett,GA,Employment Law; Business Law,2018,15,(912) 264-8539,https://attorney4277.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000678,Allen & Associates,Dacula,Gwinnett,GA,Civil Litigation; Patent Law,1987,43,(470) 718-7143,https://lawyers1232.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000679,Miller & Associates,Dacula,Gwinnett,GA,Litigation; Tax Law,1995,27,(912) 746-6881,https://legal3711.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000680,Murphy Legal,Dacula,Gwinnett,GA,Real Estate; Criminal Defense,1972,15,(478) 334-4057,https://firm7607.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000681,Miller Law Group,Dacula,Gwinnett,GA,Admiralty Law; Criminal Defense,1979,31,(478) 586-4527,https://legal787.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000682,Rodriguez Law Group,Dacula,Gwinnett,GA,Corporate Law; Bankruptcy,1960,36,(770) 233-4539,https://firm488.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000683,Gonzalez Legal,Dacula,Gwinnett,GA,Family Law; Healthcare Law,1978,34,(706) 761-4527,https://attorney5031.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000684,Parker & Rodriguez LLP,Dacula,Gwinnett,GA,Tax Law; Litigation,1989,16,(470) 495-4891,https://firm5198.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000685,Brown Law Group,Dacula,Gwinnett,GA,Bankruptcy; DUI Defense,1968,22,(470) 638-7950,https://lawyers5278.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000686,The Gonzalez Law Firm,Dacula,Gwinnett,GA,Securities Law; Civil Litigation,2015,19,(770) 590-2539,https://legal4366.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000687,"Jones, Johnson & Young",Dacula,Gwinnett,GA,Mergers & Acquisitions; Bankruptcy,1975,1,(229) 380-4519,https://legal6030.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000688,Young Law Group,Dacula,Gwinnett,GA,Real Estate; Construction Law,2000,2,(706) 838-9658,https://legal1516.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000689,Hernandez & Associates,Dacula,Gwinnett,GA,Construction Law; Personal Injury,2001,10,(762) 977-4227,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000690,Edwards & Associates,Dacula,Gwinnett,GA,Securities Law; Real Estate,1962,9,(229) 818-5641,https://lawyers5560.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000691,Lopez & Jones LLP,Dacula,Gwinnett,GA,Civil Litigation; Real Estate,2023,5,(912) 269-2422,https://attorney412.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000692,"Lewis, Edwards & Gonzalez",Madison,Morgan,GA,Admiralty Law; Construction Law,1978,7,(706) 628-8171,https://law3904.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000693,Phillips & Associates,Madison,Morgan,GA,Securities Law; Family Law,1993,40,(678) 582-1676,https://attorney9542.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000694,The Garcia Law Firm,Madison,Morgan,GA,Healthcare Law; Business Law,1998,35,(706) 614-6647,https://attorney2619.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000695,Reeves Law Group,Madison,Morgan,GA,Employment Law; Commercial Litigation,2011,49,(912) 686-2334,https://lawyers3929.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000696,Taylor Law Group,Madison,Morgan,GA,Family Law; Tax Law,2013,12,(404) 781-6699,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000697,The Edwards Law Firm,Madison,Morgan,GA,Immigration Law; Patent Law,1961,32,(478) 426-5406,https://law2586.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000698,Garcia & Associates,Madison,Morgan,GA,Divorce; Real Estate,1982,28,(678) 972-1754,https://firm9616.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000699,Young Legal,Canton,Cherokee,GA,Employment Law; Admiralty Law,1965,12,(912) 266-3094,https://lawyers2295.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000700,The Anderson Law Firm,Canton,Cherokee,GA,Intellectual Property; Mergers & Acquisitions,1980,39,(706) 912-8819,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000701,Collins & Associates,Canton,Cherokee,GA,Divorce; Tax Law,2005,27,(478) 591-1935,https://law2667.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000702,The Young Law Firm,Canton,Cherokee,GA,Business Law; Civil Litigation,1967,32,(404) 374-2881,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000703,Miller Law Group,Canton,Cherokee,GA,Probate; Litigation,2004,29,(706) 962-9030,https://legal503.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000704,Martin Legal,Canton,Cherokee,GA,Tax Law; Personal Injury,2014,16,(706) 408-7507,https://firm9655.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000705,Phillips Legal,Canton,Cherokee,GA,Patent Law; Construction Law,2001,39,(678) 807-6652,https://law4933.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000706,The Hernandez Law Firm,Canton,Cherokee,GA,Tax Law; DUI Defense,2000,24,(706) 509-9706,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000707,White Law Group,Canton,Cherokee,GA,Intellectual Property; DUI Defense,1964,48,(762) 935-9619,https://attorney308.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000708,Walker Legal,Canton,Cherokee,GA,Tax Law; Immigration Law,1991,4,(770) 713-2966,https://firm3975.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000709,Phillips & Associates,Canton,Cherokee,GA,Patent Law; Real Estate,1994,13,(404) 396-2230,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000710,Martinez Law Group,Canton,Cherokee,GA,Securities Law; Business Law,2007,21,(404) 878-6119,https://lawyers5521.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000711,The Phillips Law Firm,Woodstock,Cherokee,GA,Corporate Law; Commercial Litigation,1990,3,(229) 804-5748,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000712,Murphy Law Group,Woodstock,Cherokee,GA,Employment Law; Criminal Defense,1982,50,(706) 896-6513,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000713,"Lewis, Morris & Hernandez",Woodstock,Cherokee,GA,Intellectual Property; Mergers & Acquisitions,1962,17,(678) 831-4032,https://lawyers2299.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000714,Moore & Rodriguez LLP,Woodstock,Cherokee,GA,Mergers & Acquisitions; Civil Litigation,2003,49,(478) 238-1489,https://law7588.org,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000715,Sanchez Law Group,Woodstock,Cherokee,GA,Construction Law; Commercial Litigation,1964,46,(762) 391-4820,https://firm4985.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000716,Reeves Law Group,Woodstock,Cherokee,GA,Commercial Litigation; Construction Law,1997,12,(678) 811-2345,https://firm3305.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000717,Reeves Legal,Woodstock,Cherokee,GA,Probate; Employment Law,1976,7,(912) 824-2130,https://law1790.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000718,Murphy & Associates,Woodstock,Cherokee,GA,Corporate Law; Securities Law,1967,15,(478) 965-5223,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000719,Anderson Law Group,Douglasville,Douglas,GA,Tax Law; Civil Litigation,1990,41,(706) 705-9494,https://attorney399.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000720,Peterson Law Group,Douglasville,Douglas,GA,Intellectual Property; Criminal Defense,1965,29,(912) 266-9164,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000721,Williams Law Group,Douglasville,Douglas,GA,Bankruptcy; Criminal Defense,2019,20,(470) 449-4252,https://attorney7449.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000722,Clark Legal,Douglasville,Douglas,GA,Probate; Estate Planning,1985,24,(678) 923-1147,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000723,Reeves & Clark LLP,Douglasville,Douglas,GA,Patent Law; Business Law,2017,27,(478) 453-3951,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000724,Thompson & Associates,Douglasville,Douglas,GA,Personal Injury; Corporate Law,1964,21,(912) 257-1843,https://firm8839.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000725,The Brown Law Firm,Douglasville,Douglas,GA,Personal Injury; Intellectual Property,2015,48,(229) 496-2541,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000726,Lewis Law Group,Douglasville,Douglas,GA,Employment Law; Corporate Law,1976,16,(912) 438-3951,https://lawyers8793.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000727,Parker & Associates,Douglasville,Douglas,GA,Litigation; Healthcare Law,2019,18,(770) 676-9432,https://law5972.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000728,Thomas & Anderson LLP,Douglasville,Douglas,GA,Intellectual Property; Employment Law,2002,42,(478) 964-4086,https://firm5700.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000729,Wilson Law Group,Douglasville,Douglas,GA,Admiralty Law; Healthcare Law,1961,28,(770) 939-8439,https://legal1691.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000730,Garcia & Wilson LLP,Douglasville,Douglas,GA,Tax Law; Healthcare Law,2012,5,(470) 608-3566,https://legal838.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000731,White Law Group,Douglasville,Douglas,GA,Intellectual Property; Family Law,1970,34,(770) 254-7531,https://law555.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000732,Lewis & Associates,Douglasville,Douglas,GA,Patent Law; Estate Planning,2000,47,(478) 671-9880,https://law264.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000733,Smith Legal,Douglasville,Douglas,GA,Personal Injury; Environmental Law,2022,25,(678) 697-7664,https://legal4497.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000734,Sanchez & Associates,Douglasville,Douglas,GA,Admiralty Law; Healthcare Law,1962,10,(912) 424-9015,https://legal8228.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000735,Scott & Associates,Douglasville,Douglas,GA,Healthcare Law; DUI Defense,2007,30,(470) 773-2933,https://lawyers283.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000736,Torres Legal,Douglasville,Douglas,GA,Estate Planning; Immigration Law,2010,14,(478) 690-1834,https://attorney7042.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000737,Jones & Perez LLP,Carrollton,Carroll,GA,Employment Law; Family Law,2010,16,(478) 954-9146,https://lawyers2463.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000738,"Ramirez, Sanchez & Hernandez",Carrollton,Carroll,GA,Personal Injury; Intellectual Property,1982,28,(470) 204-2853,https://firm779.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000739,Anderson & Reeves LLP,Carrollton,Carroll,GA,Construction Law; Real Estate,1996,32,(229) 378-4465,https://law4460.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000740,Davis & Clark LLP,Carrollton,Carroll,GA,Personal Injury; Divorce,2015,7,(478) 970-2432,https://attorney2415.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000741,Gonzalez & Associates,Carrollton,Carroll,GA,DUI Defense; Commercial Litigation,2000,3,(706) 281-5229,https://firm4502.com,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000742,The Lee Law Firm,Carrollton,Carroll,GA,Intellectual Property; Corporate Law,2017,46,(478) 708-7225,https://firm3685.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000743,Reeves Law Group,Carrollton,Carroll,GA,Construction Law; Civil Litigation,1964,29,(706) 612-3579,https://lawyers5208.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000744,Peterson & Associates,Carrollton,Carroll,GA,Real Estate; Bankruptcy,2011,35,(478) 783-9618,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000745,The Moore Law Firm,Carrollton,Carroll,GA,Probate; Civil Litigation,2002,13,(706) 472-1192,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000746,"Murphy, King & Thompson",Carrollton,Carroll,GA,Criminal Defense; Family Law,2017,4,(478) 602-5915,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000747,Johnson & Associates,Carrollton,Carroll,GA,Litigation; Estate Planning,1979,10,(706) 434-4605,https://legal6381.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000748,Johnson & Hernandez LLP,Carrollton,Carroll,GA,Environmental Law; Administrative Law,2022,43,(470) 445-6879,https://law3255.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000749,Gonzalez Legal,Carrollton,Carroll,GA,Mergers & Acquisitions; Civil Litigation,2014,15,(770) 233-5577,https://firm1605.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000750,Young & Associates,Carrollton,Carroll,GA,Admiralty Law; Corporate Law,2023,16,(762) 881-6687,https://legal5937.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000751,Wilson Legal,LaGrange,Troup,GA,Healthcare Law; Probate,1972,2,(706) 920-7690,https://lawyers2023.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000752,Moore Law Group,LaGrange,Troup,GA,Personal Injury; Securities Law,2013,20,(470) 586-1469,https://lawyers6458.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000753,"Harris, Murphy & Brown",LaGrange,Troup,GA,Immigration Law; Construction Law,1967,30,(478) 528-3924,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000754,Wilson & Associates,LaGrange,Troup,GA,Personal Injury; Commercial Litigation,1966,16,(404) 838-2239,https://lawyers2281.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000755,Lewis & Thompson LLP,LaGrange,Troup,GA,Immigration Law; Probate,1971,47,(404) 564-7653,https://attorney5722.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000756,Anderson Law Group,LaGrange,Troup,GA,Environmental Law; Divorce,1987,48,(404) 326-9532,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000757,Taylor Law Group,LaGrange,Troup,GA,Healthcare Law; Bankruptcy,2018,32,(678) 846-9019,https://lawyers1025.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000758,Murphy & Associates,LaGrange,Troup,GA,Litigation; Construction Law,2007,20,(478) 886-5485,https://lawyers7347.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000759,White Legal,Valdosta,Lowndes,GA,Patent Law; Family Law,1991,15,(470) 758-9877,https://law373.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000760,Lee & Associates,Valdosta,Lowndes,GA,Mergers & Acquisitions; Corporate Law,2012,17,(404) 564-1820,https://law7769.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000761,"Lee, Davis & Jackson",Valdosta,Lowndes,GA,Immigration Law; Mergers & Acquisitions,1972,6,(912) 899-5751,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000762,Lopez Law Group,Valdosta,Lowndes,GA,Civil Litigation; Tax Law,2013,16,(678) 539-9109,https://attorney5636.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000763,"Morris, Brown & Brown",Valdosta,Lowndes,GA,Family Law; Real Estate,1961,38,(229) 572-5966,https://firm6335.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000764,"Scott, Wright & Lewis",Valdosta,Lowndes,GA,Criminal Defense; Healthcare Law,2019,16,(478) 684-5410,https://attorney9461.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000765,Anderson & Associates,Valdosta,Lowndes,GA,Family Law; Securities Law,1991,29,(478) 934-9195,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000766,Collins Law Group,Valdosta,Lowndes,GA,Business Law; Construction Law,1978,2,(470) 240-4982,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000767,Hernandez Legal,Valdosta,Lowndes,GA,Admiralty Law; Business Law,2005,25,(470) 270-2366,https://law5537.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000768,Edwards & Associates,Valdosta,Lowndes,GA,Healthcare Law; Mergers & Acquisitions,1989,49,(478) 618-3467,https://attorney3587.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000769,Garcia & Associates,Valdosta,Lowndes,GA,Bankruptcy; Business Law,2007,9,(470) 436-7460,https://legal1168.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000770,The Jones Law Firm,Valdosta,Lowndes,GA,Mergers & Acquisitions; Intellectual Property,2023,25,(478) 378-9031,https://lawyers7781.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000771,Davis Law Group,Valdosta,Lowndes,GA,Probate; Family Law,2008,32,(912) 206-3589,https://firm1393.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000772,Harris Legal,Valdosta,Lowndes,GA,Environmental Law; Securities Law,1978,9,(478) 490-6745,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000773,Johnson & Associates,Valdosta,Lowndes,GA,Mergers & Acquisitions; Criminal Defense,2023,10,(229) 854-2771,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000774,Miller Legal,Valdosta,Lowndes,GA,Intellectual Property; Probate,1990,18,(762) 528-4711,https://law599.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000775,Rodriguez Legal,Valdosta,Lowndes,GA,Immigration Law; Healthcare Law,1994,8,(470) 493-3223,https://legal8797.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000776,Martin Law Group,Valdosta,Lowndes,GA,Mergers & Acquisitions; Civil Litigation,2011,27,(912) 286-1712,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000777,Reeves & Associates,Valdosta,Lowndes,GA,Intellectual Property; DUI Defense,2001,27,(478) 413-8693,https://lawyers390.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000778,Hernandez Legal,Valdosta,Lowndes,GA,Litigation; DUI Defense,1980,48,(762) 815-3308,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000779,Brown Law Group,Valdosta,Lowndes,GA,Healthcare Law; Mergers & Acquisitions,1997,25,(770) 226-1500,https://attorney3221.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000780,Edwards Law Group,Valdosta,Lowndes,GA,Admiralty Law; Patent Law,1982,49,(706) 502-9489,https://lawyers9714.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000781,Jackson & Associates,Valdosta,Lowndes,GA,Business Law; Employment Law,1971,32,(770) 245-2877,https://firm1003.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000782,Brown Legal,Valdosta,Lowndes,GA,DUI Defense; Construction Law,1960,38,(706) 904-9642,https://legal5419.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000783,The Thomas Law Firm,Brunswick,Glynn,GA,Business Law; Real Estate,2021,4,(470) 577-1553,https://legal2677.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000784,The Sanchez Law Firm,Brunswick,Glynn,GA,Bankruptcy; Divorce,1986,35,(470) 757-2517,https://firm6693.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000785,Smith & Associates,Brunswick,Glynn,GA,Real Estate; Divorce,1989,23,(404) 932-6463,https://legal8031.org,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000786,Lewis & Associates,Brunswick,Glynn,GA,Civil Litigation; Patent Law,1977,5,(229) 541-1936,https://law2913.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000787,"Taylor, Anderson & Sanchez",Brunswick,Glynn,GA,Securities Law; Healthcare Law,2014,17,(404) 226-3528,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000788,Edwards Law Group,Brunswick,Glynn,GA,Administrative Law; Patent Law,1993,39,(770) 788-2081,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000789,Collins & Associates,Brunswick,Glynn,GA,Bankruptcy; Litigation,1987,8,(478) 714-7078,https://legal6053.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000790,Brown & Associates,Brunswick,Glynn,GA,Construction Law; Intellectual Property,1980,19,(762) 290-7042,https://legal7724.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000791,Lee Legal,Brunswick,Glynn,GA,Intellectual Property; Securities Law,1981,18,(470) 503-6703,https://attorney9365.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000792,Brown Law Group,Brunswick,Glynn,GA,Business Law; Personal Injury,1968,19,(229) 467-6982,https://legal1755.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000793,Lee & Associates,Brunswick,Glynn,GA,Divorce; Estate Planning,2005,10,(470) 733-8113,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000794,The Wright Law Firm,Brunswick,Glynn,GA,Securities Law; Personal Injury,1962,36,(404) 716-7019,,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000795,Allen Law Group,Brunswick,Glynn,GA,Employment Law; Family Law,1960,13,(470) 665-4837,https://attorney4125.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000796,Robinson & Associates,Brunswick,Glynn,GA,Bankruptcy; Tax Law,1998,5,(470) 770-4711,https://firm1310.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000797,Robinson Legal,Brunswick,Glynn,GA,Securities Law; Estate Planning,1984,45,(404) 775-6047,https://law5731.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000798,Parker Legal,Brunswick,Glynn,GA,Securities Law; Estate Planning,2002,40,(678) 903-7460,https://legal392.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000799,Rodriguez & Associates,Brunswick,Glynn,GA,Probate; Bankruptcy,1968,41,(404) 681-3429,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000800,Allen Law Group,Brunswick,Glynn,GA,Civil Litigation; DUI Defense,1967,39,(229) 851-8179,https://firm2342.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000801,Jones Law Group,Brunswick,Glynn,GA,Mergers & Acquisitions; Employment Law,2022,7,(229) 431-6891,https://attorney564.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000802,Campbell & Associates,Brunswick,Glynn,GA,Business Law; Patent Law,2022,21,(912) 618-5955,https://legal9571.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000803,Morris Legal,Jekyll Island,Glynn,GA,Mergers & Acquisitions; Healthcare Law,1963,29,(404) 606-5817,https://attorney7887.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000804,Edwards & Associates,Jekyll Island,Glynn,GA,Tax Law; Real Estate,1974,9,(912) 886-1353,https://firm2049.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000805,The Phillips Law Firm,Jekyll Island,Glynn,GA,Family Law; Securities Law,2020,5,(706) 881-2764,https://attorney9141.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000806,Gonzalez Legal,Jekyll Island,Glynn,GA,Patent Law; Administrative Law,1997,6,(478) 627-6775,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000807,Torres Legal,Jekyll Island,Glynn,GA,Intellectual Property; Administrative Law,1993,34,(404) 263-6115,https://firm4473.org,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000808,King Law Group,St. Simons Island,Fulton,GA,Business Law; Immigration Law,1984,37,(762) 427-6695,,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000809,Allen Law Group,St. Simons Island,Fulton,GA,Healthcare Law; Civil Litigation,2012,44,(478) 291-8107,https://legal4350.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000810,The Phillips Law Firm,St. Simons Island,Fulton,GA,Admiralty Law; Commercial Litigation,2013,28,(478) 993-6391,https://attorney7224.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000811,Ramirez Legal,St. Simons Island,Fulton,GA,DUI Defense; Business Law,1973,25,(706) 528-8630,https://firm3828.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000812,Brown & Associates,St. Simons Island,Fulton,GA,Divorce; Intellectual Property,1995,19,(706) 842-9826,https://firm5334.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000813,Brown Law Group,St. Simons Island,Fulton,GA,Estate Planning; Healthcare Law,1972,13,(706) 599-5971,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000814,Sanchez & Associates,St. Simons Island,Fulton,GA,DUI Defense; Civil Litigation,2018,4,(404) 477-3866,https://firm1233.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000815,Murphy Legal,St. Simons Island,Fulton,GA,Healthcare Law; Personal Injury,1980,9,(678) 794-1352,https://firm6027.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000816,Wilson Legal,St. Simons Island,Fulton,GA,Securities Law; Mergers & Acquisitions,1983,48,(678) 441-5819,https://firm2681.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000817,Martinez Law Group,St. Simons Island,Fulton,GA,Patent Law; Family Law,1962,16,(470) 667-9313,https://lawyers1035.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000818,Garcia Law Group,St. Simons Island,Fulton,GA,Criminal Defense; Bankruptcy,2014,20,(404) 896-6115,https://attorney2066.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000819,Thompson Legal,St. Simons Island,Fulton,GA,Intellectual Property; Administrative Law,2022,7,(762) 685-7219,https://legal4634.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000820,Thomas Law Group,St. Simons Island,Fulton,GA,Litigation; Estate Planning,1983,37,(770) 884-7211,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000821,"Garcia, Martin & Perez",St. Simons Island,Fulton,GA,Business Law; Litigation,1969,5,(678) 977-5692,https://attorney6276.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000822,Torres Legal,Warner Robins,Houston,GA,Immigration Law; Probate,1982,9,(478) 730-7261,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000823,Smith Law Group,Warner Robins,Houston,GA,Administrative Law; Corporate Law,2013,28,(478) 998-1122,https://law4912.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000824,Miller Legal,Warner Robins,Houston,GA,Estate Planning; Patent Law,2000,27,(912) 635-1447,https://firm3182.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000825,Clark & Associates,Warner Robins,Houston,GA,Divorce; Immigration Law,1997,26,(404) 918-1655,https://lawyers6640.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000826,Edwards Law Group,Warner Robins,Houston,GA,Litigation; Bankruptcy,1998,48,(770) 821-3685,https://legal6434.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000827,Ramirez & White LLP,Warner Robins,Houston,GA,Family Law; Patent Law,2006,2,(404) 859-9198,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000828,Anderson Law Group,Warner Robins,Houston,GA,Construction Law; Litigation,2017,12,(912) 504-4604,https://attorney3731.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000829,"Robinson, Taylor & Miller",Warner Robins,Houston,GA,Civil Litigation; Immigration Law,2008,38,(404) 811-2633,https://law1342.law,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000830,Miller Law Group,Warner Robins,Houston,GA,Divorce; Environmental Law,1975,31,(404) 212-1266,https://law2053.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000831,Miller & Peterson LLP,Warner Robins,Houston,GA,Business Law; Litigation,1969,5,(706) 553-3538,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000832,Wright Law Group,Warner Robins,Houston,GA,Estate Planning; Intellectual Property,2000,6,(229) 361-8016,https://firm5347.legal,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000833,Edwards & Associates,Warner Robins,Houston,GA,Civil Litigation; Personal Injury,1992,13,(229) 575-1821,https://firm4803.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000834,White Legal,Warner Robins,Houston,GA,Mergers & Acquisitions; Bankruptcy,1965,21,(470) 223-4754,https://legal3729.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000835,Gonzalez Law Group,Warner Robins,Houston,GA,Commercial Litigation; Intellectual Property,2000,41,(229) 515-7698,https://attorney5051.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000836,"Clark, Johnson & Parker",Warner Robins,Houston,GA,Employment Law; Commercial Litigation,1963,2,(762) 838-2404,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000837,Peterson Law Group,Warner Robins,Houston,GA,Healthcare Law; Litigation,2022,38,(912) 565-4521,https://attorney5028.org,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000838,Clark & Associates,Warner Robins,Houston,GA,Corporate Law; Civil Litigation,1984,19,(478) 458-6292,https://legal1848.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000839,The Perez Law Firm,Cordele,Crisp,GA,Real Estate; Litigation,2010,34,(762) 317-5113,https://firm7554.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000840,Miller & Associates,Cordele,Crisp,GA,Mergers & Acquisitions; Intellectual Property,2009,46,(478) 891-2044,https://attorney978.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000841,Rodriguez Law Group,Cordele,Crisp,GA,Corporate Law; DUI Defense,2017,44,(478) 245-7223,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000842,Lee Legal,Cordele,Crisp,GA,DUI Defense; Admiralty Law,2023,6,(762) 770-8241,https://law1145.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000843,Taylor Legal,Cordele,Crisp,GA,DUI Defense; Bankruptcy,1973,8,(770) 588-7982,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000844,The Torres Law Firm,Cordele,Crisp,GA,Tax Law; Personal Injury,1981,40,(478) 201-8600,https://legal121.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000845,Perez & Associates,Cordele,Crisp,GA,Mergers & Acquisitions; Construction Law,1984,11,(229) 548-8022,https://attorney9963.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000846,The Moore Law Firm,Cordele,Crisp,GA,DUI Defense; Mergers & Acquisitions,1983,9,(229) 725-7317,https://legal5693.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000847,Young & Associates,Cordele,Crisp,GA,Civil Litigation; Bankruptcy,1990,41,(478) 206-5795,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000848,White Legal,Cordele,Crisp,GA,Estate Planning; Litigation,2018,1,(762) 927-7695,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000849,Harris & Associates,Cordele,Crisp,GA,Environmental Law; Commercial Litigation,1983,40,(678) 812-1023,https://firm825.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000850,"Young, Perez & Miller",Albany,Dougherty,GA,Commercial Litigation; Healthcare Law,1963,1,(478) 540-1953,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000851,The Wright Law Firm,Albany,Dougherty,GA,Patent Law; Real Estate,1978,24,(470) 646-2426,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000852,Morris & Associates,Albany,Dougherty,GA,Immigration Law; Tax Law,2018,47,(229) 204-2650,https://law2311.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000853,Moore Legal,Albany,Dougherty,GA,Employment Law; Corporate Law,2003,21,(678) 604-6229,https://firm7401.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000854,Hernandez Legal,Albany,Dougherty,GA,Divorce; Healthcare Law,1991,34,(404) 464-9726,https://law2898.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000855,Harris & Perez LLP,Albany,Dougherty,GA,Civil Litigation; DUI Defense,1964,16,(478) 251-9149,https://legal9349.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000856,Reeves Legal,Albany,Dougherty,GA,Commercial Litigation; Real Estate,2000,47,(912) 585-7627,https://lawyers3267.com,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000857,Jackson Legal,Albany,Dougherty,GA,Family Law; Estate Planning,2006,20,(404) 758-5890,https://law4049.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000858,Gonzalez Legal,Albany,Dougherty,GA,Civil Litigation; Tax Law,2001,37,(770) 759-1029,https://legal7175.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000859,Thomas & Associates,Albany,Dougherty,GA,Probate; Corporate Law,1976,37,(478) 348-6022,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000860,Torres & Torres LLP,Albany,Dougherty,GA,Personal Injury; Divorce,2018,25,(404) 391-8039,https://firm7938.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000861,The Moore Law Firm,Albany,Dougherty,GA,Divorce; Patent Law,2021,45,(770) 351-6706,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000862,Martinez Legal,Albany,Dougherty,GA,Intellectual Property; Immigration Law,1968,36,(706) 913-6077,https://firm7594.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000863,King & Associates,Albany,Dougherty,GA,Securities Law; Corporate Law,1970,30,(912) 860-6754,https://law313.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000864,Clark Legal,Tifton,Tift,GA,Mergers & Acquisitions; Commercial Litigation,2006,2,(404) 752-6851,https://firm1262.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000865,"Davis, Lee & Walker",Tifton,Tift,GA,Divorce; Construction Law,1988,50,(770) 990-2809,https://lawyers5786.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000866,Lopez Law Group,Tifton,Tift,GA,Environmental Law; Intellectual Property,1978,33,(770) 352-6442,https://lawyers2592.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000867,Gonzalez & Associates,Tifton,Tift,GA,Corporate Law; Patent Law,1964,41,(678) 563-4221,https://legal7057.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000868,Johnson Law Group,Tifton,Tift,GA,Construction Law; Personal Injury,1998,19,(478) 447-9776,https://law7825.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000869,Torres & Edwards LLP,Moultrie,Colquitt,GA,Estate Planning; Corporate Law,1993,49,(762) 379-4359,https://law7185.legal,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000870,Collins Law Group,Moultrie,Colquitt,GA,Criminal Defense; Intellectual Property,1962,11,(229) 569-3960,https://legal9437.net,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000871,King Law Group,Moultrie,Colquitt,GA,DUI Defense; Criminal Defense,1995,22,(912) 391-2496,https://legal4731.net,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000872,Morris Law Group,Moultrie,Colquitt,GA,Probate; Bankruptcy,1964,45,(706) 921-1431,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000873,Brown Legal,Moultrie,Colquitt,GA,Securities Law; Tax Law,1999,31,(478) 365-6918,https://attorney6762.law,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000874,Jackson & Associates,Moultrie,Colquitt,GA,Mergers & Acquisitions; Intellectual Property,1960,12,(478) 527-1435,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000875,Miller Law Group,Moultrie,Colquitt,GA,DUI Defense; Personal Injury,1981,38,(229) 314-9950,,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000876,Wilson & Associates,Moultrie,Colquitt,GA,Employment Law; Construction Law,2008,26,(478) 570-7120,https://legal2762.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000877,Thomas & Associates,Moultrie,Colquitt,GA,Immigration Law; Probate,2001,29,(706) 965-6213,https://lawyers3073.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000878,King Legal,Statesboro,Fulton,GA,DUI Defense; Real Estate,1967,16,(762) 415-7630,https://lawyers5172.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000879,Smith & Murphy LLP,Statesboro,Fulton,GA,Divorce; Commercial Litigation,1980,14,(678) 659-9366,https://firm6062.org,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000880,Sanchez & Jones LLP,Statesboro,Fulton,GA,Administrative Law; Immigration Law,2004,34,(470) 303-2384,https://lawyers2215.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000881,Walker Legal,Statesboro,Fulton,GA,Securities Law; Administrative Law,1985,1,(762) 972-3319,https://law4959.law,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000882,Anderson Legal,Statesboro,Fulton,GA,Litigation; DUI Defense,2015,6,(229) 565-4650,https://lawyers8194.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000883,Moore & Associates,Statesboro,Fulton,GA,Family Law; Immigration Law,2005,45,(678) 931-1122,https://legal4213.net,Georgia State Bar Public Directory,Solo Practice,ACTIVE
+GA-000884,"Parker, Wilson & Parker",Statesboro,Fulton,GA,Immigration Law; Admiralty Law,1997,13,(478) 655-6963,https://lawyers9439.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000885,Thomas Legal,Statesboro,Fulton,GA,Immigration Law; Environmental Law,2019,7,(706) 818-8738,https://legal9137.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000886,Wilson Law Group,Statesboro,Fulton,GA,Construction Law; Litigation,1998,30,(678) 469-3036,,Georgia State Bar Public Directory,Small Firm (2-10),ACTIVE
+GA-000887,Peterson Legal,Statesboro,Fulton,GA,Patent Law; Civil Litigation,2005,6,(478) 765-5587,https://attorney8197.legal,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000888,Taylor Law Group,Statesboro,Fulton,GA,Tax Law; DUI Defense,1984,24,(706) 427-5912,https://legal1133.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE
+GA-000889,"Scott, Harris & Peterson",Statesboro,Fulton,GA,Administrative Law; Patent Law,2018,40,(478) 947-8555,https://law7070.com,Georgia State Bar Public Directory,Mid-Size (11-50),ACTIVE

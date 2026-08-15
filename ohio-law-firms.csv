@@ -1,0 +1,751 @@
+firm_id,firm_name,city,county,state,practice_areas,year_founded,estimated_attorney_count,phone,website,verified_source,firm_type,status
+OH-000000,Lee LLC,Mansfield,Richland,OH,Product Liability; Corporate Law; Nonprofit Law,1965,107,(380) 505-2063,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000001,Taylor LLP,Dayton,Montgomery,OH,Trusts; Property Law; Civil Litigation; Business Formation,2021,43,(513) 846-8090,https://5yt02nru21.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000002,"Martin, Smith & Taylor",Sandusky,Erie,OH,Tax Law; Workers Compensation; Healthcare Law,1988,140,(937) 654-4752,https://432zt7.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000003,Rogers Partners,Wooster,Wayne,OH,Environmental Law; Compliance; Workers Compensation; Contract Law,1976,114,(330) 971-7596,https://04j4u3sybt.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000004,"Bennett, Harris & Taylor",Worthington,Franklin,OH,Divorce; Civil Litigation; White Collar Crime,2013,167,(740) 320-9090,https://06a2zv.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000005,"Ortiz, Peterson & Garcia",Lorain,Lorain,OH,Nonprofit Law; HR Compliance,2017,164,(614) 480-7390,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000006,"Edwards, Taylor & Garcia",Worthington,Franklin,OH,Intellectual Property; Immigration Law,2003,31,(614) 651-4271,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000007,Stewart LLC,Steubenville,Jefferson,OH,Bankruptcy; Custody; Trial Law,1964,154,(380) 872-7287,https://g9s5pcgmt6.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000008,Torres PLLC,Blendon,Franklin,OH,Probate,2015,223,(937) 696-1542,https://lqftl83l.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000009,"Williams, Clark & Medina",Xenia,Greene,OH,Intellectual Property,1965,71,(740) 211-5530,https://f5qt4.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000010,"Lindsey, Lopez & Bowman",Kettering,Montgomery,OH,Litigation; Criminal Law,2007,171,(216) 790-9388,https://3632l.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000011,"Gonzalez, Bowman & Morgan",Zanesville,Muskingum,OH,Traffic Law; Probate; Nonprofit Law; Construction Law,2000,101,(216) 249-5453,https://9crju0mx7.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000012,Gutierrez Legal Services,Akron,Summit,OH,Construction Law; Administrative Law,1970,238,(937) 993-7803,https://w7fef162.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000013,"Murphy, Morris & Peterson",Trotwood,Montgomery,OH,Employment Law; Trusts,1996,149,(380) 669-7682,https://qbdnl.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000014,Shaffer & King Legal Services,Cincinnati,Hamilton,OH,Property Law; Patent Law; Administrative Law; Intellectual Property,2011,30,(380) 967-1696,https://pkwrltv4hb.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000015,"Shaffer, Anderson & Davis",Blendon,Franklin,OH,Bankruptcy; Real Estate; DUI Defense; Environmental Law,2018,85,(380) 682-2042,https://kgo3sv9tjc.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000016,Edwards Law Group,Marion,Marion,OH,Product Liability,2007,27,(380) 840-4410,https://tlwiugw37.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000017,Moore Associates,Elyria,Lorain,OH,Patent Law; Employment Law,1996,88,(330) 579-8008,https://fmy7lv64.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000018,Thomas Law Group,Ashland,Ashland,OH,Contract Law; Real Estate,1968,173,(567) 638-3698,https://f882pswgtq.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000019,Howell & Harris PLLC,Akron,Summit,OH,Traffic Law; Commercial Law; Energy Law,2010,236,(330) 232-7772,https://873yq2p2nx.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000020,"Gonzalez, Lee & Phillips",Youngstown,Mahoning,OH,Medical Malpractice; Corporate Law; Compliance,1990,157,(740) 781-3483,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000021,"Howell, Martin & Wilson",Euclid,Cuyahoga,OH,HR Compliance; Property Law; Trial Law; Securities Law,1998,200,(937) 943-8860,https://t4tp7skzwv.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000022,Bowman Partners,Newark,Licking,OH,Family Law; Property Law; Estate Planning,1977,158,(567) 833-5759,https://qrpxsy.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000023,"Scott, Hall & Young",Canton,Stark,OH,Administrative Law,1969,196,(614) 237-4681,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000024,Sutton Legal Group,Lakewood,Cuyahoga,OH,Securities Law; Administrative Law; Bankruptcy; Family Law,2011,200,(440) 837-6134,https://020tf2.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000025,Edwards & Phillips Law Group,Trotwood,Montgomery,OH,Securities Law; Family Law,1967,240,(330) 875-9680,https://iipno0.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000026,"Thomas, Gutierrez & Ortiz",Findlay,Hancock,OH,White Collar Crime,2017,79,(513) 593-9314,https://by3iylz.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000027,"Martinez, Valdez & Hall",Huber Heights,Montgomery,OH,White Collar Crime; Commercial Law,1980,51,(440) 749-4749,https://q57bcwqvy.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000028,"Mathis, Torres & Ortiz",Cleveland,Cuyahoga,OH,Probate; Administrative Law; Commercial Law; Nonprofit Law,1978,125,(740) 936-9866,https://qauil.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000029,Walker Law Group,Sandusky,Erie,OH,Energy Law,1976,148,(567) 915-3774,https://5mxjs5x5.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000030,"Mathis, Murphy & Hernandez",Marietta,Washington,OH,Patent Law; Energy Law; White Collar Crime,1983,115,(380) 502-1634,https://0hc2l02lh.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000031,"Harris, Harris & Lindsey",Cincinnati,Hamilton,OH,Custody,2015,56,(740) 476-5630,https://myqoa536gm.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000032,Lee & Moore PLLC,Lakewood,Cuyahoga,OH,Visa Matters; Patent Law; Trial Law; Traffic Law,1987,237,(440) 616-4680,https://diiotmuhk.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000033,Williams Legal Group,Zanesville,Muskingum,OH,Debt Relief; Intellectual Property; Nonprofit Law,2019,13,(419) 641-9024,https://2zdzlyec9.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000034,Peterson Counsel,Warren,Trumbull,OH,Trusts; Insurance Law; Patent Law; Nonprofit Law,2003,243,(419) 883-8695,https://w7oj7hv99.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000035,Martinez Associates,Sandusky,Erie,OH,Family Law; Medical Malpractice; Immigration Law,2004,3,(440) 285-8356,https://jl4mfxj.attorney,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000036,"Lee, Davis & Edwards",Marietta,Washington,OH,Debt Relief; Environmental Law; Visa Matters,2007,53,(937) 538-6190,https://u5uszxrasj.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000037,Medina & Rogers Counsel,Lima,Allen,OH,Energy Law; Healthcare Law; Traffic Law,1974,2,(937) 518-2452,https://q3rbu5.law,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000038,Young Legal,Athens,Athens,OH,Custody; Construction Law,2006,56,(440) 854-7011,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000039,Howell Law Firm,Canton,Stark,OH,Insurance Law; Administrative Law,1993,15,(567) 639-7557,https://03fu7qs25x.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000040,"Murphy, Martin & Young",Lima,Allen,OH,Energy Law,1972,81,(567) 288-1057,https://2l14odt8u.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000041,Taylor Partners,Akron,Summit,OH,Intellectual Property; White Collar Crime,2005,164,(330) 554-7455,https://ezko5l.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000042,"Garcia, Jones & Lewis",Gallipolis,Gallia,OH,Traffic Law,2017,238,(937) 778-7937,https://dmr665v1.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000043,"Collins, Walker & Morris",Lorain,Lorain,OH,Energy Law; Real Estate; Trusts,1991,8,(614) 404-4462,https://gzg2fw4cfs.attorney,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000044,Howell Legal,Massillon,Stark,OH,Divorce; Administrative Law,1979,91,(740) 471-6468,https://lzzbz.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000045,Graves Partners,Gallipolis,Gallia,OH,Probate; Traffic Law; Product Liability,1983,181,(216) 579-6354,https://bqsajrqkv.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000046,"Johnson, Brown & Campbell",Lima,Allen,OH,Workers Compensation; Tax Law,2001,97,(216) 939-7996,https://ek5nwn9t6b.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000047,"Moore, Barnes & Hall",Chillicothe,Ross,OH,DUI Defense,1986,28,(216) 738-3383,https://yaq6l.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000048,"Taylor, King & Mathis",Toledo,Lucas,OH,Family Law; Construction Law,1961,225,(614) 523-4532,https://zkx4td0i.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000049,"Rodriguez, Taylor & Garcia",Tiffin,Seneca,OH,Corporate Law; Product Liability; Education Law; Tax Law,1997,200,(740) 556-8116,https://2p46vb04.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000050,Taylor & Walker Attorneys,Mount Vernon,Knox,OH,Energy Law; HR Compliance; Business Formation,1971,152,(216) 889-6298,https://3u2d3.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000051,Jones & King LLP,Bowling Green,Wood,OH,Visa Matters; Custody; Product Liability; Insurance Law,1992,3,(937) 849-5929,https://c0iywwf.lawyers,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000052,Scott Legal,Athens,Athens,OH,Insurance Law; Criminal Law,2020,22,(330) 588-2079,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000053,Parker Associates,Zanesville,Muskingum,OH,Patent Law; Tax Law,2018,198,(330) 858-4302,https://ffnvf.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000054,Hall Associates,Delaware,Delaware,OH,Property Law; Environmental Law; Healthcare Law; Patent Law,1989,206,(380) 302-1555,https://fi3g4.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000055,Wilson LLC,Akron,Summit,OH,Commercial Law; Criminal Law; Tax Law,1967,117,(440) 735-1612,https://jqrtcm.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000056,Shaffer PLLC,Lima,Allen,OH,Government Relations,2021,78,(330) 730-1098,https://13qrqf.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000057,"Lopez, Collins & Martinez",Springfield,Clark,OH,Corporate Law; DUI Defense; Immigration Law,2002,110,(614) 801-7870,https://tzq02mnr.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000058,Young & Taylor Partners,Mansfield,Richland,OH,Employment Law,1970,166,(216) 900-9599,https://zqewichfs6.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000059,Gonzalez Legal Group,Massillon,Stark,OH,White Collar Crime; Government Relations; Family Law; Estate Planning,1973,113,(330) 842-3900,https://pk7jmg.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000060,Peterson LLC,Toledo,Lucas,OH,Administrative Law; Corporate Law,1963,106,(567) 739-8163,https://eduvq.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000061,Ortiz Law Firm,Cleveland,Cuyahoga,OH,Family Law,1966,102,(614) 260-9761,https://ekeu5qxs.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000062,Hall & Phillips Associates,Hamilton,Butler,OH,Environmental Law,1989,178,(614) 806-5112,https://vtscsl0qx1.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000063,"Reyes, Garcia & Lee",Lima,Allen,OH,White Collar Crime; Corporate Law; Employment Law,1997,130,(740) 313-8017,https://gagi50.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000064,"Thomas, Sutton & Hall",Lima,Allen,OH,DUI Defense; Construction Law,2015,87,(440) 690-4155,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000065,Graves LLC,Mount Vernon,Knox,OH,Intellectual Property,1967,113,(567) 889-2845,https://rv56wp9.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000066,"Cooper, Phillips & Morgan",Xenia,Greene,OH,Trial Law; Employment Law; Securities Law,2005,125,(440) 643-4191,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000067,Young & Parker PLLC,Kettering,Montgomery,OH,Custody; Administrative Law,1990,137,(567) 476-5793,https://d3vchob3zc.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000068,Edwards Legal,Elyria,Lorain,OH,Family Law; Administrative Law; HR Compliance; Education Law,2011,228,(216) 971-2893,https://hfv3mcugx.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000069,White & Martin Associates,Chillicothe,Ross,OH,Property Law,1961,176,(380) 896-9846,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000070,Stewart Associates,Bowling Green,Wood,OH,Litigation; Corporate Law,1987,242,(216) 773-6203,https://2ioo4w.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000071,Miller Legal Services,Youngstown,Mahoning,OH,Visa Matters; Employment Law; Probate,1976,83,(740) 280-7040,https://3p99qzs.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000072,"Walker, Taylor & Walker",Westlake,Cuyahoga,OH,Healthcare Law; Litigation,2020,176,(513) 495-7106,https://78k8q8ky.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000073,Parker & White Legal Services,Medina,Medina,OH,Custody; HR Compliance; Government Relations,1992,137,(937) 692-1783,https://xedzjjjq.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000074,"Murphy, Thomas & Davis",Cleveland,Cuyahoga,OH,Government Relations; Patent Law; Workers Compensation; Trial Law,2017,103,(419) 387-8097,https://0x115.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000075,Brown & Thomas PLLC,Delaware,Delaware,OH,Education Law; Family Law,1960,183,(740) 368-3035,https://fjyroejv.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000076,Taylor & Rogers PLLC,Marion,Marion,OH,Environmental Law; Property Law,2015,145,(419) 979-4589,https://21dfqor9.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000077,"Lewis, Moore & Peterson",Xenia,Greene,OH,Government Relations; Nonprofit Law,1990,181,(937) 279-3877,https://hh94xy.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000078,Walker Law Firm,Gallipolis,Gallia,OH,Traffic Law; Intellectual Property; Contract Law,1997,149,(330) 252-8381,https://5262d3xcuf.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000079,Taylor Legal Group,Huber Heights,Montgomery,OH,Patent Law; Education Law; Workers Compensation; Probate,1984,111,(614) 257-5841,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000080,"Parker, King & Peterson",Medina,Medina,OH,Compliance; Custody,2014,44,(740) 347-2666,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000081,Peterson & Ortiz Counsel,Marietta,Washington,OH,Compliance; Trusts; Civil Litigation,1992,178,(330) 465-9751,https://qc739qx.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000082,"Jones, Wilson & Mathis",Worthington,Franklin,OH,Probate,1969,128,(330) 359-2982,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000083,Torres & Lindsey Law Group,Westlake,Cuyahoga,OH,Nonprofit Law; Healthcare Law; Employment Law; Trial Law,1981,145,(567) 690-5901,https://wiuxj.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000084,Murphy & Peterson PLLC,Lima,Allen,OH,Insurance Law; HR Compliance; Environmental Law,2021,11,(740) 619-3892,https://xlq4t5qr.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000085,Rogers PLLC,Euclid,Cuyahoga,OH,Nonprofit Law; Personal Injury,2021,11,(513) 724-5926,https://rzzferrp.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000086,Wilkinson LLC,Toledo,Lucas,OH,Environmental Law,1968,137,(513) 326-5064,https://ngew9xv.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000087,"Rogers, Hernandez & Valdez",Huber Heights,Montgomery,OH,Healthcare Law; Estate Planning,1984,209,(937) 434-8578,https://445x1ztau.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000088,"Smith, Brown & Murphy",Marion,Marion,OH,Personal Injury; Intellectual Property; Trusts,2003,199,(330) 578-6786,https://g4jytf.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000089,"Clark, Harris & Rodriguez",Marion,Marion,OH,Intellectual Property; Commercial Law,1996,223,(614) 546-5538,https://58rqi5.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000090,Garcia Counsel,Lorain,Lorain,OH,Contract Law,2021,203,(330) 976-8954,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000091,"Jackson, Thomas & Collins",Warren,Trumbull,OH,Personal Injury,1968,16,(740) 618-6931,https://tbb59iccl0.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000092,Murphy Attorneys,Gahanna,Franklin,OH,Visa Matters; Commercial Law; Custody,2015,188,(937) 811-3002,https://78rm9qlawi.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000093,Shaffer & Bennett Law Group,Hamilton,Butler,OH,Intellectual Property; Trial Law; Administrative Law; Custody,1981,135,(740) 328-4061,https://y1srsg0.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000094,"Thomas, Rodriguez & Williams",Lima,Allen,OH,DUI Defense; Environmental Law; Custody,1980,109,(614) 836-8726,https://ie5ugjh.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000095,"Gonzalez, Edwards & Young",Columbus,Franklin,OH,Intellectual Property; Employment Law; Probate; Visa Matters,1999,55,(330) 758-4544,https://iihnvs39ah.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000096,"Garcia, Sutton & Miller",Worthington,Franklin,OH,Administrative Law; Probate; Litigation,1978,137,(216) 462-7752,https://sz0ftep.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000097,Johnson & Sutton PLLC,Zanesville,Muskingum,OH,Employment Law; Energy Law,1968,237,(380) 735-2916,https://qviab5.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000098,Young LLP,Worthington,Franklin,OH,Property Law; White Collar Crime; Energy Law,2011,165,(614) 784-7659,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000099,"Martinez, Lindsey & Miller",Marion,Marion,OH,Visa Matters; Government Relations,1990,74,(216) 671-7888,https://reert06.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000100,"Young, Stewart & Edwards",Newark,Licking,OH,HR Compliance,1989,174,(380) 733-7465,https://o80206o.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000101,King & Lopez LLP,Bowling Green,Wood,OH,Compliance; Immigration Law; Corporate Law,1992,249,(937) 691-1135,https://xtd9tm9.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000102,Edwards & Bennett Associates,Gallipolis,Gallia,OH,Environmental Law; Insurance Law; Commercial Law,2001,215,(614) 955-4243,https://x8xfeyr4ql.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000103,"Rodriguez, Howell & Lopez",Sandusky,Erie,OH,Trial Law; Probate,1960,78,(567) 642-8702,https://e4ih1.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000104,"Cooper, Wilson & Martinez",Warren,Trumbull,OH,Divorce; Employment Law; Traffic Law; Patent Law,1978,182,(513) 210-1308,https://f190jqzw2.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000105,Stewart Law Group,Mount Vernon,Knox,OH,Government Relations; Corporate Law; Traffic Law; Family Law,1986,124,(330) 360-7734,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000106,Mathis & Brown Partners,Toledo,Lucas,OH,Commercial Law; Contract Law,2018,69,(440) 345-6187,https://koh9o11o.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000107,"Smith, Young & Davis",Worthington,Franklin,OH,Real Estate; HR Compliance; Construction Law; Probate,2001,112,(330) 792-8892,https://zkrxslpr1.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000108,"Peterson, Rodriguez & Lee",Lorain,Lorain,OH,HR Compliance; Bankruptcy,2001,69,(567) 413-5638,https://9i5ys08.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000109,Hall & Williams Attorneys,Gallipolis,Gallia,OH,Government Relations; Insurance Law,2013,5,(567) 355-6088,https://5xm30ictw.law,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000110,"Anderson, Moore & Collins",Westlake,Cuyahoga,OH,DUI Defense; Litigation,2015,26,(513) 993-6887,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000111,Collins Legal Group,Hamilton,Butler,OH,Healthcare Law,1960,189,(216) 541-6664,https://c95p7nm3cz.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000112,Hernandez PLLC,Springfield,Clark,OH,Administrative Law; Workers Compensation; Tax Law,1975,29,(614) 644-2889,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000113,Clark Counsel,Bowling Green,Wood,OH,Tax Law; Bankruptcy; Litigation; Estate Planning,2006,190,(440) 247-7431,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000114,Davis Counsel,Medina,Medina,OH,Family Law; Immigration Law; White Collar Crime,2014,181,(440) 480-2443,https://f6a6byapky.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000115,"Bennett, Cooper & Harris",Cincinnati,Hamilton,OH,Environmental Law; Litigation; Debt Relief,2008,107,(216) 888-2480,https://5gckzxg.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000116,Garcia & Scott Partners,Gahanna,Franklin,OH,Property Law,2011,89,(419) 280-1323,https://xyro4t95qq.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000117,"Harris, Martin & Lewis",Ashland,Ashland,OH,DUI Defense; Business Formation; Custody,1970,79,(380) 327-3556,https://63uz1j.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000118,Williams Legal,Steubenville,Jefferson,OH,Family Law,1977,174,(614) 721-4220,https://2dvr9hxz.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000119,Taylor Legal Services,Gallipolis,Gallia,OH,Corporate Law; Custody,1987,18,(440) 850-8036,https://qy3yay4je.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000120,Lindsey Legal Services,Kettering,Montgomery,OH,Estate Planning; Trusts; Family Law,2020,12,(567) 528-4123,https://t06b48lh06.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000121,Rogers Law Group,Xenia,Greene,OH,Property Law; Energy Law,2013,78,(567) 451-1518,https://o0frvsnuhx.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000122,"Shaffer, Gutierrez & Peterson",Parma,Cuyahoga,OH,Compliance; Criminal Law,1960,162,(380) 316-5809,https://1v6tw7.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000123,Scott PLLC,Sandusky,Erie,OH,DUI Defense; Criminal Law; Environmental Law; Immigration Law,1996,45,(440) 551-3298,https://bc6t6rhr.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000124,Lopez Attorneys,Tiffin,Seneca,OH,Corporate Law; Securities Law; Trial Law,1984,21,(614) 901-6863,https://m39sd7.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000125,Miller & Shaffer Counsel,Tiffin,Seneca,OH,DUI Defense,1995,237,(440) 964-7274,https://amrdhig.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000126,Bennett & Campbell Partners,Sandusky,Erie,OH,DUI Defense; Healthcare Law; Government Relations; Commercial Law,2023,155,(937) 721-3052,https://5b7qe.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000127,"Harris, Brown & Miller",Massillon,Stark,OH,Intellectual Property; Business Formation; Traffic Law,1976,67,(216) 356-2721,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000128,"Lindsey, Shaffer & Phillips",Parma,Cuyahoga,OH,Bankruptcy; Insurance Law; Compliance,2013,131,(419) 800-6243,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000129,"Wilkinson, Rodriguez & Howell",Zanesville,Muskingum,OH,White Collar Crime; Compliance,2012,204,(216) 449-5823,https://2d07i.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000130,White Attorneys,Columbus,Franklin,OH,Family Law,2002,200,(216) 954-1551,https://byu57nr.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000131,"Sutton, Morris & Edwards",Marion,Marion,OH,Trusts; Estate Planning; Product Liability,1990,38,(419) 264-3748,https://ytkf6g.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000132,Smith Partners,Mount Vernon,Knox,OH,Environmental Law,1981,91,(937) 784-3177,https://vcgg1l.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000133,Moore & Harris Law Firm,Wooster,Wayne,OH,Workers Compensation; Tax Law,1977,65,(567) 462-7352,https://j9ny7.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000134,Edwards Legal Services,Middletown,Butler,OH,Commercial Law; Administrative Law; Trial Law,1981,98,(380) 980-8907,https://5ckzrbxq.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000135,Mathis & Gutierrez Legal,Huber Heights,Montgomery,OH,Immigration Law; Securities Law; Employment Law,1969,193,(614) 442-1669,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000136,Murphy LLP,Marietta,Washington,OH,Probate; Medical Malpractice; Family Law,1965,57,(567) 688-7098,https://qsxymuq.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000137,Williams & Mathis PLLC,Springfield,Clark,OH,Tax Law; Education Law,1961,51,(216) 665-1143,https://lggkr.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000138,Peterson & Ortiz Legal,Middletown,Butler,OH,Probate; Medical Malpractice; HR Compliance,2020,62,(567) 353-6438,https://j6ernhf09.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000139,"Lewis, Edwards & Wright",Lakewood,Cuyahoga,OH,Healthcare Law; Trusts; Government Relations; Criminal Law,2014,93,(419) 262-1562,https://67xfigt.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000140,Peterson Associates,Massillon,Stark,OH,HR Compliance,1992,48,(567) 974-6335,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000141,"Lopez, Wilson & Hall",Middletown,Butler,OH,Bankruptcy; HR Compliance; Immigration Law,1966,235,(614) 461-4902,https://71pdj.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000142,Taylor & Sutton Partners,Trotwood,Montgomery,OH,Probate,1991,189,(614) 691-6483,https://8xeiiho.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000143,Medina & Smith Law Firm,Youngstown,Mahoning,OH,Nonprofit Law; Personal Injury; DUI Defense,1968,225,(740) 415-9592,https://mlbilwil78.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000144,Torres & Jackson Legal Services,Xenia,Greene,OH,Tax Law; Corporate Law; Trusts,2000,20,(614) 299-4116,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000145,"Barnes, Williams & Collins",Chillicothe,Ross,OH,Product Liability; Business Formation; Estate Planning,1998,94,(440) 495-9937,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000146,Rodriguez & Brown Law Group,Dayton,Montgomery,OH,Estate Planning; Criminal Law; Business Formation; Civil Litigation,1972,206,(513) 381-1533,https://k5vfen.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000147,"Scott, Lindsey & Parker",Springfield,Clark,OH,Custody,2006,51,(740) 953-1153,https://w2hwcl5.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000148,"Lee, Lee & Clark",Gallipolis,Gallia,OH,Corporate Law; Trusts; Intellectual Property; Family Law,2013,169,(330) 446-7027,https://sp4mdhjt.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000149,Lopez & Young Law Group,Cincinnati,Hamilton,OH,Healthcare Law; Traffic Law,2016,113,(419) 293-9324,https://jdmpl.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000150,Taylor Legal Group,Portsmouth,Scioto,OH,Probate; Product Liability; Trusts,1966,116,(216) 632-1514,https://5shn0yjyv.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000151,Barnes Partners,Steubenville,Jefferson,OH,Nonprofit Law,1996,114,(614) 595-2572,https://kpljukqus.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000152,Rice LLP,Elyria,Lorain,OH,Contract Law; Custody; Construction Law; Patent Law,2002,48,(216) 557-5525,https://6bfie4438u.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000153,Gonzalez LLP,Lorain,Lorain,OH,Workers Compensation; Insurance Law; Debt Relief; Government Relations,1995,58,(419) 571-4216,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000154,Campbell Law Group,Lorain,Lorain,OH,Compliance,1972,221,(380) 648-6994,https://r7qyxp.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000155,Young Law Group,Hamilton,Butler,OH,Construction Law; Product Liability,2003,39,(937) 301-5056,https://gdnm1zcd.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000156,"Williams, Anderson & Jones",Euclid,Cuyahoga,OH,DUI Defense; Construction Law; Bankruptcy,1966,166,(330) 525-3357,https://wfe9lqx.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000157,"Phillips, Wilkinson & Lindsey",Lorain,Lorain,OH,Energy Law; DUI Defense; HR Compliance; Education Law,1970,119,(380) 462-1484,https://lu3hou3.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000158,"Jackson, Morris & White",Cleveland,Cuyahoga,OH,Trusts; Immigration Law; Environmental Law,1984,149,(440) 309-1224,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000159,Parker & Lewis Legal Services,Warren,Trumbull,OH,Energy Law,2022,94,(380) 846-7235,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000160,Lopez & Brown Law Firm,Athens,Athens,OH,Personal Injury; DUI Defense; Patent Law; Insurance Law,1997,193,(419) 642-8674,https://clzjsdir8.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000161,"King, White & Garcia",Delaware,Delaware,OH,Visa Matters; Trusts,1972,91,(380) 875-4880,https://76jvck.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000162,Cooper LLP,Toledo,Lucas,OH,HR Compliance; DUI Defense; Environmental Law; White Collar Crime,1980,50,(614) 412-6360,https://lot8eltpf.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000163,Lindsey Counsel,Tiffin,Seneca,OH,Criminal Law; Custody,2003,216,(740) 358-4403,https://j753v110.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000164,"Parker, Taylor & Lindsey",Cincinnati,Hamilton,OH,Administrative Law; Insurance Law; Property Law; Commercial Law,2014,21,(216) 508-6526,https://wzjv3w.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000165,Shaffer Counsel,Toledo,Lucas,OH,Energy Law; Family Law; White Collar Crime; Traffic Law,2010,209,(419) 822-9547,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000166,"Taylor, Campbell & Peterson",Ashland,Ashland,OH,HR Compliance; Administrative Law; Immigration Law; Corporate Law,1976,185,(567) 418-1157,https://oyl05py.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000167,Harris PLLC,Cleveland,Cuyahoga,OH,Personal Injury,1966,32,(419) 447-2443,https://3blys7tni8.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000168,"Rice, Sutton & Graves",Xenia,Greene,OH,Estate Planning; Commercial Law; Nonprofit Law,2010,79,(440) 725-4344,https://jwg7qfox5.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000169,"Taylor, Young & Williams",Sandusky,Erie,OH,Estate Planning; Commercial Law; Traffic Law,2011,3,(567) 235-1388,https://6y1gupvv7.legal,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000170,Howell & Hall Associates,Newark,Licking,OH,Insurance Law,2003,123,(216) 339-3469,https://vju76f6l.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000171,Jones & Wright LLC,Xenia,Greene,OH,Custody; Trusts,1973,114,(216) 979-7457,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000172,Garcia Partners,New Philadelphia,Tuscarawas,OH,Education Law; DUI Defense; Healthcare Law,2016,79,(567) 808-4345,https://66mwu587aw.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000173,"Garcia, Mathis & Graves",Kettering,Montgomery,OH,Contract Law; Debt Relief; Trial Law; Construction Law,1970,168,(740) 890-8415,https://4o0747at.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000174,"Lopez, Torres & Sutton",Dayton,Montgomery,OH,Government Relations,2019,50,(380) 423-4357,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000175,Phillips & King Law Firm,Euclid,Cuyahoga,OH,Real Estate; Nonprofit Law,1967,61,(419) 923-8872,https://4516kl.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000176,Campbell & King Legal,Portsmouth,Scioto,OH,Energy Law; Property Law,1983,85,(380) 684-1663,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000177,Peterson Law Firm,Toledo,Lucas,OH,Visa Matters; Construction Law; Immigration Law,1987,168,(380) 311-3781,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000178,King Law Firm,Hamilton,Butler,OH,Property Law; Corporate Law; Debt Relief,1970,240,(937) 811-1308,https://a3ol6t8.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000179,"Clark, Garcia & White",Ashland,Ashland,OH,Nonprofit Law; Estate Planning; Education Law; Product Liability,1973,59,(937) 644-9989,https://6nz67r89z.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000180,"Rice, Peterson & Martin",Gahanna,Franklin,OH,Insurance Law; Product Liability; Workers Compensation; Probate,2007,126,(513) 820-1304,https://wmhkh8.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000181,Bennett & Miller Counsel,Kettering,Montgomery,OH,Medical Malpractice; Tax Law; Bankruptcy,1970,181,(614) 851-8131,https://1ox2he2s.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000182,"King, Phillips & Martinez",Blendon,Franklin,OH,Real Estate; Custody; Energy Law,2011,246,(937) 329-8803,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000183,Bennett Counsel,Blendon,Franklin,OH,Patent Law; Medical Malpractice,1998,205,(567) 264-5658,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000184,Taylor & Hernandez Attorneys,Kettering,Montgomery,OH,Energy Law; Bankruptcy,1977,218,(330) 316-1142,https://sn1e35eey.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000185,"Lindsey, Peterson & Peterson",Bowling Green,Wood,OH,Compliance; Insurance Law; Medical Malpractice,1995,198,(740) 543-1828,https://wdolwuzni8.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000186,"Barnes, Young & Wilson",Marietta,Washington,OH,Administrative Law,1986,97,(513) 239-5719,https://dhmyd.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000187,Williams Legal,Blendon,Franklin,OH,Immigration Law,2023,214,(440) 877-9821,https://s5kux6eh.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000188,"Murphy, Moore & Murphy",Mount Vernon,Knox,OH,Corporate Law,2003,201,(380) 584-6978,https://okgvi5hi7n.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000189,Lopez PLLC,Blendon,Franklin,OH,Traffic Law,2009,180,(513) 428-4730,https://ek0xe.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000190,Clark Legal Group,Dayton,Montgomery,OH,Environmental Law; Trusts,1996,200,(614) 310-8829,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000191,Martinez Legal Services,Cincinnati,Hamilton,OH,DUI Defense; Government Relations; Corporate Law; Bankruptcy,1999,211,(740) 938-9632,https://ummplzpu.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000192,Walker Associates,Elyria,Lorain,OH,Bankruptcy; HR Compliance; Government Relations,1999,132,(419) 945-2475,https://8l0c2ghuha.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000193,Smith Legal Services,Delaware,Delaware,OH,Energy Law,1968,176,(740) 727-6888,https://vjwboda81d.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000194,Peterson & Collins Partners,Warren,Trumbull,OH,Medical Malpractice; Real Estate; Civil Litigation; Energy Law,2010,24,(216) 289-1167,https://an43b.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000195,Lee & Edwards Legal Services,Marietta,Washington,OH,Tax Law,1986,154,(380) 858-1672,https://4ufm59ed.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000196,Martinez & Peterson Legal Services,Portsmouth,Scioto,OH,HR Compliance; Trusts; Visa Matters,1991,224,(513) 825-7010,https://8sz8ru2.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000197,Morris Legal Services,Sandusky,Erie,OH,Business Formation; Medical Malpractice,1978,18,(937) 932-8229,https://ho4b26.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000198,Smith LLC,Wooster,Wayne,OH,Family Law; Employment Law; Immigration Law; Traffic Law,2008,29,(614) 490-6821,https://suk2ncb69y.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000199,Mathis & Anderson Attorneys,Marion,Marion,OH,Contract Law,1988,226,(380) 254-8228,https://br7wv6.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000200,Williams Legal,Newark,Licking,OH,Litigation,1992,114,(440) 805-3368,https://y8j6ng7y9u.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000201,Scott LLP,Blendon,Franklin,OH,Visa Matters; Securities Law; Litigation; Property Law,2013,222,(513) 256-4802,https://p7rioq.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000202,Lopez & Martinez Attorneys,Xenia,Greene,OH,Intellectual Property; Estate Planning,1986,162,(567) 442-1084,https://8pu85y8l1.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000203,"Cooper, Moore & Medina",Gahanna,Franklin,OH,Nonprofit Law; Immigration Law,1989,7,(740) 225-9063,https://lqn7cqqm0.law,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000204,Cooper Legal Services,Athens,Athens,OH,Administrative Law; Tax Law; Medical Malpractice; Securities Law,1968,5,(330) 714-7806,https://3se5n.law,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000205,Torres Legal,Blendon,Franklin,OH,Environmental Law; Nonprofit Law; Compliance,2008,168,(567) 512-1986,https://54wj2hhn1w.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000206,Peterson Associates,Columbus,Franklin,OH,Insurance Law; Criminal Law; Probate,1981,88,(567) 241-3280,https://9sfto8ext.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000207,Morris Law Firm,Middletown,Butler,OH,Employment Law; Immigration Law; Construction Law; Traffic Law,1984,1,(440) 777-5351,https://u4m7h.legal,Ohio State Bar Public Directory,Solo Practice,ACTIVE
+OH-000208,Clark Legal Group,Newark,Licking,OH,Patent Law; Probate,2014,45,(513) 752-4584,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000209,"White, Wright & Peterson",Mount Vernon,Knox,OH,Estate Planning; Securities Law,1983,128,(440) 467-7505,https://hb0rkv.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000210,"Smith, Rice & Martinez",Wooster,Wayne,OH,Business Formation; Bankruptcy; Product Liability; Education Law,2008,80,(937) 589-2997,https://ufkm47.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000211,Valdez & Williams Legal Group,Huber Heights,Montgomery,OH,Corporate Law; Construction Law; White Collar Crime,2020,151,(440) 289-9136,https://2adht1lv1v.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000212,Brown & Bennett LLP,Cincinnati,Hamilton,OH,Securities Law; Corporate Law; Construction Law,1994,14,(740) 338-2535,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000213,Parker Legal Group,New Philadelphia,Tuscarawas,OH,Intellectual Property; Immigration Law; Nonprofit Law; Litigation,2003,168,(330) 988-6837,https://nlf8bzvliz.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000214,Johnson & Cooper Legal Group,Cleveland,Cuyahoga,OH,Commercial Law,1995,98,(567) 431-8083,https://elcr64.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000215,Miller PLLC,Newark,Licking,OH,Personal Injury; Criminal Law,1993,139,(740) 989-8731,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000216,Morgan Legal Group,Kettering,Montgomery,OH,DUI Defense; White Collar Crime,2023,235,(740) 558-8610,https://2kqqn.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000217,Wright LLP,Dublin,Franklin,OH,Corporate Law,1981,129,(419) 325-9649,https://7mhws1f5.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000218,Hall Attorneys,Gahanna,Franklin,OH,Litigation; Workers Compensation; Debt Relief,1980,243,(513) 935-9163,https://a36s0hok6.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000219,"Morgan, Scott & Smith",Medina,Medina,OH,Trial Law; Environmental Law,2009,7,(330) 731-9735,https://cbfv2wqpi.lawyers,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000220,"Martinez, Lee & Howell",Athens,Athens,OH,Trusts; Compliance,1977,74,(513) 388-2868,https://xot4p.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000221,Rodriguez LLC,Xenia,Greene,OH,Bankruptcy; Commercial Law; Securities Law,2005,171,(330) 430-2216,https://0lfm2cp.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000222,"Peterson, Wilkinson & Martinez",Medina,Medina,OH,Employment Law; Energy Law; Environmental Law,1987,68,(380) 679-3511,https://28bgy8uyf.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000223,Martin & Howell Legal Group,Tiffin,Seneca,OH,Intellectual Property,1976,231,(380) 846-2861,https://o19kf.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000224,Smith Law Firm,Youngstown,Mahoning,OH,Business Formation; Bankruptcy; Probate; Real Estate,1963,49,(513) 497-5154,https://0czrtmcb.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000225,Peterson & Smith Attorneys,Medina,Medina,OH,Construction Law,2006,77,(937) 531-7659,https://ugrhlrx.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000226,"Smith, Rodriguez & Peterson",Kettering,Montgomery,OH,Traffic Law; Divorce,2005,156,(440) 240-3859,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000227,"Morris, Scott & Garcia",Westlake,Cuyahoga,OH,Workers Compensation,2017,98,(419) 413-4996,https://ms9bli9rr1.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000228,"Phillips, Clark & Morgan",Blendon,Franklin,OH,Nonprofit Law; White Collar Crime; Compliance; Government Relations,2001,212,(513) 385-2715,https://q8rwwcshuq.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000229,"Campbell, King & Bennett",Marietta,Washington,OH,Visa Matters; Securities Law; Divorce; Trial Law,1994,213,(216) 411-5243,https://uyeriwr.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000230,"Rogers, Scott & Brown",Kettering,Montgomery,OH,Immigration Law; Compliance; Bankruptcy,1963,221,(380) 378-6743,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000231,Wright & Phillips Counsel,Dublin,Franklin,OH,Bankruptcy; HR Compliance,2000,80,(330) 386-1494,https://pwdtcm.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000232,Valdez LLC,Mount Vernon,Knox,OH,Commercial Law; Intellectual Property; Traffic Law,2023,33,(567) 936-8289,https://wo73uu.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000233,Bennett Legal,Tiffin,Seneca,OH,Divorce,1980,114,(740) 691-4239,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000234,Phillips Law Group,Westlake,Cuyahoga,OH,Litigation; Corporate Law; Employment Law,1977,144,(330) 601-4199,https://as4hw5.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000235,Walker Legal Group,Parma,Cuyahoga,OH,Contract Law; Property Law,1992,131,(740) 305-4455,https://nq051.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000236,Martin & Campbell PLLC,Canton,Stark,OH,Healthcare Law; Debt Relief; Visa Matters; HR Compliance,2023,201,(513) 203-8107,https://4cslks.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000237,Medina Partners,Medina,Medina,OH,White Collar Crime,1980,59,(567) 803-5045,https://1ksi470rz.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000238,Peterson Legal Services,Tiffin,Seneca,OH,Litigation; Construction Law; Divorce,1997,237,(614) 621-5329,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000239,"Rice, Harris & Peterson",Cleveland,Cuyahoga,OH,Traffic Law,1980,8,(380) 233-4905,https://624i087c.lawyers,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000240,"Scott, Torres & Graves",Toledo,Lucas,OH,Trusts; Real Estate; Criminal Law; Property Law,1996,163,(937) 631-3034,https://651jnmbqz.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000241,"Smith, Campbell & Gonzalez",Zanesville,Muskingum,OH,Bankruptcy; Insurance Law,1965,69,(614) 412-2892,https://80k66pwap.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000242,Shaffer & Rice Counsel,Middletown,Butler,OH,Environmental Law; Education Law; Intellectual Property,1997,159,(614) 764-3077,https://dywxmg9.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000243,"Jackson, Parker & Hall",Canton,Stark,OH,Real Estate; Criminal Law,1973,216,(440) 823-1020,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000244,"Phillips, Moore & Peterson",Bowling Green,Wood,OH,Divorce; Patent Law,1965,3,(380) 618-5672,https://pbiqeg0jf.law,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000245,Davis & Parker Law Group,Chillicothe,Ross,OH,Probate; Workers Compensation; Healthcare Law,1981,12,(380) 762-5696,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000246,Rogers Law Firm,Youngstown,Mahoning,OH,Securities Law; Insurance Law; Real Estate; Medical Malpractice,2014,149,(740) 728-8840,https://8pjvz3zc.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000247,Bowman Partners,Gahanna,Franklin,OH,Visa Matters,1975,213,(330) 257-1031,https://9rsv4fxd5.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000248,"Hernandez, Clark & Young",Canton,Stark,OH,Property Law; Employment Law; Litigation,1987,168,(330) 897-3295,https://sueulpzz.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000249,"Garcia, Campbell & Medina",Warren,Trumbull,OH,Criminal Law; Government Relations; Litigation,2019,78,(216) 978-9345,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000250,"Cooper, Howell & Murphy",Euclid,Cuyahoga,OH,Healthcare Law,2008,39,(216) 764-2342,https://oabs1492qh.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000251,"Murphy, Walker & King",Middletown,Butler,OH,Medical Malpractice; Administrative Law,2007,212,(740) 498-8872,https://ogwwlvf.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000252,Smith Partners,Mansfield,Richland,OH,Securities Law; Corporate Law; Medical Malpractice,2014,62,(440) 694-8108,https://qzyo6e5.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000253,Campbell Legal Group,Hamilton,Butler,OH,Commercial Law; Energy Law; Administrative Law; Litigation,1985,92,(740) 482-3063,https://cqo2i3j.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000254,Lopez & Thomas Legal,Newark,Licking,OH,Energy Law; Nonprofit Law,2020,130,(380) 338-1776,https://dmsi1s03g7.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000255,"Smith, Martinez & Martin",Springfield,Clark,OH,Bankruptcy; Real Estate,2004,176,(740) 435-4372,https://u1lzqpl.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000256,Wilson & Graves Counsel,Trotwood,Montgomery,OH,Intellectual Property,1970,80,(216) 292-8854,https://nzpj5h8glx.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000257,Peterson & Thomas Associates,Sandusky,Erie,OH,Trusts; Criminal Law; HR Compliance,2012,113,(937) 205-1937,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000258,"Morris, Reyes & Sutton",Toledo,Lucas,OH,Probate,1989,101,(330) 843-4767,https://r4uqg.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000259,King Counsel,Toledo,Lucas,OH,Healthcare Law; Employment Law; Administrative Law,1981,168,(567) 884-5471,https://2wufnidi.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000260,Miller Counsel,Kettering,Montgomery,OH,Civil Litigation; Real Estate; Family Law,1960,92,(330) 364-4103,https://z4sxpz8o.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000261,Scott & Thomas PLLC,Wooster,Wayne,OH,Environmental Law,1961,55,(380) 353-6013,https://7qtog8.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000262,Gonzalez LLC,Sandusky,Erie,OH,Litigation; Trial Law,2019,88,(513) 331-8818,https://62lczgs8.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000263,Scott Attorneys,Lorain,Lorain,OH,Corporate Law; Criminal Law,2019,30,(567) 635-6593,https://y513kv.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000264,Lopez & Sutton Law Group,Warren,Trumbull,OH,Tax Law; Intellectual Property; Construction Law,1968,35,(740) 792-3202,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000265,Barnes PLLC,Cleveland,Cuyahoga,OH,Family Law,2021,52,(614) 647-4665,https://6hair.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000266,Thomas PLLC,Worthington,Franklin,OH,Energy Law; Securities Law; Medical Malpractice,1995,52,(330) 952-6764,https://08efwc.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000267,Johnson & Murphy Legal,Westlake,Cuyahoga,OH,Immigration Law; Contract Law,1996,185,(567) 565-7388,https://5u2g78btm.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000268,Morgan Legal Group,Marietta,Washington,OH,Custody; Family Law; Trial Law; Product Liability,1994,20,(614) 231-7850,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000269,"Graves, Barnes & Anderson",Columbus,Franklin,OH,Compliance; Custody,1973,97,(440) 351-5543,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000270,"White, Bennett & Young",Sandusky,Erie,OH,Custody,2019,33,(380) 830-6102,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000271,Anderson & Howell Associates,Medina,Medina,OH,Property Law; Trusts; Construction Law; Product Liability,1979,143,(380) 238-1282,https://4chm2ybz0h.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000272,Rice LLP,Gahanna,Franklin,OH,Education Law; Environmental Law,2003,109,(419) 347-9641,https://kwmw39.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000273,Taylor Associates,Zanesville,Muskingum,OH,Bankruptcy; Criminal Law,2019,120,(419) 847-8525,https://j066bk.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000274,Brown Partners,Columbus,Franklin,OH,Bankruptcy; Criminal Law,2017,245,(614) 413-4598,https://qlolv8kis7.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000275,Cooper Partners,Steubenville,Jefferson,OH,Personal Injury; Estate Planning,1986,118,(440) 561-5113,https://qbomzy.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000276,Cooper PLLC,Findlay,Hancock,OH,Estate Planning; Business Formation; Trial Law; Medical Malpractice,1969,143,(330) 827-5943,https://whdsrn.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000277,Brown & Parker Associates,Mansfield,Richland,OH,Probate,2011,24,(614) 391-3142,https://z3i6b32jin.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000278,Anderson & Morris PLLC,Athens,Athens,OH,Energy Law; Litigation; Trial Law; Nonprofit Law,2011,52,(419) 286-2858,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000279,"Lindsey, Phillips & Martinez",Springfield,Clark,OH,Estate Planning; Traffic Law,1978,56,(330) 431-7091,https://ilnin.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000280,"Phillips, Miller & Torres",Youngstown,Mahoning,OH,Real Estate; Environmental Law; Product Liability,2015,77,(937) 377-5318,https://cevoz.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000281,Taylor LLP,Athens,Athens,OH,Civil Litigation; Government Relations; Environmental Law,1982,239,(740) 748-1720,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000282,"Phillips, Garcia & Peterson",Delaware,Delaware,OH,Litigation; Trial Law,1960,12,(740) 961-3151,https://nlo6w8b2.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000283,Wilkinson Legal Services,Worthington,Franklin,OH,Tax Law; Probate; DUI Defense,1963,183,(440) 671-5650,https://f1s7ch.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000284,Lee Partners,Lorain,Lorain,OH,Construction Law; White Collar Crime; Trial Law,1992,219,(330) 326-5607,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000285,Rice Legal Group,Parma,Cuyahoga,OH,Personal Injury,2004,92,(740) 985-4661,https://38cp9e1.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000286,Williams Law Firm,Marion,Marion,OH,Employment Law; Trusts,1987,161,(567) 787-3494,https://w0fgh27.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000287,Mathis & Torres Counsel,Athens,Athens,OH,Energy Law; DUI Defense; Family Law,2011,204,(380) 667-6877,https://kudlbrj8.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000288,Moore & Murphy LLP,Akron,Summit,OH,Commercial Law; Tax Law; Traffic Law,2010,148,(419) 753-5247,https://h4ou2htec.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000289,"Hernandez, Peterson & Reyes",Medina,Medina,OH,Civil Litigation; Administrative Law; Property Law,1977,96,(513) 972-6854,https://g6qtdt.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000290,Jones & Walker PLLC,Canton,Stark,OH,Real Estate,2018,10,(567) 597-9274,https://vdb28jjjo.lawyers,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000291,Lewis & Harris Law Group,Chillicothe,Ross,OH,Securities Law; Employment Law; Bankruptcy; Property Law,2009,101,(937) 551-6185,https://52jmnn80.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000292,Walker & Campbell Counsel,Marietta,Washington,OH,Estate Planning; Healthcare Law,2008,190,(937) 649-4989,https://hw6vj38qbd.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000293,Davis & Mathis LLP,Bowling Green,Wood,OH,Business Formation,1988,7,(330) 685-7369,https://gu3r9.lawyers,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000294,Hall & Clark Law Firm,Tiffin,Seneca,OH,Securities Law,2009,134,(937) 232-7403,https://mtk78l.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000295,Reyes Counsel,Canton,Stark,OH,Energy Law,2021,54,(740) 871-1288,https://1jn2y.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000296,Morris Law Firm,Worthington,Franklin,OH,DUI Defense; Workers Compensation; Compliance; Probate,1960,70,(567) 268-1693,https://mowksuu1.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000297,Wilson & Smith Law Firm,Zanesville,Muskingum,OH,Debt Relief; Business Formation; Construction Law; Traffic Law,1996,94,(937) 425-6913,https://plfl4hukp.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000298,"Jones, Wilkinson & Jones",Chillicothe,Ross,OH,Visa Matters; Intellectual Property; Criminal Law,1974,18,(740) 554-9967,https://vkq81d1mp.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000299,Cooper Legal Services,Mansfield,Richland,OH,Nonprofit Law; Patent Law,2013,231,(440) 439-5380,https://nqaxgnfqy.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000300,Taylor & Hernandez Law Firm,Marion,Marion,OH,Energy Law,1996,82,(380) 907-4523,https://zczah.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000301,Medina & King LLP,Medina,Medina,OH,Environmental Law; Bankruptcy,1976,45,(440) 851-5660,https://pqu7r.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000302,"Morris, Bennett & Barnes",Columbus,Franklin,OH,Workers Compensation; Custody; HR Compliance,1992,219,(330) 503-1591,https://r3aik.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000303,Murphy Counsel,Lima,Allen,OH,Litigation; Property Law; White Collar Crime; DUI Defense,2020,109,(937) 633-8156,https://kzx49.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000304,Martin & Taylor PLLC,Dublin,Franklin,OH,Real Estate; Litigation; Property Law; Administrative Law,2000,29,(937) 595-3237,https://wvpdo.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000305,Wilkinson PLLC,Youngstown,Mahoning,OH,Estate Planning; Litigation; Real Estate,2015,116,(937) 405-1405,https://1lv2n.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000306,"Jackson, Martinez & Ortiz",Cincinnati,Hamilton,OH,Environmental Law; Visa Matters; Patent Law; Medical Malpractice,1968,8,(216) 445-8144,https://84jax.lawyers,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000307,Bennett LLP,Columbus,Franklin,OH,Employment Law; Real Estate,1980,241,(937) 782-2349,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000308,Murphy Legal Group,Chillicothe,Ross,OH,Employment Law; Family Law; White Collar Crime,2022,190,(937) 807-3881,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000309,"Davis, Thomas & White",Huber Heights,Montgomery,OH,Product Liability; Family Law,2022,213,(937) 272-3348,https://gwysx.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000310,Bennett LLP,Portsmouth,Scioto,OH,Education Law; Trial Law,1974,140,(216) 635-7575,https://vc1bgtm7.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000311,Taylor Law Group,Mount Vernon,Knox,OH,Insurance Law,1971,160,(740) 355-1454,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000312,"Torres, Peterson & Clark",Athens,Athens,OH,HR Compliance; Bankruptcy; Energy Law,1960,11,(567) 942-5876,https://jh45y0prg.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000313,"Johnson, Martinez & Miller",Lima,Allen,OH,Family Law; Criminal Law,1985,144,(513) 247-1200,https://65utr5.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000314,Johnson Law Group,Youngstown,Mahoning,OH,Patent Law; Bankruptcy,2022,158,(330) 354-5170,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000315,Brown Legal Group,Lakewood,Cuyahoga,OH,Product Liability,2004,101,(567) 889-1033,https://2yp32.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000316,Anderson Legal Group,Lorain,Lorain,OH,Bankruptcy; Employment Law; Criminal Law; Trial Law,1977,203,(614) 532-9172,https://124z7hxs.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000317,"Howell, Edwards & Hernandez",Dublin,Franklin,OH,Patent Law; Custody; Corporate Law,1984,247,(937) 815-9920,https://872s6oks.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000318,"Stewart, Barnes & Ortiz",Lakewood,Cuyahoga,OH,Contract Law; Securities Law; Immigration Law,2023,117,(419) 363-3771,https://683glts0.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000319,"Lopez, Ortiz & Sutton",Sandusky,Erie,OH,Intellectual Property; Environmental Law,2010,85,(937) 997-9336,https://gyp1t.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000320,Williams Legal Services,Bowling Green,Wood,OH,Environmental Law,1994,134,(380) 321-1532,https://em08t.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000321,"Taylor, Hernandez & Morris",Delaware,Delaware,OH,Real Estate,2007,78,(419) 514-3827,https://ispomsjr.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000322,Williams & Martin Partners,Chillicothe,Ross,OH,Estate Planning,1981,101,(380) 976-8992,https://71c96h5yp.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000323,"Lee, King & Anderson",Delaware,Delaware,OH,Patent Law,1994,240,(567) 540-8323,https://q7948ucob0.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000324,Anderson & Rice Law Group,Lorain,Lorain,OH,Custody; Product Liability; White Collar Crime; Medical Malpractice,2019,198,(380) 750-9345,https://uwcs8m.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000325,Bowman Associates,Mansfield,Richland,OH,Environmental Law; Insurance Law; DUI Defense,2014,160,(419) 661-8158,https://8eoczk3f.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000326,"Stewart, Gonzalez & Graves",Huber Heights,Montgomery,OH,Contract Law; Bankruptcy; Trusts; Personal Injury,1995,245,(380) 304-2730,https://uoajp.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000327,Walker Counsel,Lakewood,Cuyahoga,OH,Medical Malpractice; Administrative Law,2021,199,(330) 271-2076,https://3t0n8d.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000328,Jones & Murphy Law Group,Elyria,Lorain,OH,Custody; Product Liability,2007,113,(513) 331-3470,https://kqetnn7b.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000329,Reyes Partners,Trotwood,Montgomery,OH,Insurance Law; Construction Law; Employment Law,1963,41,(380) 924-6436,https://0ldddlox1.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000330,Howell Law Group,Marion,Marion,OH,White Collar Crime; Probate,1982,93,(380) 290-2028,https://3sbcuw.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000331,"Murphy, Shaffer & Howell",Dublin,Franklin,OH,Trusts; Divorce; Employment Law,1979,125,(380) 935-1276,https://rvkwsj.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000332,Wilson & Stewart Law Firm,Elyria,Lorain,OH,Medical Malpractice; Administrative Law; Environmental Law,1966,159,(740) 889-5694,https://xw5wgn2s6t.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000333,Wilson & Wilson Law Group,Toledo,Lucas,OH,Compliance; Construction Law; Traffic Law; Administrative Law,1961,161,(513) 855-7787,https://q9ocqyy.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000334,Valdez Law Firm,Huber Heights,Montgomery,OH,Intellectual Property; Environmental Law,2008,29,(440) 433-8256,https://drw7t7y.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000335,"Brown, Lindsey & Phillips",Canton,Stark,OH,Family Law; Criminal Law; Trial Law,2004,88,(740) 567-5981,https://3u8xf.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000336,Morris Law Firm,Medina,Medina,OH,HR Compliance; Estate Planning,2007,152,(330) 306-6718,https://fur3mpz.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000337,"Johnson, King & Lee",Athens,Athens,OH,Commercial Law; White Collar Crime; Visa Matters,1994,209,(440) 689-6143,https://xfoalz9.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000338,"Peterson, Bennett & Phillips",Parma,Cuyahoga,OH,Construction Law; Property Law; Patent Law,1969,185,(513) 259-9011,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000339,"Campbell, Harris & Taylor",Chillicothe,Ross,OH,Property Law; Corporate Law; Real Estate,2009,75,(567) 408-4066,https://xg3nip.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000340,Gutierrez Attorneys,Dayton,Montgomery,OH,Healthcare Law,2019,22,(380) 717-9062,https://iqa7iwvyf.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000341,"Morgan, Gonzalez & Anderson",Gahanna,Franklin,OH,Bankruptcy; Nonprofit Law; Intellectual Property; Tax Law,2007,178,(567) 472-9427,https://zlsgyicw1.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000342,White LLP,Steubenville,Jefferson,OH,Probate; Commercial Law,1991,134,(380) 285-6316,https://un5moiz5.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000343,Bowman Counsel,Elyria,Lorain,OH,Litigation; Divorce,1971,26,(419) 944-6857,https://gbfp8.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000344,"Brown, Morgan & Lee",Trotwood,Montgomery,OH,Personal Injury; Intellectual Property,2010,185,(567) 997-2733,https://8aa40a23gd.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000345,Wright & Valdez PLLC,Zanesville,Muskingum,OH,HR Compliance; Probate; Construction Law; Education Law,1965,14,(740) 696-8076,https://ck7ssn6.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000346,"Cooper, Smith & Martin",Kettering,Montgomery,OH,Government Relations,1999,202,(614) 559-4444,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000347,Lee Associates,Columbus,Franklin,OH,Estate Planning; Environmental Law,1965,169,(513) 825-1795,https://pkksk2v.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000348,Bowman Legal Services,Mount Vernon,Knox,OH,Nonprofit Law,1999,248,(740) 747-6348,https://h0kj2l.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000349,"Bennett, Edwards & Campbell",Xenia,Greene,OH,Tax Law; Commercial Law; Construction Law,2014,156,(330) 207-7574,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000350,Morgan & Valdez Legal,Cincinnati,Hamilton,OH,Civil Litigation,1987,224,(567) 596-8288,https://o3mt1vqsur.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000351,Anderson Associates,Lima,Allen,OH,Energy Law; Immigration Law,2004,153,(330) 426-3470,https://23uk1r4.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000352,"Miller, Davis & Peterson",Lakewood,Cuyahoga,OH,Criminal Law; Litigation; Trusts; Corporate Law,2011,64,(513) 377-9587,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000353,Medina Legal Group,Akron,Summit,OH,Construction Law; Contract Law; DUI Defense; HR Compliance,1966,43,(513) 986-1747,https://kbptbsbtmy.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000354,Wilkinson Legal,Toledo,Lucas,OH,Healthcare Law; Tax Law; Property Law,1973,48,(513) 798-8491,https://gnb5pigoo7.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000355,Valdez & White Attorneys,Blendon,Franklin,OH,Criminal Law; White Collar Crime; Visa Matters; Bankruptcy,2000,209,(216) 395-9222,https://j1ivn35e.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000356,"Smith, Stewart & Jackson",Findlay,Hancock,OH,Personal Injury; Trusts; Corporate Law,2015,186,(567) 845-6057,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000357,"Bennett, Bennett & Young",Massillon,Stark,OH,Litigation,2018,65,(380) 462-2054,https://zyg9p6p.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000358,Gutierrez Legal Group,Cleveland,Cuyahoga,OH,Medical Malpractice; Construction Law,1984,237,(419) 427-7331,https://jwxqin0q7.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000359,Peterson Legal Group,Huber Heights,Montgomery,OH,Corporate Law; Trusts,1962,59,(330) 243-9101,https://djr1uf1ge.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000360,Howell Legal Services,Dayton,Montgomery,OH,Employment Law; Custody; White Collar Crime; Insurance Law,1993,78,(614) 690-8884,https://artfv6.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000361,Stewart Partners,Huber Heights,Montgomery,OH,Securities Law; Trial Law; Construction Law,2021,55,(330) 267-1864,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000362,"Jones, Gonzalez & Valdez",Delaware,Delaware,OH,Litigation; Trusts,1996,65,(740) 956-5134,https://w6udsznsnc.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000363,Bennett & Bowman Legal Group,Hamilton,Butler,OH,Securities Law; Visa Matters,1992,125,(614) 843-4576,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000364,Wilkinson PLLC,Tiffin,Seneca,OH,Estate Planning; Business Formation; Personal Injury; Litigation,1970,62,(740) 551-7471,https://brwky.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000365,Walker Attorneys,Akron,Summit,OH,Commercial Law,1993,111,(330) 567-3938,https://gr5jq50ev.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000366,Scott & Miller Legal Group,Gallipolis,Gallia,OH,Visa Matters; Civil Litigation,2000,242,(513) 784-3054,https://2tdkm6pa.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000367,Rodriguez Legal,Ashland,Ashland,OH,Contract Law; Commercial Law,2013,27,(513) 501-7469,https://cqj46h8.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000368,"Stewart, Walker & Wright",Massillon,Stark,OH,White Collar Crime; Business Formation; Government Relations,1971,88,(419) 444-5364,https://s3k0xr.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000369,"King, Lee & Lindsey",Hamilton,Butler,OH,Product Liability; Securities Law,1991,20,(216) 708-9960,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000370,Collins Attorneys,Tiffin,Seneca,OH,Tax Law; Education Law; Commercial Law; Bankruptcy,1985,21,(614) 411-7230,https://c6xpu.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000371,"Thomas, Gonzalez & Anderson",Sandusky,Erie,OH,Workers Compensation; White Collar Crime,1990,249,(740) 721-9148,https://kqd5rxjlc.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000372,"Taylor, Smith & Sutton",Westlake,Cuyahoga,OH,Construction Law; Bankruptcy; Visa Matters,2010,48,(440) 484-2097,https://ni7618xl.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000373,Shaffer & Torres Legal Services,Massillon,Stark,OH,Personal Injury; Divorce,2023,215,(380) 915-3235,https://380x5q5.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000374,Martin & Jones Attorneys,Newark,Licking,OH,Custody; Medical Malpractice; Energy Law,1989,115,(380) 647-3265,https://4emcx.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000375,Rogers & Morris Legal Group,Mansfield,Richland,OH,Construction Law,2005,4,(937) 370-8852,https://ho5eg.legal,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000376,"Cooper, Ortiz & Bowman",Mansfield,Richland,OH,Personal Injury,2012,138,(740) 852-4548,https://rh2gqgk1.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000377,Lopez LLC,Massillon,Stark,OH,Custody; Property Law,2001,77,(330) 244-7071,https://2v0mudyg.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000378,Collins Attorneys,Elyria,Lorain,OH,Personal Injury,2018,32,(740) 632-2931,https://462dwq53ek.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000379,"Martinez, Young & Williams",Zanesville,Muskingum,OH,Construction Law; Trial Law,1985,144,(614) 215-2712,https://bqp5giaz5q.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000380,Martin Legal Group,Gallipolis,Gallia,OH,Trial Law; DUI Defense; Compliance,1971,178,(380) 200-2113,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000381,"Rice, Hernandez & Gutierrez",Westlake,Cuyahoga,OH,White Collar Crime; Workers Compensation; Patent Law,2015,79,(330) 669-7834,https://l7bi87mvx6.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000382,"Valdez, Bennett & Campbell",Cincinnati,Hamilton,OH,Construction Law; Debt Relief,2006,56,(513) 358-6920,https://ul82i9.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000383,Bowman Associates,Cincinnati,Hamilton,OH,Intellectual Property; Probate; Patent Law; Visa Matters,2018,16,(740) 988-9956,https://zddox785b7.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000384,"Wilkinson, Campbell & Thomas",Massillon,Stark,OH,Tax Law,2010,159,(419) 259-2958,https://orfkm.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000385,"Lopez, Sutton & Walker",Gallipolis,Gallia,OH,Workers Compensation; DUI Defense,2006,183,(567) 719-4297,https://ex69x5.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000386,Hernandez Attorneys,Hamilton,Butler,OH,Administrative Law,1969,227,(567) 466-5775,https://witzoasb.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000387,"Reyes, Moore & Lopez",Findlay,Hancock,OH,Commercial Law; Criminal Law; Property Law; Custody,2010,8,(937) 478-9122,https://8twa2z7.law,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000388,"Taylor, Valdez & Rogers",Tiffin,Seneca,OH,Contract Law,1984,75,(216) 718-2904,https://xq5r95o.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000389,Rice & Gonzalez PLLC,Canton,Stark,OH,Intellectual Property,1983,178,(380) 458-2653,https://qo94o3vd.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000390,"Torres, Jones & Miller",Cincinnati,Hamilton,OH,Business Formation; Workers Compensation; HR Compliance,1990,183,(380) 654-7848,https://ggma88o5y.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000391,Johnson Legal Group,Steubenville,Jefferson,OH,Divorce; Property Law,1990,93,(937) 806-4499,https://zstqcnq.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000392,Gutierrez & Phillips Legal Group,Steubenville,Jefferson,OH,Property Law,2016,82,(513) 547-9238,https://raldxt.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000393,"Moore, Lewis & Peterson",Newark,Licking,OH,Business Formation; Nonprofit Law,1965,66,(937) 283-1490,https://vddtpq0.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000394,Lee PLLC,Columbus,Franklin,OH,Estate Planning,1987,247,(440) 266-1805,https://osgrkmy.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000395,Graves & Murphy Associates,Westlake,Cuyahoga,OH,Bankruptcy; Patent Law; Construction Law,1963,110,(330) 480-9878,https://szov3xy9p.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000396,Barnes & Peterson Counsel,Delaware,Delaware,OH,Civil Litigation,1965,3,(614) 360-5413,https://0gswx9dad.law,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000397,Peterson & Hernandez Associates,Huber Heights,Montgomery,OH,Administrative Law; Family Law; Environmental Law,1985,246,(513) 431-6426,https://9zsrtvcgl.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000398,Rodriguez Law Firm,Ashland,Ashland,OH,Medical Malpractice; Estate Planning; Trusts; Debt Relief,1994,113,(419) 497-3960,https://jukme.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000399,"Sutton, Torres & Lee",Springfield,Clark,OH,Corporate Law,2015,48,(937) 588-1740,https://9ip0x.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000400,Peterson & Stewart Law Firm,Youngstown,Mahoning,OH,Debt Relief; Custody; Education Law,1962,145,(419) 648-7892,https://ublni3.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000401,Peterson & Phillips PLLC,Xenia,Greene,OH,Criminal Law; Insurance Law,1995,90,(419) 422-9504,https://peik7ypos8.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000402,Jones Legal Services,Youngstown,Mahoning,OH,Construction Law; DUI Defense; Civil Litigation,1994,207,(380) 409-3265,https://3cvyqs.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000403,Martin LLC,Zanesville,Muskingum,OH,Trial Law; Criminal Law; Debt Relief; Civil Litigation,1978,86,(380) 644-2321,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000404,Campbell Law Group,Toledo,Lucas,OH,Real Estate; Immigration Law; Custody,1971,237,(380) 428-9883,https://zw6aikc.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000405,"Howell, Lewis & Lee",Athens,Athens,OH,White Collar Crime; Property Law,2017,204,(513) 625-7321,https://bcp9y.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000406,Gutierrez & Rogers Associates,Mansfield,Richland,OH,Bankruptcy; Education Law; Insurance Law,2008,121,(330) 816-3523,https://130nwny4y.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000407,Peterson & Clark Legal Group,Lakewood,Cuyahoga,OH,DUI Defense,2011,227,(513) 947-4783,https://cmmqt6zf3.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000408,Martinez PLLC,Steubenville,Jefferson,OH,Insurance Law; HR Compliance; Real Estate,1975,237,(419) 512-3918,https://1qtsqfj.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000409,Rodriguez & Collins Associates,Massillon,Stark,OH,Visa Matters; Construction Law,1992,236,(380) 334-6681,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000410,"King, Davis & Smith",Athens,Athens,OH,Corporate Law; Energy Law; Government Relations; Family Law,2022,119,(937) 942-4905,https://54v5vz4e.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000411,Rogers & Torres Attorneys,Westlake,Cuyahoga,OH,Contract Law; Medical Malpractice; Education Law; Construction Law,2019,168,(216) 780-4187,https://sb377ex.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000412,Williams & King Legal Services,Euclid,Cuyahoga,OH,Tax Law; Divorce; Patent Law; White Collar Crime,1999,125,(419) 720-2467,https://crbo84f6.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000413,"Wilson, Valdez & Gutierrez",Huber Heights,Montgomery,OH,Trusts; Energy Law; DUI Defense,1967,66,(216) 496-6336,https://imuzmksnnp.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000414,Davis & Martin Legal Services,Warren,Trumbull,OH,Compliance; Environmental Law,1981,165,(937) 446-5885,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000415,Ortiz Counsel,Canton,Stark,OH,Employment Law; Trusts; Contract Law; Environmental Law,1961,101,(419) 293-8709,https://ogxjp5bgfy.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000416,"White, Peterson & Stewart",Ashland,Ashland,OH,Criminal Law; Contract Law; Probate,1984,199,(216) 322-2383,https://3vkkvs8rn.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000417,Miller & Davis Law Firm,Dublin,Franklin,OH,Intellectual Property; Immigration Law,2016,24,(567) 215-7493,https://7jlgrm1itk.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000418,Peterson PLLC,Chillicothe,Ross,OH,Criminal Law; DUI Defense,2013,233,(740) 416-6378,https://ansrajmgvf.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000419,"Johnson, Young & Jones",Springfield,Clark,OH,Insurance Law; Probate,2012,182,(330) 815-9354,https://qcwbwhn3.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000420,Martinez & Morgan Law Group,Findlay,Hancock,OH,White Collar Crime,1987,130,(216) 657-1352,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000421,"Mathis, Walker & Torres",Cleveland,Cuyahoga,OH,Construction Law,1973,28,(513) 427-7185,https://potssnp.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000422,Thomas Attorneys,Lakewood,Cuyahoga,OH,Property Law; Civil Litigation; Nonprofit Law; Environmental Law,1965,94,(740) 847-9007,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000423,Lindsey & Smith Attorneys,Westlake,Cuyahoga,OH,Product Liability; Bankruptcy; Intellectual Property; Family Law,1981,136,(937) 950-2002,https://hsoyl.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000424,"Gutierrez, Parker & Moore",Canton,Stark,OH,Trusts; Construction Law; Civil Litigation; Personal Injury,2016,28,(740) 503-3094,https://hiovyacu7j.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000425,"Parker, Gonzalez & Peterson",Sandusky,Erie,OH,Visa Matters,1973,217,(937) 842-6127,https://d2yf8.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000426,"Lewis, Brown & Lee",Tiffin,Seneca,OH,Personal Injury; Healthcare Law; Business Formation; Criminal Law,2006,57,(937) 674-3035,https://auik4q19h1.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000427,Smith & Gutierrez Law Group,Chillicothe,Ross,OH,Contract Law,2014,71,(567) 743-9359,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000428,Rice & Johnson Attorneys,Cleveland,Cuyahoga,OH,Criminal Law; Energy Law; Tax Law,2013,237,(440) 524-9125,https://9kaxux.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000429,Moore & White Partners,Columbus,Franklin,OH,Corporate Law; Healthcare Law; Construction Law; Environmental Law,1984,120,(513) 253-5073,https://5chmr.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000430,Walker Associates,Massillon,Stark,OH,Administrative Law; Family Law,1983,126,(380) 836-4580,https://9uve444v2.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000431,Wilkinson & Wilson Law Group,Sandusky,Erie,OH,DUI Defense; Contract Law; HR Compliance; Bankruptcy,1973,4,(513) 507-2846,,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000432,Clark & Barnes Partners,Middletown,Butler,OH,Healthcare Law; Compliance; Construction Law,1966,175,(330) 876-6691,https://fqkmv47.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000433,"Cooper, Sutton & Moore",Lakewood,Cuyahoga,OH,Energy Law; Insurance Law; Commercial Law,2015,163,(614) 502-1508,https://bh7dx1234.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000434,"Sutton, Cooper & Howell",Tiffin,Seneca,OH,Tax Law; Nonprofit Law; Family Law,1978,131,(380) 932-5757,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000435,Wilson Attorneys,Dublin,Franklin,OH,Workers Compensation,2005,155,(440) 862-6865,https://t9r3l10.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000436,Anderson & Moore Legal Services,Dublin,Franklin,OH,Product Liability,1993,134,(740) 682-4639,https://as6rq0aoh9.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000437,Thomas & Phillips LLP,Lorain,Lorain,OH,Tax Law,2000,234,(419) 626-7066,https://wokkth.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000438,Peterson Law Group,Lima,Allen,OH,Bankruptcy,1961,233,(567) 938-8404,https://4vo3v3zq.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000439,"Hall, Scott & Williams",Findlay,Hancock,OH,Healthcare Law; Compliance,2014,23,(330) 375-3825,https://hek30i.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000440,Valdez & Jackson Attorneys,Trotwood,Montgomery,OH,Business Formation; Personal Injury; Bankruptcy,1971,68,(740) 204-2346,https://7z2vk905j.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000441,Williams & Reyes LLC,Cincinnati,Hamilton,OH,Administrative Law; Contract Law,1973,32,(440) 205-8229,https://mw3bce.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000442,Scott & Smith LLC,Dayton,Montgomery,OH,Intellectual Property; Government Relations; Construction Law,1977,242,(740) 954-8538,https://wnrees.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000443,"Garcia, Rice & Wilson",Marietta,Washington,OH,Healthcare Law; DUI Defense,2002,134,(330) 799-2177,https://thf5t.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000444,Edwards & Ortiz Legal Group,New Philadelphia,Tuscarawas,OH,DUI Defense,1979,26,(513) 562-3114,https://vwt49mkhrk.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000445,Graves LLP,Mount Vernon,Knox,OH,Civil Litigation,1994,69,(330) 388-7525,https://nalz6znsbs.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000446,"Smith, Cooper & Hernandez",Lima,Allen,OH,Compliance,2018,72,(380) 926-5225,https://jdi3x8gel.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000447,Brown & Stewart Counsel,Tiffin,Seneca,OH,Healthcare Law; Nonprofit Law; Product Liability,2007,174,(614) 682-7494,https://da8os1fnm.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000448,"Ortiz, Bennett & Martin",Delaware,Delaware,OH,Debt Relief; Medical Malpractice; Employment Law; HR Compliance,1992,244,(419) 710-6311,https://i9wi4r596.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000449,Ortiz Legal Services,Akron,Summit,OH,Estate Planning; DUI Defense; HR Compliance; Corporate Law,1968,196,(614) 823-3490,https://cti4atb4lk.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000450,Young & Reyes Legal Services,Delaware,Delaware,OH,Government Relations; Tax Law; Business Formation; Compliance,2015,27,(440) 236-3941,https://lsn8ue.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000451,Young & Harris Attorneys,Ashland,Ashland,OH,White Collar Crime; Contract Law; Trial Law; Education Law,2021,176,(216) 252-5735,https://znw7t376.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000452,"Moore, Phillips & Smith",Dayton,Montgomery,OH,Insurance Law; White Collar Crime,1992,206,(567) 333-6237,https://zuhn0oh5mi.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000453,Peterson Law Firm,Gahanna,Franklin,OH,Trial Law; HR Compliance,1960,73,(513) 225-6944,https://nkeq0f4lzt.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000454,"Johnson, Peterson & Rice",Gahanna,Franklin,OH,Divorce,2023,35,(614) 292-4085,https://95k3v3.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000455,"Morgan, Wilkinson & Hall",Lorain,Lorain,OH,HR Compliance,1990,33,(419) 966-9195,https://advtn.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000456,"Torres, Ortiz & Scott",Marion,Marion,OH,Compliance; HR Compliance; DUI Defense,1975,49,(419) 911-5505,https://wc9rxolkup.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000457,Shaffer Law Group,Sandusky,Erie,OH,Workers Compensation; Corporate Law; Healthcare Law; Government Relations,2010,10,(740) 607-4104,https://vpkqm61mt.attorney,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000458,Clark & Davis Law Group,Massillon,Stark,OH,Probate; Immigration Law,2018,48,(216) 864-3111,https://5klew.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000459,"Parker, Jones & Collins",Kettering,Montgomery,OH,Business Formation; Product Liability; Estate Planning; Traffic Law,1990,227,(740) 240-8576,https://vj5q45.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000460,"Medina, Murphy & Parker",Steubenville,Jefferson,OH,Debt Relief; Education Law; Employment Law,2020,12,(440) 416-4961,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000461,White & Edwards LLC,Chillicothe,Ross,OH,Custody,1968,212,(380) 202-2492,https://ap2dx.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000462,"Thomas, Morris & Scott",Xenia,Greene,OH,White Collar Crime; Healthcare Law; Personal Injury,1974,87,(330) 712-3544,https://w6m4nv.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000463,"Thomas, Reyes & Anderson",Cleveland,Cuyahoga,OH,Energy Law; Insurance Law; Real Estate,1994,61,(937) 943-2204,https://ncmvjm.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000464,"Brown, Garcia & Graves",Marietta,Washington,OH,HR Compliance; Compliance,1977,42,(440) 796-3011,https://z1xgd76gqn.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000465,Clark & Martin Legal Group,Xenia,Greene,OH,Traffic Law; HR Compliance,1978,220,(513) 600-8430,https://v8sxijsc7.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000466,White LLP,Youngstown,Mahoning,OH,White Collar Crime; Patent Law,2019,50,(740) 633-1281,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000467,Martin Attorneys,Mansfield,Richland,OH,Medical Malpractice; Healthcare Law; Personal Injury; Securities Law,1972,171,(440) 397-7844,https://bdbnxh4.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000468,"Edwards, Shaffer & Graves",Gahanna,Franklin,OH,Business Formation,2005,240,(513) 843-5906,https://ibjv6axc.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000469,Gonzalez Legal,Dublin,Franklin,OH,Divorce; Family Law; Government Relations,1964,245,(380) 500-6498,https://xfdwqxkci.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000470,Stewart Counsel,Lorain,Lorain,OH,Civil Litigation; Probate,1999,13,(740) 666-3752,https://otyr4ebq9o.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000471,"Barnes, Wilson & Jackson",Steubenville,Jefferson,OH,Litigation; Administrative Law; Real Estate,1960,123,(380) 660-8440,https://qbi2i0e.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000472,King & Bowman LLC,Lakewood,Cuyahoga,OH,Intellectual Property,1973,114,(419) 772-4687,https://voqiv3de4t.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000473,Johnson & Peterson LLC,Worthington,Franklin,OH,Business Formation; Construction Law; White Collar Crime; Contract Law,1989,40,(419) 784-4209,https://m0sy69j6.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000474,Gutierrez LLC,Mount Vernon,Knox,OH,Workers Compensation; Administrative Law,1973,149,(513) 929-2102,https://yqs6x8.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000475,Lopez Legal Group,Youngstown,Mahoning,OH,Debt Relief,2012,57,(216) 312-1449,https://u07loef7.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000476,Taylor LLC,Ashland,Ashland,OH,Property Law; Government Relations; Divorce,2009,29,(614) 258-1553,https://do5n6wtdq.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000477,"Peterson, Brown & Brown",Columbus,Franklin,OH,Administrative Law; Intellectual Property; Environmental Law; Securities Law,1971,188,(614) 411-6221,https://c0kfleauv6.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000478,"Barnes, Edwards & Peterson",Portsmouth,Scioto,OH,Nonprofit Law,1987,247,(614) 638-2040,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000479,"Jackson, Martin & Phillips",Steubenville,Jefferson,OH,Construction Law; Bankruptcy,1972,102,(937) 349-9146,https://ri5asnp.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000480,Smith & Wilson Attorneys,Toledo,Lucas,OH,Family Law,1995,167,(740) 427-2843,https://3ciaqkh0.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000481,Barnes & Davis Associates,Springfield,Clark,OH,Custody,2015,217,(740) 819-7160,https://ff7tvwk9vf.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000482,"Collins, Sutton & Peterson",Warren,Trumbull,OH,Traffic Law; Insurance Law,2014,213,(740) 437-8262,https://8jeeh.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000483,Lewis Legal,Tiffin,Seneca,OH,Civil Litigation,2004,25,(937) 487-8485,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000484,"Collins, Miller & Collins",Huber Heights,Montgomery,OH,Product Liability,2005,148,(937) 949-7922,https://f1y6ajl.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000485,"Lopez, Stewart & Jones",Wooster,Wayne,OH,Contract Law; Workers Compensation; Patent Law; Custody,2015,66,(440) 786-9775,https://bgyka1l.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000486,Rogers LLC,Blendon,Franklin,OH,Energy Law,1987,58,(440) 472-1874,https://lq5mrut.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000487,Rogers LLP,Lakewood,Cuyahoga,OH,White Collar Crime; Trial Law; Compliance; Business Formation,1964,13,(567) 600-4374,https://eo7gy.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000488,"Peterson, Lee & Valdez",Zanesville,Muskingum,OH,Contract Law; Immigration Law,1980,104,(440) 857-2137,https://n64haildt.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000489,"Peterson, Parker & Bowman",Toledo,Lucas,OH,Business Formation; Divorce; Probate; Estate Planning,1999,37,(567) 428-7679,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000490,Wright Legal Services,Kettering,Montgomery,OH,Education Law; Commercial Law,1971,58,(440) 214-2867,https://el2yi0.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000491,Barnes Associates,Zanesville,Muskingum,OH,Family Law; Debt Relief,2004,117,(937) 718-6358,https://moeavv.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000492,Ortiz Law Group,Gahanna,Franklin,OH,Trial Law; Administrative Law; Product Liability; Patent Law,2022,100,(740) 553-4134,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000493,"Martinez, Thomas & Lewis",Euclid,Cuyahoga,OH,Intellectual Property; Visa Matters,1978,207,(513) 365-5881,https://8u96nup.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000494,"Medina, Shaffer & Garcia",Chillicothe,Ross,OH,Workers Compensation; HR Compliance,1988,209,(380) 420-4656,https://v6bax7.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000495,Jones & Williams Partners,Medina,Medina,OH,Environmental Law,2015,219,(614) 666-1733,https://sw92536yt.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000496,Stewart LLC,Blendon,Franklin,OH,Corporate Law,2002,62,(740) 948-6318,https://pvk1490.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000497,Graves Partners,New Philadelphia,Tuscarawas,OH,Probate; Visa Matters; Government Relations,1964,21,(513) 527-3582,https://96lu0sw2.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000498,Walker & Lopez Associates,Euclid,Cuyahoga,OH,Custody; Litigation,1995,203,(440) 756-7421,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000499,"Reyes, Wright & Davis",Newark,Licking,OH,White Collar Crime; Insurance Law; Government Relations,2011,39,(937) 893-3136,https://4kr45ydu.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000500,Barnes & Torres Law Firm,Ashland,Ashland,OH,Nonprofit Law,1990,61,(330) 778-8340,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000501,"Gonzalez, Peterson & Lee",Elyria,Lorain,OH,Government Relations; Probate; Nonprofit Law; Divorce,2022,153,(380) 952-7953,https://7tm0e8.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000502,Mathis Legal Services,Lakewood,Cuyahoga,OH,Employment Law; Custody; Government Relations; Litigation,1993,23,(513) 364-6327,https://gwidu.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000503,Hernandez Legal Services,Tiffin,Seneca,OH,Healthcare Law; Medical Malpractice; Commercial Law; Business Formation,1988,213,(614) 922-8471,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000504,Gonzalez & White Counsel,Canton,Stark,OH,Visa Matters; HR Compliance,1972,171,(330) 977-9287,https://5bxliqfmki.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000505,Garcia & Gutierrez Attorneys,Blendon,Franklin,OH,Custody; Visa Matters,1983,75,(216) 645-5469,https://4k7kne12.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000506,Campbell Partners,Massillon,Stark,OH,Debt Relief; Probate,2000,75,(330) 332-6209,https://2w96xiz.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000507,Martin & Morris PLLC,Warren,Trumbull,OH,Energy Law,1962,216,(567) 289-3088,https://zncyt8w01i.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000508,Clark & Wilson Legal Services,Dayton,Montgomery,OH,Debt Relief; Immigration Law,2016,220,(380) 367-9086,https://jnf2ca5ox.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000509,Parker Attorneys,Blendon,Franklin,OH,Energy Law,1974,185,(216) 388-8034,https://jbaxz4.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000510,Martin Law Group,Delaware,Delaware,OH,Probate; Immigration Law,1981,175,(380) 933-1395,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000511,"Rogers, Martinez & Brown",Akron,Summit,OH,Healthcare Law,1973,243,(440) 786-8415,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000512,"Walker, Taylor & Barnes",Portsmouth,Scioto,OH,Medical Malpractice,2002,122,(216) 226-4394,https://65z0nnn.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000513,Bowman Associates,Bowling Green,Wood,OH,Healthcare Law,1970,77,(567) 916-2422,https://50m60l.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000514,Ortiz Law Firm,Dublin,Franklin,OH,Litigation; Criminal Law,1997,134,(330) 727-6603,https://z0lypgwd34.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000515,"Torres, Edwards & Edwards",Marion,Marion,OH,Intellectual Property; Government Relations; Commercial Law,1966,125,(419) 676-1810,https://abbvjt.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000516,Lee & Thomas Legal,Blendon,Franklin,OH,Government Relations; Employment Law,2009,12,(380) 879-9082,https://ooihjdwumm.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000517,Bennett & Harris Law Group,Trotwood,Montgomery,OH,Insurance Law,2015,80,(419) 687-9097,https://52odg2.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000518,Stewart Legal,Middletown,Butler,OH,Probate; Bankruptcy; Contract Law; Trusts,1984,229,(440) 826-2491,https://64m0acumx7.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000519,Davis & Wilson Legal Services,Massillon,Stark,OH,Civil Litigation; Real Estate; Immigration Law; Corporate Law,1982,108,(567) 547-4736,https://xskgjk7o1r.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000520,Morgan LLP,Ashland,Ashland,OH,Divorce; Criminal Law; Traffic Law; Personal Injury,1991,84,(614) 960-2221,https://k9ziz.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000521,Gonzalez & Davis Legal Services,Gahanna,Franklin,OH,Product Liability; Workers Compensation; Environmental Law; Bankruptcy,1992,113,(440) 535-1891,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000522,Morgan Legal Services,Portsmouth,Scioto,OH,Employment Law; Education Law; Environmental Law,1990,113,(614) 817-4793,https://xel3i.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000523,Young Law Group,Springfield,Clark,OH,Environmental Law; Commercial Law; Business Formation; DUI Defense,1978,139,(614) 737-7485,https://w8jr389bl.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000524,"Garcia, Stewart & Gonzalez",Dublin,Franklin,OH,Estate Planning; Visa Matters; Patent Law,1982,202,(216) 268-6705,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000525,Rice Legal,Blendon,Franklin,OH,DUI Defense,2009,17,(216) 419-4534,https://5oroy574u.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000526,Rogers Law Group,Trotwood,Montgomery,OH,Family Law; Civil Litigation; Visa Matters; Employment Law,2001,205,(440) 360-4997,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000527,Reyes & Hernandez Law Firm,Akron,Summit,OH,Civil Litigation; Insurance Law,1971,241,(513) 200-9992,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000528,Williams & King Counsel,Gallipolis,Gallia,OH,Trial Law,1972,70,(567) 598-5145,https://dqhvv0qq.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000529,Mathis & Lopez Attorneys,Delaware,Delaware,OH,DUI Defense; Personal Injury,1995,240,(419) 472-6618,https://ak4v9.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000530,Barnes & Medina Legal Group,Zanesville,Muskingum,OH,Corporate Law; Debt Relief,1979,133,(513) 603-8744,https://5x7fid.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000531,"Gonzalez, Medina & Johnson",Ashland,Ashland,OH,Probate; Estate Planning; Government Relations,1979,129,(330) 362-5203,https://6xvvj1b22.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000532,"Parker, Hall & Rogers",Marietta,Washington,OH,Probate; Tax Law; Intellectual Property; Debt Relief,2015,28,(419) 480-1948,https://t6mlj.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000533,"Rodriguez, Taylor & Peterson",Huber Heights,Montgomery,OH,Divorce,2009,190,(740) 869-4167,https://acam27171.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000534,"Johnson, Ortiz & Parker",Tiffin,Seneca,OH,Debt Relief; Environmental Law; Immigration Law,1987,201,(937) 816-1510,https://t6932r2des.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000535,White Law Group,Findlay,Hancock,OH,Bankruptcy; Nonprofit Law,1968,131,(513) 446-2503,https://mk5jlv348l.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000536,"Cooper, Thomas & Morgan",Mansfield,Richland,OH,Nonprofit Law; Contract Law,1996,191,(740) 709-9292,https://qqub58mzp.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000537,"Bennett, Campbell & Moore",Tiffin,Seneca,OH,Divorce,1976,27,(567) 695-4850,https://zdzrkl1.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000538,Torres LLP,Kettering,Montgomery,OH,Immigration Law; HR Compliance; Business Formation; Employment Law,1962,88,(614) 733-2561,https://l9kok.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000539,Williams & Gutierrez Associates,Chillicothe,Ross,OH,HR Compliance,1974,164,(380) 219-2122,https://i9nh4.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000540,Rice & Jackson Law Group,Athens,Athens,OH,Bankruptcy,1978,250,(380) 854-2800,https://ycmsk62pxl.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000541,Howell & Morris LLP,Columbus,Franklin,OH,Energy Law; Employment Law; Environmental Law; Patent Law,2020,184,(614) 997-4432,https://eyhqw.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000542,Howell & Clark Associates,Delaware,Delaware,OH,DUI Defense; Compliance; Criminal Law; Energy Law,1967,133,(740) 220-9668,https://3cskv47bk0.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000543,Martinez PLLC,Worthington,Franklin,OH,Civil Litigation; Probate; Tax Law; Commercial Law,2015,72,(419) 879-9341,https://9fnin.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000544,Wilkinson Attorneys,Wooster,Wayne,OH,Compliance; Visa Matters; Securities Law,1999,157,(740) 800-5296,https://d38xj6pg.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000545,Martinez Legal Group,Steubenville,Jefferson,OH,Bankruptcy; Property Law,2020,166,(216) 363-3035,https://z93nq.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000546,Morris Associates,Delaware,Delaware,OH,Bankruptcy; Criminal Law,1986,4,(740) 864-6822,https://vny1vc.attorney,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000547,"Davis, Shaffer & Wilkinson",Gallipolis,Gallia,OH,Nonprofit Law,2003,179,(614) 870-3815,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000548,"Wilson, Lopez & Walker",Toledo,Lucas,OH,Traffic Law,1964,24,(740) 966-4621,https://9b3jq7q.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000549,Murphy Legal Group,Massillon,Stark,OH,Debt Relief; Medical Malpractice; Patent Law; Contract Law,1975,124,(440) 937-6002,https://plz1vfin8.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000550,Peterson Partners,Akron,Summit,OH,DUI Defense; Insurance Law,1979,83,(614) 625-7999,https://sv3r5.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000551,"Lopez, Ortiz & Parker",Westlake,Cuyahoga,OH,Real Estate; Nonprofit Law; Environmental Law; Family Law,1999,88,(513) 628-7260,https://l9qnk7ay53.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000552,Moore & Brown Attorneys,Warren,Trumbull,OH,Compliance,2009,30,(380) 938-9252,https://tawd1u5ny.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000553,Hernandez Legal,Xenia,Greene,OH,Employment Law; Trusts; Tax Law,2021,190,(440) 927-5673,https://hrma5w.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000554,Peterson Attorneys,Chillicothe,Ross,OH,Litigation; Custody; Family Law,2008,139,(380) 921-6568,https://3vbdnpt9h.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000555,Cooper Counsel,Akron,Summit,OH,Real Estate; Contract Law; Patent Law; Intellectual Property,2009,68,(330) 554-7503,https://ips79tv3cz.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000556,"Graves, Shaffer & Sutton",Akron,Summit,OH,Corporate Law; Family Law,1974,112,(330) 916-4496,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000557,Brown Attorneys,Dayton,Montgomery,OH,Healthcare Law; Debt Relief; Probate; Litigation,1997,202,(380) 441-3340,https://s7rip6.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000558,Campbell & Peterson Law Group,Worthington,Franklin,OH,Commercial Law; Bankruptcy; Insurance Law; Trial Law,1965,134,(937) 466-1127,https://b80l5jxsnd.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000559,"Campbell, Johnson & Miller",Lima,Allen,OH,Business Formation; Civil Litigation; Commercial Law,1994,94,(330) 625-5737,https://w7ukl.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000560,"Bennett, King & Torres",Columbus,Franklin,OH,Immigration Law; Employment Law; Corporate Law,1983,133,(330) 946-4398,https://4vwcs.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000561,Edwards & Mathis PLLC,Lima,Allen,OH,Government Relations; Securities Law,1979,158,(614) 468-3011,https://wvp83r57f.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000562,"Ortiz, Valdez & Jackson",Tiffin,Seneca,OH,Construction Law; Property Law; Debt Relief,2016,214,(567) 269-1394,https://udxlqf27a3.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000563,Hernandez & Hall Associates,New Philadelphia,Tuscarawas,OH,Bankruptcy; Patent Law,2012,222,(614) 335-7785,https://1l8u2.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000564,Phillips & Johnson Attorneys,Portsmouth,Scioto,OH,Visa Matters,2010,31,(440) 702-8925,https://9sntz28zm.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000565,Edwards Legal Group,Mansfield,Richland,OH,Litigation; Debt Relief,1967,119,(513) 405-9898,https://3ognw.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000566,Murphy & Scott LLP,Bowling Green,Wood,OH,Probate; Civil Litigation,2011,203,(567) 500-9401,https://uv2r2.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000567,Rice Legal,Bowling Green,Wood,OH,Custody; Compliance; Medical Malpractice,1994,241,(614) 944-3044,https://x72kcp2r3v.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000568,Morris & Rodriguez Legal Services,Chillicothe,Ross,OH,Energy Law; Custody; Real Estate; Employment Law,1996,45,(419) 433-4023,https://rldcu.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000569,"Peterson, Jackson & Peterson",Newark,Licking,OH,Medical Malpractice; Estate Planning,1983,223,(330) 957-5823,https://3a3nrkn.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000570,"Murphy, Martinez & Thomas",Westlake,Cuyahoga,OH,Tax Law,1968,37,(937) 411-4802,https://6dpzh.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000571,Wright & Clark LLC,Massillon,Stark,OH,DUI Defense,1979,237,(380) 552-3535,https://3cvy54zwig.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000572,Gonzalez Associates,Massillon,Stark,OH,Tax Law; HR Compliance,1963,193,(614) 279-1310,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000573,"Edwards, Wilkinson & Peterson",Portsmouth,Scioto,OH,Litigation; Trial Law; Contract Law; Workers Compensation,2005,70,(740) 711-7281,https://mgd7iwzl.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000574,Howell & Hernandez Legal Services,Xenia,Greene,OH,Litigation; Education Law,2014,58,(740) 633-9444,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000575,Anderson & Davis Counsel,Tiffin,Seneca,OH,Divorce; Employment Law; DUI Defense; Intellectual Property,1996,99,(513) 798-6849,https://0caggbvn0.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000576,Peterson Counsel,New Philadelphia,Tuscarawas,OH,Visa Matters,1993,240,(567) 898-5853,https://n29flxp.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000577,Parker & Sutton Law Group,Elyria,Lorain,OH,Traffic Law; Bankruptcy; Patent Law; Visa Matters,1993,207,(614) 305-8130,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000578,Scott Counsel,Columbus,Franklin,OH,Probate; Property Law; Patent Law,2023,68,(440) 441-3998,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000579,Moore Partners,Delaware,Delaware,OH,Criminal Law; Real Estate; Divorce,1982,118,(614) 251-2491,https://18068.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000580,"Young, Martinez & Clark",Zanesville,Muskingum,OH,Commercial Law,1993,198,(740) 874-9462,https://jq6s3q.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000581,"Rice, Rogers & Moore",Trotwood,Montgomery,OH,Property Law; Personal Injury,1975,219,(216) 837-2017,https://mgdr6.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000582,Lopez Law Group,Westlake,Cuyahoga,OH,Intellectual Property; DUI Defense,1988,11,(419) 506-6954,https://exow22zws.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000583,"Reyes, Taylor & Wilson",Middletown,Butler,OH,Environmental Law; Commercial Law; Education Law,1976,243,(380) 782-5541,https://bs9qo7.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000584,Wright Legal,Kettering,Montgomery,OH,DUI Defense; Securities Law; Product Liability; Contract Law,2000,173,(614) 645-4991,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000585,Medina Attorneys,New Philadelphia,Tuscarawas,OH,Energy Law; Product Liability; Construction Law; Contract Law,1997,172,(330) 307-3506,https://bgnrabf.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000586,Lopez & Lopez Law Group,Middletown,Butler,OH,White Collar Crime; Workers Compensation,1987,87,(440) 543-4752,https://tph38gqol.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000587,Taylor & Young Law Firm,Zanesville,Muskingum,OH,Debt Relief; Business Formation; Litigation,2015,44,(513) 302-6030,https://1q5kej.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000588,Edwards & Gutierrez Law Firm,Youngstown,Mahoning,OH,Property Law; Patent Law,2020,30,(937) 808-8467,https://wzs2473mmu.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000589,Ortiz Counsel,Toledo,Lucas,OH,Environmental Law; Criminal Law; Traffic Law; Trusts,1981,2,(330) 760-7851,https://cg0wopg8jb.attorney,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000590,Cooper Law Group,Elyria,Lorain,OH,Construction Law,2014,62,(614) 761-1249,https://4o5xsdtqu.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000591,Jones & Collins LLC,Newark,Licking,OH,Construction Law; Family Law,1980,134,(937) 368-1132,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000592,"Parker, Young & Smith",Trotwood,Montgomery,OH,Debt Relief; Contract Law; Criminal Law; Business Formation,2021,79,(513) 203-6383,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000593,Graves Law Group,Worthington,Franklin,OH,Compliance,2010,83,(614) 464-1260,https://wjsgseiz.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000594,"Morgan, Howell & Lopez",Ashland,Ashland,OH,Trial Law,1966,145,(567) 796-3243,https://j19n3.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000595,Wright Attorneys,Middletown,Butler,OH,Bankruptcy; Government Relations; Divorce; Probate,1962,3,(614) 499-2201,https://5wz4a0r.law,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000596,Davis PLLC,Tiffin,Seneca,OH,Healthcare Law; Medical Malpractice; Construction Law,2018,102,(419) 710-5979,https://yg445w6pp0.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000597,Bowman & Mathis Law Group,Mount Vernon,Knox,OH,Product Liability; Education Law,2018,128,(330) 579-9989,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000598,Jones & Peterson Legal Services,Kettering,Montgomery,OH,Workers Compensation; Civil Litigation,2001,73,(614) 993-9847,https://vzr7kna.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000599,Harris Law Group,Medina,Medina,OH,Patent Law; Healthcare Law; HR Compliance,1960,192,(216) 956-9257,https://yxknx67.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000600,Rodriguez Counsel,Youngstown,Mahoning,OH,Energy Law,2007,157,(513) 619-3633,https://lb9x77mdk7.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000601,Gutierrez & Wright Attorneys,Medina,Medina,OH,Probate; Construction Law; Employment Law,2009,96,(567) 334-5552,https://wa8yov7.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000602,Howell Counsel,Tiffin,Seneca,OH,Medical Malpractice,2021,163,(419) 523-6903,https://xbg0j9dk4.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000603,"Mathis, Rice & King",Gallipolis,Gallia,OH,Probate; Healthcare Law; Intellectual Property; HR Compliance,2010,104,(614) 957-8620,https://3m3g3ed.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000604,Bowman LLC,Portsmouth,Scioto,OH,Medical Malpractice; Real Estate; Workers Compensation; Product Liability,2004,78,(567) 286-7848,https://89rbx6jr6y.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000605,Moore Legal,Newark,Licking,OH,Visa Matters; Personal Injury; Securities Law; Intellectual Property,2013,199,(937) 216-1869,https://8ckxxx9xc7.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000606,Johnson & White Attorneys,Hamilton,Butler,OH,Commercial Law; Family Law; Criminal Law,2023,92,(440) 934-5235,https://qf14j.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000607,"Bowman, Sutton & Graves",Mansfield,Richland,OH,Medical Malpractice; Civil Litigation,2023,23,(740) 847-3097,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000608,Gutierrez & Thomas Legal Group,Tiffin,Seneca,OH,Divorce; Insurance Law,2022,239,(614) 941-8700,https://y84td3bf3z.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000609,Garcia Legal Group,Middletown,Butler,OH,Contract Law; Probate; Compliance,1976,129,(380) 933-3502,https://0krxfr.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000610,"Peterson, Wright & Garcia",Tiffin,Seneca,OH,Probate; Litigation; Criminal Law; Nonprofit Law,1990,207,(937) 778-8149,https://mg2hc.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000611,"Moore, Garcia & Phillips",Youngstown,Mahoning,OH,Contract Law; Employment Law,2007,152,(614) 693-3331,https://13g98ip37.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000612,"Peterson, Torres & Lewis",Mansfield,Richland,OH,Trial Law; Tax Law,1966,99,(513) 565-1961,https://1n6yen8.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000613,Reyes LLP,Xenia,Greene,OH,Business Formation,1997,7,(216) 517-9621,https://s101q2ooe.attorney,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000614,"Lopez, Brown & Howell",Springfield,Clark,OH,Litigation; Product Liability; Intellectual Property,1976,6,(567) 550-9436,,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000615,"Wilson, Jones & Shaffer",Hamilton,Butler,OH,Commercial Law; Nonprofit Law; Debt Relief; Visa Matters,2005,60,(614) 291-4281,https://fl81mcxg.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000616,Martin LLP,Xenia,Greene,OH,Patent Law; Probate; Securities Law,2005,118,(937) 932-6047,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000617,"Taylor, Barnes & Murphy",Kettering,Montgomery,OH,Probate; Environmental Law; Property Law,1976,177,(937) 607-8414,https://4b3rne2.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000618,Peterson & Lewis Partners,Blendon,Franklin,OH,Commercial Law; Visa Matters,1990,140,(614) 774-7648,https://o93rt.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000619,Peterson & Lewis Associates,Elyria,Lorain,OH,Estate Planning; Business Formation; Energy Law; Criminal Law,1967,177,(330) 426-9061,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000620,Peterson Counsel,Springfield,Clark,OH,Healthcare Law; Government Relations,1971,25,(567) 834-1586,https://shf62xz2rt.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000621,Jackson LLC,Newark,Licking,OH,Environmental Law; Tax Law; Administrative Law,1976,34,(937) 717-8076,https://z8s6dukt.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000622,Williams LLP,Springfield,Clark,OH,Family Law; Civil Litigation; Custody,1960,171,(513) 733-5773,https://d77zecx2a6.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000623,"Hernandez, Miller & Bowman",Findlay,Hancock,OH,Business Formation; White Collar Crime; Commercial Law; Compliance,2017,110,(937) 818-4071,https://8xeoq.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000624,"Johnson, Gonzalez & Martin",Mansfield,Richland,OH,HR Compliance; Traffic Law,1993,199,(419) 894-1887,https://l138gtx.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000625,Brown Attorneys,Marion,Marion,OH,Corporate Law,1977,103,(419) 650-9611,https://536hiay.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000626,Mathis Law Group,Massillon,Stark,OH,Patent Law; Litigation; Workers Compensation; Probate,1980,185,(380) 816-8103,https://q6d67fw.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000627,Wilson & Sutton LLP,Xenia,Greene,OH,Administrative Law; Divorce; Real Estate,2012,195,(567) 766-4912,https://4taxw.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000628,Anderson Legal Group,Gallipolis,Gallia,OH,Securities Law; Visa Matters; Tax Law,1964,45,(614) 514-6662,https://pxic4sngt.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000629,Collins & Jones Attorneys,Gallipolis,Gallia,OH,Property Law; Patent Law,1963,158,(380) 316-3515,https://q2p7v6.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000630,Davis Law Firm,Marietta,Washington,OH,Tax Law; DUI Defense,1975,146,(567) 906-7333,https://jc90k.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000631,Stewart & Howell Legal Services,Dayton,Montgomery,OH,Nonprofit Law; Criminal Law; Probate,2006,149,(380) 725-3568,https://9v2hbzw8.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000632,Morgan & Barnes Legal Services,Tiffin,Seneca,OH,Administrative Law; Real Estate,1976,201,(614) 561-4140,https://dfgd2.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000633,"Miller, Jackson & Walker",Wooster,Wayne,OH,Commercial Law; Personal Injury,2018,112,(440) 285-3563,https://l3jm48i8.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000634,"Barnes, Valdez & Sutton",New Philadelphia,Tuscarawas,OH,Bankruptcy; Patent Law; Medical Malpractice; Tax Law,2015,56,(740) 602-9335,https://5kcxabzp.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000635,Lopez Legal Group,Elyria,Lorain,OH,Contract Law; Compliance; Education Law; Product Liability,1974,197,(937) 960-2428,https://79smwxrv9.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000636,Cooper & Rice PLLC,Ashland,Ashland,OH,Environmental Law; Criminal Law; Patent Law; Contract Law,2001,131,(440) 982-4613,https://qi57x46j3.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000637,Torres Partners,Youngstown,Mahoning,OH,Debt Relief; Business Formation; Environmental Law; Family Law,1977,67,(330) 878-8841,https://3w2mfxqub.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000638,"Martinez, Morris & Lopez",Warren,Trumbull,OH,Government Relations,2023,228,(614) 491-5669,https://mvorjnb0.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000639,Clark & Gonzalez Legal Services,Gallipolis,Gallia,OH,Family Law,2018,50,(380) 987-6463,https://xc12rlfhdr.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000640,Hernandez Legal Services,Elyria,Lorain,OH,Intellectual Property; Immigration Law; Probate; HR Compliance,2001,108,(937) 804-1080,https://t1c4wv5.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000641,Ortiz & Lindsey Law Firm,Youngstown,Mahoning,OH,Insurance Law; Administrative Law; White Collar Crime,2001,59,(380) 350-2530,https://ajnkm.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000642,"Jackson, Peterson & Johnson",Athens,Athens,OH,Property Law; Civil Litigation; Product Liability,1987,196,(330) 859-5726,https://6d4941qnw.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000643,Gutierrez Associates,Akron,Summit,OH,Government Relations; Nonprofit Law; Criminal Law; DUI Defense,2012,155,(330) 659-5388,https://zamaglwr.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000644,Williams PLLC,Akron,Summit,OH,Debt Relief; Environmental Law; Medical Malpractice; Criminal Law,2004,91,(330) 302-2737,https://w08a33w6v.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000645,Medina Attorneys,Euclid,Cuyahoga,OH,Medical Malpractice; Construction Law; Debt Relief; Insurance Law,2006,14,(937) 882-9892,https://51v82n.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000646,Wilson LLP,Lima,Allen,OH,Trial Law,1978,28,(330) 515-3398,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000647,Valdez & Hall Partners,Canton,Stark,OH,Environmental Law,1975,2,(937) 806-6931,https://xxydippv8c.attorney,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000648,Hall Counsel,Hamilton,Butler,OH,Securities Law; Education Law; Visa Matters,2009,54,(567) 760-7755,https://kcyqvc.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000649,Rice LLC,Tiffin,Seneca,OH,White Collar Crime; Tax Law,1976,38,(567) 790-5687,https://4gzs7g.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000650,Rice Associates,Parma,Cuyahoga,OH,Compliance; Nonprofit Law; Trial Law,1970,77,(440) 299-2266,https://4a5z02qqh.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000651,Harris PLLC,Springfield,Clark,OH,Government Relations; Employment Law; DUI Defense; Education Law,2023,190,(513) 950-4557,https://g6pilkg.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000652,Collins & Stewart LLC,Kettering,Montgomery,OH,Nonprofit Law,2018,250,(740) 741-5438,https://jvkx2aod.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000653,Rodriguez & Medina Legal,Elyria,Lorain,OH,Compliance; Trusts,2016,189,(513) 993-7353,https://sm9vsek.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000654,"Davis, Valdez & Collins",Mansfield,Richland,OH,Litigation; Insurance Law,1974,30,(614) 994-5999,https://t7ycl.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000655,Peterson Counsel,Worthington,Franklin,OH,Commercial Law,2016,130,(419) 271-1606,https://q6vhd8px.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000656,Edwards Counsel,Dayton,Montgomery,OH,DUI Defense; Medical Malpractice; Employment Law,2000,176,(614) 319-2826,https://6zzock3.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000657,Wilson Legal Group,Xenia,Greene,OH,Custody; Construction Law,2009,25,(330) 570-8260,https://xpg7328.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000658,Mathis & Wilson Law Group,Dayton,Montgomery,OH,Bankruptcy,2016,71,(216) 908-3898,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000659,Taylor & Smith LLP,Delaware,Delaware,OH,Securities Law; Education Law; HR Compliance,1992,146,(740) 354-6308,https://4cbmj0go4t.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000660,Peterson & Martin Law Firm,Chillicothe,Ross,OH,Tax Law; HR Compliance; Estate Planning; Civil Litigation,2000,229,(216) 734-6031,https://l5igi.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000661,"Wilson, Thomas & Bennett",New Philadelphia,Tuscarawas,OH,Product Liability,1998,100,(419) 690-1301,https://dhzpn.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000662,Wilkinson Partners,Sandusky,Erie,OH,Corporate Law; Estate Planning; Traffic Law,2023,6,(330) 553-3534,https://ehxbcdd786.lawyers,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000663,Clark & Reyes LLC,Cleveland,Cuyahoga,OH,Criminal Law; Litigation,1996,222,(567) 359-6917,https://eu8k09.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000664,King Legal Services,Huber Heights,Montgomery,OH,Visa Matters,2009,37,(740) 926-9255,https://ke5zahm19l.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000665,Stewart Associates,Lima,Allen,OH,Medical Malpractice; Probate,1980,19,(937) 653-3449,,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000666,Graves & Miller Partners,Hamilton,Butler,OH,Estate Planning; Divorce; Real Estate; Debt Relief,2013,47,(216) 296-8541,https://6m4kx6c3dw.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000667,"Taylor, Campbell & Sutton",Chillicothe,Ross,OH,Intellectual Property,1972,187,(330) 869-3124,https://4t4qkoo.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000668,Edwards & Brown Law Group,Delaware,Delaware,OH,Trial Law,2018,236,(330) 499-5654,https://pwouqx2fhp.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000669,Bennett & Morgan Law Group,Toledo,Lucas,OH,Education Law; Tax Law; Insurance Law; Criminal Law,2012,249,(330) 916-7644,https://fso9aci2.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000670,Peterson Law Firm,Sandusky,Erie,OH,Workers Compensation; Probate; Product Liability; Corporate Law,1971,15,(380) 280-9976,https://bb4a3rqm7i.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000671,"Rogers, Mathis & Collins",Medina,Medina,OH,Government Relations; Healthcare Law; Probate,1972,35,(419) 663-4668,https://7fywha3k1.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000672,Shaffer & Hernandez Associates,Kettering,Montgomery,OH,Estate Planning; Real Estate; Divorce; Criminal Law,1993,235,(216) 214-4964,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000673,Martinez & Medina LLP,Delaware,Delaware,OH,Real Estate,1972,70,(419) 852-4376,https://3kbzhgehgm.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000674,"Peterson, Stewart & Graves",Warren,Trumbull,OH,Real Estate; Medical Malpractice; Litigation; Family Law,2007,189,(216) 584-6457,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000675,Anderson & Edwards Associates,Portsmouth,Scioto,OH,Corporate Law,2018,122,(740) 512-6863,https://jc13b8.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000676,Lee & Rice Attorneys,Trotwood,Montgomery,OH,Intellectual Property,2000,18,(740) 496-7467,https://gddpnye4r.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000677,Peterson LLP,Mount Vernon,Knox,OH,Litigation; Personal Injury; Traffic Law,2003,226,(513) 681-4126,https://9i872.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000678,Williams & Harris PLLC,Mansfield,Richland,OH,Traffic Law; Nonprofit Law; Tax Law,1969,82,(740) 409-1619,https://32u1ct.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000679,Phillips & Martin Associates,Blendon,Franklin,OH,Custody; Energy Law,2002,232,(513) 619-6103,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000680,Brown & Peterson Law Firm,Xenia,Greene,OH,Energy Law; Debt Relief; Product Liability; Intellectual Property,2014,249,(567) 475-3042,https://4z1vtt96x.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000681,Stewart Law Firm,Zanesville,Muskingum,OH,Debt Relief,2010,3,(330) 418-1178,https://gjpw68wxba.lawyers,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000682,"Morris, Parker & Martin",Toledo,Lucas,OH,Securities Law,1988,34,(419) 849-9946,https://hu0r57d.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000683,Mathis Associates,Euclid,Cuyahoga,OH,Contract Law; Construction Law,1980,180,(380) 212-4044,https://tq464pqcih.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000684,Lindsey Legal Group,Lima,Allen,OH,Real Estate; HR Compliance; Energy Law,1976,146,(937) 837-2087,https://e1hc9.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000685,Gutierrez Legal Group,Marietta,Washington,OH,Real Estate; Trusts; White Collar Crime; Product Liability,1969,102,(614) 548-1872,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000686,Walker & Wright Law Firm,Lima,Allen,OH,Business Formation; Environmental Law,1968,227,(330) 576-6022,https://c6dgjera.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000687,Valdez Legal,Mount Vernon,Knox,OH,Compliance,1972,195,(330) 597-8766,https://51bwrg.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000688,Parker Partners,Medina,Medina,OH,White Collar Crime,1992,200,(330) 222-3948,https://0fc4ha8.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000689,Phillips Legal Services,Dayton,Montgomery,OH,Civil Litigation,1988,117,(216) 669-6247,https://0a8dliae07.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000690,"Martin, Morris & Rice",Mansfield,Richland,OH,Trusts,1981,13,(440) 916-2366,https://9as2lbi.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000691,Shaffer & Morgan Counsel,Portsmouth,Scioto,OH,Environmental Law; Debt Relief,2017,224,(216) 263-4770,https://t5u7ov.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000692,Bennett & Wright Law Group,Newark,Licking,OH,Insurance Law; Trial Law; Estate Planning,1989,133,(740) 575-8596,https://yr9m1.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000693,"Wilson, Gutierrez & Mathis",Springfield,Clark,OH,Tax Law; Commercial Law,1999,206,(380) 732-5808,https://0yg3k4k6.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000694,Peterson & Collins Attorneys,Dayton,Montgomery,OH,Criminal Law,1988,210,(330) 333-4884,https://97k2naw.legal,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000695,"Wilkinson, Graves & King",Elyria,Lorain,OH,Bankruptcy; Estate Planning; Business Formation,2016,225,(513) 963-8747,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000696,Peterson Law Firm,Warren,Trumbull,OH,Workers Compensation; Traffic Law,1973,181,(419) 492-2942,https://4x2cm0.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000697,Lee Legal Group,Chillicothe,Ross,OH,Construction Law,2007,207,(330) 730-7309,https://vtbruuy.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000698,Rodriguez Partners,Columbus,Franklin,OH,Construction Law; Workers Compensation; Immigration Law; Environmental Law,2000,106,(216) 521-4966,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000699,"Garcia, Lee & Hall",Bowling Green,Wood,OH,Insurance Law,1966,69,(513) 957-5771,https://zbnex5h660.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000700,"Cooper, Reyes & Ortiz",Athens,Athens,OH,White Collar Crime; Traffic Law; Product Liability,2006,86,(330) 680-3083,https://49hg3laxk7.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000701,Johnson Legal,Tiffin,Seneca,OH,Healthcare Law; Government Relations,2012,94,(440) 243-5690,https://ffeecj.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000702,White Partners,Portsmouth,Scioto,OH,Insurance Law; Workers Compensation; Immigration Law; Corporate Law,2012,53,(937) 877-9049,https://plmngbaoq.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000703,"Rogers, Howell & Lewis",Cleveland,Cuyahoga,OH,Government Relations; Family Law; Energy Law,1989,17,(614) 428-8989,https://dis4nbadj9.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000704,Ortiz & Wilson Law Firm,Mansfield,Richland,OH,Medical Malpractice; Trusts; Civil Litigation; Custody,2022,119,(419) 220-3869,https://5vibcgudl.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000705,Wright Partners,Hamilton,Butler,OH,Contract Law,2019,47,(513) 700-9269,https://tbjguw78.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000706,Ortiz PLLC,Findlay,Hancock,OH,Patent Law,1980,145,(937) 409-8208,https://xnytfhi1mv.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000707,"Lindsey, Cooper & Gutierrez",Cleveland,Cuyahoga,OH,Personal Injury,1986,174,(440) 861-3922,https://117eliqhf.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000708,"Peterson, Rice & Wright",Toledo,Lucas,OH,Medical Malpractice; Construction Law; Bankruptcy,1999,242,(614) 958-6719,https://702s8lns.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000709,"Walker, Collins & Phillips",Bowling Green,Wood,OH,Real Estate; Tax Law,1989,5,(567) 920-9261,https://0pmb74.legal,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000710,"Stewart, Gutierrez & Graves",Delaware,Delaware,OH,Construction Law,2007,188,(614) 379-4513,https://8p0pzm7.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000711,Campbell & Jones Partners,Cleveland,Cuyahoga,OH,Custody,1969,39,(937) 333-4599,https://m9zy1cqs.legal,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000712,Walker Legal Group,Mansfield,Richland,OH,Custody; Visa Matters; Intellectual Property,1965,187,(419) 405-7436,https://qgkhxgilyu.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000713,Rogers & Torres Law Group,Trotwood,Montgomery,OH,Securities Law,1979,30,(216) 833-4177,https://g3gpiz.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000714,Moore Partners,Parma,Cuyahoga,OH,Real Estate; Personal Injury,1965,156,(567) 997-8241,https://0aeszg.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000715,"Ortiz, Anderson & Anderson",Lorain,Lorain,OH,Litigation; Traffic Law,1967,20,(513) 309-9239,https://mpl4d.law,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000716,"Harris, Jones & Rogers",Athens,Athens,OH,Nonprofit Law; Medical Malpractice,1962,82,(567) 761-2172,https://xzgt8j.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000717,Edwards & Peterson Law Firm,Cleveland,Cuyahoga,OH,Environmental Law; Property Law; Commercial Law,2007,7,(614) 222-8589,https://c6rr7.legal,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000718,"Valdez, Taylor & Bowman",Marion,Marion,OH,Bankruptcy; Compliance; Energy Law; Nonprofit Law,2000,162,(937) 541-6483,https://rwjny5.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000719,Barnes & Thomas Legal Services,Newark,Licking,OH,Family Law; Criminal Law; Government Relations; Product Liability,1970,6,(513) 919-7994,,Ohio State Bar Public Directory,Small Firm (2-10),ACTIVE
+OH-000720,Shaffer & Garcia Counsel,Youngstown,Mahoning,OH,Immigration Law; Commercial Law,1984,94,(567) 882-4041,https://ojfty.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000721,Young & Anderson LLC,Dayton,Montgomery,OH,Criminal Law,1975,118,(614) 712-5251,https://5h1pw2u.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000722,Lindsey Legal Group,Akron,Summit,OH,Insurance Law; Criminal Law; Trusts,1992,1,(740) 485-7990,https://y8sw8xq.law,Ohio State Bar Public Directory,Solo Practice,ACTIVE
+OH-000723,"Morgan, Collins & Brown",Ashland,Ashland,OH,Tax Law; Custody,1982,104,(614) 661-6557,https://zg8n1zl7o.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000724,Ortiz LLC,Delaware,Delaware,OH,Criminal Law,2018,86,(740) 686-7272,https://ovaut8nm.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000725,"Morris, Bowman & Wilson",Lima,Allen,OH,Environmental Law; HR Compliance; Corporate Law,2006,132,(440) 523-5055,,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000726,Rogers & Lopez Legal,Zanesville,Muskingum,OH,Immigration Law; Corporate Law,2000,118,(330) 425-2495,https://mv80b6s.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000727,"Peterson, Scott & Taylor",Blendon,Franklin,OH,Administrative Law; Trusts; Energy Law; Construction Law,1993,138,(567) 203-2570,https://g0xngf.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000728,Rodriguez Law Firm,Findlay,Hancock,OH,Medical Malpractice; Securities Law; Immigration Law,2019,98,(330) 577-6728,https://c532j.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000729,Jackson PLLC,Cincinnati,Hamilton,OH,Compliance; Government Relations; Tax Law,2020,97,(216) 982-2177,https://66atv.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000730,"Stewart, Barnes & Morgan",Bowling Green,Wood,OH,Property Law; Construction Law,1972,249,(513) 400-4154,https://rqw4l.lawyers,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000731,"Medina, Rogers & Peterson",Youngstown,Mahoning,OH,Intellectual Property; Securities Law; Tax Law,1987,160,(419) 809-1355,https://o7s4k7sbb.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000732,Edwards & Rogers Law Group,Parma,Cuyahoga,OH,Personal Injury; White Collar Crime; Bankruptcy; Commercial Law,2021,108,(216) 902-5995,https://ixn7gyndqv.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000733,Thomas Legal,Bowling Green,Wood,OH,HR Compliance,2000,142,(740) 825-5929,https://83nuch6.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000734,Wright LLP,Middletown,Butler,OH,Real Estate; Insurance Law,2010,120,(937) 216-1770,https://oj0np.lawyers,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000735,"Mathis, King & Collins",Westlake,Cuyahoga,OH,Estate Planning; Trial Law; Contract Law; Property Law,1972,195,(380) 252-8864,https://580ofkx1o.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000736,Campbell Legal,Hamilton,Butler,OH,Criminal Law; Tax Law,2003,47,(216) 372-3611,https://cvwh87.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000737,Stewart & Taylor Associates,Gallipolis,Gallia,OH,Workers Compensation,1972,46,(740) 940-4955,https://nukgcm21.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000738,"Shaffer, Gonzalez & Graves",Medina,Medina,OH,Trusts; Estate Planning,1973,84,(740) 206-1754,https://7jgzbkv1qa.law,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000739,King & Jackson Law Group,Toledo,Lucas,OH,Commercial Law; Trial Law; Energy Law; Corporate Law,1960,199,(513) 652-7196,https://e635fgnko.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000740,King Counsel,Columbus,Franklin,OH,Litigation; Medical Malpractice,1968,230,(330) 304-7609,https://syhlry.attorney,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000741,Anderson & Hernandez LLC,Dayton,Montgomery,OH,Government Relations; Securities Law,1983,158,(567) 476-6582,https://fl0x9.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000742,"Lindsey, Campbell & Hall",Parma,Cuyahoga,OH,Contract Law,1963,240,(330) 393-4030,,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000743,Edwards Associates,Lorain,Lorain,OH,Personal Injury; Product Liability,2003,187,(740) 899-1242,https://fkwbmi4h00.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000744,Sutton Law Firm,Warren,Trumbull,OH,Business Formation; Commercial Law; Workers Compensation; Trial Law,1987,94,(440) 839-4407,https://ivva7cpkn6.attorney,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000745,Shaffer & Howell Counsel,Springfield,Clark,OH,Corporate Law; Medical Malpractice,1987,41,(380) 909-5695,https://p41tyj.attorney,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000746,"Campbell, Collins & Reyes",New Philadelphia,Tuscarawas,OH,Real Estate; Family Law; Debt Relief,1971,82,(330) 583-5230,https://6rt72am59e.legal,Ohio State Bar Public Directory,Large (50-200),ACTIVE
+OH-000747,Lee & Bennett LLC,Bowling Green,Wood,OH,Custody; Criminal Law; Construction Law; Healthcare Law,1964,232,(937) 467-9527,https://xwivq58.law,Ohio State Bar Public Directory,National (200+),ACTIVE
+OH-000748,Gonzalez Legal Services,Zanesville,Muskingum,OH,Product Liability; Divorce; Criminal Law,1999,17,(614) 775-3167,https://ayd7qff6bh.lawyers,Ohio State Bar Public Directory,Mid-Size (11-50),ACTIVE
+OH-000749,"Smith, Stewart & Wright",Portsmouth,Scioto,OH,Government Relations; Custody; Estate Planning,1975,225,(330) 849-1343,https://tg1zuum.law,Ohio State Bar Public Directory,National (200+),ACTIVE

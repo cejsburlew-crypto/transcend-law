@@ -1,0 +1,68 @@
+firm_id,firm_name,city,county,state,practice_areas,year_founded,estimated_attorney_count,phone,website,verified_source
+LA-000000,Aaron & Gianna PLC,New Orleans,Orleans,LA,Bankruptcy; Banking; Corporate; Insurance; Real Estate,1997,,,aarongianna.com,Clutch.co
+LA-000001,"Baldwin Haspel Burke & Mayer, LLC",New Orleans,Orleans,LA,Bankruptcy; Corporate; Insurance; Labor & Employment; Real Estate,1914,,,bhbmlaw.com,Clutch.co
+LA-000002,"Baron & Budd, P.C.",Baton Rouge,East Baton Rouge,LA,Civil Rights; Corporate; Malpractice,1977,,,baronandbudd.com,Clutch.co
+LA-000003,"Barrasso Usdin Kupperman Freeman & Sarver, L.L.C.",New Orleans,Orleans,LA,Corporate; Insurance; IP,2003,,,barrassousdin.com,Clutch.co
+LA-000004,Bernstein Litowitz Berger & Grossmann LLP,New Orleans,Orleans,LA,Corporate,1983,,,blbglaw.com,Clutch.co
+LA-000005,Blase Inzina Injury Attorneys,Lafayette,Lafayette,LA,Corporate; Insurance; Labor & Employment,2014,,,blaseinzina.com,Clutch.co
+LA-000006,Bloom Legal LLC,New Orleans,Orleans,LA,Corporate; Immigration; Insurance; Labor & Employment,2005,,,bloomlegal.com,Clutch.co
+LA-000007,"Blue Williams, LLC",Metairie,Jefferson,LA,Corporate; Family; Insurance; Labor & Employment; Real Estate,,,,bluewilliams.com,Clutch.co
+LA-000008,Borghardt Law Firm,Baton Rouge,East Baton Rouge,LA,Corporate,,,,borghardtlawfirm.com,Clutch.co
+LA-000009,Bradley Murchison Kelly & Shea LLC,New Orleans,Orleans,LA,Corporate; Litigation,,,,bradleyfirm.com,Best Law Firms
+LA-000010,Breazeale Sachse and Wilson LLP,Baton Rouge,East Baton Rouge,LA,Bankruptcy; Banking; Corporate; Finance; IP; Real Estate; Tax,,,,bswllp.com,Clutch.co
+LA-000011,"Brown Sims, P.C.",New Orleans,Orleans,LA,Corporate; Labor & Employment; Malpractice; Real Estate; Litigation; Trial,1976,,,brownsims.com,Clutch.co
+LA-000012,Burns Charest LLP,New Orleans,Orleans,LA,Corporate; Labor & Employment,2015,,,burnscharest.com,Clutch.co
+LA-000013,"Carl Barkemeyer, Criminal Defense Attorney",Baton Rouge,East Baton Rouge,LA,Civil Rights; Corporate; Family; Immigration,,,,attorneycarl.com,Clutch.co
+LA-000014,Carver Darden Koretzky Tessier Finn Blossman & Areaux LLC,Covington,St. Tammany,LA,Bankruptcy; Banking; Corporate; Finance; Real Estate,1994,,,carverdarden.com,Clutch.co
+LA-000015,Castex Esnard LLC,New Orleans,Orleans,LA,Litigation; Corporate,,,,castexesnard.com,Best Law Firms
+LA-000016,Chaffe McCall LLP,New Orleans,Orleans,LA,Corporate; Litigation,,,,chaffemccall.com,Best Law Firms
+LA-000017,"Christovich & Kearney, LLP",New Orleans,Orleans,LA,Corporate; Insurance; Labor & Employment; Malpractice; Real Estate,1926,,,christovich.com,Clutch.co
+LA-000018,"Coats Rose, P.C.",New Orleans,Orleans,LA,Bankruptcy; Banking; Corporate; Insurance; Real Estate,1989,,,coatsrose.com,Clutch.co
+LA-000019,D'Arcy Vicknair LLC,New Orleans,Orleans,LA,Corporate; Litigation,,,,darcyvicknair.com,Best Law Firms
+LA-000020,"Daly & Black, P.C.",Metairie,Jefferson,LA,Corporate; Insurance,2014,,,dalyblack.com,Clutch.co
+LA-000021,"Degan, Blanchard & Nash",Baton Rouge,East Baton Rouge,LA,Banking; Corporate; Labor & Employment; Tax,1991,,,degan.com,Clutch.co
+LA-000022,"Deutsch Kerrigan, L.L.P.",New Orleans,Orleans,LA,Corporate; Banking; Insurance; Commercial Law,,,,deutschkerrigan.com,Clutch.co
+LA-000023,Fisher Phillips,New Orleans,Orleans,LA,Corporate; Immigration; Labor & Employment,1943,,,fisherphillips.com,Clutch.co
+LA-000024,Fishman Haygood LLP,New Orleans,Orleans,LA,Corporate; Securities Litigation; M&A; Bankruptcy; Commercial Disputes; Environmental; Energy; Real Estate,,,,fishmanhaygood.com,Best Law Firms + Clutch.co
+LA-000025,Foley and Mansfield,,,LA,Multiple,,,,,Sartori Partners
+LA-000026,Gordon Rees Scully Mansukhani,,,LA,Multiple,,,,,Sartori Partners
+LA-000027,Griffen Law Firm,Baton Rouge,East Baton Rouge,LA,Corporate,,,,griffenlawfirm.com,Clutch.co
+LA-000028,Husch Blackwell,,,LA,Multiple,,,,,Sartori Partners
+LA-000029,Jones Walker LLP,New Orleans,Orleans,LA,Corporate; Litigation; M&A; Maritime & Admiralty; Business Formation; Multiple areas,,,,joneswalker.com,Best Law Firms + Sartori
+LA-000030,KSW&B,Baton Rouge,East Baton Rouge,LA,Bankruptcy; Banking; Corporate; Finance; Immigration,,,,kswb.com,Clutch.co
+LA-000031,Kean Miller LLP,Baton Rouge,East Baton Rouge,LA,Corporate; IP; Internet & Technology; Labor & Employment; Malpractice; Energy; Litigation; M&A,1983,,,keanmiller.com,Clutch.co + Sartori
+LA-000032,Kelly Hart & Hallman LLP,Baton Rouge,East Baton Rouge,LA,Banking; Corporate; IP; Labor & Employment; Real Estate,1979,,,kellyhart.com,Clutch.co
+LA-000033,"Kutcher Tygier & Luminais, LLP",Metairie,Jefferson,LA,Corporate; Real Estate,1996,,,nolacounsel.com,Clutch.co
+LA-000034,"Lamothe Law Firm, LLC",New Orleans,Orleans,LA,Corporate; Malpractice,,,,lamothefirm.com,Clutch.co
+LA-000035,Leake & Andersson LLP,New Orleans,Orleans,LA,Corporate; Insurance; IP; Labor & Employment; Real Estate,1987,,,leakeandersson.com,Clutch.co
+LA-000036,"Lewis, Kullman, Sterbcow & Abramson, LLC",New Orleans,Orleans,LA,Corporate; Malpractice,,,,lksalaw.com,Clutch.co
+LA-000037,Liskow & Lewis,New Orleans,Orleans,LA,Bankruptcy; Corporate; Labor & Employment; Real Estate; Tax; Maritime,,,,liskow.com,Clutch.co
+LA-000038,Litchfield Cavo,,,LA,Multiple,,,,,Sartori Partners
+LA-000039,"Lowe, Stein, Hoffman, Allweiss & Hauver L.L.P.",New Orleans,Orleans,LA,Corporate; Insurance; Labor & Employment; Real Estate; Tax,,,,lowestein.com,Clutch.co
+LA-000040,"Lugenbuhl, Wheaton, Peck, Rankin & Hubbard",New Orleans,Orleans,LA,Corporate; Internet & Technology; Labor & Employment; Real Estate; Tax,1986,,,lawla.com,Clutch.co
+LA-000041,Lukinovich APLC,Metairie,Jefferson,LA,Corporate; Tax,,,,lukinovichlaw.com,Clutch.co
+LA-000042,Lundy LLP,Lake Charles,Calcasieu,LA,Bankruptcy; Banking; Corporate; Finance; Insurance,,,,lundyllp.com,Clutch.co
+LA-000043,McGlinchey Stafford,Baton Rouge,East Baton Rouge,LA,Bankruptcy; Corporate; Labor & Employment; Real Estate; Tax,,,,mcglinchey.com,Clutch.co
+LA-000044,Miller Sullivan & DeMarcay LLC,,,LA,Multiple,,,,,Best Law Firms
+LA-000045,Milling Benson Woodward L.L.P.,New Orleans,Orleans,LA,Banking; Corporate; Insurance; IP; Labor & Employment,1896,,,millinglaw.com,Clutch.co
+LA-000046,NeunerPate,Lafayette,Lafayette,LA,Corporate; Insurance; Labor & Employment,,,,neunerpate.com,Clutch.co
+LA-000047,Onebane Law Firm,Lafayette,Lafayette,LA,Bankruptcy; Corporate; Insurance; Labor & Employment; Real Estate,1977,,,onebane.com,Clutch.co
+LA-000048,"Ottinger Hebert, L.L.C.",Lafayette,Lafayette,LA,Corporate; Business Consulting,2000,,,ottingerhebert.com,Clutch.co
+LA-000049,Phelps Dunbar LLP,New Orleans,Orleans,LA,Corporate; Insurance; Litigation; Banking; Real Estate; Tax; M&A,,,,phelps.com,Best Law Firms + Sartori
+LA-000050,"Pipes Miles Beckman, LLC",New Orleans,Orleans,LA,Banking; Corporate; Insurance; Labor & Employment; Real Estate,2019,,,pipesmiles.com,Clutch.co
+LA-000051,"Plauche Maselli Parkerson, LLP",New Orleans,Orleans,LA,Corporate; Insurance; Labor & Employment; Real Estate,1981,,,pmpllp.com,Clutch.co
+LA-000052,"Plauche, Smith & Nieset, LLC",Lake Charles,Calcasieu,LA,Corporate; Insurance; Labor & Employment,,,,psnlaw.com,Clutch.co
+LA-000053,Proskauer,,,LA,Multiple,,,,,Sartori Partners
+LA-000054,Pugh Accardo LLC,New Orleans,Orleans,LA,Corporate; Labor & Employment,2008,,,pugh-law.com,Clutch.co
+LA-000055,Quintairos Prieto Wood & Boyer,,,LA,Multiple,,,,,Sartori Partners
+LA-000056,"Simon, Peragine, Smith & Redfearn",New Orleans,Orleans,LA,Bankruptcy; Corporate; Insurance; Labor & Employment,,,,spsr-law.com,Clutch.co
+LA-000057,Smith Law Firm,Baton Rouge,East Baton Rouge,LA,Corporate; Labor & Employment; Malpractice; Tax,1972,,,jarthursmith.com,Clutch.co
+LA-000058,"Stanley, Reuter, Ross, Thornton & Alford LLC",New Orleans,Orleans,LA,Bankruptcy; Corporate; IP; Real Estate,1997,,,stanleyreuter.com,Clutch.co
+LA-000059,"Sternberg, Naccari & White",Baton Rouge,East Baton Rouge,LA,Corporate; Litigation,,,,snw.law,Best Law Firms
+LA-000060,Stewart Robbins & Brown LLC,Baton Rouge,East Baton Rouge,LA,Bankruptcy; Corporate,,,,stewartrobbins.com,Clutch.co
+LA-000061,Stone Pigman Walther Wittmann LLC,New Orleans,Orleans,LA,Corporate; Litigation; Real Estate,,,,stonepigman.com,Best Law Firms
+LA-000062,"The Baringer Law Firm, L.L.C.",Baton Rouge,East Baton Rouge,LA,Banking; Corporate; Real Estate; Tax,,,,baringerlawfirm.com,Clutch.co
+LA-000063,The Thrower Law Firm,Baton Rouge,East Baton Rouge,LA,Corporate; Finance,,,,throwerfirm.com,Clutch.co
+LA-000064,"Walters, Papillion, Thomas, Cullens, LLC",Baton Rouge,East Baton Rouge,LA,Corporate; Insurance,1976,,,lawbr.net,Clutch.co
+LA-000065,Whitehead Jr Jack K,Baton Rouge,East Baton Rouge,LA,Bankruptcy; Banking; Corporate,,,,whitehead-law.com,Clutch.co
+LA-000066,"Wiener, Weiss & Madison",Baton Rouge,East Baton Rouge,LA,Bankruptcy; Banking; Corporate; Labor & Employment; Real Estate,,,,wwmlaw.com,Clutch.co

@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { LawSpecialty } from './LawSpecialties';
+import type { NotaryService } from './NotaryServices';
 import { LawSpecialties } from './LawSpecialties';
 import { LawSpecialtyDetail } from './LawSpecialtyDetail';
+import { NotaryServices } from './NotaryServices';
+import { NotaryServiceDetail } from './NotaryServiceDetail';
+import { StatusBadge, Toast } from '@/components/UI';
 import './ServiceSelection.css';
+
+interface ServiceCount {
+  name: string;
+  count: number;
+  description: string;
+}
 
 export interface ServiceSelectionProps {
   onSelectService: (service: string) => void;
@@ -36,6 +46,54 @@ const SERVICES = [
 export const ServiceSelection: React.FC<ServiceSelectionProps> = ({ onSelectService }) => {
   const [selectedSpecialty, setSelectedSpecialty] = useState<LawSpecialty | null>(null);
   const [showLawSpecialties, setShowLawSpecialties] = useState(false);
+  const [selectedNotaryService, setSelectedNotaryService] = useState<NotaryService | null>(null);
+  const [showNotaryServices, setShowNotaryServices] = useState(false);
+  const [serviceCounts, setServiceCounts] = useState<Map<string, number>>(new Map());
+  const [lawyerCounts, setLawyerCounts] = useState<{ firmCount: number; lawyerCount: number } | null>(null);
+  const [notaryCount, setNotaryCount] = useState<number>(0);
+  const [loadingCounts, setLoadingCounts] = useState(true);
+  const [toast, setToast] = useState<any>(null);
+
+  const showToast = (type: 'success' | 'info', message: string) => {
+    setToast({ type, message, duration: 3000, onClose: () => setToast(null) });
+  };
+
+  useEffect(() => {
+    const fetchServiceCounts = async () => {
+      try {
+        // Fetch general service counts
+        const response = await fetch('/api/v1/service-counts');
+        if (response.ok) {
+          const data = await response.json();
+          const countsMap = new Map<string, number>();
+          data.data.forEach((service: ServiceCount) => {
+            countsMap.set(service.name, service.count);
+          });
+          setServiceCounts(countsMap);
+        }
+
+        // Fetch lawyer breakdown (firms vs individual lawyers)
+        const lawyerResponse = await fetch('/api/v1/service-counts/breakdown/lawyer');
+        if (lawyerResponse.ok) {
+          const lawyerData = await lawyerResponse.json();
+          setLawyerCounts(lawyerData.data);
+        }
+
+        // Fetch notary count
+        const notaryResponse = await fetch('/api/v1/service-counts/breakdown/notary');
+        if (notaryResponse.ok) {
+          const notaryData = await notaryResponse.json();
+          setNotaryCount(notaryData.data.count);
+        }
+      } catch (error) {
+        console.error('Error fetching service counts:', error);
+      } finally {
+        setLoadingCounts(false);
+      }
+    };
+
+    fetchServiceCounts();
+  }, []);
 
   if (selectedSpecialty) {
     return (
@@ -54,6 +112,23 @@ export const ServiceSelection: React.FC<ServiceSelectionProps> = ({ onSelectServ
     );
   }
 
+  if (selectedNotaryService) {
+    return (
+      <NotaryServiceDetail
+        service={selectedNotaryService}
+        onBack={() => setSelectedNotaryService(null)}
+      />
+    );
+  }
+
+  if (showNotaryServices) {
+    return (
+      <NotaryServices
+        onSelectService={(service) => setSelectedNotaryService(service)}
+      />
+    );
+  }
+
   return (
     <div className="service-selection-container">
       <div className="service-header">
@@ -62,25 +137,63 @@ export const ServiceSelection: React.FC<ServiceSelectionProps> = ({ onSelectServ
       </div>
 
       <div className="services-grid">
-        {SERVICES.map((service) => (
-          <button
-            key={service.name}
-            className="service-card"
-            onClick={() => {
-              if (service.name === 'Lawyer') {
-                setShowLawSpecialties(true);
-              } else {
-                onSelectService(service.name);
-              }
-            }}
-            title={service.description}
-          >
-            <div className="service-icon">{service.icon}</div>
-            <h3 className="service-name">{service.name}</h3>
-            <p className="service-desc">{service.description}</p>
-            <div className="service-arrow">→</div>
-          </button>
-        ))}
+        {SERVICES.map((service) => {
+          // Mark popular services
+          const popularServices = ['Lawyer', 'Notary', 'Legal Document Preparer'];
+          const isPopular = popularServices.includes(service.name);
+
+          return (
+            <div
+              key={service.name}
+              style={{ position: 'relative' }}
+              onClick={() => {
+                if (service.name === 'Lawyer') {
+                  setShowLawSpecialties(true);
+                  showToast('info', 'Loading lawyers...');
+                } else if (service.name === 'Notary') {
+                  setShowNotaryServices(true);
+                  showToast('info', 'Loading notaries...');
+                } else {
+                  onSelectService(service.name);
+                  showToast('success', `Selected: ${service.name}`);
+                }
+              }}
+            >
+              <button
+                className="service-card"
+                title={service.description}
+              >
+                <div className="service-icon">{service.icon}</div>
+                <h3 className="service-name">{service.name}</h3>
+                <p className="service-desc">{service.description}</p>
+                <div className="service-count">
+                  {!loadingCounts ? (
+                    <>
+                      {service.name === 'Lawyer' && lawyerCounts ? (
+                        <div className="count-breakdown">
+                          <div>{lawyerCounts.firmCount.toLocaleString()} Law Firms</div>
+                          <div>{lawyerCounts.lawyerCount.toLocaleString()} Lawyers</div>
+                        </div>
+                      ) : service.name === 'Notary' ? (
+                        <span>{notaryCount.toLocaleString()} Notaries</span>
+                      ) : (
+                        <span>{serviceCounts.get(service.name)?.toLocaleString()} providers</span>
+                      )}
+                    </>
+                  ) : (
+                    <span>Loading...</span>
+                  )}
+                </div>
+                <div className="service-arrow">→</div>
+              </button>
+              {isPopular && (
+                <div style={{ position: 'absolute', top: '12px', right: '12px' }}>
+                  <StatusBadge status="success">Popular</StatusBadge>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       <div className="service-info">
@@ -88,6 +201,13 @@ export const ServiceSelection: React.FC<ServiceSelectionProps> = ({ onSelectServ
           💡 <strong>Not sure which service you need?</strong> Contact our support team and we'll help you find the right professional.
         </p>
       </div>
+
+      {/* Toast Notification */}
+      {toast && (
+        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 1000 }}>
+          <Toast {...toast} />
+        </div>
+      )}
     </div>
   );
 };
