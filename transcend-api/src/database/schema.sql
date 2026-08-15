@@ -339,3 +339,109 @@ SELECT
 FROM attorneys a
 LEFT JOIN case_offers co ON a.id = co.attorney_id AND co.status = 'retained'
 GROUP BY a.id;
+
+-- ============================================
+-- DEPLOYMENTS TABLE
+-- ============================================
+CREATE TABLE deployments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  environment_id VARCHAR(100) NOT NULL,
+  deployment_type VARCHAR(50) NOT NULL CHECK (deployment_type IN ('feature', 'bugfix', 'hotfix', 'rollback')),
+  description TEXT NOT NULL,
+  requested_by UUID NOT NULL REFERENCES users(id) ON DELETE SET NULL,
+  status VARCHAR(50) DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'deploying', 'completed', 'failed', 'rolled_back')),
+  scheduled_at TIMESTAMP,
+  rollback_from_id UUID REFERENCES deployments(id) ON DELETE SET NULL,
+  error_message TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  completed_at TIMESTAMP
+);
+
+CREATE INDEX idx_deployments_environment_id ON deployments(environment_id);
+CREATE INDEX idx_deployments_status ON deployments(status);
+CREATE INDEX idx_deployments_requested_by ON deployments(requested_by);
+CREATE INDEX idx_deployments_created_at ON deployments(created_at);
+CREATE INDEX idx_deployments_completed_at ON deployments(completed_at);
+
+-- ============================================
+-- ACTIVITY LOGS TABLE (Enhanced with GPS)
+-- ============================================
+CREATE TABLE activity_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  action VARCHAR(100) NOT NULL,
+  resource VARCHAR(100) NOT NULL,
+  resource_id UUID NOT NULL,
+  changes JSONB DEFAULT '{}',
+  gps_coordinates JSONB, -- {latitude: float, longitude: float}
+  ip_address VARCHAR(45),
+  user_agent TEXT,
+  session_id UUID,
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_activity_logs_user_id ON activity_logs(user_id);
+CREATE INDEX idx_activity_logs_resource ON activity_logs(resource, resource_id);
+CREATE INDEX idx_activity_logs_action ON activity_logs(action);
+CREATE INDEX idx_activity_logs_timestamp ON activity_logs(timestamp);
+CREATE INDEX idx_activity_logs_session_id ON activity_logs(session_id);
+
+-- ============================================
+-- IMMUTABLE DOCUMENTS TABLE
+-- ============================================
+CREATE TABLE immutable_documents (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  document_type VARCHAR(100) NOT NULL,
+  content JSONB NOT NULL,
+  hash VARCHAR(64) NOT NULL UNIQUE,
+  previous_hash VARCHAR(64),
+  created_by UUID NOT NULL REFERENCES users(id) ON DELETE SET NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  immutable BOOLEAN DEFAULT TRUE
+);
+
+CREATE INDEX idx_immutable_documents_document_type ON immutable_documents(document_type);
+CREATE INDEX idx_immutable_documents_created_by ON immutable_documents(created_by);
+CREATE INDEX idx_immutable_documents_created_at ON immutable_documents(created_at);
+CREATE INDEX idx_immutable_documents_hash ON immutable_documents(hash);
+
+-- ============================================
+-- DELETION ATTEMPTS TABLE
+-- ============================================
+CREATE TABLE deletion_attempts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  target_type VARCHAR(100) NOT NULL,
+  target_id UUID NOT NULL,
+  attempted_by UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  reason TEXT,
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  blocked BOOLEAN DEFAULT FALSE,
+  block_reason TEXT
+);
+
+CREATE INDEX idx_deletion_attempts_target ON deletion_attempts(target_type, target_id);
+CREATE INDEX idx_deletion_attempts_attempted_by ON deletion_attempts(attempted_by);
+CREATE INDEX idx_deletion_attempts_timestamp ON deletion_attempts(timestamp);
+CREATE INDEX idx_deletion_attempts_blocked ON deletion_attempts(blocked);
+
+-- ============================================
+-- DEPLOYMENT METRICS VIEW
+-- ============================================
+CREATE VIEW deployment_metrics_daily AS
+SELECT
+  DATE(created_at) as deployment_date,
+  COUNT(*) as total_deployments,
+  SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed_count,
+  SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed_count,
+  SUM(CASE WHEN status = 'rolled_back' THEN 1 ELSE 0 END) as rollback_count,
+  AVG(EXTRACT(EPOCH FROM (completed_at - created_at))) as avg_duration_seconds
+FROM deployments
+WHERE completed_at IS NOT NULL
+GROUP BY DATE(created_at);
+
+-- ============================================
+-- TRIGGERS FOR DEPLOYMENT TABLES
+-- ============================================
+CREATE TRIGGER deployments_updated_at BEFORE UPDATE ON deployments
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
