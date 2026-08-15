@@ -1,0 +1,280 @@
+.location-credibility {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 2rem;
+}
+
+.credibility-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.credibility-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.3rem;
+}
+
+.credibility-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+}
+
+.credibility-icon {
+  font-size: 1.3rem;
+}
+
+.credibility-text {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* GPS Toggle */
+.gps-toggle-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.toggle-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.toggle-label {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 50px;
+  height: 28px;
+  background: #bdc3c7;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.toggle-switch.active {
+  background: #27ae60;
+  justify-content: flex-end;
+}
+
+.toggle-indicator {
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.permission-warning {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  color: #856404;
+  font-size: 0.9rem;
+}
+
+.gps-info {
+  margin-bottom: 0;
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: #d5f4e6;
+  color: #27ae60;
+  border-left: 3px solid #27ae60;
+}
+
+.gps-info.disabled {
+  background: #e8f4f8;
+  color: #3498db;
+  border-left-color: #3498db;
+}
+
+/* Credibility Details */
+.credibility-details {
+  margin-bottom: 1.5rem;
+}
+
+.score-container {
+  margin-bottom: 1.5rem;
+}
+
+.score-bar {
+  width: 100%;
+  height: 12px;
+  background: #ecf0f1;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.score-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.5s ease;
+}
+
+.score-number {
+  text-align: right;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+.credibility-breakdown {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.credibility-breakdown p {
+  margin: 0.5rem 0;
+  color: #34495e;
+  font-size: 0.95rem;
+}
+
+.credibility-breakdown strong {
+  color: #2c3e50;
+}
+
+.location-coords {
+  display: inline-block;
+  font-family: 'Monaco', monospace;
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  background: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.25rem;
+}
+
+.map-link {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.map-link:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+/* Credibility Messages */
+.credibility-message {
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-top: 1rem;
+}
+
+.credibility-message.success {
+  background: #d5f4e6;
+  color: #27ae60;
+  border-left: 4px solid #27ae60;
+}
+
+.credibility-message.warning {
+  background: #fef5e7;
+  color: #f39c12;
+  border-left: 4px solid #f39c12;
+}
+
+.credibility-message.error {
+  background: #fadbd8;
+  color: #e74c3c;
+  border-left: 4px solid #e74c3c;
+}
+
+/* No Location Data */
+.no-location-data {
+  text-align: center;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  color: #7f8c8d;
+}
+
+.no-location-data p {
+  margin: 0.5rem 0;
+}
+
+.enable-gps-button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.enable-gps-button:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+/* No Activities */
+.no-activities {
+  text-align: center;
+  padding: 2rem;
+  background: #ecf0f1;
+  border-radius: 8px;
+  color: #7f8c8d;
+}
+
+.no-activities p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .location-credibility {
+    padding: 1rem;
+  }
+
+  .credibility-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .toggle-control {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .credibility-breakdown {
+    font-size: 0.9rem;
+  }
+}
