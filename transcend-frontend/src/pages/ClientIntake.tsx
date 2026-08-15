@@ -8,9 +8,6 @@ export interface ServiceFormData {
   state: string;
   urgency: 'low' | 'medium' | 'high' | 'urgent';
   budget?: string;
-  clientName?: string;
-  clientEmail?: string;
-  clientPhone?: string;
 }
 
 interface CaseFormData extends ServiceFormData {
@@ -171,7 +168,10 @@ const CASE_CATEGORIES: CaseCategory[] = [
 ];
 
 export const ClientIntake: React.FC = () => {
-  const [step, setStep] = useState<'select' | 'details' | 'confirm'>('select');
+  const [step, setStep] = useState<'select' | 'details' | 'confirm' | 'saved'>('select');
+  const [savedIntakes, setSavedIntakes] = useState<CaseFormData[]>([]);
+  const [currentIntakeId, setCurrentIntakeId] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<CaseFormData>({
     serviceType: 'lawyer',
     caseType: '',
@@ -191,9 +191,28 @@ export const ClientIntake: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async () => {
+  const handleSaveIntake = () => {
+    if (!formData.title || !formData.description) {
+      alert('Please fill in title and description');
+      return;
+    }
+
+    if (!currentIntakeId) {
+      const id = Date.now().toString();
+      setSavedIntakes([...savedIntakes, { ...formData }]);
+      setCurrentIntakeId(id);
+    } else {
+      setSavedIntakes(savedIntakes.map(intake =>
+        intake === savedIntakes.find(i => i.title === formData.title) ? formData : intake
+      ));
+    }
+
+    setStep('saved');
+    setIsEditing(false);
+  };
+
+  const handleSubmitIntake = async () => {
     try {
-      // Submit to backend
       const response = await fetch('https://transcend-law.com/api/intake/submit', {
         method: 'POST',
         headers: {
@@ -208,10 +227,21 @@ export const ClientIntake: React.FC = () => {
         setTimeout(() => {
           setStep('select');
           setFormData({ serviceType: 'lawyer', caseType: '', title: '', description: '', state: 'CA', urgency: 'medium' });
+          setSavedIntakes([]);
+          setCurrentIntakeId(null);
         }, 3000);
       }
     } catch (error) {
       console.error('Intake submission error:', error);
+    }
+  };
+
+  const handleDeleteIntake = () => {
+    if (confirm('Delete this intake? This action cannot be undone.')) {
+      setSavedIntakes(savedIntakes.filter(intake => intake.title !== formData.title));
+      setStep('select');
+      setFormData({ serviceType: 'lawyer', caseType: '', title: '', description: '', state: 'CA', urgency: 'medium' });
+      setCurrentIntakeId(null);
     }
   };
 
@@ -347,30 +377,6 @@ export const ClientIntake: React.FC = () => {
               </div>
             </div>
 
-            <div className="form-row">
-              <div className="form-group">
-                <label>Your Name (Optional)</label>
-                <input
-                  type="text"
-                  name="clientName"
-                  placeholder="Your full name"
-                  value={formData.clientName || ''}
-                  onChange={handleInputChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Your Email (Optional)</label>
-                <input
-                  type="email"
-                  name="clientEmail"
-                  placeholder="your@email.com"
-                  value={formData.clientEmail || ''}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-
             <div className="form-group">
               <label>Budget (Optional)</label>
               <input
@@ -383,14 +389,59 @@ export const ClientIntake: React.FC = () => {
             </div>
 
             <div className="form-actions">
-              <button type="button" className="btn-secondary" onClick={() => setStep('select')}>
+              <button type="button" className="btn-secondary" onClick={() => {
+                setStep('select');
+                setFormData({ serviceType: 'lawyer', caseType: '', title: '', description: '', state: 'CA', urgency: 'medium' });
+                setIsEditing(false);
+              }}>
                 Back
               </button>
-              <button type="button" className="btn-primary" onClick={handleSubmit}>
-                Review & Submit
+              <button type="button" className="btn-primary" onClick={handleSaveIntake}>
+                {isEditing ? 'Update & Save' : 'Save Draft'}
               </button>
             </div>
           </form>
+        </div>
+      )}
+
+      {step === 'saved' && (
+        <div className="intake-step">
+          <div className="saved-intake-card">
+            <h2>📝 Draft Saved</h2>
+            <div className="saved-details">
+              <div className="detail-row">
+                <span className="label">Case Type:</span>
+                <span className="value">{formData.caseType}</span>
+              </div>
+              <div className="detail-row">
+                <span className="label">Title:</span>
+                <span className="value">{formData.title}</span>
+              </div>
+              <div className="detail-row">
+                <span className="label">State:</span>
+                <span className="value">{formData.state}</span>
+              </div>
+              <div className="detail-row">
+                <span className="label">Urgency:</span>
+                <span className="value">{formData.urgency}</span>
+              </div>
+            </div>
+
+            <div className="saved-actions">
+              <button type="button" className="btn-secondary" onClick={() => {
+                setStep('details');
+                setIsEditing(true);
+              }}>
+                ✏️ Edit
+              </button>
+              <button type="button" className="btn-danger" onClick={handleDeleteIntake}>
+                🗑️ Delete
+              </button>
+              <button type="button" className="btn-primary" onClick={handleSubmitIntake}>
+                ✓ Submit to Attorneys
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
