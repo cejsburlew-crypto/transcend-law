@@ -1,38 +1,43 @@
-# Docker Compose for complete stack (dev/staging)
-# Includes: API, Database, Cache, Monitoring
-
-version: '3.8'
+version: '3.9'
 
 services:
-  # PostgreSQL Database
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/transcend_prod
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
   db:
     image: postgres:14-alpine
-    container_name: transcend-db
     environment:
-      POSTGRES_DB: ${DB_NAME:-transcend_law}
-      POSTGRES_USER: ${DB_USER:-postgres}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=en_US.UTF-8"
-    ports:
-      - "5432:5432"
+      POSTGRES_DB: transcend_prod
+      POSTGRES_PASSWORD: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./transcend-api/src/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
-    networks:
-      - transcend-network
-    restart: unless-stopped
-
-  # Redis Cache
-  cache:
-    image: redis:7-alpine
-    container_name: transcend-cache
     ports:
-      - "6379:6379"
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
     volumes:
       - redis_data:/data
     healthcheck:
@@ -40,67 +45,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    networks:
-      - transcend-network
-    restart: unless-stopped
-
-  # Application API
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: transcend-api
-    environment:
-      NODE_ENV: ${NODE_ENV:-staging}
-      PORT: 3001
-      DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD}@db:5432/${DB_NAME:-transcend_law}
-      REDIS_URL: redis://cache:6379
-      JWT_SECRET: ${JWT_SECRET}
-      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
-      CLOVER_MERCHANT_ID: ${CLOVER_MERCHANT_ID}
-      CLOVER_ACCESS_TOKEN: ${CLOVER_ACCESS_TOKEN}
-      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
-      AWS_S3_BUCKET: ${AWS_S3_BUCKET}
-      AWS_REGION: ${AWS_REGION:-us-east-1}
-      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-      SENTRY_DSN: ${SENTRY_DSN}
-      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:5173}
     ports:
-      - "3001:3001"
-    depends_on:
-      db:
-        condition: service_healthy
-      cache:
-        condition: service_healthy
-    volumes:
-      - ./transcend-api/src:/app/src
-    networks:
-      - transcend-network
-    restart: unless-stopped
-
-  # Frontend (optional, for full stack)
-  frontend:
-    build:
-      context: ./transcend-frontend
-      target: development
-    container_name: transcend-frontend
-    environment:
-      VITE_API_URL: http://localhost:3001
-      VITE_SOCKET_URL: http://localhost:3001
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./transcend-frontend/src:/app/src
-    depends_on:
-      - api
-    networks:
-      - transcend-network
-    restart: unless-stopped
-
-networks:
-  transcend-network:
-    driver: bridge
+      - "6379:6379"
 
 volumes:
   postgres_data:

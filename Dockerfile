@@ -1,44 +1,55 @@
-# Production-grade Dockerfile for Transcend Law API
-# Node 18 Alpine + security hardening + health checks
+# Multi-stage Dockerfile for Transcend Law
 
-FROM node:18-alpine AS builder
-
-WORKDIR /build
-
-# Copy package files
-COPY transcend-api/package*.json ./
-
-# Install dependencies
-RUN npm ci --only=production && \
-    npm cache clean --force
-
-# Copy application code
-COPY transcend-api/src ./src
-
-# Production stage
-FROM node:18-alpine
-
-# Security: Run as non-root user
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001
-
+# Stage 1: Build frontend
+FROM node:18-alpine AS frontend-builder
 WORKDIR /app
 
-# Copy from builder
-COPY --from=builder --chown=nodejs:nodejs /build/node_modules ./node_modules
-COPY --from=builder --chown=nodejs:nodejs /build/src ./src
-COPY --from=builder --chown=nodejs:nodejs /build/package*.json ./
+COPY transcend-frontend/package*.json ./transcend-frontend/
+RUN cd transcend-frontend && npm ci
 
-# Copy only necessary config
-COPY --chown=nodejs:nodejs transcend-api/.env.example ./.env.example
+COPY transcend-frontend ./transcend-frontend
+RUN cd transcend-frontend && npm run build
 
+# Stage 2: Build backend
+FROM node:18-alpine AS backend-builder
+WORKDIR /app
+
+COPY transcend-api/package*.json ./transcend-api/
+RUN cd transcend-api && npm ci --production
+
+# Stage 3: Production runtime
+FROM node:18-alpine
+WORKDIR /app
+
+# Install dumb-init for proper signal handling
+RUN apk add --no-cache dumb-init
+
+# Copy backend from builder
+COPY --from=backend-builder /app/transcend-api ./transcend-api
+
+# Copy frontend build from builder
+COPY --from=frontend-builder /app/transcend-frontend/dist ./transcend-frontend/dist
+
+# Copy root package files
+COPY package*.json ./
+
+# Create health check script
+RUN echo '#!/bin/sh\ncurl -f http://localhost:3000/health || exit 1' > /healthcheck.sh && chmod +x /healthcheck.sh
+
+# Non-root user
+RUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001
 USER nodejs
 
-EXPOSE 3001
+# Environment
+ENV NODE_ENV=production
+ENV PORT=3000
 
-# Health check (Docker will restart if unhealthy)
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-    CMD node -e "require('http').get('http://localhost:3001/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
+# Expose port
+EXPOSE 3000
 
-# Start application
-CMD ["node", "src/index.js"]
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD /healthcheck.sh
+
+# Start with dumb-init to handle signals properly
+ENTRYPOINT ["dumb-init", "--"]
+CMD ["node", "transcend-api/server.js"]
