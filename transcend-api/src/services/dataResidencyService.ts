@@ -77,7 +77,7 @@ export interface DataTransferRequest {
 // REGION CONFIGURATIONS
 // ============================================
 
-const REGION_CONFIGS: Record<Region, RegionConfig> = {
+export const REGION_CONFIGS: Record<Region, RegionConfig> = {
   'us-east-1': {
     region: 'us-east-1',
     name: 'US East Coast',
@@ -124,7 +124,7 @@ const REGION_CONFIGS: Record<Region, RegionConfig> = {
 // COMPLIANCE FRAMEWORKS
 // ============================================
 
-const COMPLIANCE_REQUIREMENTS: Record<string, RegionalCompliance> = {
+export const COMPLIANCE_REQUIREMENTS: Record<string, RegionalCompliance> = {
   GDPR: {
     region: 'eu-west-1',
     framework: 'General Data Protection Regulation',

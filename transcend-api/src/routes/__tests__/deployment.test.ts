@@ -22,12 +22,12 @@ describe('Deployment Routes', () => {
     // Mock auth middleware for testing
     app.use((req, res, next) => {
       req.userId = 'test-user-id';
-      req.user = {
+      (req.user as any) = {
         userId: 'test-user-id',
         userType: 'admin',
         email: 'test@example.com',
       };
-      req.sessionID = uuidv4();
+      (req as any).sessionId = uuidv4();
       next();
     });
 
@@ -568,9 +568,9 @@ describe('Integration Tests', () => {
     app = express();
     app.use(express.json());
     app.use((req, res, next) => {
-      req.userId = 'integration-test-user';
-      req.user = { userId: 'integration-test-user', userType: 'admin' };
-      req.sessionID = uuidv4();
+      (req as any).userId = 'integration-test-user';
+      (req.user as any) = { userId: 'integration-test-user', userType: 'admin' };
+      (req as any).sessionId = uuidv4();
       next();
     });
     app.use(authMiddleware);

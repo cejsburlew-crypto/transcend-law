@@ -1,0 +1,153 @@
+/* Offline Indicator Styles */
+
+.offline-indicator {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  animation: slideIn 0.3s ease-out;
+}
+
+.offline-indicator--top {
+  top: 0;
+}
+
+.offline-indicator--bottom {
+  bottom: 0;
+}
+
+.offline-indicator__content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 14px;
+}
+
+.offline-indicator__content--offline {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.offline-indicator__content--syncing {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.offline-indicator__content--synced {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.offline-indicator__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  min-width: 24px;
+}
+
+.spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.icon-offline {
+  font-size: 18px;
+}
+
+.icon-success {
+  font-size: 18px;
+}
+
+.offline-indicator__text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.offline-indicator__title {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.offline-indicator__subtitle {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.offline-indicator__close {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 16px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.offline-indicator__close:hover {
+  opacity: 1;
+}
+
+.offline-indicator__stats {
+  display: flex;
+  gap: 16px;
+  padding-left: 16px;
+  font-size: 12px;
+  opacity: 0.9;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.offline-indicator__stat {
+  white-space: nowrap;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .offline-indicator__content {
+    padding: 10px 12px;
+    flex-wrap: wrap;
+  }
+
+  .offline-indicator__stats {
+    display: none;
+  }
+
+  .offline-indicator__text {
+    flex: 1;
+  }
+
+  .offline-indicator__subtitle {
+    display: none;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .offline-indicator__content {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+}

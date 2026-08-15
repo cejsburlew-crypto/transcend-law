@@ -1,7 +1,7 @@
 // User Segmentation & Personalized Journeys Service
 // Features: Multi-dimensional user segmentation, CTA optimization, A/B testing, performance tracking
 
-import { query, transaction, getConnection } from '../database/connection';
+import { query, transaction, getConnection } from '../src/database/connection';
 import { v4 as uuidv4 } from 'uuid';
 
 // ============================================
@@ -193,7 +193,7 @@ export class UserSegmentationService {
         [userId]
       );
 
-      segment.serviceTypes = servicesResult.rows.map((r) => r.service_type);
+      segment.serviceTypes = servicesResult.rows.map((r: any) => r.service_type);
 
       // Identify behavior patterns
       segment.behaviorPatterns = await this.identifyBehaviorPatterns(userId);
@@ -308,7 +308,7 @@ export class UserSegmentationService {
         [userId]
       );
 
-      return result.rows.map((row) => ({
+      return result.rows.map((row: any) => ({
         pattern: row.action_type,
         frequency: row.frequency,
         lastOccurred: row.last_occurred,
@@ -773,18 +773,18 @@ export class UserSegmentationService {
       return {
         totalUsers,
         segmentDistribution: Object.fromEntries(
-          lifecycleResult.rows.map((r) => [r.lifecycle, r.count])
+          lifecycleResult.rows.map((r: any) => [r.lifecycle, r.count])
         ),
         lifecycleBreakdown: Object.fromEntries(
-          lifecycleResult.rows.map((r) => [r.lifecycle, r.count])
+          lifecycleResult.rows.map((r: any) => [r.lifecycle, r.count])
         ),
-        valueBreakdown: Object.fromEntries(valueResult.rows.map((r) => [r.value, r.count])),
+        valueBreakdown: Object.fromEntries(valueResult.rows.map((r: any) => [r.value, r.count])),
         engagementBreakdown: Object.fromEntries(
-          engagementResult.rows.map((r) => [r.engagement, r.count])
+          engagementResult.rows.map((r: any) => [r.engagement, r.count])
         ),
         averageConversionRate: performanceResult.rows[0]?.avg_conversion || 0,
         averageChurnRisk: performanceResult.rows[0]?.avg_churn || 0,
-        topRiskFactors: riskFactorsResult.rows.map((r) => r.risk_factors).flat(),
+        topRiskFactors: riskFactorsResult.rows.map((r: any) => r.risk_factors).flat(),
         generatedAt: new Date(),
       };
     } catch (error) {

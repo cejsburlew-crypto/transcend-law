@@ -51,7 +51,7 @@ describe('PiiRedactionEngine', () => {
 
     test('should redact credit card without dashes', () => {
       const result = engine.redact('Card number: 4111111111111111');
-      expect(result.redactedContent || result.redacted).toBeTruthy();
+      expect(result.redacted).toBeTruthy();
       expect(result.redactionCount).toBeGreaterThan(0);
     });
 

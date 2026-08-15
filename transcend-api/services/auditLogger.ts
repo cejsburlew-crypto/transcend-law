@@ -2,7 +2,7 @@
 // Features: Immutable logging, search, export, retention policy, compliance reporting
 // All audit logs are append-only, encrypted, and retained per legal requirements
 
-import { query } from '../database/connection';
+import { query } from '../src/database/connection';
 import { v4 as uuidv4 } from 'uuid';
 import * as geoip from 'geoip-lite';
 import { createWriteStream } from 'fs';
@@ -53,6 +53,7 @@ export interface AuditLogFilter {
   status?: 'success' | 'failure';
   dataClassification?: string;
   sessionId?: string;
+  sensitiveDataAccessed?: boolean;
   limit?: number;
   offset?: number;
 }
@@ -665,6 +666,14 @@ export async function generateAuditReport(
       .slice(0, 10)
       .map(([location, accessCount]) => ({ location, accessCount }));
 
+    // Transform anomalies to match AuditReport type
+    const formattedAnomalies = anomalies.map(anomaly => ({
+      type: anomaly.type,
+      description: anomaly.type.replace(/_/g, ' '),
+      severity: anomaly.severity as 'low' | 'medium' | 'high' | 'critical',
+      timestamp: new Date(),
+    }));
+
     const report: AuditReport = {
       id: uuidv4(),
       generatedAt: new Date(),
@@ -682,7 +691,7 @@ export async function generateAuditReport(
         topEntities: [], // Can be populated from logs
         topLocations,
       },
-      anomalies,
+      anomalies: formattedAnomalies,
       generatedBy,
     };
 

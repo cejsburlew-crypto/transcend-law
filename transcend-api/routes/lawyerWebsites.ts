@@ -1,10 +1,16 @@
 /**
  * Lawyer Profile Website Routes
  * Handle website creation, updates, and public access
+ * Payment processing via Clover
  */
 
 import { Router, Request, Response } from 'express';
+import axios from 'axios';
 import lawyerWebsiteService, { LawyerWebsite } from '../services/lawyerWebsiteService';
+
+const CLOVER_API_BASE = 'https://api.clover.com';
+const CLOVER_API_KEY = process.env.CLOVER_API_KEY;
+const CLOVER_MERCHANT_ID = process.env.CLOVER_MERCHANT_ID;
 
 const router = Router();
 
@@ -53,12 +59,26 @@ router.post('/api/lawyer-websites', async (req: Request, res: Response) => {
       allAvailableServices,
     });
 
-    // TODO: Create Stripe subscription ($25/month)
-    // const stripeSubscription = await stripe.subscriptions.create({
-    //   customer: lawyer.stripeCustomerId,
-    //   items: [{ price: 'price_lawyer_website_monthly' }],
-    //   metadata: { websiteId: website.id },
-    // });
+    // Create Clover subscription ($25/month)
+    try {
+      // TODO: Get lawyer from database to get cloverCustomerId
+      // const lawyer = await db.users.findById(lawyerId);
+
+      const cloverSubscriptionId = await lawyerWebsiteService.createCloverSubscription({
+        lawyerId,
+        lawyerEmail: req.body.email,
+        lawyerName: req.body.lawyerName,
+        cloverCustomerId: req.body.cloverCustomerId, // Must be passed from frontend
+      });
+
+      // TODO: Store clover subscription ID in database
+      // website.cloverSubscriptionId = cloverSubscriptionId;
+    } catch (error) {
+      console.error('Failed to create Clover subscription:', error);
+      return res.status(500).json({
+        error: 'Failed to process payment. Please try again.',
+      });
+    }
 
     res.status(201).json({
       success: true,
@@ -173,14 +193,18 @@ router.post('/api/lawyer-websites/:websiteId/renew', async (req: Request, res: R
 
 /**
  * POST /api/lawyer-websites/:websiteId/cancel
- * Cancel subscription
+ * Cancel subscription via Clover
  */
 router.post('/api/lawyer-websites/:websiteId/cancel', async (req: Request, res: Response) => {
   try {
     const { websiteId } = req.params;
+    // TODO: Get website from database to get cloverSubscriptionId
+    // const website = await db.lawyerWebsites.findById(websiteId);
 
-    // TODO: Cancel Stripe subscription
-    await lawyerWebsiteService.cancelSubscription(websiteId);
+    await lawyerWebsiteService.cancelSubscription(
+      websiteId,
+      req.body.cloverSubscriptionId || 'subscription_id' // TODO: Get from database
+    );
 
     res.json({
       success: true,

@@ -1,6 +1,5 @@
 // Session Timeout Middleware Tests
 
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { Request, Response, NextFunction } from 'express';
 import {
   SessionManager,
@@ -31,13 +30,13 @@ const createMockRequest = (overrides?: Partial<Request>): Request => ({
 } as any);
 
 const createMockResponse = (): Response => ({
-  status: vi.fn().mockReturnThis(),
-  json: vi.fn().mockReturnThis(),
-  setHeader: vi.fn().mockReturnThis(),
-  send: vi.fn().mockReturnThis(),
+  status: jest.fn().mockReturnThis(),
+  json: jest.fn().mockReturnThis(),
+  setHeader: jest.fn().mockReturnThis(),
+  send: jest.fn().mockReturnThis(),
 } as any);
 
-const createMockNext = (): NextFunction => vi.fn();
+const createMockNext = (): NextFunction => jest.fn();
 
 // ============================================
 // TESTS
@@ -327,7 +326,7 @@ describe('Session Timeout Middleware', () => {
   });
 
   it('should skip public endpoints', () => {
-    req.path = '/health';
+    Object.defineProperty(req, 'path', { value: '/health', configurable: true });
     sessionTimeoutMiddleware(req, res, next);
 
     expect(next).toHaveBeenCalled();
@@ -374,7 +373,7 @@ describe('Session Handlers', () => {
   describe('Session Status Handler', () => {
     it('should return 401 if no session', () => {
       req.sessionId = undefined;
-      req.user!.userId = undefined;
+      (req.user as any).userId = undefined;
 
       sessionStatusHandler(req, res);
 

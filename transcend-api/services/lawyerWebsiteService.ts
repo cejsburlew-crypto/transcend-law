@@ -1,10 +1,16 @@
 /**
  * Lawyer Profile Website Service
  * Manages lawyer-hosted websites on Transcend Law domain
- * $25/month subscription model
+ * $25/month subscription model via Clover
  */
 
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+
+const CLOVER_API_BASE = 'https://api.clover.com';
+const CLOVER_API_KEY = process.env.CLOVER_API_KEY;
+const CLOVER_MERCHANT_ID = process.env.CLOVER_MERCHANT_ID;
+const LAWYER_WEBSITE_ITEM_ID = process.env.CLOVER_WEBSITE_ITEM_ID || 'lawyer_website_25mo';
 
 export interface LawyerWebsite {
   id: string;
@@ -272,28 +278,113 @@ class LawyerWebsiteService {
   }
 
   /**
+   * Create Clover subscription for lawyer website
+   */
+  async createCloverSubscription(data: {
+    lawyerId: string;
+    lawyerEmail: string;
+    lawyerName: string;
+    cloverCustomerId: string;
+  }): Promise<string> {
+    try {
+      // Create subscription in Clover
+      const response = await axios.post(
+        `${CLOVER_API_BASE}/v3/merchants/${CLOVER_MERCHANT_ID}/subscription_plans`,
+        {
+          name: `Lawyer Website - ${data.lawyerName}`,
+          items: [
+            {
+              id: LAWYER_WEBSITE_ITEM_ID,
+              name: 'Lawyer Website Hosting',
+              price: 2500, // $25.00 in cents
+              quantity: 1,
+            },
+          ],
+          recurring: {
+            interval: 'MONTH',
+            intervalCount: 1,
+          },
+          customer: data.cloverCustomerId,
+          initialCharge: 2500,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${CLOVER_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      return response.data.id;
+    } catch (error) {
+      console.error('Failed to create Clover subscription:', error);
+      throw error;
+    }
+  }
+
+  /**
    * Renew subscription
    */
   async renewSubscription(websiteId: string, months: number = 1): Promise<LawyerWebsite> {
-    // TODO: Calculate new end date and update
-    // const website = await db.lawyerWebsites.findById(websiteId);
-    // const newEndDate = new Date(website.subscriptionEndDate || new Date());
-    // newEndDate.setMonth(newEndDate.getMonth() + months);
-    // website.subscriptionEndDate = newEndDate;
-    // await db.lawyerWebsites.update(website);
+    try {
+      // TODO: Get website from database
+      // const website = await db.lawyerWebsites.findById(websiteId);
 
-    return {} as LawyerWebsite;
+      // Charge via Clover one-time charge
+      await axios.post(
+        `${CLOVER_API_BASE}/v3/merchants/${CLOVER_MERCHANT_ID}/charges`,
+        {
+          amount: 2500 * months, // $25 per month in cents
+          customerId: 'customer_id', // TODO: Get from website.cloverCustomerId
+          currency: 'USD',
+          description: `Lawyer Website Renewal - ${months} month(s)`,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${CLOVER_API_KEY}`,
+          },
+        }
+      );
+
+      // Update end date
+      const newEndDate = new Date();
+      newEndDate.setMonth(newEndDate.getMonth() + months);
+      // TODO: Update database
+      // website.subscriptionEndDate = newEndDate;
+      // await db.lawyerWebsites.update(website);
+
+      return {} as LawyerWebsite;
+    } catch (error) {
+      console.error('Failed to renew subscription:', error);
+      throw error;
+    }
   }
 
   /**
    * Cancel subscription
    */
-  async cancelSubscription(websiteId: string): Promise<void> {
-    // TODO: Update database
-    // await db.lawyerWebsites.updateOne(
-    //   { id: websiteId },
-    //   { subscriptionStatus: 'cancelled' }
-    // );
+  async cancelSubscription(websiteId: string, cloverSubscriptionId: string): Promise<void> {
+    try {
+      // Cancel subscription in Clover
+      await axios.delete(
+        `${CLOVER_API_BASE}/v3/merchants/${CLOVER_MERCHANT_ID}/subscription_plans/${cloverSubscriptionId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${CLOVER_API_KEY}`,
+          },
+        }
+      );
+
+      // Update database
+      // TODO: Update database
+      // await db.lawyerWebsites.updateOne(
+      //   { id: websiteId },
+      //   { subscriptionStatus: 'cancelled' }
+      // );
+    } catch (error) {
+      console.error('Failed to cancel Clover subscription:', error);
+      throw error;
+    }
   }
 }
 

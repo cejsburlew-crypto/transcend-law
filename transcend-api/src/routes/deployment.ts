@@ -180,7 +180,7 @@ router.post(
           JSON.stringify({ deploymentType, environmentId }),
           req.ip || null,
           req.get('user-agent') || null,
-          req.sessionID || uuidv4(),
+          (req as any).sessionId || uuidv4(),
           now,
         ]
       );
@@ -374,7 +374,7 @@ router.put(
           }),
           req.ip || null,
           req.get('user-agent') || null,
-          req.sessionID || uuidv4(),
+          (req as any).sessionId || uuidv4(),
           now,
         ]
       );
@@ -435,7 +435,7 @@ router.post(
           gpsJSON,
           req.ip || null,
           req.get('user-agent') || null,
-          req.sessionID || uuidv4(),
+          (req as any).sessionId || uuidv4(),
           now,
         ]
       );
@@ -679,7 +679,7 @@ router.post(
       let hasPermission = false;
       let blockReason = null;
 
-      if (req.user?.userType === 'admin') {
+      if ((req.user as any)?.userType === 'admin') {
         hasPermission = true;
       } else {
         hasPermission = false;
@@ -724,7 +724,7 @@ router.post(
           }),
           req.ip || null,
           req.get('user-agent') || null,
-          req.sessionID || uuidv4(),
+          (req as any).sessionId || uuidv4(),
           now,
         ]
       );
@@ -843,7 +843,7 @@ router.post(
           }),
           req.ip || null,
           req.get('user-agent') || null,
-          req.sessionID || uuidv4(),
+          (req as any).sessionId || uuidv4(),
           now,
         ]
       );

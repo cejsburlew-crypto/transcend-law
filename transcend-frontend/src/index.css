@@ -1,4 +1,5 @@
 @import './styles/psychology-design-system.css';
+@import './styles/darkMode.css';
 
 :root {
   --text: #6b6375;

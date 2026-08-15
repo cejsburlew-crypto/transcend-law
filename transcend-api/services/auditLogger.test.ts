@@ -406,9 +406,9 @@ describe('Audit Logger Service', () => {
       );
 
       expect(policy.id).toBeDefined();
-      expect(policy.data_classification).toBe('internal');
-      expect(policy.retention_days).toBe(1095);
-      expect(policy.delete_policy).toBe('archive');
+      expect(policy.dataClassification).toBe('internal');
+      expect(policy.retentionDays).toBe(1095);
+      expect(policy.deletePolicy).toBe('archive');
     });
 
     test('applyDefaultRetentionPolicies', async () => {
