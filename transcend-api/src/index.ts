@@ -21,9 +21,11 @@ import messagesRoutes from './routes/messages';
 import subscriptionsRoutes from './routes/subscriptions';
 import translationRoutes from './routes/translation';
 import paymentsRoutes from './routes/payments';
+import documentsRoutes from './routes/documents';
 
 // Import services
 import { initializeClover } from './services/cloverService';
+import { initializeS3Bucket } from './services/s3Service';
 
 const app: Express = express();
 const PORT = process.env.PORT || 3001;
@@ -67,6 +69,7 @@ app.use('/api/v2/intake', intakeRoutes);
 app.use('/api/v2/messages', messagesRoutes);
 app.use('/api/v2/subscriptions', subscriptionsRoutes);
 app.use('/api/v2/payments', paymentsRoutes);
+app.use('/api/v2/documents', documentsRoutes);
 app.use('/api/v2/translate', translationRoutes);
 
 // ============================================
@@ -103,6 +106,14 @@ async function startServer() {
       console.log('✅ Clover payment system initialized');
     } catch (error) {
       console.warn('⚠️  Clover not configured - payments disabled');
+    }
+
+    // Initialize S3
+    try {
+      await initializeS3Bucket();
+      console.log('✅ AWS S3 document storage initialized');
+    } catch (error) {
+      console.warn('⚠️  AWS S3 not configured - file storage disabled');
     }
 
     // Start server
