@@ -131,16 +131,8 @@ export const ServiceIntakeForm: React.FC<ServiceIntakeFormProps> = ({
       setError('Please select or enter a location');
       return false;
     }
-    return true;
-  };
-
-  const validateStep4 = () => {
-    if (formData.selectedAttorneys.length === 0) {
-      setError('Please select at least one attorney to proceed');
-      return false;
-    }
     if (!formData.termsAccepted) {
-      setError('You must accept the terms to continue');
+      setError('You must accept the terms to submit your case');
       return false;
     }
     return true;
@@ -153,26 +145,8 @@ export const ServiceIntakeForm: React.FC<ServiceIntakeFormProps> = ({
     } else if (step === 2 && validateStep2()) {
       setStep(3);
     } else if (step === 3 && validateStep3()) {
-      setStep(4);
-    } else if (step === 4 && validateStep4()) {
       handleSubmit();
     }
-  };
-
-  const toggleAttorney = (attorneyId: string) => {
-    setFormData(prev => ({
-      ...prev,
-      selectedAttorneys: prev.selectedAttorneys.includes(attorneyId)
-        ? prev.selectedAttorneys.filter(id => id !== attorneyId)
-        : [...prev.selectedAttorneys, attorneyId],
-    }));
-  };
-
-  const sendToAllAttorneys = () => {
-    setFormData(prev => ({
-      ...prev,
-      selectedAttorneys: SAMPLE_ATTORNEYS.map(a => a.id),
-    }));
   };
 
   const handleBack = () => {
@@ -232,10 +206,10 @@ export const ServiceIntakeForm: React.FC<ServiceIntakeFormProps> = ({
 
         {/* Progress Indicator */}
         <div className="progress-bar">
-          <div className="progress-fill" style={{ width: `${(step / 4) * 100}%` }}></div>
+          <div className="progress-fill" style={{ width: `${(step / 3) * 100}%` }}></div>
         </div>
         <div className="step-indicator">
-          Step {step} of 4
+          Step {step} of 3
         </div>
 
         {error && (
@@ -413,47 +387,21 @@ export const ServiceIntakeForm: React.FC<ServiceIntakeFormProps> = ({
             </>
           )}
 
-          {/* Step 4: Attorney Selection */}
-          {step === 4 && (
+          {/* Privacy Disclaimer & Terms */}
+          {step === 3 && (
             <>
-              <div className="form-section">
-                <h2>Select attorneys to send your case</h2>
-                <p className="section-subtitle">Choose attorneys who specialize in your case type, or send to all</p>
-
-                <div className="form-group">
-                  <button
-                    type="button"
-                    className="btn-send-all"
-                    onClick={sendToAllAttorneys}
-                  >
-                    📤 Send to All Attorneys
-                  </button>
-                </div>
-
-                <div className="attorneys-list">
-                  {SAMPLE_ATTORNEYS.map(attorney => (
-                    <div
-                      key={attorney.id}
-                      className={`attorney-card ${formData.selectedAttorneys.includes(attorney.id) ? 'selected' : ''}`}
-                    >
-                      <label className="attorney-checkbox">
-                        <input
-                          type="checkbox"
-                          checked={formData.selectedAttorneys.includes(attorney.id)}
-                          onChange={() => toggleAttorney(attorney.id)}
-                        />
-                      </label>
-                      <div className="attorney-info">
-                        <h4>{attorney.name}</h4>
-                        <p className="specialty">📚 {attorney.specialty}</p>
-                        <div className="attorney-meta">
-                          <span>⭐ {attorney.rating}</span>
-                          <span>📋 {attorney.yearsExperience} yrs exp</span>
-                          <span>✓ {attorney.caseCount} cases</span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+              <div className="form-section privacy-section">
+                <div className="privacy-disclaimer">
+                  <h3>🔒 Your Privacy is Protected</h3>
+                  <p>
+                    Your personal information and case details are kept confidential. Attorneys on the Transcend Law platform will <strong>NOT</strong> see your name, email, phone, or any identifying information when reviewing your case.
+                  </p>
+                  <ul className="privacy-points">
+                    <li>✓ Your identity is anonymous to all attorneys initially</li>
+                    <li>✓ Only attorneys who you accept will see your contact information</li>
+                    <li>✓ Direct communication only occurs after you accept their quote</li>
+                    <li>✓ This prevents unauthorized contact or tracking</li>
+                  </ul>
                 </div>
 
                 <div className="form-group">
@@ -471,12 +419,15 @@ export const ServiceIntakeForm: React.FC<ServiceIntakeFormProps> = ({
                   </label>
                 </div>
 
+                {!formData.termsAccepted && (
+                  <div className="info-box error">
+                    ⚠️ You must accept the terms to submit your case
+                  </div>
+                )}
+
                 <div className="info-box">
                   <p>
-                    ℹ️ Selected attorneys: <strong>{formData.selectedAttorneys.length}</strong>
-                  </p>
-                  <p>
-                    Your case details will be sent to the attorneys you selected. They will review and provide quotes within 24 hours.
+                    ℹ️ After submitting, attorneys specializing in <strong>{formData.serviceType}</strong> will review your case and send quotes within 24 hours.
                   </p>
                 </div>
               </div>
@@ -503,9 +454,9 @@ export const ServiceIntakeForm: React.FC<ServiceIntakeFormProps> = ({
               type="button"
               className="btn-primary"
               onClick={handleNext}
-              disabled={loading}
+              disabled={loading || (step === 3 && !formData.termsAccepted)}
             >
-              {loading ? '⏳ Submitting...' : step === 4 ? '✓ Send to Attorneys' : 'Next →'}
+              {loading ? '⏳ Saving...' : step === 3 ? '✓ Save Case' : 'Next →'}
             </button>
           </div>
         </form>

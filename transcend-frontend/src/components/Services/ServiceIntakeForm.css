@@ -676,6 +676,62 @@ select.form-input {
   cursor: not-allowed;
 }
 
+/* Privacy Disclaimer Section */
+.privacy-section {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+  border: 2px solid rgba(139, 92, 246, 0.2);
+  border-radius: 8px;
+  padding: 24px;
+  margin: 24px 0;
+}
+
+.privacy-disclaimer {
+  background: var(--bg-primary);
+  border-left: 4px solid #8b5cf6;
+  padding: 20px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.privacy-disclaimer h3 {
+  margin: 0 0 12px 0;
+  color: #8b5cf6;
+  font-size: 16px;
+}
+
+.privacy-disclaimer p {
+  margin: 0 0 16px 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.privacy-points {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.privacy-points li {
+  padding: 8px 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.privacy-points li:before {
+  content: "✓ ";
+  color: #10b981;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.info-box.error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: var(--error);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .intake-card {
