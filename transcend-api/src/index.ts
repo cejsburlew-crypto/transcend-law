@@ -20,6 +20,10 @@ import intakeRoutes from './routes/intake';
 import messagesRoutes from './routes/messages';
 import subscriptionsRoutes from './routes/subscriptions';
 import translationRoutes from './routes/translation';
+import paymentsRoutes from './routes/payments';
+
+// Import services
+import { initializeClover } from './services/cloverService';
 
 const app: Express = express();
 const PORT = process.env.PORT || 3001;
@@ -62,6 +66,7 @@ app.use('/api/v2/auth', authRoutes);
 app.use('/api/v2/intake', intakeRoutes);
 app.use('/api/v2/messages', messagesRoutes);
 app.use('/api/v2/subscriptions', subscriptionsRoutes);
+app.use('/api/v2/payments', paymentsRoutes);
 app.use('/api/v2/translate', translationRoutes);
 
 // ============================================
@@ -91,6 +96,14 @@ async function startServer() {
 
     // Initialize database
     await initializeDatabase();
+
+    // Initialize Clover
+    try {
+      initializeClover();
+      console.log('✅ Clover payment system initialized');
+    } catch (error) {
+      console.warn('⚠️  Clover not configured - payments disabled');
+    }
 
     // Start server
     app.listen(PORT, () => {

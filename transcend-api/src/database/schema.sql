@@ -193,14 +193,18 @@ CREATE TABLE subscriptions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
   plan_type VARCHAR(50) NOT NULL CHECK (plan_type IN ('basic', 'professional', 'enterprise')),
-  stripe_customer_id VARCHAR(255),
-  stripe_subscription_id VARCHAR(255),
   status VARCHAR(20) DEFAULT 'active' CHECK (status IN ('active', 'paused', 'cancelled', 'expired')),
   price_per_month INT,
   billing_cycle_anchor TIMESTAMP,
   current_period_start TIMESTAMP,
   current_period_end TIMESTAMP,
   auto_renew BOOLEAN DEFAULT TRUE,
+  -- Clover Integration
+  clover_customer_id VARCHAR(255),
+  clover_order_id VARCHAR(255),
+  -- Legacy Stripe (if migrating)
+  stripe_customer_id VARCHAR(255),
+  stripe_subscription_id VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   cancelled_at TIMESTAMP
