@@ -16,6 +16,16 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted, onRequestDemo })
     return document.documentElement.getAttribute('data-theme') === 'dark';
   });
 
+  React.useEffect(() => {
+    // Initialize light mode on page load
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    if (!currentTheme) {
+      html.setAttribute('data-theme', 'light');
+      setIsDark(false);
+    }
+  }, []);
+
   const toggleDarkMode = () => {
     const html = document.documentElement;
     const newIsDark = !isDark;
