@@ -628,7 +628,8 @@
       "Bash(rm /Users/jbconsultingassociatesinc./code/transcend-ssp/transcend-frontend/src/components/CommandPaletteExample.tsx && npm run build 2>&1 | head -30)",
       "Bash(xargs -I {} gh run view {} --log-failed)",
       "Bash(xargs -I {} gh run view {} --json jobs -q '.jobs[] | select\\(.name == \"Build frontend\"\\) | .conclusion')",
-      "Bash(xargs -I {} gh run view {} --log)"
+      "Bash(xargs -I {} gh run view {} --log)",
+      "Bash(git ls-files *)"
     ]
   }
 }
