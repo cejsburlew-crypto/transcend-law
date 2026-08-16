@@ -240,7 +240,7 @@ export const SellerDashboard: React.FC<SellerDashboardProps> = ({
             <p className="metric-label">Cancellation Rate</p>
             <p className="metric-value">{metrics.cancellationRate.toFixed(1)}%</p>
           </div>
-          <div className="metric-target">Target: <2%</div>
+          <div className="metric-target">Target: &lt;2%</div>
         </div>
 
         <div className="metric-card">
