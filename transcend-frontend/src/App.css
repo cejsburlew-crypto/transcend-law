@@ -72,6 +72,26 @@ body {
   width: 100%;
   background-color: var(--bg-primary);
   color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 50px;
+  padding: 0 20px;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.app-header-spacer {
+  flex: 1;
 }
 
 /* Scrollbar styling */

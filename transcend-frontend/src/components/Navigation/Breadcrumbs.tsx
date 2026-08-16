@@ -3,7 +3,6 @@
 
 import React from 'react';
 import LanguageSwitcher from './LanguageSwitcher';
-import { DarkModeToggle } from '../UI/DarkModeToggle';
 import './Breadcrumbs.css';
 
 export interface BreadcrumbItem {
@@ -64,7 +63,6 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
         </ol>
 
         <div className="breadcrumb-actions">
-          <DarkModeToggle variant="button" showLabel={false} />
           <LanguageSwitcher />
           {items.length > 1 && (
             <button
