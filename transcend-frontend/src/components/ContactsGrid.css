@@ -1,0 +1,140 @@
+.contacts-grid-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Header */
+.contacts-header {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.contacts-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.contacts-header p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary, #666666);
+}
+
+/* Controls */
+.contacts-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 12px;
+  background: var(--bg-secondary, #f5f5f5);
+  border-radius: 8px;
+}
+
+.sort-control,
+.filter-control {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.sort-control label,
+.filter-control label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary, #666666);
+  white-space: nowrap;
+}
+
+.sort-control select,
+.filter-control select {
+  padding: 6px 10px;
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 6px;
+  background: var(--bg-primary, #ffffff);
+  color: var(--text-primary, #1a1a1a);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.sort-control select:hover,
+.filter-control select:hover {
+  border-color: var(--text-secondary, #666666);
+}
+
+.results-count {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--text-secondary, #666666);
+}
+
+.results-count strong {
+  color: var(--text-primary, #1a1a1a);
+  font-weight: 600;
+}
+
+/* Grid layout */
+.contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+/* No results state */
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  background: var(--bg-secondary, #f5f5f5);
+  border-radius: 8px;
+  border: 1px dashed var(--border-color, #e0e0e0);
+}
+
+.no-results p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary, #666666);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .contacts-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+
+  .contacts-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sort-control,
+  .filter-control {
+    justify-content: space-between;
+  }
+
+  .results-count {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .contacts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contacts-header h2 {
+    font-size: 20px;
+  }
+
+  .contacts-controls {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+  }
+}

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import type { NotaryService } from './NotaryServices';
+import { ContactsGrid } from '../components/ContactsGrid';
+import type { ContactProfile } from '../components/ContactCard';
 import './NotaryServiceDetail.css';
 
 interface Notary {
@@ -24,6 +26,7 @@ export const NotaryServiceDetail: React.FC<NotaryServiceDetailProps> = ({ servic
   const [showBooking, setShowBooking] = useState(false);
   const [selectedDate, setSelectedDate] = useState('today');
   const [selectedTime, setSelectedTime] = useState('');
+  const [publicProfiles, setPublicProfiles] = useState<Set<string>>(new Set());
   const [notaryList, setNotaryList] = useState<Notary[]>([
     {
       id: 'n1',
@@ -169,63 +172,33 @@ export const NotaryServiceDetail: React.FC<NotaryServiceDetailProps> = ({ servic
 
       {/* Available Notaries */}
       <div className="notaries-section">
-        <h2>🔍 Available Notaries</h2>
-        <p className="section-subtitle">Top-rated professionals ready to help you</p>
-
-        <div className="notaries-grid">
-          {notaryList.map(notary => (
-            <div key={notary.id} className="notary-card">
-              <div className="notary-header">
-                <div className="notary-avatar">
-                  {notary.name.split(' ').map(n => n[0]).join('')}
-                </div>
-                <div className="notary-info">
-                  <h4>{notary.name}</h4>
-                  <p className="certification">{notary.certificationLevel}</p>
-                </div>
-              </div>
-
-              <div className="notary-stats">
-                <div className="rating-section">
-                  <span className="stars">⭐ {notary.rating}</span>
-                  <span className="reviews">({notary.reviews} reviews)</span>
-                </div>
-              </div>
-
-              <div className="notary-details">
-                <div className="detail-item">
-                  <span className="label">📍 Location:</span>
-                  <span className="value">{notary.location}</span>
-                </div>
-                <div className="detail-item">
-                  <span className="label">⏱️ Response:</span>
-                  <span className="value">{notary.responseTime}</span>
-                </div>
-                <div className="detail-item">
-                  <span className="label">📅 Available:</span>
-                  <span className={`value ${notary.availableToday ? 'available' : ''}`}>
-                    {notary.nextAvailable}
-                  </span>
-                </div>
-              </div>
-
-              {notary.specialties.length > 0 && (
-                <div className="notary-specialties">
-                  <div className="specialties-label">🎯 Specialties:</div>
-                  <div className="specialties-list">
-                    {notary.specialties.map((specialty, idx) => (
-                      <span key={idx} className="specialty-badge">{specialty}</span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <button className="book-notary-btn">
-                Book {notary.name.split(' ')[0]}
-              </button>
-            </div>
-          ))}
-        </div>
+        <ContactsGrid
+          title="🔍 Available Notaries"
+          subtitle="Top-rated professionals ready to help you"
+          contacts={notaryList.map(notary => ({
+            id: notary.id,
+            name: notary.name,
+            title: notary.certificationLevel,
+            state: 'CA',
+            rating: notary.rating,
+            reviews: notary.reviews,
+            verified: notary.rating >= 4.7,
+            badges: notary.specialties.slice(0, 1),
+          } as ContactProfile))}
+          publicProfiles={publicProfiles}
+          onProfileToggle={(contactId) => {
+            const newPublic = new Set(publicProfiles);
+            if (newPublic.has(contactId)) {
+              newPublic.delete(contactId);
+            } else {
+              newPublic.add(contactId);
+            }
+            setPublicProfiles(newPublic);
+          }}
+          onCommunicate={(contactId) => {
+            console.log('Booking notary:', contactId);
+          }}
+        />
       </div>
 
       {/* Why Choose Us */}

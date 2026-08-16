@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import type { LawSpecialty } from './LawSpecialties';
+import { ContactCard, type ContactProfile } from '../components/ContactCard';
+import { ContactsGrid } from '../components/ContactsGrid';
 import './LawSpecialtyDetail.css';
 
 interface Attorney {
@@ -86,6 +88,7 @@ export const LawSpecialtyDetail: React.FC<LawSpecialtyDetailProps> = ({ specialt
   const [selectedFirm, setSelectedFirm] = useState<Firm | null>(null);
   const [showIntakeForm, setShowIntakeForm] = useState(false);
   const [costFilter, setCostFilter] = useState<'all' | 'budget' | 'moderate' | 'premium'>('all');
+  const [publicProfiles, setPublicProfiles] = useState<Set<string>>(new Set());
 
   const availableFirms = selectedState ? (FIRMS_BY_STATE[selectedState] || []) : [];
 
@@ -284,40 +287,36 @@ export const LawSpecialtyDetail: React.FC<LawSpecialtyDetailProps> = ({ specialt
           <div className="filter-step">
             <div className="step-header">
               <span className="step-number">3</span>
-              <h3>Attorneys at {selectedFirm.name}</h3>
+              <h3>Available Attorneys at {selectedFirm.name}</h3>
             </div>
-            <div className="attorneys-grid">
-              {filterAttorneysByCost(selectedFirm.attorneys).map(attorney => (
-                <div key={attorney.id} className="attorney-profile">
-                  <div className="attorney-avatar">
-                    {attorney.name.split(' ').map(n => n[0]).join('')}
-                  </div>
-                  <h4>{attorney.name}</h4>
-                  <p className="specialization">{attorney.specialization}</p>
-                  <div className="attorney-stats">
-                    <div className="rating">
-                      <span className="stars">⭐ {attorney.rating}</span>
-                      <span className="reviews">({attorney.reviews} reviews)</span>
-                    </div>
-                    <p className="experience">
-                      {attorney.yearsExperience}+ years experience
-                    </p>
-                    {attorney.hourlyRate && (
-                      <p className="hourly-rate">
-                        <span className="rate-label">Hourly Rate:</span>
-                        <span className="rate-value">${attorney.hourlyRate}/hr</span>
-                      </p>
-                    )}
-                  </div>
-                  <button className="contact-btn">View Profile & Contact</button>
-                </div>
-              ))}
-              {filterAttorneysByCost(selectedFirm.attorneys).length === 0 && (
-                <div className="no-attorneys">
-                  <p>No attorneys available in the selected price range.</p>
-                </div>
-              )}
-            </div>
+            <ContactsGrid
+              contacts={filterAttorneysByCost(selectedFirm.attorneys).map(attorney => ({
+                id: attorney.id,
+                name: attorney.name,
+                title: 'Attorney',
+                specialization: attorney.specialization,
+                state: selectedFirm.state,
+                rating: attorney.rating,
+                reviews: attorney.reviews,
+                yearsExperience: attorney.yearsExperience,
+                hourlyRate: attorney.hourlyRate,
+                verified: attorney.rating >= 4.7,
+                badges: attorney.rating >= 4.8 ? ['Top Rated'] : [],
+              } as ContactProfile))}
+              publicProfiles={publicProfiles}
+              onProfileToggle={(contactId) => {
+                const newPublic = new Set(publicProfiles);
+                if (newPublic.has(contactId)) {
+                  newPublic.delete(contactId);
+                } else {
+                  newPublic.add(contactId);
+                }
+                setPublicProfiles(newPublic);
+              }}
+              onCommunicate={(contactId) => {
+                console.log('Starting communication with attorney:', contactId);
+              }}
+            />
           </div>
         )}
 
