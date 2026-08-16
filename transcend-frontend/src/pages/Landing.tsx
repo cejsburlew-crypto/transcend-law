@@ -22,7 +22,7 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted, onRequestDemo })
     if (newIsDark) {
       html.setAttribute('data-theme', 'dark');
     } else {
-      html.removeAttribute('data-theme');
+      html.setAttribute('data-theme', 'light');
     }
     setIsDark(newIsDark);
   };

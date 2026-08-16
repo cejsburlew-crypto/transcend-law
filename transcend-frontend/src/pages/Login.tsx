@@ -18,7 +18,7 @@ export const Login: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     if (newIsDark) {
       html.setAttribute('data-theme', 'dark');
     } else {
-      html.removeAttribute('data-theme');
+      html.setAttribute('data-theme', 'light');
     }
     setIsDark(newIsDark);
   };

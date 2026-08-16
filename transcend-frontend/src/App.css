@@ -113,30 +113,30 @@ body {
   background: var(--text-secondary);
 }
 
-/* Form inputs styling - light mode (default) */
-:root:not([data-theme="dark"]) input,
-:root:not([data-theme="dark"]) textarea,
-:root:not([data-theme="dark"]) select {
-  background-color: #f5f5f5 !important;
-  color: #333 !important;
-  border: 1px solid #ddd !important;
+/* Form inputs styling */
+input,
+textarea,
+select {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 1px solid #cccccc !important;
 }
 
-:root:not([data-theme="dark"]) input::placeholder,
-:root:not([data-theme="dark"]) textarea::placeholder {
-  color: #999 !important;
+input::placeholder,
+textarea::placeholder {
+  color: #999999 !important;
 }
 
-/* Form inputs styling - dark mode */
-:root[data-theme="dark"] input,
-:root[data-theme="dark"] textarea,
-:root[data-theme="dark"] select {
+/* Dark mode overrides */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
   background-color: var(--bg-secondary) !important;
   color: var(--text-primary) !important;
   border: 1px solid var(--border-color) !important;
 }
 
-:root[data-theme="dark"] input::placeholder,
-:root[data-theme="dark"] textarea::placeholder {
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
   color: var(--text-tertiary) !important;
 }
