@@ -2,6 +2,7 @@
 // Public-facing landing page before authentication
 
 import React, { useState } from 'react';
+import { DarkModeToggle } from '../components/UI/DarkModeToggle';
 import './Landing.css';
 
 interface LandingProps {
@@ -35,6 +36,7 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted, onRequestDemo })
             <li><a href="#contact">Contact</a></li>
           </ul>
           <div className="nav-actions">
+            <DarkModeToggle variant="button" showLabel={false} />
             <button className="btn-secondary" onClick={() => setDemoModal(true)}>
               Request Demo
             </button>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { DarkModeToggle } from '../components/UI/DarkModeToggle';
 import './Login.css';
 
 export const Login: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
@@ -31,6 +32,9 @@ export const Login: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
 
   return (
     <div className="login-container">
+      <div style={{ position: 'absolute', top: '20px', right: '20px' }}>
+        <DarkModeToggle variant="button" showLabel={false} />
+      </div>
       <div className="login-card">
         <div className="login-header">
           <h1>TRANSCEND LAW</h1>
