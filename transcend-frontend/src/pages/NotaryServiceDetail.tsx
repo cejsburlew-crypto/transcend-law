@@ -166,40 +166,52 @@ export const NotaryServiceDetail: React.FC<NotaryServiceDetailProps> = ({ servic
 
       {/* Available Notaries */}
       <div className="notaries-section">
-        {loading && <p style={{ textAlign: 'center', color: '#666' }}>Loading notaries...</p>}
-        {error && <p style={{ textAlign: 'center', color: '#d32f2f' }}>Error: {error}</p>}
-        {!loading && notaryList.length > 0 && (
-          <ContactsGrid
-            title="🔍 Available Notaries"
-            subtitle="Top-rated professionals ready to help you"
-            contacts={notaryList.map(notary => ({
-              id: notary.id,
-              name: notary.name,
-              title: notary.certificationLevel,
-              state: selectedState,
-              rating: notary.rating,
-              reviews: notary.reviews,
-              verified: notary.rating >= 4.7,
-              badges: notary.specialties.slice(0, 1),
-            } as ContactProfile))}
-            publicProfiles={publicProfiles}
-            onProfileToggle={(contactId) => {
-              const newPublic = new Set(publicProfiles);
-              if (newPublic.has(contactId)) {
-                newPublic.delete(contactId);
-              } else {
-                newPublic.add(contactId);
-              }
-              setPublicProfiles(newPublic);
-            }}
-            onCommunicate={(contactId) => {
-              console.log('Booking notary:', contactId);
-            }}
-          />
-        )}
-        {!loading && notaryList.length === 0 && !error && (
-          <p style={{ textAlign: 'center', color: '#666' }}>No notaries available.</p>
-        )}
+        <h2>📋 Available Notaries</h2>
+        <p style={{ color: '#666', marginBottom: '15px' }}>
+          Browse all available notaries. Contact them individually or send your request to all at once.
+        </p>
+        <button
+          onClick={() => console.log('Send to all notaries')}
+          style={{
+            padding: '12px 24px',
+            backgroundColor: '#4CAF50',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            width: '100%',
+            marginBottom: '20px'
+          }}
+        >
+          📧 Send to All Notaries at Once
+        </button>
+        <ContactsGrid
+          contacts={(NOTARIES_BY_STATE['CA'] || []).map(notary => ({
+            id: notary.id,
+            name: notary.name,
+            title: notary.certificationLevel,
+            state: 'CA',
+            rating: notary.rating,
+            reviews: notary.reviews,
+            verified: notary.rating >= 4.7,
+            badges: notary.specialties ? notary.specialties.slice(0, 1) : ['Notarization'],
+          } as ContactProfile))}
+          publicProfiles={publicProfiles}
+          onProfileToggle={(contactId) => {
+            const newPublic = new Set(publicProfiles);
+            if (newPublic.has(contactId)) {
+              newPublic.delete(contactId);
+            } else {
+              newPublic.add(contactId);
+            }
+            setPublicProfiles(newPublic);
+          }}
+          onCommunicate={(contactId) => {
+            console.log('Contacting notary:', contactId);
+          }}
+        />
       </div>
 
       {/* Why Choose Us */}
