@@ -59,11 +59,12 @@ body {
 .landing-nav {
   position: sticky;
   top: 0;
-  background: #2d2d2d;
-  color: white;
+  background: #ffffff;
+  color: var(--text-primary);
   padding: 16px 0;
   z-index: 1000;
   box-shadow: var(--shadow-md);
+  border-bottom: 1px solid var(--border);
 }
 
 .nav-container {
@@ -90,7 +91,8 @@ body {
 }
 
 .logo-text {
-  color: white;
+  color: var(--text-primary);
+  font-weight: 700;
 }
 
 .nav-links {
@@ -101,7 +103,7 @@ body {
 }
 
 .nav-links a {
-  color: #d1d5db;
+  color: var(--text-light);
   text-decoration: none;
   font-weight: 500;
   font-size: 14px;
@@ -110,6 +112,7 @@ body {
 
 .nav-links a:hover {
   color: var(--primary);
+  font-weight: 600;
 }
 
 .nav-actions {
@@ -120,10 +123,7 @@ body {
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(135deg, rgba(45, 45, 45, 0.85) 0%, rgba(45, 45, 45, 0.75) 100%),
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.1" /><stop offset="100%" style="stop-color:#4ade80;stop-opacity:0.1" /></linearGradient></defs><rect fill="url(%23grad)" width="1200" height="600"/></svg>');
-  background-size: cover;
-  background-position: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 100px 20px;
   text-align: center;
@@ -147,7 +147,7 @@ body {
 
 .hero-content p {
   font-size: 20px;
-  color: #d1d5db;
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 32px;
   line-height: 1.6;
 }
@@ -203,12 +203,12 @@ body {
 
 .btn-secondary {
   background: transparent;
-  color: white;
-  border: 1px solid white;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-light);
   border-color: var(--primary);
   color: var(--primary);
 }

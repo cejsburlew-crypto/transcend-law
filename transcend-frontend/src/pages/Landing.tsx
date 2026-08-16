@@ -11,31 +11,11 @@ interface LandingProps {
 
 export const Landing: React.FC<LandingProps> = ({ onGetStarted, onRequestDemo }) => {
   const [demoModal, setDemoModal] = useState(false);
-  const [isDark, setIsDark] = useState(() => {
-    if (typeof document === 'undefined') return false;
-    return document.documentElement.getAttribute('data-theme') === 'dark';
-  });
 
   React.useEffect(() => {
-    // Initialize light mode on page load
-    const html = document.documentElement;
-    const currentTheme = html.getAttribute('data-theme');
-    if (!currentTheme) {
-      html.setAttribute('data-theme', 'light');
-      setIsDark(false);
-    }
+    // Ensure light mode only
+    document.documentElement.setAttribute('data-theme', 'light');
   }, []);
-
-  const toggleDarkMode = () => {
-    const html = document.documentElement;
-    const newIsDark = !isDark;
-    if (newIsDark) {
-      html.setAttribute('data-theme', 'dark');
-    } else {
-      html.setAttribute('data-theme', 'light');
-    }
-    setIsDark(newIsDark);
-  };
 
   return (
     <div className="landing-page">
@@ -60,14 +40,6 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted, onRequestDemo })
             <li><a href="#contact">Contact</a></li>
           </ul>
           <div className="nav-actions">
-            <button
-              className="btn-icon"
-              onClick={toggleDarkMode}
-              title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-              style={{ padding: '8px 12px', background: 'transparent', border: '1px solid currentColor', borderRadius: '4px', cursor: 'pointer', fontSize: '16px' }}
-            >
-              {isDark ? '☀️' : '🌙'}
-            </button>
             <button className="btn-secondary" onClick={() => setDemoModal(true)}>
               Request Demo
             </button>
