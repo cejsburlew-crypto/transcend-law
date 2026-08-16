@@ -1,14 +1,27 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useDarkMode } from '../hooks/useDarkMode';
 import './Login.css';
 
 export const Login: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof document === 'undefined') return false;
+    return document.documentElement.getAttribute('data-theme') === 'dark';
+  });
   const { login, loading, error } = useAuth();
-  const { isDark, toggle } = useDarkMode();
+
+  const toggleDarkMode = () => {
+    const html = document.documentElement;
+    const newIsDark = !isDark;
+    if (newIsDark) {
+      html.setAttribute('data-theme', 'dark');
+    } else {
+      html.removeAttribute('data-theme');
+    }
+    setIsDark(newIsDark);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,7 +52,7 @@ export const Login: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
           <p>Global Legal Services Marketplace</p>
           <button
             type="button"
-            onClick={toggle}
+            onClick={toggleDarkMode}
             title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             style={{
               position: 'absolute',
