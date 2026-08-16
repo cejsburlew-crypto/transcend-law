@@ -304,61 +304,40 @@ export const LawSpecialtyDetail: React.FC<LawSpecialtyDetailProps> = ({ specialt
           </div>
         )}
 
-        {/* Step 3: View Attorneys - from API or Firm */}
+        {/* Step 3: View Attorneys - FORCE RENDER */}
         <div className="filter-step">
           <div className="step-header">
             <span className="step-number">3</span>
-            <h3>{selectedState ? (selectedFirm ? `Available Attorneys at ${selectedFirm.name}` : `Available Attorneys in ${selectedState}`) : 'Select a state first'}</h3>
+            <h3>Available Attorneys in {selectedState || 'CA'}</h3>
           </div>
-          <p style={{ textAlign: 'center', color: '#999', fontSize: '12px' }}>DEBUG: loading={loading}, attorneys.length={attorneys.length}, selectedState={selectedState}</p>
-          {loading && <p style={{ textAlign: 'center', color: '#666' }}>Loading attorneys...</p>}
-          {error && <p style={{ textAlign: 'center', color: '#d32f2f' }}>Error: {error}</p>}
-          {!loading && attorneys.length > 0 && selectedState && (
-            <ContactsGrid
-              contacts={filterAttorneysByCost(
-                selectedFirm
-                  ? selectedFirm.attorneys
-                  : attorneys.map(a => ({
-                      id: a.id || '',
-                      name: a.name,
-                      specialization: a.specialization,
-                      rating: a.rating,
-                      reviews: a.reviews,
-                      yearsExperience: a.yearsExperience,
-                      firmId: '',
-                      hourlyRate: a.hourlyRate,
-                    }))
-              ).map(attorney => ({
-                id: attorney.id,
-                name: attorney.name,
-                title: 'Attorney',
-                specialization: attorney.specialization,
-                state: selectedState,
-                rating: attorney.rating,
-                reviews: attorney.reviews,
-                yearsExperience: attorney.yearsExperience,
-                hourlyRate: attorney.hourlyRate,
-                verified: attorney.rating >= 4.7,
-                badges: attorney.rating >= 4.8 ? ['Top Rated'] : [],
-              } as ContactProfile))}
-              publicProfiles={publicProfiles}
-              onProfileToggle={(contactId) => {
-                const newPublic = new Set(publicProfiles);
-                if (newPublic.has(contactId)) {
-                  newPublic.delete(contactId);
-                } else {
-                  newPublic.add(contactId);
-                }
-                setPublicProfiles(newPublic);
-              }}
-              onCommunicate={(contactId) => {
-                console.log('Starting communication with attorney:', contactId);
-              }}
-            />
-          )}
-          {!loading && attorneys.length === 0 && selectedState && !selectedFirm && (
-            <p style={{ textAlign: 'center', color: '#666' }}>No attorneys found for {selectedState} in this practice area.</p>
-          )}
+          <ContactsGrid
+            contacts={(ATTORNEYS_BY_STATE[selectedState || 'CA'] || []).slice(0, 50).map(attorney => ({
+              id: attorney.id,
+              name: attorney.name,
+              title: 'Attorney',
+              specialization: attorney.specialization,
+              state: selectedState || 'CA',
+              rating: attorney.rating,
+              reviews: attorney.reviews,
+              yearsExperience: attorney.yearsExperience,
+              hourlyRate: attorney.hourlyRate,
+              verified: attorney.rating >= 4.7,
+              badges: attorney.rating >= 4.8 ? ['Top Rated'] : [],
+            } as ContactProfile))}
+            publicProfiles={publicProfiles}
+            onProfileToggle={(contactId) => {
+              const newPublic = new Set(publicProfiles);
+              if (newPublic.has(contactId)) {
+                newPublic.delete(contactId);
+              } else {
+                newPublic.add(contactId);
+              }
+              setPublicProfiles(newPublic);
+            }}
+            onCommunicate={(contactId) => {
+              console.log('Starting communication with attorney:', contactId);
+            }}
+          />
         </div>
 
       </div>
