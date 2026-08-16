@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "buildCommand": "",
+  "installCommand": "npm ci --legacy-peer-deps",
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "api/**/*.ts": {
+      "memory": 512,
+      "maxDuration": 30,
+      "runtime": "nodejs20.x"
+    }
+  },
+  "routes": [
+    { "src": "/api/v2/attorneys", "dest": "/api/v2/attorneys.ts", "methods": ["GET"] },
+    { "src": "/api/v2/notaries", "dest": "/api/v2/notaries.ts", "methods": ["GET"] }
+  ]
+}

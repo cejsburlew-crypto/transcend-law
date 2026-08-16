@@ -641,7 +641,13 @@
       "Bash(grep -E \"\\\\.\\(tsx|ts|css\\)$\")",
       "Bash(awk '{print $2}')",
       "Bash(grep -E \"\\(sql|ts|js\\)$\")",
-      "Bash(psql \"dbname=transcend_prod user=postgres\" -c \"SELECT count\\(*\\) as attorney_count FROM attorneys LIMIT 1;\")"
+      "Bash(psql \"dbname=transcend_prod user=postgres\" -c \"SELECT count\\(*\\) as attorney_count FROM attorneys LIMIT 1;\")",
+      "Bash(PORT=3000 npm start)",
+      "Bash(pkill -f \"ts-node\")",
+      "Bash(PORT=3000 npx ts-node transcend-api/src/index.ts)",
+      "Bash(curl -s https://transcend-law.com/api/v2/health)",
+      "Bash(curl -s 'https://transcend-law.com/api/v2/attorneys?state=CA&limit=5')",
+      "Bash(curl -s 'https://transcend-law.com/api/v2/attorneys')"
     ]
   }
 }
