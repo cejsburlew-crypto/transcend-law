@@ -242,7 +242,7 @@ export const LawSpecialtyDetail: React.FC<LawSpecialtyDetailProps> = ({ specialt
         </div>
 
         <ContactsGrid
-          contacts={(ATTORNEYS_BY_STATE['CA'] || []).slice(0, 500).map(attorney => ({
+          contacts={(ATTORNEYS_BY_STATE['CA'] || []).map(attorney => ({
             id: attorney.id,
             name: attorney.name,
             title: 'Attorney',
