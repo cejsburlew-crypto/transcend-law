@@ -311,6 +311,7 @@ export const LawSpecialtyDetail: React.FC<LawSpecialtyDetailProps> = ({ specialt
               <span className="step-number">3</span>
               <h3>{selectedFirm ? `Available Attorneys at ${selectedFirm.name}` : `Available Attorneys in ${selectedState}`}</h3>
             </div>
+            <p style={{ textAlign: 'center', color: '#999', fontSize: '12px' }}>DEBUG: loading={loading}, attorneys.length={attorneys.length}</p>
             {loading && <p style={{ textAlign: 'center', color: '#666' }}>Loading attorneys...</p>}
             {error && <p style={{ textAlign: 'center', color: '#d32f2f' }}>Error: {error}</p>}
             {!loading && attorneys.length > 0 && (
