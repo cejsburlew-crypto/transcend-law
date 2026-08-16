@@ -12,13 +12,14 @@ export const ClientServiceIntake: React.FC = () => {
 
   if (selectedService === 'Lawyer') {
     return (
-      <div>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         <button
           onClick={handleBackToServices}
           style={{
-            position: 'absolute',
-            top: '100px',
-            left: '20px',
+            alignSelf: 'flex-start',
+            marginBottom: '20px',
+            marginLeft: '20px',
+            marginTop: '20px',
             padding: '8px 16px',
             background: '#f5f7fa',
             border: '1px solid #e1e8ed',
