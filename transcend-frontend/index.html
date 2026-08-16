@@ -8,6 +8,52 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Initialize theme toggle button
+      (function initThemeToggle() {
+        // Set light mode as default if not set
+        if (!document.documentElement.getAttribute('data-theme')) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+
+        // Inject theme toggle button
+        function injectButton() {
+          if (document.querySelector('#theme-toggle-btn')) return;
+
+          const html = document.documentElement;
+          const btn = document.createElement('button');
+          btn.id = 'theme-toggle-btn';
+          btn.textContent = html.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+          btn.style.cssText = 'position:fixed;top:20px;right:20px;padding:10px 15px;background:rgba(0,0,0,0.15);border:1px solid rgba(0,0,0,0.25);border-radius:6px;font-size:24px;cursor:pointer;z-index:10000;transition:all 0.3s ease;';
+          btn.title = html.getAttribute('data-theme') === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+
+          btn.onmouseover = () => btn.style.background = 'rgba(0,0,0,0.25)';
+          btn.onmouseout = () => btn.style.background = 'rgba(0,0,0,0.15)';
+
+          btn.onclick = () => {
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+              html.setAttribute('data-theme', 'light');
+              btn.textContent = '🌙';
+              btn.title = 'Switch to dark mode';
+            } else {
+              html.setAttribute('data-theme', 'dark');
+              btn.textContent = '☀️';
+              btn.title = 'Switch to light mode';
+            }
+          };
+
+          document.body.appendChild(btn);
+        }
+
+        // Inject immediately
+        if (document.body) {
+          injectButton();
+        } else {
+          document.addEventListener('DOMContentLoaded', injectButton);
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
