@@ -17,61 +17,11 @@ const AppContent: React.FC = () => {
   const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website' | 'admin-role-preview'>(
     token && user ? 'dashboard' : 'landing'
   );
-  const [isDark, setIsDark] = useState(() => {
-    if (typeof document === 'undefined') return false;
-    return document.documentElement.getAttribute('data-theme') === 'dark';
-  });
-
-  const toggleDarkMode = () => {
-    const html = document.documentElement;
-    const newIsDark = !isDark;
-    if (newIsDark) {
-      html.setAttribute('data-theme', 'dark');
-    } else {
-      html.setAttribute('data-theme', 'light');
-    }
-    setIsDark(newIsDark);
-  };
 
   React.useEffect(() => {
-    // Initialize light mode on page load
-    const html = document.documentElement;
-    const currentTheme = html.getAttribute('data-theme');
-    if (!currentTheme) {
-      html.setAttribute('data-theme', 'light');
-      setIsDark(false);
-    }
+    // Ensure light mode is always active
+    document.documentElement.setAttribute('data-theme', 'light');
   }, []);
-
-  React.useEffect(() => {
-    // Inject theme toggle button directly into DOM as fallback
-    if (!document.querySelector('.theme-toggle-app-btn') && !document.querySelector('#theme-toggle-fallback')) {
-      const btn = document.createElement('button');
-      btn.id = 'theme-toggle-fallback';
-      btn.className = 'theme-toggle-app-btn';
-      btn.type = 'button';
-      btn.textContent = isDark ? '☀️' : '🌙';
-      btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
-      btn.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 10px 15px;
-        background: rgba(0, 0, 0, 0.15);
-        border: 1px solid rgba(0, 0, 0, 0.25);
-        border-radius: 6px;
-        font-size: 24px;
-        cursor: pointer;
-        z-index: 10000;
-        transition: all 0.3s ease;
-      `;
-      btn.onclick = toggleDarkMode;
-      document.body.appendChild(btn);
-    } else {
-      const btn = document.querySelector('#theme-toggle-fallback') as HTMLButtonElement;
-      if (btn) btn.textContent = isDark ? '☀️' : '🌙';
-    }
-  }, [isDark]);
 
   React.useEffect(() => {
     if (token && user && currentView === 'landing') {
@@ -125,14 +75,6 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="app">
-      <button
-        type="button"
-        onClick={toggleDarkMode}
-        title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-        className="theme-toggle-app-btn"
-      >
-        {isDark ? '☀️' : '🌙'}
-      </button>
       {currentView !== 'landing' && <Breadcrumbs items={getBreadcrumbs()} />}
       {currentView === 'admin-role-preview' && token && user ? (
         <AdminRolePreview />
