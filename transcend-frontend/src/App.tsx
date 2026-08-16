@@ -44,6 +44,36 @@ const AppContent: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
+    // Inject theme toggle button directly into DOM as fallback
+    if (!document.querySelector('.theme-toggle-app-btn') && !document.querySelector('#theme-toggle-fallback')) {
+      const btn = document.createElement('button');
+      btn.id = 'theme-toggle-fallback';
+      btn.className = 'theme-toggle-app-btn';
+      btn.type = 'button';
+      btn.textContent = isDark ? '☀️' : '🌙';
+      btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+      btn.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 10px 15px;
+        background: rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        border-radius: 6px;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 10000;
+        transition: all 0.3s ease;
+      `;
+      btn.onclick = toggleDarkMode;
+      document.body.appendChild(btn);
+    } else {
+      const btn = document.querySelector('#theme-toggle-fallback') as HTMLButtonElement;
+      if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+    }
+  }, [isDark]);
+
+  React.useEffect(() => {
     if (token && user && currentView === 'landing') {
       setCurrentView('dashboard');
     }
