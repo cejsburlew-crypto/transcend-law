@@ -142,6 +142,25 @@ textarea::placeholder {
 }
 
 /* Theme toggle button styling */
+.theme-toggle-app-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10000;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle-app-btn:hover {
+  background: rgba(0, 0, 0, 0.25);
+  transform: scale(1.1);
+}
+
 button[style*="position: fixed"][style*="top: 20px"][style*="right: 20px"],
 #theme-toggle-visible {
   position: fixed !important;
