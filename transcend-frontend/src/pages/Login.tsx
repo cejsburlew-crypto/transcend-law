@@ -33,28 +33,27 @@ export const Login: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
 
   return (
     <div className="login-container">
-      <button
-        onClick={toggle}
-        title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-        style={{
-          position: 'absolute',
-          top: '20px',
-          right: '20px',
-          padding: '8px 12px',
-          background: 'var(--bg-secondary)',
-          border: '1px solid var(--border-color)',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          fontSize: '18px',
-          zIndex: 10
-        }}
-      >
-        {isDark ? '☀️' : '🌙'}
-      </button>
       <div className="login-card">
         <div className="login-header">
           <h1>TRANSCEND LAW</h1>
           <p>Global Legal Services Marketplace</p>
+          <button
+            type="button"
+            onClick={toggle}
+            title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            style={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              padding: '6px 10px',
+              background: 'transparent',
+              border: 'none',
+              fontSize: '20px',
+              cursor: 'pointer'
+            }}
+          >
+            {isDark ? '☀️' : '🌙'}
+          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
