@@ -223,7 +223,7 @@ export const LawSpecialtyDetail: React.FC<LawSpecialtyDetailProps> = ({ specialt
         <div className="filter-step">
           <div className="step-header">
             <span className="step-number">1</span>
-            <h3>✓ SELECT YOUR STATE (DEPLOYED TEST)</h3>
+            <h3>Select State</h3>
           </div>
           <div className="state-grid">
             {STATES.map(state => (
