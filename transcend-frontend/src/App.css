@@ -140,3 +140,25 @@ textarea::placeholder {
 [data-theme="dark"] textarea::placeholder {
   color: var(--text-tertiary) !important;
 }
+
+/* Theme toggle button styling */
+button[style*="position: fixed"][style*="top: 20px"][style*="right: 20px"],
+#theme-toggle-visible {
+  position: fixed !important;
+  top: 20px !important;
+  right: 20px !important;
+  padding: 10px 15px !important;
+  background: rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid rgba(0, 0, 0, 0.25) !important;
+  border-radius: 6px !important;
+  font-size: 24px !important;
+  cursor: pointer !important;
+  z-index: 10000 !important;
+  transition: all 0.3s ease !important;
+}
+
+button[style*="position: fixed"][style*="top: 20px"][style*="right: 20px"]:hover,
+#theme-toggle-visible:hover {
+  background: rgba(0, 0, 0, 0.25) !important;
+  transform: scale(1.1) !important;
+}
