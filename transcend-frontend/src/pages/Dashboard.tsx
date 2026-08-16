@@ -35,7 +35,7 @@ interface DashboardMetrics {
   averageRating: number;
 }
 
-export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsite?: () => void }> = ({ onLogout, onNavigateLawyerWebsite }) => {
+export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsite?: () => void; onViewAdminPreview?: () => void }> = ({ onLogout, onNavigateLawyerWebsite, onViewAdminPreview }) => {
   const [currentPage, setCurrentPage] = useState<'home' | 'cases' | 'profile'>('home');
   const [user, setUser] = useState<UserProfile | null>(null);
   const [metrics] = useState<DashboardMetrics>({
@@ -157,6 +157,9 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
               </button>
               <button className="dropdown-item">🔔 Notifications</button>
               <button className="dropdown-item">⚙️ Settings</button>
+              <button className="dropdown-item" onClick={onViewAdminPreview}>
+                👨‍💼 View Admin Roles
+              </button>
               <hr />
               <button className="dropdown-item logout" onClick={handleLogout}>
                 🚪 Logout

@@ -5,7 +5,8 @@ import { DarkModeProvider } from './context/DarkModeContext';
 import { Landing } from './pages/Landing';
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
-import { LawyerWebsiteSetup } from './pages/LawyerWebsiteSetup';
+import LawyerWebsiteSetup from './pages/LawyerWebsiteSetup';
+import AdminRolePreview from './pages/AdminRolePreview';
 import Breadcrumbs from './components/Navigation/Breadcrumbs';
 import type { BreadcrumbItem } from './components/Navigation/Breadcrumbs';
 import './App.css';
@@ -13,7 +14,7 @@ import './App.css';
 const AppContent: React.FC = () => {
   const { t } = useLanguage();
   const { user, token, logout } = useAuth();
-  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website'>(
+  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website' | 'admin-role-preview'>(
     token && user ? 'dashboard' : 'landing'
   );
 
@@ -50,6 +51,12 @@ const AppContent: React.FC = () => {
           { label: 'Dashboard', icon: '📊', onClick: () => setCurrentView('dashboard') },
           { label: 'My Website', icon: '🌐' },
         ];
+      case 'admin-role-preview':
+        return [
+          { label: t('home'), icon: '⚖️', onClick: () => setCurrentView('landing') },
+          { label: 'Admin', icon: '👨‍💼', onClick: () => setCurrentView('dashboard') },
+          { label: 'Role Preview', icon: '🔍' },
+        ];
       default:
         return [];
     }
@@ -58,10 +65,12 @@ const AppContent: React.FC = () => {
   return (
     <div className="app">
       {currentView !== 'landing' && <Breadcrumbs items={getBreadcrumbs()} />}
-      {currentView === 'lawyer-website' && token && user ? (
+      {currentView === 'admin-role-preview' && token && user ? (
+        <AdminRolePreview />
+      ) : currentView === 'lawyer-website' && token && user ? (
         <LawyerWebsiteSetup onBack={() => setCurrentView('dashboard')} />
       ) : currentView === 'dashboard' && token && user ? (
-        <Dashboard onLogout={handleLogout} onNavigateLawyerWebsite={() => setCurrentView('lawyer-website')} />
+        <Dashboard onLogout={handleLogout} onNavigateLawyerWebsite={() => setCurrentView('lawyer-website')} onViewAdminPreview={() => setCurrentView('admin-role-preview')} />
       ) : currentView === 'login' ? (
         <Login onSuccess={handleLoginSuccess} />
       ) : (
