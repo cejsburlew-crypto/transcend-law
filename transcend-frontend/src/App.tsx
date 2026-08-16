@@ -18,6 +18,12 @@ const AppContent: React.FC = () => {
     token && user ? 'dashboard' : 'landing'
   );
 
+  React.useEffect(() => {
+    if (token && user && currentView === 'landing') {
+      setCurrentView('dashboard');
+    }
+  }, [token, user, currentView]);
+
   const handleGetStarted = () => {
     setCurrentView('login');
   };
