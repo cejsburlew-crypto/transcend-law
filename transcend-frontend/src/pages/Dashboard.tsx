@@ -225,9 +225,13 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
             <section className="quick-actions-section">
               <h2>Quick Actions</h2>
               <div className="actions-grid">
-                <button className="action-card">
-                  <span className="action-icon">🔍</span>
-                  <span className="action-text">Find Attorney</span>
+                <button className="action-card" onClick={() => showToast('info', 'Navigating to attorney services...')}>
+                  <span className="action-icon">👨‍⚖️</span>
+                  <span className="action-text">Attorney Services</span>
+                </button>
+                <button className="action-card" onClick={onNavigateNotary}>
+                  <span className="action-icon">🔏</span>
+                  <span className="action-text">Notary Services</span>
                 </button>
                 <button className="action-card">
                   <span className="action-icon">📝</span>
@@ -240,10 +244,6 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
                 <button className="action-card">
                   <span className="action-icon">📚</span>
                   <span className="action-text">Resources</span>
-                </button>
-                <button className="action-card">
-                  <span className="action-icon">🎥</span>
-                  <span className="action-text">Video Call</span>
                 </button>
                 <button className="action-card">
                   <span className="action-icon">💳</span>
