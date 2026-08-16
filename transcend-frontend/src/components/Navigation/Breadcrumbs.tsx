@@ -63,7 +63,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
         </ol>
 
         <div className="breadcrumb-actions">
-          {/* <LanguageSwitcher /> */}
+          <LanguageSwitcher />
           {items.length > 1 && (
             <button
               className="back-btn"
