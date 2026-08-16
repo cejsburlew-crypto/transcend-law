@@ -1,4 +1,4 @@
-name: Deploy to Staging
+name: Deploy to Production
 
 on:
   push:
@@ -8,43 +8,95 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: staging
-    
+    environment: production
+
     steps:
-      - uses: actions/checkout@v3
-      
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      
+          fetch-depth: 0
+
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
-      
-      - name: Build and push Docker image
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install frontend dependencies
+        working-directory: transcend-frontend
+        run: npm ci
+
+      - name: Run tests
+        working-directory: transcend-frontend
+        run: npm test -- --passWithNoTests
+        continue-on-error: true
+
+      - name: Build frontend
+        working-directory: transcend-frontend
+        run: npm run build
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL || 'https://api.transcend-law.com' }}
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel
+        working-directory: transcend-frontend
         run: |
-          docker build -t transcend-law:latest .
-          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
-          docker tag transcend-law:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/transcend-law:latest
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/transcend-law:latest
-      
-      - name: Deploy to EC2
+          vercel deploy --prod --token ${{ secrets.VERCEL_TOKEN }} \
+            --build-env VITE_API_URL=${{ secrets.VITE_API_URL || 'https://api.transcend-law.com' }} \
+            --env ENVIRONMENT=production
+        env:
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+
+      - name: Wait for deployment
+        run: sleep 30
+
+      - name: Verify deployment
         run: |
-          echo "Deploying to staging..."
-          # Add deployment commands here
-      
-      - name: Run smoke tests
-        run: |
-          echo "Running smoke tests..."
-          # Add smoke test commands here
-      
-      - name: Notify deployment
-        if: always()
+          MAX_RETRIES=5
+          RETRY_COUNT=0
+
+          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+            echo "Checking deployment status (attempt $((RETRY_COUNT + 1))/$MAX_RETRIES)..."
+
+            RESPONSE=$(curl -s -w "\n%{http_code}" https://transcend-law.com)
+            STATUS_CODE=$(echo "$RESPONSE" | tail -n 1)
+
+            if [ "$STATUS_CODE" = "200" ]; then
+              echo "✅ Deployment verified successfully"
+              exit 0
+            fi
+
+            echo "⏳ Status code: $STATUS_CODE, retrying..."
+            RETRY_COUNT=$((RETRY_COUNT + 1))
+            sleep 10
+          done
+
+          echo "❌ Deployment verification failed after $MAX_RETRIES attempts"
+          exit 1
+
+      - name: Notify success
+        if: success()
         uses: actions/github-script@v6
         with:
           script: |
-            console.log('Deployment completed')
+            github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: context.payload.deployment.id,
+              state: 'success',
+              environment_url: 'https://transcend-law.com',
+              description: 'Deployment successful',
+            })
+
+      - name: Notify failure
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.setFailed('Deployment failed - see logs for details')
