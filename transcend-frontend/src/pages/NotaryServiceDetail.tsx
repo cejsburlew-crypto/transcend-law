@@ -27,44 +27,56 @@ export const NotaryServiceDetail: React.FC<NotaryServiceDetailProps> = ({ servic
   const [selectedDate, setSelectedDate] = useState('today');
   const [selectedTime, setSelectedTime] = useState('');
   const [publicProfiles, setPublicProfiles] = useState<Set<string>>(new Set());
-  const [notaryList, setNotaryList] = useState<Notary[]>([
-    {
-      id: 'n1',
-      name: 'Maria Rodriguez',
-      certificationLevel: 'Certified Signing Agent',
-      rating: 4.9,
-      reviews: 287,
-      availableToday: true,
-      nextAvailable: '2 hours',
-      location: 'Within 15 miles',
-      responseTime: '< 30 min',
-      specialties: ['Loan Signing', 'Mortgage Documents', 'Power of Attorney'],
-    },
-    {
-      id: 'n2',
-      name: 'James Wilson',
-      certificationLevel: 'Mobile Notary',
-      rating: 4.8,
-      reviews: 156,
-      availableToday: true,
-      nextAvailable: '1 hour',
-      location: 'Within 20 miles',
-      responseTime: '< 45 min',
-      specialties: ['General Notarization', 'Affidavits', 'Document Authentication'],
-    },
-    {
-      id: 'n3',
-      name: 'Sarah Johnson',
-      certificationLevel: 'eNotary',
-      rating: 4.7,
-      reviews: 342,
-      availableToday: true,
-      nextAvailable: 'Now',
-      location: 'Remote (Video)',
-      responseTime: '< 10 min',
-      specialties: ['Remote Video Notarization', 'Multi-State RON', 'Digital Signatures'],
-    },
-  ]);
+  const [notaryList, setNotaryList] = useState<Notary[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedState, setSelectedState] = useState('CA');
+
+  React.useEffect(() => {
+    const fetchNotaries = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const params = new URLSearchParams({
+          state: selectedState,
+          limit: '50',
+        });
+
+        const response = await fetch(`/api/v2/notaries?${params}`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch notaries');
+        }
+
+        const data = await response.json();
+        const notaries = (data.data || []).map((notary: any) => ({
+          id: notary.id,
+          name: notary.name,
+          certificationLevel: notary.certificationLevel,
+          rating: notary.rating,
+          reviews: notary.reviews,
+          availableToday: true,
+          nextAvailable: '< 1 hour',
+          location: `${notary.city}, ${notary.state}`,
+          responseTime: '< 30 min',
+          specialties: notary.specialties || ['Notarization'],
+        }));
+        setNotaryList(notaries);
+      } catch (err) {
+        console.error('Error fetching notaries:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load notaries');
+        setNotaryList([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNotaries();
+  }, [selectedState]);
 
   const timeSlots = ['9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM'];
 
@@ -172,33 +184,40 @@ export const NotaryServiceDetail: React.FC<NotaryServiceDetailProps> = ({ servic
 
       {/* Available Notaries */}
       <div className="notaries-section">
-        <ContactsGrid
-          title="🔍 Available Notaries"
-          subtitle="Top-rated professionals ready to help you"
-          contacts={notaryList.map(notary => ({
-            id: notary.id,
-            name: notary.name,
-            title: notary.certificationLevel,
-            state: 'CA',
-            rating: notary.rating,
-            reviews: notary.reviews,
-            verified: notary.rating >= 4.7,
-            badges: notary.specialties.slice(0, 1),
-          } as ContactProfile))}
-          publicProfiles={publicProfiles}
-          onProfileToggle={(contactId) => {
-            const newPublic = new Set(publicProfiles);
-            if (newPublic.has(contactId)) {
-              newPublic.delete(contactId);
-            } else {
-              newPublic.add(contactId);
-            }
-            setPublicProfiles(newPublic);
-          }}
-          onCommunicate={(contactId) => {
-            console.log('Booking notary:', contactId);
-          }}
-        />
+        {loading && <p style={{ textAlign: 'center', color: '#666' }}>Loading notaries...</p>}
+        {error && <p style={{ textAlign: 'center', color: '#d32f2f' }}>Error: {error}</p>}
+        {!loading && notaryList.length > 0 && (
+          <ContactsGrid
+            title="🔍 Available Notaries"
+            subtitle="Top-rated professionals ready to help you"
+            contacts={notaryList.map(notary => ({
+              id: notary.id,
+              name: notary.name,
+              title: notary.certificationLevel,
+              state: selectedState,
+              rating: notary.rating,
+              reviews: notary.reviews,
+              verified: notary.rating >= 4.7,
+              badges: notary.specialties.slice(0, 1),
+            } as ContactProfile))}
+            publicProfiles={publicProfiles}
+            onProfileToggle={(contactId) => {
+              const newPublic = new Set(publicProfiles);
+              if (newPublic.has(contactId)) {
+                newPublic.delete(contactId);
+              } else {
+                newPublic.add(contactId);
+              }
+              setPublicProfiles(newPublic);
+            }}
+            onCommunicate={(contactId) => {
+              console.log('Booking notary:', contactId);
+            }}
+          />
+        )}
+        {!loading && notaryList.length === 0 && !error && (
+          <p style={{ textAlign: 'center', color: '#666' }}>No notaries available.</p>
+        )}
       </div>
 
       {/* Why Choose Us */}

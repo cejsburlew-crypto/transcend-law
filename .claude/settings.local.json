@@ -629,7 +629,18 @@
       "Bash(xargs -I {} gh run view {} --log-failed)",
       "Bash(xargs -I {} gh run view {} --json jobs -q '.jobs[] | select\\(.name == \"Build frontend\"\\) | .conclusion')",
       "Bash(xargs -I {} gh run view {} --log)",
-      "Bash(git ls-files *)"
+      "Bash(git ls-files *)",
+      "Bash(grep -E \"\\\\.\\(sql|py|ts|tsx\\)$\")",
+      "Bash(psql -U postgres -h localhost -c \"\\\\l\")",
+      "Bash(curl -s http://127.0.0.1:3000/health)",
+      "Bash(curl -s http://127.0.0.1:3000/api/v1/service-counts)",
+      "Bash(curl -s http://127.0.0.1:3000/api/v1/service-counts/breakdown/lawyer)",
+      "Bash(curl -s http://127.0.0.1:3000/api/v1/service-counts/breakdown/notary)",
+      "Bash(curl -s http://127.0.0.1:3000/api/v1/service-counts/Notary)",
+      "Bash(curl -i -s http://127.0.0.1:3000/api/v1/service-counts)",
+      "Bash(grep -E \"\\\\.\\(tsx|ts|css\\)$\")",
+      "Bash(awk '{print $2}')",
+      "Bash(grep -E \"\\(sql|ts|js\\)$\")"
     ]
   }
 }

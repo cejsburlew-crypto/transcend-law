@@ -89,6 +89,48 @@ export const LawSpecialtyDetail: React.FC<LawSpecialtyDetailProps> = ({ specialt
   const [showIntakeForm, setShowIntakeForm] = useState(false);
   const [costFilter, setCostFilter] = useState<'all' | 'budget' | 'moderate' | 'premium'>('all');
   const [publicProfiles, setPublicProfiles] = useState<Set<string>>(new Set());
+  const [attorneys, setAttorneys] = useState<Attorney[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  React.useEffect(() => {
+    if (!selectedState) return;
+
+    const fetchAttorneys = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const params = new URLSearchParams({
+          state: selectedState,
+          limit: '50',
+        });
+        if (specialty.name && specialty.name !== 'All Practice Areas') {
+          params.append('practice_area', specialty.name);
+        }
+
+        const response = await fetch(`/api/v2/attorneys?${params}`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch attorneys');
+        }
+
+        const data = await response.json();
+        setAttorneys(data.data || []);
+      } catch (err) {
+        console.error('Error fetching attorneys:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load attorneys');
+        setAttorneys([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAttorneys();
+  }, [selectedState, specialty.name]);
 
   const availableFirms = selectedState ? (FIRMS_BY_STATE[selectedState] || []) : [];
 
@@ -282,49 +324,64 @@ export const LawSpecialtyDetail: React.FC<LawSpecialtyDetailProps> = ({ specialt
           </div>
         )}
 
-        {/* Step 3: View Attorneys */}
-        {selectedFirm && (
+        {/* Step 3: View Attorneys - from API or Firm */}
+        {selectedState && (
           <div className="filter-step">
             <div className="step-header">
               <span className="step-number">3</span>
-              <h3>Available Attorneys at {selectedFirm.name}</h3>
+              <h3>{selectedFirm ? `Available Attorneys at ${selectedFirm.name}` : `Available Attorneys in ${selectedState}`}</h3>
             </div>
-            <ContactsGrid
-              contacts={filterAttorneysByCost(selectedFirm.attorneys).map(attorney => ({
-                id: attorney.id,
-                name: attorney.name,
-                title: 'Attorney',
-                specialization: attorney.specialization,
-                state: selectedFirm.state,
-                rating: attorney.rating,
-                reviews: attorney.reviews,
-                yearsExperience: attorney.yearsExperience,
-                hourlyRate: attorney.hourlyRate,
-                verified: attorney.rating >= 4.7,
-                badges: attorney.rating >= 4.8 ? ['Top Rated'] : [],
-              } as ContactProfile))}
-              publicProfiles={publicProfiles}
-              onProfileToggle={(contactId) => {
-                const newPublic = new Set(publicProfiles);
-                if (newPublic.has(contactId)) {
-                  newPublic.delete(contactId);
-                } else {
-                  newPublic.add(contactId);
-                }
-                setPublicProfiles(newPublic);
-              }}
-              onCommunicate={(contactId) => {
-                console.log('Starting communication with attorney:', contactId);
-              }}
-            />
+            {loading && <p style={{ textAlign: 'center', color: '#666' }}>Loading attorneys...</p>}
+            {error && <p style={{ textAlign: 'center', color: '#d32f2f' }}>Error: {error}</p>}
+            {!loading && attorneys.length > 0 && (
+              <ContactsGrid
+                contacts={filterAttorneysByCost(
+                  selectedFirm
+                    ? selectedFirm.attorneys
+                    : attorneys.map(a => ({
+                        id: a.id || '',
+                        name: a.name,
+                        specialization: a.specialization,
+                        rating: a.rating,
+                        reviews: a.reviews,
+                        yearsExperience: a.yearsExperience,
+                        firmId: '',
+                        hourlyRate: a.hourlyRate,
+                      }))
+                ).map(attorney => ({
+                  id: attorney.id,
+                  name: attorney.name,
+                  title: 'Attorney',
+                  specialization: attorney.specialization,
+                  state: selectedState,
+                  rating: attorney.rating,
+                  reviews: attorney.reviews,
+                  yearsExperience: attorney.yearsExperience,
+                  hourlyRate: attorney.hourlyRate,
+                  verified: attorney.rating >= 4.7,
+                  badges: attorney.rating >= 4.8 ? ['Top Rated'] : [],
+                } as ContactProfile))}
+                publicProfiles={publicProfiles}
+                onProfileToggle={(contactId) => {
+                  const newPublic = new Set(publicProfiles);
+                  if (newPublic.has(contactId)) {
+                    newPublic.delete(contactId);
+                  } else {
+                    newPublic.add(contactId);
+                  }
+                  setPublicProfiles(newPublic);
+                }}
+                onCommunicate={(contactId) => {
+                  console.log('Starting communication with attorney:', contactId);
+                }}
+              />
+            )}
+            {!loading && attorneys.length === 0 && selectedState && !selectedFirm && (
+              <p style={{ textAlign: 'center', color: '#666' }}>No attorneys found for {selectedState} in this practice area.</p>
+            )}
           </div>
         )}
 
-        {selectedState && availableFirms.length === 0 && (
-          <div className="no-firms">
-            <p>No firms available in {selectedState} yet. Please select another state.</p>
-          </div>
-        )}
       </div>
     </div>
   );

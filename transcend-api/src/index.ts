@@ -22,6 +22,8 @@ import subscriptionsRoutes from './routes/subscriptions';
 import translationRoutes from './routes/translation';
 import paymentsRoutes from './routes/payments';
 import documentsRoutes from './routes/documents';
+import attorneysRoutes from './routes/attorneys';
+import notariesRoutes from './routes/notaries';
 import adminRequestsRoutes from './routes/adminRequests';
 import adminHealthCheckRoutes from './routes/adminHealthCheck';
 import adminSecurityScanRoutes from './routes/adminSecurityScan';
@@ -74,6 +76,8 @@ app.use('/api/v2/subscriptions', subscriptionsRoutes);
 app.use('/api/v2/payments', paymentsRoutes);
 app.use('/api/v2/documents', documentsRoutes);
 app.use('/api/v2/translate', translationRoutes);
+app.use('/api/v2/attorneys', attorneysRoutes);
+app.use('/api/v2/notaries', notariesRoutes);
 
 // Admin routes (request panel, health check, security scan)
 app.use('/api', adminRequestsRoutes);
