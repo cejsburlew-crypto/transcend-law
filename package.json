@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "tsc --noEmit false --skipLibCheck",
+    "build": "tsc --skipLibCheck --noImplicitAny false",
     "dev": "ts-node transcend-api/src/index.ts",
     "start": "node transcend-api/dist/index.js"
   },
