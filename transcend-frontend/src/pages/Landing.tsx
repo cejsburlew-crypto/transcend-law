@@ -2,6 +2,7 @@
 // Public-facing landing page before authentication
 
 import React, { useState } from 'react';
+import { useDarkMode } from '../hooks/useDarkMode';
 import './Landing.css';
 
 interface LandingProps {
@@ -11,6 +12,7 @@ interface LandingProps {
 
 export const Landing: React.FC<LandingProps> = ({ onGetStarted, onRequestDemo }) => {
   const [demoModal, setDemoModal] = useState(false);
+  const { isDark, toggle } = useDarkMode();
 
   return (
     <div className="landing-page">
@@ -35,6 +37,14 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted, onRequestDemo })
             <li><a href="#contact">Contact</a></li>
           </ul>
           <div className="nav-actions">
+            <button
+              className="btn-icon"
+              onClick={toggle}
+              title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              style={{ padding: '8px 12px', background: 'transparent', border: '1px solid currentColor', borderRadius: '4px', cursor: 'pointer', fontSize: '16px' }}
+            >
+              {isDark ? '☀️' : '🌙'}
+            </button>
             <button className="btn-secondary" onClick={() => setDemoModal(true)}>
               Request Demo
             </button>
