@@ -7,6 +7,7 @@ import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
 import LawyerWebsiteSetup from './pages/LawyerWebsiteSetup';
 import AdminRolePreview from './pages/AdminRolePreview';
+import { NotaryServices } from './pages/NotaryServices';
 import Breadcrumbs from './components/Navigation/Breadcrumbs';
 import type { BreadcrumbItem } from './components/Navigation/Breadcrumbs';
 import './App.css';
@@ -14,7 +15,7 @@ import './App.css';
 const AppContent: React.FC = () => {
   const { t } = useLanguage();
   const { user, token, logout } = useAuth();
-  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website' | 'admin-role-preview'>(
+  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website' | 'admin-role-preview' | 'notary'>(
     token && user ? 'dashboard' : 'landing'
   );
 
@@ -68,6 +69,12 @@ const AppContent: React.FC = () => {
           { label: 'Admin', icon: '👨‍💼', onClick: () => setCurrentView('dashboard') },
           { label: 'Role Preview', icon: '🔍' },
         ];
+      case 'notary':
+        return [
+          { label: t('home'), icon: '⚖️', onClick: () => setCurrentView('landing') },
+          { label: t('dashboard'), icon: '📊', onClick: () => setCurrentView('dashboard') },
+          { label: 'Notary Services', icon: '📝' },
+        ];
       default:
         return [];
     }
@@ -78,10 +85,12 @@ const AppContent: React.FC = () => {
       {currentView !== 'landing' && <Breadcrumbs items={getBreadcrumbs()} />}
       {currentView === 'admin-role-preview' && token && user ? (
         <AdminRolePreview />
+      ) : currentView === 'notary' && token && user ? (
+        <NotaryServices onBack={() => setCurrentView('dashboard')} />
       ) : currentView === 'lawyer-website' && token && user ? (
         <LawyerWebsiteSetup onBack={() => setCurrentView('dashboard')} />
       ) : currentView === 'dashboard' && token && user ? (
-        <Dashboard onLogout={handleLogout} onNavigateLawyerWebsite={() => setCurrentView('lawyer-website')} onViewAdminPreview={() => setCurrentView('admin-role-preview')} />
+        <Dashboard onLogout={handleLogout} onNavigateLawyerWebsite={() => setCurrentView('lawyer-website')} onNavigateNotary={() => setCurrentView('notary')} onViewAdminPreview={() => setCurrentView('admin-role-preview')} />
       ) : currentView === 'login' ? (
         <Login onSuccess={handleLoginSuccess} />
       ) : (
