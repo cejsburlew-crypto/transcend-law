@@ -640,7 +640,8 @@
       "Bash(curl -i -s http://127.0.0.1:3000/api/v1/service-counts)",
       "Bash(grep -E \"\\\\.\\(tsx|ts|css\\)$\")",
       "Bash(awk '{print $2}')",
-      "Bash(grep -E \"\\(sql|ts|js\\)$\")"
+      "Bash(grep -E \"\\(sql|ts|js\\)$\")",
+      "Bash(psql \"dbname=transcend_prod user=postgres\" -c \"SELECT count\\(*\\) as attorney_count FROM attorneys LIMIT 1;\")"
     ]
   }
 }
