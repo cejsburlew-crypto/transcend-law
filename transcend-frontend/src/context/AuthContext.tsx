@@ -20,21 +20,39 @@ function getAuthTokenFromCookie(): string | null {
   return null; // Token is in httpOnly cookie, not accessible from JS
 }
 
-function setAuthTokenCookie(token: string): void {
+function setAuthTokenCookie(token: string, user?: User): void {
   // This would be set by the backend in the Set-Cookie header with httpOnly flag
   // Frontend should NOT set cookies directly
   // The backend handles: document.cookie = `token=${token}; HttpOnly; Secure; SameSite=Strict; path=/`
   // We'll store a session flag in localStorage for UI purposes (persists across refreshes)
   localStorage.setItem('auth_session_valid', 'true');
+  if (user) {
+    localStorage.setItem('auth_user', JSON.stringify(user));
+  }
+}
+
+function getStoredUser(): User | null {
+  const stored = localStorage.getItem('auth_user');
+  if (stored) {
+    try {
+      return JSON.parse(stored);
+    } catch {
+      return null;
+    }
+  }
+  return null;
 }
 
 function clearAuthTokenCookie(): void {
-  // Clear session flag
+  // Clear session flag and user
   localStorage.removeItem('auth_session_valid');
+  localStorage.removeItem('auth_user');
 }
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() =>
+    localStorage.getItem('auth_session_valid') ? getStoredUser() : null
+  );
   // ERROR FIX 8: Don't store actual token in state - it's in httpOnly cookie on backend
   // This state exists only for UI purposes
   const [token, setToken] = useState<string | null>(
@@ -49,8 +67,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const data: AuthResponse = await api.login(email, password);
       setUser(data.user);
-      // ERROR FIX 8: Backend sets httpOnly cookie, we just mark session as valid
-      setAuthTokenCookie(data.token);
+      // ERROR FIX 8: Backend sets httpOnly cookie, we also save user for persistence
+      setAuthTokenCookie(data.token, data.user);
       setToken('authenticated'); // Placeholder to indicate authenticated state
     } catch (err) {
       // Demo mode: Allow login if backend is unavailable
@@ -62,8 +80,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           authorized_at: new Date().toISOString(),
         };
         setUser(demoUser);
-        // Even in demo mode, don't expose actual token to client
-        setAuthTokenCookie('demo_session');
+        // Even in demo mode, don't expose actual token to client but save user for persistence
+        setAuthTokenCookie('demo_session', demoUser);
         setToken('authenticated');
         return; // Success!
       }
