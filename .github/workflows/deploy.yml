@@ -80,23 +80,5 @@ jobs:
           echo "❌ Deployment verification failed after $MAX_RETRIES attempts"
           exit 1
 
-      - name: Notify success
-        if: success()
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.repos.createDeploymentStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              deployment_id: context.payload.deployment.id,
-              state: 'success',
-              environment_url: 'https://transcend-law.com',
-              description: 'Deployment successful',
-            })
-
-      - name: Notify failure
-        if: failure()
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.setFailed('Deployment failed - see logs for details')
+      - name: Deployment complete
+        run: echo "✅ Deployment to https://transcend-law.com completed successfully"
