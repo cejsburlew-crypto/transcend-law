@@ -215,131 +215,60 @@ export const LawSpecialtyDetail: React.FC<LawSpecialtyDetailProps> = ({ specialt
         )}
       </div>
 
-      {/* Attorney Filtering System */}
+      {/* Available Attorneys Section */}
       <div className="filtering-section">
-        <h2>🔍 Find an Attorney</h2>
+        <h2>📋 Available Attorneys</h2>
 
-        {/* Step 1: Select State */}
-        <div className="filter-step">
-          <div className="step-header">
-            <span className="step-number">1</span>
-            <h3>Select State</h3>
-          </div>
-          <div className="state-grid">
-            {STATES.map(state => (
-              <button
-                key={state}
-                className={`state-btn ${selectedState === state ? 'active' : ''}`}
-                onClick={() => {
-                  setSelectedState(state);
-                  setSelectedFirm(null);
-                }}
-              >
-                {state}
-              </button>
-            ))}
-          </div>
+        <div style={{ marginBottom: '20px' }}>
+          <p style={{ color: '#666', marginBottom: '15px' }}>
+            Browse available attorneys for {specialty.name}. Contact them individually or send your inquiry to all at once.
+          </p>
+          <button
+            onClick={() => console.log('Send to all attorneys')}
+            style={{
+              padding: '12px 24px',
+              backgroundColor: '#4CAF50',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              width: '100%'
+            }}
+          >
+            📧 Send to All Attorneys at Once
+          </button>
         </div>
 
-        {/* Cost Filter */}
-        {selectedState && (
-          <div className="filter-step">
-            <div className="step-header">
-              <h3>💰 Filter by Hourly Rate</h3>
-            </div>
-            <div className="cost-filter-buttons">
-              <button
-                className={`cost-btn ${costFilter === 'all' ? 'active' : ''}`}
-                onClick={() => setCostFilter('all')}
-              >
-                All Rates
-              </button>
-              <button
-                className={`cost-btn budget ${costFilter === 'budget' ? 'active' : ''}`}
-                onClick={() => setCostFilter('budget')}
-              >
-                💰 Budget-Friendly ($0-$200/hr)
-              </button>
-              <button
-                className={`cost-btn moderate ${costFilter === 'moderate' ? 'active' : ''}`}
-                onClick={() => setCostFilter('moderate')}
-              >
-                💵 Moderate ($200-$400/hr)
-              </button>
-              <button
-                className={`cost-btn premium ${costFilter === 'premium' ? 'active' : ''}`}
-                onClick={() => setCostFilter('premium')}
-              >
-                💎 Premium ($400+/hr)
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Step 2: Select Firm */}
-        {selectedState && availableFirms.length > 0 && (
-          <div className="filter-step">
-            <div className="step-header">
-              <span className="step-number">2</span>
-              <h3>Select Firm in {selectedState}</h3>
-            </div>
-            <div className="firms-list">
-              {availableFirms.map(firm => (
-                <div
-                  key={firm.id}
-                  className={`firm-card ${selectedFirm?.id === firm.id ? 'selected' : ''}`}
-                  onClick={() => setSelectedFirm(firm)}
-                >
-                  <div className="firm-info">
-                    <h4>{firm.name}</h4>
-                    <p>{firm.location}</p>
-                    <span className="attorneys-count">
-                      {firm.attorneys.length} attorney{firm.attorneys.length !== 1 ? 's' : ''}
-                    </span>
-                  </div>
-                  <span className="expand-icon">→</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Step 3: View Attorneys - FORCE RENDER */}
-        <div className="filter-step">
-          <div className="step-header">
-            <span className="step-number">3</span>
-            <h3>Available Attorneys in {selectedState || 'CA'}</h3>
-          </div>
-          <ContactsGrid
-            contacts={(ATTORNEYS_BY_STATE[selectedState || 'CA'] || []).slice(0, 50).map(attorney => ({
-              id: attorney.id,
-              name: attorney.name,
-              title: 'Attorney',
-              specialization: attorney.specialization,
-              state: selectedState || 'CA',
-              rating: attorney.rating,
-              reviews: attorney.reviews,
-              yearsExperience: attorney.yearsExperience,
-              hourlyRate: attorney.hourlyRate,
-              verified: attorney.rating >= 4.7,
-              badges: attorney.rating >= 4.8 ? ['Top Rated'] : [],
-            } as ContactProfile))}
-            publicProfiles={publicProfiles}
-            onProfileToggle={(contactId) => {
-              const newPublic = new Set(publicProfiles);
-              if (newPublic.has(contactId)) {
-                newPublic.delete(contactId);
-              } else {
-                newPublic.add(contactId);
-              }
-              setPublicProfiles(newPublic);
-            }}
-            onCommunicate={(contactId) => {
-              console.log('Starting communication with attorney:', contactId);
-            }}
-          />
-        </div>
-
+        <ContactsGrid
+          contacts={(ATTORNEYS_BY_STATE['CA'] || []).slice(0, 500).map(attorney => ({
+            id: attorney.id,
+            name: attorney.name,
+            title: 'Attorney',
+            specialization: attorney.specialization,
+            state: 'CA',
+            rating: attorney.rating,
+            reviews: attorney.reviews,
+            yearsExperience: attorney.yearsExperience,
+            hourlyRate: attorney.hourlyRate,
+            verified: attorney.rating >= 4.7,
+            badges: attorney.rating >= 4.8 ? ['Top Rated'] : [],
+          } as ContactProfile))}
+          publicProfiles={publicProfiles}
+          onProfileToggle={(contactId) => {
+            const newPublic = new Set(publicProfiles);
+            if (newPublic.has(contactId)) {
+              newPublic.delete(contactId);
+            } else {
+              newPublic.add(contactId);
+            }
+            setPublicProfiles(newPublic);
+          }}
+          onCommunicate={(contactId) => {
+            console.log('Sending message to attorney:', contactId);
+          }}
+        />
       </div>
     </div>
   );
