@@ -113,23 +113,23 @@ body {
   background: var(--text-secondary);
 }
 
-/* Form inputs styling */
+/* Form inputs styling - override hardcoded colors */
 input,
 textarea,
 select {
-  background-color: var(--bg-secondary);
-  color: var(--text-primary);
-  border-color: var(--border-color);
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color) !important;
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: var(--text-tertiary);
+  color: var(--text-tertiary) !important;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-  outline-color: var(--accent-color);
-  border-color: var(--accent-color);
+  outline-color: var(--accent-color) !important;
+  border-color: var(--accent-color) !important;
 }
