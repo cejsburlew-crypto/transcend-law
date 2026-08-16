@@ -73,7 +73,7 @@ const AppContent: React.FC = () => {
     <div className="app">
       <div className="app-header">
         <div className="app-header-spacer" />
-        <DarkModeToggle variant="button" showLabel={false} />
+        <button style={{ padding: '8px 12px', background: 'var(--accent-color)', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>🌙</button>
       </div>
       {currentView !== 'landing' && <Breadcrumbs items={getBreadcrumbs()} />}
       {currentView === 'admin-role-preview' && token && user ? (
