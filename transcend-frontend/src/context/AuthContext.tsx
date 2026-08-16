@@ -24,13 +24,13 @@ function setAuthTokenCookie(token: string): void {
   // This would be set by the backend in the Set-Cookie header with httpOnly flag
   // Frontend should NOT set cookies directly
   // The backend handles: document.cookie = `token=${token}; HttpOnly; Secure; SameSite=Strict; path=/`
-  // We'll store a session flag in sessionStorage for UI purposes only
-  sessionStorage.setItem('auth_session_valid', 'true');
+  // We'll store a session flag in localStorage for UI purposes (persists across refreshes)
+  localStorage.setItem('auth_session_valid', 'true');
 }
 
 function clearAuthTokenCookie(): void {
   // Clear session flag
-  sessionStorage.removeItem('auth_session_valid');
+  localStorage.removeItem('auth_session_valid');
 }
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -38,7 +38,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // ERROR FIX 8: Don't store actual token in state - it's in httpOnly cookie on backend
   // This state exists only for UI purposes
   const [token, setToken] = useState<string | null>(
-    sessionStorage.getItem('auth_session_valid') ? 'authenticated' : null
+    localStorage.getItem('auth_session_valid') ? 'authenticated' : null
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
