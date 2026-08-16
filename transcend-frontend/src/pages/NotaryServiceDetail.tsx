@@ -31,7 +31,7 @@ export const NotaryServiceDetail: React.FC<NotaryServiceDetailProps> = ({ servic
   const [notaryList, setNotaryList] = useState<Notary[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedState, setSelectedState] = useState('CA');
+  const [selectedState] = useState('CA');
 
   React.useEffect(() => {
     setLoading(true);

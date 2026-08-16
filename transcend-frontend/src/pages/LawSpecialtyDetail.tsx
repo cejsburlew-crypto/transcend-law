@@ -85,7 +85,7 @@ interface LawSpecialtyDetailProps {
 }
 
 export const LawSpecialtyDetail: React.FC<LawSpecialtyDetailProps> = ({ specialty, onBack }) => {
-  const [selectedState, setSelectedState] = useState<string | null>(null);
+  const [selectedState, setSelectedState] = useState<string>('CA');
   const [selectedFirm, setSelectedFirm] = useState<Firm | null>(null);
   const [showIntakeForm, setShowIntakeForm] = useState(false);
   const [costFilter, setCostFilter] = useState<'all' | 'budget' | 'moderate' | 'premium'>('all');
