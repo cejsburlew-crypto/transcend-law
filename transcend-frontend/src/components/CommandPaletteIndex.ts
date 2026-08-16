@@ -5,7 +5,6 @@
  */
 
 export { CommandPalette } from './CommandPalette';
-export { CommandPaletteIntegration } from './CommandPaletteExample';
 export type { Command, CommandPaletteState, AnalyticsEvent } from '../hooks/useCommandPalette';
 
 // Re-export the hook for direct use

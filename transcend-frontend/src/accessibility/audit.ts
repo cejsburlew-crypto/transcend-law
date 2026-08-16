@@ -215,6 +215,7 @@ class AccessibilityAudit {
 
       if (!hasAccessibleName && (tagName === 'button' || role === 'button' || tagName === 'a')) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'error',
           category: 'aria',
           title: 'Missing accessible label for button/link',
@@ -228,6 +229,7 @@ class AccessibilityAudit {
       // Check for icon-only buttons
       if ((tagName === 'button' || role === 'button') && !hasTextContent && !hasAriaLabel) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'error',
           category: 'aria',
           title: 'Icon-only button missing aria-label',
@@ -243,6 +245,7 @@ class AccessibilityAudit {
         const isInteractive = htmlEl.onclick || el.hasAttribute('onclick');
         if (isInteractive) {
           this.addIssue({
+          component: this.currentComponent,
             severity: 'warning',
             category: 'aria',
             title: 'Non-semantic interactive element missing role',
@@ -263,6 +266,7 @@ class AccessibilityAudit {
 
       if (!alt && !isDecorative) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'error',
           category: 'media',
           title: 'Image missing alt text',
@@ -273,6 +277,7 @@ class AccessibilityAudit {
         });
       } else if (alt === 'image' || alt === 'photo' || alt === 'picture') {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'warning',
           category: 'media',
           title: 'Alt text is too generic',
@@ -302,6 +307,7 @@ class AccessibilityAudit {
         maxTabIndex = Math.max(maxTabIndex, tabindex);
         if (tabindex > 32767) {
           this.addIssue({
+          component: this.currentComponent,
             severity: 'error',
             category: 'keyboard',
             title: 'Invalid tabindex value',
@@ -316,6 +322,7 @@ class AccessibilityAudit {
 
     if (maxTabIndex > 0) {
       this.addIssue({
+          component: this.currentComponent,
         severity: 'warning',
         category: 'keyboard',
         title: 'Positive tabindex values detected',
@@ -332,6 +339,7 @@ class AccessibilityAudit {
       const tagName = el.tagName.toLowerCase();
       if (!['button', 'a', 'input'].includes(tagName) && !el.hasAttribute('onkeypress') && !el.hasAttribute('onkeydown')) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'error',
           category: 'keyboard',
           title: 'Click handler without keyboard support',
@@ -351,6 +359,7 @@ class AccessibilityAudit {
       );
       if (focusableInModal.length === 0) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'error',
           category: 'keyboard',
           title: 'Modal/dialog with no focusable elements',
@@ -364,6 +373,7 @@ class AccessibilityAudit {
       // Check if Escape closes modal
       if (!modal.hasAttribute('data-escape-closes') && !modal.querySelector('[data-escape-closes]')) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'warning',
           category: 'keyboard',
           title: 'Modal doesn\'t mention Escape key for closing',
@@ -403,6 +413,7 @@ class AccessibilityAudit {
 
         if (contrast < requiredContrast && contrast > 0) {
           this.addIssue({
+          component: this.currentComponent,
             severity: 'error',
             category: 'contrast',
             title: `Insufficient color contrast (${contrast.toFixed(2)}:1, need ${requiredContrast}:1)`,
@@ -424,6 +435,7 @@ class AccessibilityAudit {
 
       if (!outline || outline === 'none') {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'warning',
           category: 'contrast',
           title: 'Focus indicator has no outline',
@@ -461,6 +473,7 @@ class AccessibilityAudit {
       const isFocusable = !htmlEl.hasAttribute('disabled') && htmlEl.offsetParent !== null;
       if (isFocusable && !hasVisibleFocus) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'warning',
           category: 'focus',
           title: 'No visible focus indicator',
@@ -474,6 +487,7 @@ class AccessibilityAudit {
 
     if (focusedCount > 5) {
       this.addIssue({
+          component: this.currentComponent,
         severity: 'warning',
         category: 'focus',
         title: 'Many elements lack focus indicators',
@@ -512,6 +526,7 @@ class AccessibilityAudit {
 
       if (!hasLabel && !hasAriaLabel && !hasAriaLabelledby) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'error',
           category: 'form',
           title: 'Form input missing associated label',
@@ -528,6 +543,7 @@ class AccessibilityAudit {
         const label = document.querySelector(`label[for="${inputId}"]`);
         if (label && !label.textContent?.includes('*') && !label.querySelector('[aria-label*="required"]')) {
           this.addIssue({
+          component: this.currentComponent,
             severity: 'warning',
             category: 'form',
             title: 'Required field not visually marked',
@@ -547,6 +563,7 @@ class AccessibilityAudit {
         const isInvalid = input.hasAttribute('aria-invalid') && input.getAttribute('aria-invalid') === 'true';
         if (isInvalid) {
           this.addIssue({
+          component: this.currentComponent,
             severity: 'warning',
             category: 'form',
             title: 'Invalid input without error message',
@@ -565,6 +582,7 @@ class AccessibilityAudit {
       const legend = fieldset.querySelector('legend');
       if (!legend) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'error',
           category: 'form',
           title: 'Fieldset missing legend',
@@ -591,6 +609,7 @@ class AccessibilityAudit {
 
       if (!hasTitle && !hasDesc && !hasAriaLabel && !isDecorative) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'warning',
           category: 'media',
           title: 'SVG lacks accessible description',
@@ -608,6 +627,7 @@ class AccessibilityAudit {
       const tracks = video.querySelectorAll('track[kind="captions"]');
       if (tracks.length === 0) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'error',
           category: 'media',
           title: 'Video missing captions',
@@ -622,6 +642,7 @@ class AccessibilityAudit {
       const hasAudioDesc = video.querySelectorAll('track[kind="descriptions"]').length > 0;
       if (!hasAudioDesc) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'info',
           category: 'media',
           title: 'Video should have audio description',
@@ -640,6 +661,7 @@ class AccessibilityAudit {
       const hasTranscript = element.querySelector('[data-transcript-for-audio]');
       if (!hasTranscript) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'info',
           category: 'media',
           title: 'Audio should have transcript',
@@ -671,6 +693,7 @@ class AccessibilityAudit {
       // Check for skipped heading levels
       if (level > lastLevel + 1 && lastLevel > 0) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'warning',
           category: 'semantic',
           title: `Heading hierarchy skipped from h${lastLevel} to h${level}`,
@@ -686,6 +709,7 @@ class AccessibilityAudit {
 
     if (h1Count === 0) {
       this.addIssue({
+          component: this.currentComponent,
         severity: 'warning',
         category: 'semantic',
         title: 'Page has no h1 heading',
@@ -698,6 +722,7 @@ class AccessibilityAudit {
 
     if (h1Count > 1) {
       this.addIssue({
+          component: this.currentComponent,
         severity: 'info',
         category: 'semantic',
         title: `Multiple h1 elements found (${h1Count})`,
@@ -712,6 +737,7 @@ class AccessibilityAudit {
     const skipLink = element.querySelector('a[href="#main-content"]');
     if (!skipLink && element.querySelector('nav')) {
       this.addIssue({
+          component: this.currentComponent,
         severity: 'info',
         category: 'semantic',
         title: 'Missing skip navigation link',
@@ -726,6 +752,7 @@ class AccessibilityAudit {
     const fakeListLike = element.querySelectorAll('div[role="list"], div[role="listitem"]');
     if (fakeListLike.length > 0) {
       this.addIssue({
+          component: this.currentComponent,
         severity: 'warning',
         category: 'semantic',
         title: 'List implemented with divs instead of semantic <ul>/<ol>',
@@ -745,6 +772,7 @@ class AccessibilityAudit {
 
       if (!thead) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'warning',
           category: 'semantic',
           title: 'Table lacks <thead>',
@@ -757,6 +785,7 @@ class AccessibilityAudit {
 
       if (headers.length === 0) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'error',
           category: 'semantic',
           title: 'Table has no header cells (<th>)',
@@ -774,6 +803,7 @@ class AccessibilityAudit {
 
       if (!caption && !label && !labelledby) {
         this.addIssue({
+          component: this.currentComponent,
           severity: 'warning',
           category: 'semantic',
           title: 'Table lacks caption or label',
