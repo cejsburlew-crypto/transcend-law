@@ -652,7 +652,8 @@
       "Bash(curl -s 'https://transcend-law.com/api/v2/attorneys?state=CA&limit=2')",
       "Bash(curl -v 'https://transcend-law.com/api/v2/attorneys')",
       "Bash(curl -s 'https://transcend-law.com/health')",
-      "Bash(node -e \"const contacts = require\\('./src/data/contacts'\\); console.log\\('CA attorneys:', contacts.ATTORNEYS_BY_STATE.CA ? contacts.ATTORNEYS_BY_STATE.CA.length : 'undefined'\\)\")"
+      "Bash(node -e \"const contacts = require\\('./src/data/contacts'\\); console.log\\('CA attorneys:', contacts.ATTORNEYS_BY_STATE.CA ? contacts.ATTORNEYS_BY_STATE.CA.length : 'undefined'\\)\")",
+      "Bash(npm ls *)"
     ]
   }
 }
