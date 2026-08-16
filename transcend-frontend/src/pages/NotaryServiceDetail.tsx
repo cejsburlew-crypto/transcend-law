@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { NotaryService } from './NotaryServices';
 import { ContactsGrid } from '../components/ContactsGrid';
 import type { ContactProfile } from '../components/ContactCard';
+import { NOTARIES_BY_STATE } from '../data/contacts';
 import './NotaryServiceDetail.css';
 
 interface Notary {
@@ -33,49 +34,30 @@ export const NotaryServiceDetail: React.FC<NotaryServiceDetailProps> = ({ servic
   const [selectedState, setSelectedState] = useState('CA');
 
   React.useEffect(() => {
-    const fetchNotaries = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const params = new URLSearchParams({
-          state: selectedState,
-          limit: '50',
-        });
+    setLoading(true);
+    setError(null);
 
-        const response = await fetch(`/api/v2/notaries?${params}`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch notaries');
-        }
-
-        const data = await response.json();
-        const notaries = (data.data || []).map((notary: any) => ({
-          id: notary.id,
-          name: notary.name,
-          certificationLevel: notary.certificationLevel,
-          rating: notary.rating,
-          reviews: notary.reviews,
-          availableToday: true,
-          nextAvailable: '< 1 hour',
-          location: `${notary.city}, ${notary.state}`,
-          responseTime: '< 30 min',
-          specialties: notary.specialties || ['Notarization'],
-        }));
-        setNotaryList(notaries);
-      } catch (err) {
-        console.error('Error fetching notaries:', err);
-        setError(err instanceof Error ? err.message : 'Failed to load notaries');
-        setNotaryList([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchNotaries();
+    try {
+      const stateNotaries = (NOTARIES_BY_STATE[selectedState] || []).map((notary: any) => ({
+        id: notary.id,
+        name: notary.name,
+        certificationLevel: notary.certificationLevel,
+        rating: notary.rating,
+        reviews: notary.reviews,
+        availableToday: true,
+        nextAvailable: '< 1 hour',
+        location: `${notary.city}, ${notary.state}`,
+        responseTime: '< 30 min',
+        specialties: notary.specialties || ['Notarization'],
+      }));
+      setNotaryList(stateNotaries);
+    } catch (err) {
+      console.error('Error loading notaries:', err);
+      setError('Failed to load notaries');
+      setNotaryList([]);
+    } finally {
+      setLoading(false);
+    }
   }, [selectedState]);
 
   const timeSlots = ['9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM'];

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { LawSpecialty } from './LawSpecialties';
 import { ContactCard, type ContactProfile } from '../components/ContactCard';
 import { ContactsGrid } from '../components/ContactsGrid';
+import { ATTORNEYS_BY_STATE } from '../data/contacts';
 import './LawSpecialtyDetail.css';
 
 interface Attorney {
@@ -96,41 +97,20 @@ export const LawSpecialtyDetail: React.FC<LawSpecialtyDetailProps> = ({ specialt
   React.useEffect(() => {
     if (!selectedState) return;
 
-    const fetchAttorneys = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const params = new URLSearchParams({
-          state: selectedState,
-          limit: '50',
-        });
-        if (specialty.name && specialty.name !== 'All Practice Areas') {
-          params.append('practice_area', specialty.name);
-        }
+    setLoading(true);
+    setError(null);
 
-        const response = await fetch(`/api/v2/attorneys?${params}`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch attorneys');
-        }
-
-        const data = await response.json();
-        setAttorneys(data.data || []);
-      } catch (err) {
-        console.error('Error fetching attorneys:', err);
-        setError(err instanceof Error ? err.message : 'Failed to load attorneys');
-        setAttorneys([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAttorneys();
-  }, [selectedState, specialty.name]);
+    try {
+      const stateAttorneys = ATTORNEYS_BY_STATE[selectedState] || [];
+      setAttorneys(stateAttorneys);
+    } catch (err) {
+      console.error('Error loading attorneys:', err);
+      setError('Failed to load attorneys');
+      setAttorneys([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [selectedState]);
 
   const availableFirms = selectedState ? (FIRMS_BY_STATE[selectedState] || []) : [];
 
