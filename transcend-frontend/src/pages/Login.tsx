@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import './Login.css';
 
@@ -22,6 +22,31 @@ export const Login: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     }
     setIsDark(newIsDark);
   };
+
+  useEffect(() => {
+    // Inject dark mode toggle button into the DOM as a fallback
+    const loginCard = document.querySelector('.login-card');
+    if (loginCard && !document.querySelector('.theme-toggle-btn')) {
+      const btn = document.createElement('button');
+      btn.className = 'theme-toggle-btn';
+      btn.type = 'button';
+      btn.textContent = isDark ? '☀️' : '🌙';
+      btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+      btn.style.cssText = `
+        display: block;
+        margin-left: auto;
+        margin-bottom: 10px;
+        margin-right: 0;
+        padding: 6px 10px;
+        background: transparent;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+      `;
+      btn.onclick = toggleDarkMode;
+      loginCard.insertBefore(btn, loginCard.firstChild);
+    }
+  }, [isDark]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
