@@ -604,7 +604,25 @@
       "Bash(curl -X POST http://localhost:3000/api/lawyer-websites -H 'Content-Type: application/json' -d '{ *)",
       "Bash(npx ts-node *)",
       "Bash(node /Users/jbconsultingassociatesinc./code/transcend-ssp/scripts/test-security-scan.js)",
-      "Bash(git diff *)"
+      "Bash(git diff *)",
+      "Bash(PGPASSWORD=transcend_dev_password psql -h 127.0.0.1 -U transcend -d transcend_law_dev -c \"\\\\dt\")",
+      "Bash(psql -U jbconsultingassociatesinc. -h localhost -c \"\\\\l\")",
+      "Bash(psql -U jbconsultingassociatesinc. -d postgres -h localhost -c \"\\\\l\")",
+      "Bash(psql -U jbconsultingassociatesinc. -d transcend_law -h localhost -c \"\\\\dt\")",
+      "Bash(psql -U jbconsultingassociatesinc. -d transcend_law -h localhost -c \"SELECT COUNT\\(*\\) as table_count FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';\")",
+      "Bash(curl -s -X GET http://localhost:3000/health)",
+      "Bash(psql -U jbconsultingassociatesinc. -d transcend_law -h localhost -c \"SELECT * FROM information_schema.tables WHERE table_schema NOT IN \\('pg_catalog', 'information_schema'\\);\")",
+      "Bash(curl -s -X POST http://localhost:3000/api/admin/health-check)",
+      "Bash(curl -s -X GET http://localhost:3001/health)",
+      "Bash(psql -U jbconsultingassociatesinc. -d transcend_law -h localhost)",
+      "Bash(curl -s -X GET http://localhost:3000/api/v1/status)",
+      "Bash(curl -s -X GET http://localhost:3000/api/v2/status)",
+      "Bash(curl -v http://localhost:3000/health)",
+      "Bash(psql -U jbconsultingassociatesinc. -d transcend_law -h localhost -c \"SELECT EXISTS\\(SELECT 1 FROM information_schema.tables WHERE table_name = 'users'\\) as users_exists;\")",
+      "Bash(git restore *)",
+      "Bash(pkill -f \"node.*vite\\\\|vite.*dev\")",
+      "Bash(pkill -9 -f \"node.*vite\")",
+      "Bash(rm -rf .vite dist)"
     ]
   }
 }

@@ -310,5 +310,3 @@ export default function LawyerWebsiteSetup() {
 
   return <div>Website created successfully!</div>;
 }
-
-export { LawyerWebsiteSetup };
