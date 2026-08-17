@@ -656,7 +656,9 @@
       "Bash(npm ls *)",
       "Bash(curl -s https://transcend-law.com/assets/index-Dm6te2kW.js)",
       "Bash(curl -I https://transcend-law.com/assets/index-BHvTeenk.js)",
-      "Bash(rm -f api/attorneys.js api/notaries.js && git add -A && git commit -m \"Remove duplicate JavaScript API files - keep TypeScript versions only\" && git push origin main)"
+      "Bash(rm -f api/attorneys.js api/notaries.js && git add -A && git commit -m \"Remove duplicate JavaScript API files - keep TypeScript versions only\" && git push origin main)",
+      "Bash(nslookup transcend-law.com 8.8.8.8)",
+      "Bash(curl -v https://transcend-law.com)"
     ]
   }
 }
