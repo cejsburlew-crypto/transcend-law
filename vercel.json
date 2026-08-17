@@ -1,9 +1,9 @@
 {
   "version": 2,
   "_updated": "2025-08-16T17:25:00Z",
-  "buildCommand": "",
+  "buildCommand": "echo 'Skipping build - using pre-built frontend'",
   "outputDirectory": "frontend-dist",
-  "installCommand": "npm ci --legacy-peer-deps",
+  "installCommand": "echo 'Skipping install'",
   "env": {
     "NODE_ENV": "production"
   },
