@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npm run build && cp -r frontend-dist/* .",
+  "buildCommand": "cd transcend-frontend && npm install --legacy-peer-deps && npm run build && cd .. && cp -r transcend-frontend/dist/* .",
   "outputDirectory": ".",
   "installCommand": "npm ci --legacy-peer-deps",
   "env": {
@@ -14,7 +14,8 @@
     }
   },
   "routes": [
-    { "src": "/api/v2/attorneys", "dest": "/api/v2/attorneys.ts", "methods": ["GET"] },
-    { "src": "/api/v2/notaries", "dest": "/api/v2/notaries.ts", "methods": ["GET"] }
+    { "src": "/api/attorneys", "dest": "/api/attorneys.ts", "methods": ["GET"] },
+    { "src": "/api/notaries", "dest": "/api/notaries.ts", "methods": ["GET"] },
+    { "src": "/(.*)", "dest": "/index.html", "status": 200 }
   ]
 }
