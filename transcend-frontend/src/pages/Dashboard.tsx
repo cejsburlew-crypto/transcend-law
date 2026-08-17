@@ -35,7 +35,7 @@ interface DashboardMetrics {
   averageRating: number;
 }
 
-export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsite?: () => void; onNavigateNotary?: () => void; onViewAdminPreview?: () => void }> = ({ onLogout, onNavigateLawyerWebsite, onNavigateNotary, onViewAdminPreview }) => {
+export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsite?: () => void; onNavigateNotary?: () => void; onNavigateLawServices?: () => void; onViewAdminPreview?: () => void }> = ({ onLogout, onNavigateLawyerWebsite, onNavigateNotary, onNavigateLawServices, onViewAdminPreview }) => {
   const [currentPage, setCurrentPage] = useState<'home' | 'cases' | 'profile'>('home');
   const [user, setUser] = useState<UserProfile | null>(null);
   const [metrics] = useState<DashboardMetrics>({
@@ -225,7 +225,7 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
             <section className="quick-actions-section">
               <h2>Quick Actions</h2>
               <div className="actions-grid">
-                <button className="action-card" onClick={() => showToast('info', 'Navigating to attorney services...')}>
+                <button className="action-card" onClick={onNavigateLawServices}>
                   <span className="action-icon">👨‍⚖️</span>
                   <span className="action-text">Attorney Services</span>
                 </button>
