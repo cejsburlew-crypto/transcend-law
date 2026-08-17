@@ -37,6 +37,7 @@ interface DashboardMetrics {
 
 export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsite?: () => void; onNavigateNotary?: () => void; onNavigateLawServices?: () => void; onNavigateProviderProfile?: () => void; onViewAdminPreview?: () => void }> = ({ onLogout, onNavigateLawyerWebsite, onNavigateNotary, onNavigateLawServices, onNavigateProviderProfile, onViewAdminPreview }) => {
   const [currentPage, setCurrentPage] = useState<'home' | 'cases' | 'profile'>('home');
+  const [showServicesMenu, setShowServicesMenu] = useState(false);
   const [user, setUser] = useState<UserProfile | null>(null);
   const [metrics] = useState<DashboardMetrics>({
     activeCases: 3,
@@ -138,7 +139,72 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
               📋 Cases ({metrics.activeCases})
             </button>
             <button className="nav-item">💬 Messages</button>
-            <button className="nav-item">⚙️ Services</button>
+            <div style={{ position: 'relative' }}>
+              <button
+                className="nav-item"
+                onClick={() => setShowServicesMenu(!showServicesMenu)}
+              >
+                ⚙️ Services
+              </button>
+              {showServicesMenu && (
+                <div style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  backgroundColor: 'white',
+                  border: '1px solid #ddd',
+                  borderRadius: '8px',
+                  minWidth: '200px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                  zIndex: 1000,
+                  marginTop: '8px'
+                }}>
+                  <button
+                    onClick={() => {
+                      onNavigateLawServices?.();
+                      setShowServicesMenu(false);
+                    }}
+                    style={{
+                      display: 'block',
+                      width: '100%',
+                      padding: '12px 16px',
+                      border: 'none',
+                      background: 'none',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      fontSize: '14px',
+                      color: '#333'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                  >
+                    👨‍⚖️ Attorney Services
+                  </button>
+                  <button
+                    onClick={() => {
+                      onNavigateNotary?.();
+                      setShowServicesMenu(false);
+                    }}
+                    style={{
+                      display: 'block',
+                      width: '100%',
+                      padding: '12px 16px',
+                      border: 'none',
+                      background: 'none',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      fontSize: '14px',
+                      color: '#333',
+                      borderTop: '1px solid #eee'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                  >
+                    🔏 Notary Services
+                  </button>
+                </div>
+              )}
+            </div>
           </nav>
         </div>
 
