@@ -5,17 +5,5 @@
   "installCommand": "npm ci --legacy-peer-deps",
   "env": {
     "NODE_ENV": "production"
-  },
-  "functions": {
-    "api/**/*.ts": {
-      "memory": 512,
-      "maxDuration": 30,
-      "runtime": "nodejs20"
-    }
-  },
-  "routes": [
-    { "src": "/api/attorneys", "dest": "/api/attorneys.js" },
-    { "src": "/api/notaries", "dest": "/api/notaries.js" },
-    { "src": "/(?!api).*", "dest": "/index.html" }
-  ]
+  }
 }
