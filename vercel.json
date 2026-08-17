@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "_updated": "2025-08-16T17:25:00Z",
   "buildCommand": "echo 'Skipping build - using pre-built frontend'",
   "outputDirectory": "frontend-dist",
   "installCommand": "echo 'Skipping install'",
