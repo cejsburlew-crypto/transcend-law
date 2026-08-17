@@ -1,26 +1,19 @@
-/* Dashboard Styles */
+/* Dashboard Styles - Modern Light Theme */
 
 :root {
-  --primary: #667eea;
-  --primary-dark: #5568d3;
-  --success: #48bb78;
-  --warning: #ed8936;
-  --error: #f56565;
-  --text-primary: #1a202c;
-  --text-secondary: #718096;
-  --bg-light: #f7fafc;
+  --primary: #4f46e5;
+  --primary-light: #6366f1;
+  --primary-dark: #4338ca;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --bg-light: #f9fafb;
   --bg-surface: #ffffff;
-  --border: #e2e8f0;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-primary: #e2e8f0;
-    --text-secondary: #a0aec0;
-    --bg-light: #2d3748;
-    --bg-surface: #1a202c;
-    --border: #4a5568;
-  }
+  --border: #e5e7eb;
+  --border-light: #f3f4f6;
 }
 
 * {

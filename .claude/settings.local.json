@@ -653,7 +653,9 @@
       "Bash(curl -v 'https://transcend-law.com/api/v2/attorneys')",
       "Bash(curl -s 'https://transcend-law.com/health')",
       "Bash(node -e \"const contacts = require\\('./src/data/contacts'\\); console.log\\('CA attorneys:', contacts.ATTORNEYS_BY_STATE.CA ? contacts.ATTORNEYS_BY_STATE.CA.length : 'undefined'\\)\")",
-      "Bash(npm ls *)"
+      "Bash(npm ls *)",
+      "Bash(curl -s https://transcend-law.com/assets/index-Dm6te2kW.js)",
+      "Bash(curl -I https://transcend-law.com/assets/index-BHvTeenk.js)"
     ]
   }
 }
