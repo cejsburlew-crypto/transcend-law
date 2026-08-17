@@ -35,7 +35,7 @@ interface DashboardMetrics {
   averageRating: number;
 }
 
-export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsite?: () => void; onNavigateNotary?: () => void; onNavigateLawServices?: () => void; onViewAdminPreview?: () => void }> = ({ onLogout, onNavigateLawyerWebsite, onNavigateNotary, onNavigateLawServices, onViewAdminPreview }) => {
+export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsite?: () => void; onNavigateNotary?: () => void; onNavigateLawServices?: () => void; onNavigateProviderProfile?: () => void; onViewAdminPreview?: () => void }> = ({ onLogout, onNavigateLawyerWebsite, onNavigateNotary, onNavigateLawServices, onNavigateProviderProfile, onViewAdminPreview }) => {
   const [currentPage, setCurrentPage] = useState<'home' | 'cases' | 'profile'>('home');
   const [user, setUser] = useState<UserProfile | null>(null);
   const [metrics] = useState<DashboardMetrics>({
@@ -154,6 +154,9 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
                 onClick={() => setCurrentPage('profile')}
               >
                 👤 Profile
+              </button>
+              <button className="dropdown-item" onClick={onNavigateProviderProfile}>
+                📋 My Provider Profile
               </button>
               <button className="dropdown-item">🔔 Notifications</button>
               <button className="dropdown-item">⚙️ Settings</button>
