@@ -14,9 +14,8 @@
     }
   },
   "routes": [
-    { "src": "/api/attorneys(.*)", "dest": "/api/attorneys.ts", "methods": ["GET"] },
-    { "src": "/api/notaries(.*)", "dest": "/api/notaries.ts", "methods": ["GET"] },
-    { "src": "/api/(.*)", "dest": "/api/$1.ts", "methods": ["GET", "POST", "PUT", "DELETE"] },
+    { "src": "/api/attorneys", "dest": "/api/attorneys.js" },
+    { "src": "/api/notaries", "dest": "/api/notaries.js" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
