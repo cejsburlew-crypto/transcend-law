@@ -655,7 +655,8 @@
       "Bash(node -e \"const contacts = require\\('./src/data/contacts'\\); console.log\\('CA attorneys:', contacts.ATTORNEYS_BY_STATE.CA ? contacts.ATTORNEYS_BY_STATE.CA.length : 'undefined'\\)\")",
       "Bash(npm ls *)",
       "Bash(curl -s https://transcend-law.com/assets/index-Dm6te2kW.js)",
-      "Bash(curl -I https://transcend-law.com/assets/index-BHvTeenk.js)"
+      "Bash(curl -I https://transcend-law.com/assets/index-BHvTeenk.js)",
+      "Bash(rm -f api/attorneys.js api/notaries.js && git add -A && git commit -m \"Remove duplicate JavaScript API files - keep TypeScript versions only\" && git push origin main)"
     ]
   }
 }
