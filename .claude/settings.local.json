@@ -660,7 +660,8 @@
       "Bash(nslookup transcend-law.com 8.8.8.8)",
       "Bash(curl -v https://transcend-law.com)",
       "Bash(grep -E \"\\\\.\\(csv|json|xlsx|xls\\)$\")",
-      "Bash(node scripts/generate-contacts-from-csv.js)"
+      "Bash(node scripts/generate-contacts-from-csv.js)",
+      "Bash(git rebase *)"
     ]
   }
 }

@@ -27,7 +27,7 @@ const LEGAL_SERVICES: Service[] = [
   { id: 'environmental', name: 'Environmental Law', icon: '🌱', description: 'EPA compliance, pollution' },
   { id: 'labor', name: 'Labor Law', icon: '🤝', description: 'Unions, workers rights' },
   { id: 'landlord-tenant', name: 'Landlord & Tenant', icon: '🔑', description: 'Eviction, lease disputes' },
-  { id: 'intellectual-property', name: 'Contract Law', icon: '📝', description: 'Drafting, disputes, enforcement' },
+  { id: 'contract-law', name: 'Contract Law', icon: '📝', description: 'Drafting, disputes, enforcement' },
   { id: 'litigation', name: 'Civil Litigation', icon: '⚔️', description: 'Lawsuits, disputes, appeals' },
   { id: 'entertainment', name: 'Entertainment Law', icon: '🎬', description: 'Contracts, copyright, licensing' },
   { id: 'consumer-protection', name: 'Consumer Protection', icon: '🛡️', description: 'Fraud, debt, rights' },

@@ -1,8 +1,8 @@
 /* Breadcrumbs Navigation */
 
 :root {
-  --primary: #4ade80;
-  --primary-dark: #22c55e;
+  --primary: #2563eb;
+  --primary-dark: #1e40af;
   --text-primary: #1f2937;
   --text-secondary: #6b7280;
   --bg-primary: #ffffff;
@@ -13,8 +13,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --primary: #4ade80;
-    --primary-dark: #22c55e;
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
     --text-primary: #f3f4f6;
     --text-secondary: #d1d5db;
     --bg-primary: #1f2937;
@@ -25,8 +25,8 @@
 }
 
 :root[data-theme="dark"] {
-  --primary: #4ade80;
-  --primary-dark: #22c55e;
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
   --text-primary: #f3f4f6;
   --text-secondary: #d1d5db;
   --bg-primary: #1f2937;
