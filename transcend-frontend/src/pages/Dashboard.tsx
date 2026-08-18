@@ -126,12 +126,6 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
           <div className="logo">⚖️ Transcend Legal</div>
           <nav className="main-nav">
             <button
-              className={`nav-item ${currentPage === 'home' ? 'active' : ''}`}
-              onClick={() => setCurrentPage('home')}
-            >
-              🏠 Home
-            </button>
-            <button
               className={`nav-item ${currentPage === 'cases' ? 'active' : ''}`}
               onClick={() => setCurrentPage('cases')}
             >
