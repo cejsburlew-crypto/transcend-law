@@ -102,7 +102,7 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="app">
-      {currentView !== 'landing' && currentView !== 'dashboard' && <Breadcrumbs items={getBreadcrumbs()} />}
+      {/* Breadcrumbs hidden - use navigation menus instead */}
       {currentView === 'admin-role-preview' && token && user ? (
         <AdminRolePreview />
       ) : currentView === 'provider-profile' && token && user ? (
