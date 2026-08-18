@@ -177,148 +177,74 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
           <>
             {/* Dashboard Header Banner */}
             <div className="dashboard-header-banner">
-              <h1>📊 Your Dashboard</h1>
-              <p>Manage your cases, track progress, and connect with verified legal professionals</p>
+              <h1>Welcome back, {user?.firstName}! 👋</h1>
+              <p>Manage your cases and track progress with verified legal professionals</p>
             </div>
 
-            {/* Welcome Section */}
-            <section className="welcome-section">
-              <div className="welcome-content">
-                <h1>Welcome back, {user?.firstName}! 👋</h1>
-                <p>Your legal services hub - Find attorneys, manage cases, and track progress</p>
+            {/* Key Metrics - Clean Grid */}
+            <div className="dashboard-stats-grid">
+              <div className="stat-card">
+                <div className="stat-number">{metrics.activeCases}</div>
+                <div className="stat-label">Active Cases</div>
               </div>
-              <PrimaryButton onClick={() => showToast('success', 'Starting new case...')}>
-                + New Case
-              </PrimaryButton>
-            </section>
-
-            {/* Metrics Cards */}
-            <section className="metrics-section">
-              <div className="metrics-grid">
-                <div className="metric-card">
-                  <div className="metric-icon">📂</div>
-                  <div className="metric-content">
-                    <div className="metric-value">{metrics.activeCases}</div>
-                    <div className="metric-label">Active Cases</div>
-                  </div>
-                </div>
-
-                <div className="metric-card">
-                  <div className="metric-icon">✅</div>
-                  <div className="metric-content">
-                    <div className="metric-value">{metrics.completedCases}</div>
-                    <div className="metric-label">Completed</div>
-                  </div>
-                </div>
-
-                <div className="metric-card">
-                  <div className="metric-icon">💰</div>
-                  <div className="metric-content">
-                    <div className="metric-value">${metrics.totalSpent.toLocaleString()}</div>
-                    <div className="metric-label">Total Spent</div>
-                  </div>
-                </div>
-
-                <div className="metric-card">
-                  <div className="metric-icon">⭐</div>
-                  <div className="metric-content">
-                    <div className="metric-value">{metrics.averageRating.toFixed(1)}</div>
-                    <div className="metric-label">Avg Rating</div>
-                  </div>
-                </div>
+              <div className="stat-card">
+                <div className="stat-number">{metrics.completedCases}</div>
+                <div className="stat-label">Completed</div>
               </div>
-            </section>
-
-            {/* Quick Actions */}
-            <section className="quick-actions-section">
-              <h2>Quick Actions</h2>
-              <div className="actions-grid">
-                <button className="action-card" onClick={onNavigateLawServices}>
-                  <span className="action-icon">👨‍⚖️</span>
-                  <span className="action-text">Attorney Services</span>
-                </button>
-                <button className="action-card" onClick={onNavigateNotary}>
-                  <span className="action-icon">🔏</span>
-                  <span className="action-text">Notary Services</span>
-                </button>
-                <button className="action-card">
-                  <span className="action-icon">📝</span>
-                  <span className="action-text">File Form</span>
-                </button>
-                <button className="action-card">
-                  <span className="action-icon">💬</span>
-                  <span className="action-text">Chat</span>
-                </button>
-                <button className="action-card">
-                  <span className="action-icon">📚</span>
-                  <span className="action-text">Resources</span>
-                </button>
-                <button className="action-card">
-                  <span className="action-icon">💳</span>
-                  <span className="action-text">Billing</span>
-                </button>
+              <div className="stat-card">
+                <div className="stat-number">${(metrics.totalSpent / 1000).toFixed(1)}K</div>
+                <div className="stat-label">Total Spent</div>
               </div>
-            </section>
+              <div className="stat-card">
+                <div className="stat-number">{metrics.averageRating.toFixed(1)}</div>
+                <div className="stat-label">Avg Rating</div>
+              </div>
+            </div>
 
-            {/* Active Cases - Psychology Optimized */}
-            <section className="active-cases-section">
-              <div className="section-header">
+            {/* Active Cases Section */}
+            {activeCases.length > 0 && (
+              <div className="dashboard-section">
                 <h2>Your Active Cases</h2>
-                <button className="view-all-btn">View All →</button>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '16px' }}>
-                {activeCases.map(caseItem => {
-                  const progressMap: { [key: string]: number } = {
-                    '1': 65,
-                    '2': 40,
-                    '3': 10,
-                  };
-                  const statusMap: { [key: string]: 'pending' | 'in-progress' | 'review' | 'complete' } = {
-                    'pending': 'pending',
-                    'active': 'in-progress',
-                    'completed': 'complete',
-                  };
-                  return (
-                    <div key={caseItem.id}>
-                      <CaseStatusCard
-                        title={caseItem.service}
-                        status={statusMap[caseItem.status] || 'pending'}
-                        progress={progressMap[caseItem.id] || 0}
-                        lastUpdate={new Date(caseItem.createdAt).toLocaleDateString()}
-                        nextStep={caseItem.provider ? `Waiting for attorney response` : 'Waiting for attorney assignment'}
-                      />
-                      <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
-                        <PrimaryButton
-                          onClick={() => showToast('info', `Opening ${caseItem.service}...`)}
-                          style={{ flex: 1 }}
-                        >
-                          View Details
-                        </PrimaryButton>
-                        <button
-                          className="btn-secondary"
-                          onClick={() => showToast('info', 'Opening messages...')}
-                          style={{ flex: 1, padding: '10px' }}
-                        >
-                          Message
-                        </button>
+                <div className="dashboard-cases-grid">
+                  {activeCases.map(caseItem => (
+                    <div key={caseItem.id} className="case-card-clean">
+                      <div className="case-header-clean">
+                        <h3>{caseItem.service}</h3>
+                        <span className={`case-status-badge ${caseItem.status}`}>
+                          {caseItem.status === 'active' ? 'In Progress' : caseItem.status === 'pending' ? 'Pending' : 'Completed'}
+                        </span>
                       </div>
+                      {caseItem.provider && (
+                        <div className="case-provider">
+                          <p className="provider-name">{caseItem.provider.name}</p>
+                          <p className="provider-rating">⭐ {caseItem.provider.rating}</p>
+                        </div>
+                      )}
+                      <p className="case-date">Started {new Date(caseItem.createdAt).toLocaleDateString()}</p>
+                      <PrimaryButton
+                        onClick={() => showToast('info', `Opening ${caseItem.service}...`)}
+                        style={{ width: '100%', marginTop: '12px' }}
+                      >
+                        View Details →
+                      </PrimaryButton>
                     </div>
-                  );
-                })}
-              </div>
-            </section>
-
-            {/* Subscription Info */}
-            <section className="subscription-section">
-              <div className="subscription-card">
-                <div className="subscription-content">
-                  <h3>Your Current Plan</h3>
-                  <p className="plan-name">Professional - $149/month</p>
-                  <p className="plan-features">Unlimited consultations • Priority support • Document review</p>
+                  ))}
                 </div>
-                <button className="upgrade-btn">Upgrade →</button>
               </div>
-            </section>
+            )}
+
+            {/* Call to Action */}
+            <div className="dashboard-cta-section">
+              <h2>Need Legal Help?</h2>
+              <div className="cta-buttons">
+                <PrimaryButton onClick={onNavigateLawServices} style={{ flex: 1 }}>
+                  👨‍⚖️ Find an Attorney
+                </PrimaryButton>
+                <PrimaryButton onClick={onNavigateNotary} style={{ flex: 1 }}>
+                  📝 Notary Services
+                </PrimaryButton>
+              </div>
+            </div>
           </>
         )}
 
