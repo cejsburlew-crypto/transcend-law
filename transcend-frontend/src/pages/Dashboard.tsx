@@ -118,10 +118,19 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
           <div className="logo">⚖️ Transcend Legal</div>
           <nav className="main-nav">
             <button
+              className={`nav-item ${currentPage === 'home' ? 'active' : ''}`}
+              onClick={() => setCurrentPage('home')}
+            >
+              📊 Dashboard
+            </button>
+            <button
               className={`nav-item ${currentPage === 'cases' ? 'active' : ''}`}
               onClick={() => setCurrentPage('cases')}
             >
               📋 Cases ({metrics.activeCases})
+            </button>
+            <button className="nav-item" onClick={onNavigateServicesDirectory}>
+              🏛️ Services
             </button>
             <button className="nav-item">💬 Messages</button>
           </nav>
