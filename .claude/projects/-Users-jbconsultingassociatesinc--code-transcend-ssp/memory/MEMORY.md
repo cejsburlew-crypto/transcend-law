@@ -1,0 +1,1 @@
+- [Dashboard Redesign Feedback](feedback_dashboard_redesign.md) — Clean readable layout, proper contrast, organized sections, no scattered elements, remove redundant Services menu

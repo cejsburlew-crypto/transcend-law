@@ -661,7 +661,9 @@
       "Bash(curl -v https://transcend-law.com)",
       "Bash(grep -E \"\\\\.\\(csv|json|xlsx|xls\\)$\")",
       "Bash(node scripts/generate-contacts-from-csv.js)",
-      "Bash(git rebase *)"
+      "Bash(git rebase *)",
+      "Bash(kill 54545)",
+      "Bash(rm -rf /Users/jbconsultingassociatesinc./code/transcend-ssp/.vercel && git add -A && git commit -m \"Remove: Delete .vercel config pointing to wrong account *)"
     ]
   }
 }
