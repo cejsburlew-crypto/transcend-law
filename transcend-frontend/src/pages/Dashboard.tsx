@@ -35,7 +35,7 @@ interface DashboardMetrics {
   averageRating: number;
 }
 
-export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsite?: () => void; onNavigateNotary?: () => void; onNavigateLawServices?: () => void; onNavigateProviderProfile?: () => void; onViewAdminPreview?: () => void }> = ({ onLogout, onNavigateLawyerWebsite, onNavigateNotary, onNavigateLawServices, onNavigateProviderProfile, onViewAdminPreview }) => {
+export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsite?: () => void; onNavigateNotary?: () => void; onNavigateLawServices?: () => void; onNavigateProviderProfile?: () => void; onNavigateServicesDirectory?: () => void; onViewAdminPreview?: () => void }> = ({ onLogout, onNavigateLawyerWebsite, onNavigateNotary, onNavigateLawServices, onNavigateProviderProfile, onNavigateServicesDirectory, onViewAdminPreview }) => {
   const [currentPage, setCurrentPage] = useState<'home' | 'cases' | 'profile'>('home');
   const [showServicesMenu, setShowServicesMenu] = useState(false);
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -154,11 +154,34 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
                   backgroundColor: 'white',
                   border: '1px solid #ddd',
                   borderRadius: '8px',
-                  minWidth: '200px',
+                  minWidth: '220px',
                   boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
                   zIndex: 1000,
                   marginTop: '8px'
                 }}>
+                  <button
+                    onClick={() => {
+                      onNavigateServicesDirectory?.();
+                      setShowServicesMenu(false);
+                    }}
+                    style={{
+                      display: 'block',
+                      width: '100%',
+                      padding: '12px 16px',
+                      border: 'none',
+                      background: 'none',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      fontSize: '14px',
+                      color: '#333',
+                      fontWeight: '600'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                  >
+                    📚 Browse All Services
+                  </button>
+                  <div style={{ borderTop: '1px solid #eee', margin: '8px 0' }}></div>
                   <button
                     onClick={() => {
                       onNavigateLawServices?.();

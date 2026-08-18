@@ -9,6 +9,7 @@ import AdminRolePreview from './pages/AdminRolePreview';
 import { NotaryServices } from './pages/NotaryServices';
 import { LawServices } from './pages/LawServices';
 import { MyProviderProfile } from './pages/MyProviderProfile';
+import { ServicesDirectory } from './pages/ServicesDirectory';
 import Breadcrumbs from './components/Navigation/Breadcrumbs';
 import type { BreadcrumbItem } from './components/Navigation/Breadcrumbs';
 import './App.css';
@@ -16,7 +17,7 @@ import './App.css';
 const AppContent: React.FC = () => {
   const { t } = useLanguage();
   const { user, token, logout } = useAuth();
-  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website' | 'admin-role-preview' | 'notary' | 'law-services' | 'provider-profile'>(
+  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website' | 'admin-role-preview' | 'notary' | 'law-services' | 'provider-profile' | 'services-directory'>(
     token && user ? 'dashboard' : 'landing'
   );
 
@@ -88,6 +89,12 @@ const AppContent: React.FC = () => {
           { label: t('dashboard'), icon: '📊', onClick: () => setCurrentView('dashboard') },
           { label: 'My Profile', icon: '📋' },
         ];
+      case 'services-directory':
+        return [
+          { label: t('home'), icon: '⚖️', onClick: () => setCurrentView('landing') },
+          { label: t('dashboard'), icon: '📊', onClick: () => setCurrentView('dashboard') },
+          { label: 'Services', icon: '📚' },
+        ];
       default:
         return [];
     }
@@ -100,6 +107,8 @@ const AppContent: React.FC = () => {
         <AdminRolePreview />
       ) : currentView === 'provider-profile' && token && user ? (
         <MyProviderProfile onBack={() => setCurrentView('dashboard')} />
+      ) : currentView === 'services-directory' && token && user ? (
+        <ServicesDirectory />
       ) : currentView === 'law-services' && token && user ? (
         <LawServices onBack={() => setCurrentView('dashboard')} />
       ) : currentView === 'notary' && token && user ? (
@@ -107,7 +116,7 @@ const AppContent: React.FC = () => {
       ) : currentView === 'lawyer-website' && token && user ? (
         <LawyerWebsiteSetup onBack={() => setCurrentView('dashboard')} />
       ) : currentView === 'dashboard' && token && user ? (
-        <Dashboard onLogout={handleLogout} onNavigateLawyerWebsite={() => setCurrentView('lawyer-website')} onNavigateNotary={() => setCurrentView('notary')} onNavigateLawServices={() => setCurrentView('law-services')} onNavigateProviderProfile={() => setCurrentView('provider-profile')} onViewAdminPreview={() => setCurrentView('admin-role-preview')} />
+        <Dashboard onLogout={handleLogout} onNavigateLawyerWebsite={() => setCurrentView('lawyer-website')} onNavigateNotary={() => setCurrentView('notary')} onNavigateLawServices={() => setCurrentView('law-services')} onNavigateProviderProfile={() => setCurrentView('provider-profile')} onNavigateServicesDirectory={() => setCurrentView('services-directory')} onViewAdminPreview={() => setCurrentView('admin-role-preview')} />
       ) : currentView === 'login' ? (
         <Login onSuccess={handleLoginSuccess} />
       ) : (
