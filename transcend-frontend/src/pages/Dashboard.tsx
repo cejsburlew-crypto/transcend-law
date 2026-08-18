@@ -228,18 +228,6 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
               </div>
             )}
 
-            {/* Call to Action */}
-            <div className="dashboard-cta-section">
-              <h2>Need Legal Help?</h2>
-              <div className="cta-buttons">
-                <PrimaryButton onClick={onNavigateLawServices} style={{ flex: 1 }}>
-                  👨‍⚖️ Find an Attorney
-                </PrimaryButton>
-                <PrimaryButton onClick={onNavigateNotary} style={{ flex: 1 }}>
-                  📝 Notary Services
-                </PrimaryButton>
-              </div>
-            </div>
           </>
         )}
 
