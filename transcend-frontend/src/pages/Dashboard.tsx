@@ -112,14 +112,6 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
         </div>
       )}
 
-      {/* Privacy Disclaimer */}
-      <div className="privacy-banner">
-        <div className="privacy-banner-content">
-          <p>
-            <strong>🔒 Your Privacy is Protected:</strong> Your personal information is kept confidential. Attorneys will NOT see your identifying information until you accept their quote and choose to communicate directly.
-          </p>
-        </div>
-      </div>
       {/* Header */}
       <header className="dashboard-header">
         <div className="header-left">
