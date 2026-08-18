@@ -112,59 +112,6 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
         </div>
       )}
 
-      {/* Header */}
-      <header className="dashboard-header">
-        <div className="header-left">
-          <div className="logo">⚖️ Transcend Legal</div>
-          <nav className="main-nav">
-            <button
-              className={`nav-item ${currentPage === 'home' ? 'active' : ''}`}
-              onClick={() => setCurrentPage('home')}
-            >
-              📊 Dashboard
-            </button>
-            <button
-              className={`nav-item ${currentPage === 'cases' ? 'active' : ''}`}
-              onClick={() => setCurrentPage('cases')}
-            >
-              📋 Cases ({metrics.activeCases})
-            </button>
-            <button className="nav-item" onClick={onNavigateServicesDirectory}>
-              🏛️ Services
-            </button>
-            <button className="nav-item">💬 Messages</button>
-          </nav>
-        </div>
-
-        <div className="header-right">
-          <button className="help-btn" title="Help">
-            ❓
-          </button>
-          <div className="user-menu">
-            <div className="user-avatar">{getInitials()}</div>
-            <div className="dropdown-menu">
-              <button
-                className={`dropdown-item ${currentPage === 'profile' ? 'active' : ''}`}
-                onClick={() => setCurrentPage('profile')}
-              >
-                👤 Profile
-              </button>
-              <button className="dropdown-item" onClick={onNavigateProviderProfile}>
-                📋 My Provider Profile
-              </button>
-              <button className="dropdown-item">🔔 Notifications</button>
-              <button className="dropdown-item">⚙️ Settings</button>
-              <button className="dropdown-item" onClick={onViewAdminPreview}>
-                👨‍💼 View Admin Roles
-              </button>
-              <hr />
-              <button className="dropdown-item logout" onClick={handleLogout}>
-                🚪 Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
 
       {/* Main Content */}
       <main className="dashboard-main">
