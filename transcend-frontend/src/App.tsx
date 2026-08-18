@@ -18,7 +18,7 @@ const AppContent: React.FC = () => {
   const { t } = useLanguage();
   const { user, token, logout } = useAuth();
   const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website' | 'admin-role-preview' | 'notary' | 'law-services' | 'provider-profile' | 'services-directory'>(
-    token && user ? 'dashboard' : 'landing'
+    token && user ? 'services-directory' : 'landing'
   );
 
   React.useEffect(() => {
@@ -28,7 +28,7 @@ const AppContent: React.FC = () => {
 
   React.useEffect(() => {
     if (token && user && currentView === 'landing') {
-      setCurrentView('dashboard');
+      setCurrentView('services-directory');
     }
   }, [token, user, currentView]);
 

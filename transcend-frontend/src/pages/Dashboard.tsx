@@ -265,6 +265,12 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
       <main className="dashboard-main">
         {currentPage === 'home' && (
           <>
+            {/* Dashboard Header Banner */}
+            <div className="dashboard-header-banner">
+              <h1>📊 Your Dashboard</h1>
+              <p>Manage your cases, track progress, and connect with verified legal professionals</p>
+            </div>
+
             {/* Welcome Section */}
             <section className="welcome-section">
               <div className="welcome-content">
