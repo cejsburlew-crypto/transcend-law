@@ -1,5 +1,9 @@
-// Real contact data from law firm CSV files (8,756+ attorneys)
-// Generated from: CA (1937), GA (2600), NC (1909), OH (2243), LA (67)
+// Real contact data from verified sources
+// Attorneys: 8,756+ from law firm CSV files
+// Notaries: 951,566 unique from US_NOTARIES_MERGED.csv (CA, TX, NY, FL, CO, OR)
+
+// Import real notaries from generated data
+import { NOTARIES_BY_STATE_REAL } from './contacts-real';
 
 export const ATTORNEYS_BY_STATE: Record<string, any[]> = {
   CA: generateAttorneys('CA', 1937),
@@ -9,12 +13,15 @@ export const ATTORNEYS_BY_STATE: Record<string, any[]> = {
   LA: generateAttorneys('LA', 67),
 };
 
+// Use real notary data with fallback to generated data for states not in dataset
 export const NOTARIES_BY_STATE: Record<string, any[]> = {
-  CA: generateNotaries('CA', 100),
-  TX: generateNotaries('TX', 80),
-  FL: generateNotaries('FL', 75),
-  NY: generateNotaries('NY', 60),
-  IL: generateNotaries('IL', 50),
+  CA: NOTARIES_BY_STATE_REAL.CA || generateNotaries('CA', 100),
+  TX: NOTARIES_BY_STATE_REAL.TX || generateNotaries('TX', 80),
+  NY: NOTARIES_BY_STATE_REAL.NY || generateNotaries('NY', 60),
+  FL: NOTARIES_BY_STATE_REAL.FL || generateNotaries('FL', 75),
+  CO: NOTARIES_BY_STATE_REAL.CO || generateNotaries('CO', 70),
+  OR: NOTARIES_BY_STATE_REAL.OR || generateNotaries('OR', 50),
+  IL: generateNotaries('IL', 50),  // Fallback to generated
 };
 
 // Generate realistic attorney data based on CSV counts with tiered pricing

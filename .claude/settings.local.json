@@ -658,7 +658,9 @@
       "Bash(curl -I https://transcend-law.com/assets/index-BHvTeenk.js)",
       "Bash(rm -f api/attorneys.js api/notaries.js && git add -A && git commit -m \"Remove duplicate JavaScript API files - keep TypeScript versions only\" && git push origin main)",
       "Bash(nslookup transcend-law.com 8.8.8.8)",
-      "Bash(curl -v https://transcend-law.com)"
+      "Bash(curl -v https://transcend-law.com)",
+      "Bash(grep -E \"\\\\.\\(csv|json|xlsx|xls\\)$\")",
+      "Bash(node scripts/generate-contacts-from-csv.js)"
     ]
   }
 }
