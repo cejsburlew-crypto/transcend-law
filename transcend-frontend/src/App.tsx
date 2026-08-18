@@ -12,6 +12,7 @@ import { MyProviderProfile } from './pages/MyProviderProfile';
 import { ServicesDirectory } from './pages/ServicesDirectory';
 import Breadcrumbs from './components/Navigation/Breadcrumbs';
 import type { BreadcrumbItem } from './components/Navigation/Breadcrumbs';
+import { LanguageSelector } from './components/LanguageSelector';
 import './App.css';
 
 const AppContent: React.FC = () => {
@@ -102,6 +103,13 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="app">
+      {/* Global Header for all authenticated pages */}
+      {token && user && currentView !== 'landing' && currentView !== 'login' && (
+        <div style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: '16px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ fontSize: '20px', fontWeight: '700' }}>⚖️ Transcend Legal</div>
+          <LanguageSelector />
+        </div>
+      )}
       {/* Breadcrumbs hidden - use navigation menus instead */}
       {currentView === 'admin-role-preview' && token && user ? (
         <AdminRolePreview />
