@@ -106,7 +106,11 @@ const AppContent: React.FC = () => {
       {/* Global Header for all authenticated pages */}
       {token && user && currentView !== 'landing' && currentView !== 'login' && (
         <div style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: '16px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ fontSize: '20px', fontWeight: '700' }}>⚖️ Transcend Legal</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
+            <div style={{ fontSize: '20px', fontWeight: '700' }}>⚖️ Transcend Legal</div>
+            <button onClick={() => setCurrentView('dashboard')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', color: currentView === 'dashboard' ? '#2563eb' : '#666', fontWeight: currentView === 'dashboard' ? '600' : '500' }}>📊 Dashboard</button>
+            <button onClick={() => setCurrentView('services-directory')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', color: currentView === 'services-directory' ? '#2563eb' : '#666', fontWeight: currentView === 'services-directory' ? '600' : '500' }}>🏛️ Services</button>
+          </div>
           <LanguageSelector />
         </div>
       )}
