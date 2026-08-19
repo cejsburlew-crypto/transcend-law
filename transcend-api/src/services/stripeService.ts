@@ -4,8 +4,23 @@
 import Stripe from 'stripe';
 import { query } from '../database/connection';
 
+/**
+ * Fields removed from Stripe's TypeScript definitions in newer SDK releases but
+ * still returned by the pinned API version (2023-10-16). Accessing them through
+ * this shape keeps the code correct for the version we actually call - renaming
+ * to the new field names would break against the pinned API.
+ */
+type LegacyInvoiceFields = {
+  payment_intent?: unknown;
+  paid_at?: number | null;
+  subscription?: string | null;
+};
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2023-10-16',
+  // Cast: the installed SDK's types pin this literal to its own release.
+  // Keep the pinned version - upgrading Stripe's API is a deliberate decision,
+  // not a side effect of satisfying the compiler.
+  apiVersion: '2023-10-16' as any,
 });
 
 // ============================================
@@ -164,11 +179,13 @@ export async function createSubscription(
     );
 
     const invoice = subscription.latest_invoice as Stripe.Invoice;
-    const paymentIntent = invoice?.payment_intent as Stripe.PaymentIntent;
+    const paymentIntent = (invoice as Stripe.Invoice & LegacyInvoiceFields)
+      ?.payment_intent as Stripe.PaymentIntent;
 
     return {
       subscriptionId: subscription.id,
-      clientSecret: paymentIntent?.client_secret,
+      // client_secret is string | null on the SDK type; normalise to undefined.
+      clientSecret: paymentIntent?.client_secret ?? undefined,
     };
   } catch (error) {
     console.error('Failed to create subscription:', error);
@@ -337,7 +354,7 @@ export async function getInvoices(userId: string): Promise<any[]> {
       id: invoice.id,
       amount: invoice.amount_paid,
       status: invoice.status,
-      paidAt: new Date(invoice.paid_at || 0),
+      paidAt: new Date((invoice as Stripe.Invoice & LegacyInvoiceFields).paid_at || 0),
       dueAt: new Date(invoice.due_date || 0),
       invoiceUrl: invoice.hosted_invoice_url,
       description: invoice.description,
@@ -391,7 +408,7 @@ export async function handleWebhookEvent(event: Stripe.Event): Promise<void> {
         // Save invoice record
         const subResult = await query(
           'SELECT user_id FROM subscriptions WHERE stripe_subscription_id = $1',
-          [invoice.subscription]
+          [(invoice as Stripe.Invoice & LegacyInvoiceFields).subscription]
         );
 
         if (subResult.rows.length > 0) {

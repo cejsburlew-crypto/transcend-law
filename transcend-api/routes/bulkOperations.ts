@@ -94,10 +94,13 @@ router.post(
       processImportJob(job.id, data, template, dryRun === 'true')
         .catch((error) => {
           console.error('Import job error:', error);
-          const job = bulkOperationsService.getJob(job.id);
-          if (job) {
-            job.status = 'failed';
-            job.errors.push({
+          // `const job = ...getJob(job.id)` shadowed the outer `job` and read
+          // it inside its own initialiser - a guaranteed ReferenceError, so a
+          // failed import was never marked failed. Renamed to break the shadow.
+          const failedJob = bulkOperationsService.getJob(job.id);
+          if (failedJob) {
+            failedJob.status = 'failed';
+            failedJob.errors.push({
               rowNumber: 0,
               rowData: {},
               error: error.message || 'Unknown error',

@@ -17,6 +17,9 @@ import { authenticateToken, requireRole } from '../middleware/auth';
 import { auditLog } from '../services/auditLogger';
 import { queryParam, routeParam } from '../src/utils/httpParams';
 
+// NOTE: `req.user!` / `req.userId!` assertions are sound - this router applies
+// authentication middleware, so no handler runs without an authenticated user.
+
 const router = Router();
 
 // ============================================
@@ -45,11 +48,11 @@ router.get('/api/reviews/:reviewId/credibility', authenticateToken, async (req: 
 
     // Audit log
     await auditLog({
-      userId: req.user?.id,
+      userId: req.user!.id,
       action: 'VIEW_REVIEW_CREDIBILITY',
       resourceId: reviewId,
       resourceType: 'review_credibility',
-      details: { reviewed_by: req.user?.id },
+      details: { reviewed_by: req.user!.id },
     });
 
     res.json({
@@ -82,7 +85,7 @@ router.get('/api/providers/:providerId/reputation', authenticateToken, async (re
 
     // Audit log
     await auditLog({
-      userId: req.user?.id,
+      userId: req.user!.id,
       action: 'VIEW_PROVIDER_REPUTATION',
       resourceId: providerId,
       resourceType: 'provider_reputation',
@@ -108,7 +111,7 @@ router.get('/api/providers/:providerId/review-trends', authenticateToken, async 
 
     // Audit log
     await auditLog({
-      userId: req.user?.id,
+      userId: req.user!.id,
       action: 'VIEW_REVIEW_TRENDS',
       resourceId: providerId,
       resourceType: 'review_trends',
@@ -152,7 +155,7 @@ router.post('/api/reviews/submit', authenticateToken, async (req: Request, res: 
     // Submit review for analysis
     const { reviewId, credibilityScore } = await submitReviewForAnalysis(
       providerId,
-      req.user?.id,
+      req.user!.id,
       rating,
       title,
       content,
@@ -163,7 +166,7 @@ router.post('/api/reviews/submit', authenticateToken, async (req: Request, res: 
 
     // Audit log
     await auditLog({
-      userId: req.user?.id,
+      userId: req.user!.id,
       action: 'CREATE_REVIEW',
       resourceId: reviewId,
       resourceType: 'review',
@@ -223,7 +226,7 @@ router.post(
 
       // Audit log
       await auditLog({
-        userId: req.user?.id,
+        userId: req.user!.id,
         action: 'REANALYZE_REVIEW',
         resourceId: reviewId,
         resourceType: 'review',
@@ -262,7 +265,7 @@ router.get('/api/admin/review-queue', authenticateToken, requireRole('admin'), a
 
     // Audit log
     await auditLog({
-      userId: req.user?.id,
+      userId: req.user!.id,
       action: 'VIEW_REVIEW_QUEUE',
       resourceType: 'admin_review_queue',
       details: { status, priority, itemCount: queue.length },
@@ -294,11 +297,11 @@ router.post(
         });
       }
 
-      await resolveAdminReview(queueId, req.user?.id, action, resolution || '');
+      await resolveAdminReview(queueId, req.user!.id, action, resolution || '');
 
       // Audit log
       await auditLog({
-        userId: req.user?.id,
+        userId: req.user!.id,
         action: 'RESOLVE_REVIEW_QUEUE_ITEM',
         resourceId: queueId,
         resourceType: 'admin_review_queue',
@@ -349,7 +352,7 @@ router.post(
 
       // Audit log
       await auditLog({
-        userId: req.user?.id,
+        userId: req.user!.id,
         action: 'FLAG_REVIEW_FOR_ADMIN',
         resourceId: reviewId,
         resourceType: 'review',
@@ -383,7 +386,7 @@ router.post(
 
       // Audit log
       await auditLog({
-        userId: req.user?.id,
+        userId: req.user!.id,
         action: 'FILTER_FAKE_REVIEWS',
         resourceId: providerId,
         resourceType: 'provider',
@@ -418,7 +421,7 @@ router.post(
 
       // Audit log
       await auditLog({
-        userId: req.user?.id,
+        userId: req.user!.id,
         action: 'RECALCULATE_PROVIDER_REPUTATION',
         resourceId: providerId,
         resourceType: 'provider_reputation',
@@ -457,7 +460,7 @@ router.get(
 
       // Audit log
       await auditLog({
-        userId: req.user?.id,
+        userId: req.user!.id,
         action: 'VIEW_PROVIDER_TRENDS',
         resourceId: providerId,
         resourceType: 'review_trends',
@@ -491,7 +494,7 @@ router.get(
 
       // Audit log
       await auditLog({
-        userId: req.user?.id,
+        userId: req.user!.id,
         action: 'VIEW_SUSPICIOUS_REVIEWS',
         resourceType: 'review',
         details: { limit, offset, count: result?.rows?.length || 0 },
@@ -519,7 +522,7 @@ router.get(
 
       // Audit log
       await auditLog({
-        userId: req.user?.id,
+        userId: req.user!.id,
         action: 'VIEW_PROVIDER_HEALTH',
         resourceType: 'provider_reputation',
         details: { providerCount: result?.rows?.length || 0 },

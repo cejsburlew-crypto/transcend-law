@@ -6,6 +6,9 @@ import { authMiddleware } from '../middleware/authMiddleware';
 import { getCloverService } from '../services/cloverService';
 import { query } from '../database/connection';
 
+// NOTE: `req.user!` / `req.userId!` assertions are sound - this router applies
+// authentication middleware, so no handler runs without an authenticated user.
+
 const router = Router();
 
 /**
@@ -15,7 +18,7 @@ const router = Router();
 router.post('/subscribe', authMiddleware, async (req: Request, res: Response) => {
   try {
     const { planType, billingCycle } = req.body;
-    const userId = req.userId;
+    const userId = req.userId!;
 
     if (!planType || !['basic', 'professional', 'enterprise'].includes(planType)) {
       return res.status(400).json({ error: 'Invalid plan type' });
@@ -74,7 +77,7 @@ router.post('/subscribe', authMiddleware, async (req: Request, res: Response) =>
  */
 router.get('/subscription', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const userId = req.userId;
+    const userId = req.userId!;
 
     const result = await query(
       `SELECT * FROM subscriptions WHERE user_id = $1`,
@@ -112,7 +115,7 @@ router.get('/subscription', authMiddleware, async (req: Request, res: Response) 
 router.post('/upgrade', authMiddleware, async (req: Request, res: Response) => {
   try {
     const { newPlanType } = req.body;
-    const userId = req.userId;
+    const userId = req.userId!;
 
     if (!newPlanType || !['basic', 'professional', 'enterprise'].includes(newPlanType)) {
       return res.status(400).json({ error: 'Invalid plan type' });
@@ -162,7 +165,7 @@ router.post('/upgrade', authMiddleware, async (req: Request, res: Response) => {
  */
 router.get('/invoices', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const userId = req.userId;
+    const userId = req.userId!;
 
     const subResult = await query(
       `SELECT * FROM subscriptions WHERE user_id = $1`,
@@ -223,7 +226,7 @@ router.post('/webhook', async (req: Request, res: Response) => {
  */
 router.post('/cancel', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const userId = req.userId;
+    const userId = req.userId!;
 
     // Update subscription status
     await query(

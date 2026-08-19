@@ -7,6 +7,10 @@ import type { Request, Response } from 'express';
 import { npsService, NPSDashboardMetrics } from '../services/npsService';
 import { logAction } from '../services/auditLogger';
 import { queryParam, routeParam } from '../src/utils/httpParams';
+import { authenticate } from '../middleware/auth';
+
+// NOTE: `req.user!` / `req.userId!` assertions are sound - this router applies
+// authentication middleware, so no handler runs without an authenticated user.
 
 /**
  * POST /api/nps/submit
@@ -45,7 +49,7 @@ export async function submitNPSSurvey(req: Request, res: Response) {
  */
 export async function checkSurveyEligibility(req: Request, res: Response) {
   try {
-    const userId = req.user?.id || queryParam(req.query.userId);
+    const userId = req.user!.id || queryParam(req.query.userId);
 
     if (!userId) {
       return res.status(400).json({ error: 'User ID required' });
@@ -142,7 +146,7 @@ export async function getNPSTrends(req: Request, res: Response) {
  */
 export async function getNPSDashboard(req: Request, res: Response) {
   try {
-    const userId = req.user?.id;
+    const userId = req.user!.id;
     const isAdmin = req.user?.role === 'admin';
 
     if (!isAdmin) {
@@ -196,7 +200,7 @@ export async function getNPSActionItems(req: Request, res: Response) {
  */
 export async function updateNPSActionItem(req: Request, res: Response) {
   try {
-    const userId = req.user?.id;
+    const userId = req.user!.id;
     const isAdmin = req.user?.role === 'admin';
 
     if (!isAdmin) {
@@ -231,7 +235,7 @@ export async function updateNPSActionItem(req: Request, res: Response) {
  */
 export async function exportNPSData(req: Request, res: Response) {
   try {
-    const userId = req.user?.id;
+    const userId = req.user!.id;
     const isAdmin = req.user?.role === 'admin';
 
     if (!isAdmin) {

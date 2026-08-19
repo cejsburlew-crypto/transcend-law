@@ -545,7 +545,11 @@ export class BulkOperationsService extends EventEmitter {
 
       // Process in batches
       for (let i = 0; i < data.length; i += batchSize) {
-        if (job.status === 'cancelled') {
+        // job.status is mutated by the cancel path while this loop runs.
+        // TypeScript narrowed it to 'processing' from the assignment above, so
+        // the cast restores the real union - without this check, cancellation
+        // would be silently ineffective.
+        if ((job.status as BulkJob['status']) === 'cancelled') {
           throw new Error('Job was cancelled');
         }
 

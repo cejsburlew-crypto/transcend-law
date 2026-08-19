@@ -124,20 +124,18 @@ export class ReferralService {
         throw new Error(`User has reached maximum referral codes (${this.maxCodesPerUser})`);
       }
 
-      // Generate unique code
-      let code: string;
-      let isUnique = false;
-
-      while (!isUnique) {
+      // Generate unique code. Initialised up front (rather than asserted with
+      // `code!` at each use) so the assignment is provable.
+      let code = this.generateUniqueCode();
+      while (await this.codeExists(code)) {
         code = this.generateUniqueCode();
-        isUnique = !(await this.codeExists(code));
       }
 
       const now = new Date();
       const expiresAt = new Date(now.getTime() + expirationDays * 24 * 60 * 60 * 1000);
 
       const referralCode: ReferralCode = {
-        code: code!,
+        code,
         referrerId,
         createdAt: now,
         expiresAt,

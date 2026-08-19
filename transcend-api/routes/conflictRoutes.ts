@@ -8,6 +8,9 @@ import { auditLogger } from '../services/auditLogger';
 import { authenticate, requireRole } from '../middleware/auth';
 import { queryParam, routeParam } from '../src/utils/httpParams';
 
+// NOTE: `req.user!` / `req.userId!` assertions are sound - this router applies
+// authentication middleware, so no handler runs without an authenticated user.
+
 const router = Router();
 
 // Apply authentication middleware to all routes
@@ -24,7 +27,7 @@ router.use(authenticate);
 router.get('/check/:attorneyId/:clientId', async (req: Request, res: Response) => {
   try {
     const attorneyId = routeParam(req.params.attorneyId); const clientId = routeParam(req.params.clientId);
-    const userId = req.user?.id;
+    const userId = req.user!.id;
 
     // Check if match is already blocked
     const conflictDetails = await ConflictCheckerService.getConflictDetails(
@@ -50,7 +53,7 @@ router.get('/check/:attorneyId/:clientId', async (req: Request, res: Response) =
 router.post('/perform-check', async (req: Request, res: Response) => {
   try {
     const { attorneyId, clientId } = req.body;
-    const userId = req.user?.id;
+    const userId = req.user!.id;
 
     if (!attorneyId || !clientId) {
       return res.status(400).json({
@@ -193,7 +196,7 @@ router.post('/appeal/:conflictMatchId', async (req: Request, res: Response) => {
   try {
     const conflictMatchId = routeParam(req.params.conflictMatchId);
     const { reason, documents, additionalInfo } = req.body;
-    const userId = req.user?.id;
+    const userId = req.user!.id;
 
     if (!reason) {
       return res.status(400).json({
@@ -249,7 +252,7 @@ router.post(
     try {
       const appealId = routeParam(req.params.appealId);
       const { decision, rationale } = req.body;
-      const userId = req.user?.id;
+      const userId = req.user!.id;
 
       if (!decision || !rationale) {
         return res.status(400).json({
@@ -322,7 +325,7 @@ router.post(
     try {
       const conflictMatchId = routeParam(req.params.conflictMatchId);
       const { reason } = req.body;
-      const userId = req.user?.id;
+      const userId = req.user!.id;
 
       // Audit log for compliance
       await auditLogger.log({

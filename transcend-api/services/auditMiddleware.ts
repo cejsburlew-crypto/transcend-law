@@ -5,6 +5,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { logAction, logAuthEvent, logPermissionChange } from './auditLogger';
 import { v4 as uuidv4 } from 'uuid';
+import { routeParam } from '../src/utils/httpParams';
 
 // Extended Request interface with audit context
 export interface AuditRequest extends Request {
@@ -108,26 +109,27 @@ export function auditAuthMiddleware() {
     if (req.path === '/api/auth/login') {
       const originalSend = res.send.bind(res);
 
-      res.send = async function (body: any) {
-        try {
-          const userId = (req.body.email || 'unknown');
-          const success = res.statusCode === 200;
+      // Express types res.send as synchronous returning Response. The audit
+      // write is fire-and-forget so the signature is preserved - awaiting here
+      // would also delay the response to the client.
+      res.send = function (body: any) {
+        // Fire-and-forget: audit failures must neither delay nor break the
+        // response. Errors are surfaced in logs.
+        void (async () => {
+          try {
+            const userId = req.body.email || 'unknown';
+            const success = res.statusCode === 200;
 
-          await logAuthEvent(
-            userId,
-            'login',
-            ipAddress,
-            req.headers['user-agent'],
-            success
-          );
+            await logAuthEvent(userId, 'login', ipAddress, req.headers['user-agent'], success);
 
-          if (success) {
-            const user = typeof body === 'string' ? JSON.parse(body) : body;
-            await logAuthEvent(user.id, 'login', ipAddress, req.headers['user-agent'], true);
+            if (success) {
+              const user = typeof body === 'string' ? JSON.parse(body) : body;
+              await logAuthEvent(user.id, 'login', ipAddress, req.headers['user-agent'], true);
+            }
+          } catch (error) {
+            console.error('Error logging auth event:', error);
           }
-        } catch (error) {
-          console.error('Error logging auth event:', error);
-        }
+        })();
 
         return originalSend(body);
       };
@@ -217,7 +219,9 @@ export function auditDataChangeMiddleware(
                 ipAddress,
                 changes: {
                   before: beforeState,
-                  after: null,
+                  // Deletion: no 'after' state. Empty object rather than null,
+                  // which the audit schema does not accept.
+                  after: {},
                   fields_modified: [],
                 },
                 status: res.statusCode >= 400 ? 'failure' : 'success',
@@ -248,22 +252,25 @@ export function auditPermissionMiddleware() {
       const ipAddress = getClientIp(req);
       const userId = (req.user as any)?.id;
 
-      res.json = async function (body: any) {
-        try {
-          const targetUserId = req.body.userId || req.params.userId;
-          const permissionType = req.body.permission || req.params.permission;
-          const changeType = req.method === 'POST' ? 'grant' : 'revoke';
+      res.json = function (body: any) {
+        // Fire-and-forget, as with the login hook above.
+        void (async () => {
+          try {
+            const targetUserId = req.body.userId || routeParam(req.params.userId);
+            const permissionType = req.body.permission || routeParam(req.params.permission);
+            const changeType = req.method === 'POST' ? 'grant' : 'revoke';
 
-          await logPermissionChange(
-            userId,
-            targetUserId,
-            permissionType,
-            changeType,
-            ipAddress
-          );
-        } catch (error) {
-          console.error('Error logging permission change:', error);
-        }
+            await logPermissionChange(
+              userId,
+              targetUserId,
+              permissionType,
+              changeType,
+              ipAddress
+            );
+          } catch (error) {
+            console.error('Error logging permission change:', error);
+          }
+        })();
 
         return originalJson(body);
       };

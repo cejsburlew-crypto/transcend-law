@@ -14,7 +14,13 @@ const REFRESH_EXPIRY = '7d'; // Refresh token expires in 7 days
 export interface JWTPayload {
   userId: string;
   email: string;
-  userType: 'client' | 'attorney' | 'firm';
+  /**
+   * 'admin' is included because route code gates on it, but the users table
+   * still constrains user_type to ('client','attorney','firm') - so no token
+   * can currently carry it and every admin check fails closed. Extend the CHECK
+   * constraint before granting the role.
+   */
+  userType: 'client' | 'attorney' | 'firm' | 'admin';
 }
 
 export interface TokenPair {

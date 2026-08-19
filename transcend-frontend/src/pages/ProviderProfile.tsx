@@ -4,11 +4,12 @@ import { useLanguage } from '../context/LanguageContext';
 import './ProviderProfile.css';
 
 interface ProviderFormData {
-  profileType: 'client' | 'provider' | 'interested' | '';
+  profileType: 'client' | 'provider' | '';
   fullName: string;
   email: string;
   phone: string;
   company: string;
+  companyId: string; // Link to existing company
   website: string;
   selectedServices: string[];
   serviceArea: string;
@@ -50,6 +51,7 @@ export const ProviderProfile: React.FC<{ onComplete?: () => void }> = ({ onCompl
     email: '',
     phone: '',
     company: '',
+    companyId: '',
     website: '',
     selectedServices: [],
     serviceArea: '',
@@ -58,14 +60,35 @@ export const ProviderProfile: React.FC<{ onComplete?: () => void }> = ({ onCompl
     idVerified: false,
     agreedToTerms: false,
   });
+  const [companyOptions, setCompanyOptions] = useState<Array<{id: string; name: string}>>([]);
+  const [showCompanySearch, setShowCompanySearch] = useState(false);
 
-  const handleProfileTypeSelect = (type: 'client' | 'provider' | 'interested') => {
+  const handleProfileTypeSelect = (type: 'client' | 'provider') => {
     setFormData({ ...formData, profileType: type });
     if (type === 'client') {
       handleSaveAndComplete();
     } else {
       setStep('section1');
     }
+  };
+
+  const handleCompanySearch = (searchTerm: string) => {
+    if (searchTerm.length < 2) {
+      setCompanyOptions([]);
+      return;
+    }
+    // Mock company search - in production this would query the backend
+    const mockCompanies = [
+      { id: '1', name: 'Smith & Associates Law Firm' },
+      { id: '2', name: 'Johnson Legal Services' },
+      { id: '3', name: 'Legal Solutions LLC' },
+    ];
+    setCompanyOptions(mockCompanies.filter(c => c.name.toLowerCase().includes(searchTerm.toLowerCase())));
+  };
+
+  const handleCompanySelect = (companyId: string, companyName: string) => {
+    setFormData({ ...formData, companyId, company: companyName });
+    setShowCompanySearch(false);
   };
 
   const handleServiceToggle = (serviceId: string) => {
@@ -133,12 +156,7 @@ export const ProviderProfile: React.FC<{ onComplete?: () => void }> = ({ onCompl
             <button className="type-card provider" onClick={() => handleProfileTypeSelect('provider')}>
               <ServiceIcon name="scales" className="card-icon" />
               <h3>Service Provider</h3>
-              <p>I provide legal services</p>
-            </button>
-            <button className="type-card interested" onClick={() => handleProfileTypeSelect('interested')}>
-              <ServiceIcon name="star" className="card-icon" />
-              <h3>Interested</h3>
-              <p>I'd like to provide services</p>
+              <p>I provide or want to provide legal services</p>
             </button>
           </div>
         </div>
@@ -165,15 +183,56 @@ export const ProviderProfile: React.FC<{ onComplete?: () => void }> = ({ onCompl
                 <input type="tel" placeholder="(555) 123-4567" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} required />
               </div>
             </div>
-            <div className="form-row">
-              <div className="form-group">
-                <label>Company/Firm (if applicable)</label>
-                <input type="text" placeholder="Your company name" value={formData.company} onChange={(e) => setFormData({ ...formData, company: e.target.value })} />
+            <div className="form-group company-lookup">
+              <label>Company/Firm (if applicable)</label>
+              <p className="form-hint">Search for an existing firm to link your profile, or create a new one</p>
+              <div className="company-search-container">
+                <input
+                  type="text"
+                  placeholder="Search for your company..."
+                  value={formData.company}
+                  onChange={(e) => {
+                    setFormData({ ...formData, company: e.target.value });
+                    handleCompanySearch(e.target.value);
+                  }}
+                  onFocus={() => setShowCompanySearch(true)}
+                />
+                {showCompanySearch && companyOptions.length > 0 && (
+                  <div className="company-dropdown">
+                    {companyOptions.map((company) => (
+                      <button
+                        key={company.id}
+                        type="button"
+                        className="company-option"
+                        onClick={() => handleCompanySelect(company.id, company.name)}
+                      >
+                        <span className="company-name">{company.name}</span>
+                        <span className="company-link-icon">🔗</span>
+                      </button>
+                    ))}
+                    <button
+                      type="button"
+                      className="company-option create-new"
+                      onClick={() => {
+                        setShowCompanySearch(false);
+                        setFormData({ ...formData, companyId: 'new' });
+                      }}
+                    >
+                      <span className="company-name">+ Create new firm "{formData.company}"</span>
+                    </button>
+                  </div>
+                )}
+                {formData.companyId && (
+                  <div className="company-linked">
+                    <span className="linked-icon">✓</span>
+                    <span>Linked to company profile</span>
+                  </div>
+                )}
               </div>
-              <div className="form-group">
-                <label>Website (if applicable)</label>
-                <input type="url" placeholder="https://yourwebsite.com" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} />
-              </div>
+            </div>
+            <div className="form-group">
+              <label>Website (if applicable)</label>
+              <input type="url" placeholder="https://yourwebsite.com" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} />
             </div>
             <div className="form-actions">
               <button type="button" className="btn-secondary" onClick={() => setStep('type')}>Back</button>

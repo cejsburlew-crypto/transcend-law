@@ -34,7 +34,7 @@ const toAuthenticatedUser = (payload: JWTPayload): AuthenticatedUser => ({
   ...payload,
   id: payload.userId,
   role: payload.userType,
-  isAdmin: (payload.userType as string) === 'admin',
+  isAdmin: payload.userType === 'admin',
   isVerified: false,
 });
 

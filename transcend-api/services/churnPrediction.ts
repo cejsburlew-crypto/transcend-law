@@ -6,7 +6,10 @@ import { sendEmail } from '../services/emailService';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2023-10-16',
+  // Cast: the installed SDK's types pin this literal to its own release.
+  // Keep the pinned version - upgrading Stripe's API is a deliberate decision,
+  // not a side effect of satisfying the compiler.
+  apiVersion: '2023-10-16' as any,
 });
 
 // ============================================

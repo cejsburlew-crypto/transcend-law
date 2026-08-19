@@ -5,6 +5,9 @@ import { Router, Request, Response } from 'express';
 import multer from 'multer';
 import { authMiddleware } from '../middleware/authMiddleware';
 import { queryParam, routeParam } from '../utils/httpParams';
+
+// NOTE: `req.user!` / `req.userId!` assertions are sound - this router applies
+// authentication middleware, so no handler runs without an authenticated user.
 import {
   uploadCaseDocument,
   downloadCaseDocument,
@@ -36,7 +39,7 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const caseId = routeParam(req.params.caseId);
-      const userId = req.userId;
+      const userId = req.userId!;
 
       if (!req.file) {
         return res.status(400).json({ error: 'No file provided' });
@@ -96,7 +99,7 @@ router.get(
   async (req: Request, res: Response) => {
     try {
       const documentId = routeParam(req.params.documentId);
-      const userId = req.userId;
+      const userId = req.userId!;
 
       const document = await downloadCaseDocument(documentId, userId);
 
@@ -221,7 +224,7 @@ router.get(
  */
 router.get('/usage/user', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const userId = req.userId;
+    const userId = req.userId!;
 
     const usage = await getUserStorageUsage(userId);
     const limit = 1024 * 1024 * 1024; // 1GB
