@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useLanguage } from '../context/LanguageContext';
+import { translateTextDetailed } from '../services/translationService';
 import './Messages.css';
 
 interface Conversation {
@@ -44,12 +46,106 @@ const MOCK_CONVERSATIONS: Conversation[] = [
   },
 ];
 
+type TranslationState = {
+  status: 'idle' | 'pending' | 'done' | 'unavailable';
+  text: string;
+};
+
+/**
+ * Translates message bodies for DISPLAY in the reader's selected language.
+ *
+ * The stored `text` on each message is never modified - it stays the source of
+ * truth and remains viewable via "Show original". Keyed by the original text so
+ * repeated wording resolves from cache.
+ */
+const useTranslatedMessages = (texts: string[], language: string) => {
+  const [translations, setTranslations] = useState<Record<string, TranslationState>>({});
+
+  // Stable key so the effect only re-runs when the actual set of texts changes.
+  const textsKey = useMemo(() => JSON.stringify([...new Set(texts)].sort()), [texts]);
+
+  useEffect(() => {
+    const unique = [...new Set(texts)].filter(t => t.trim().length > 0);
+
+    if (language === 'en' || unique.length === 0) {
+      setTranslations({});
+      return;
+    }
+
+    let cancelled = false;
+
+    setTranslations(prev => {
+      const next = { ...prev };
+      for (const text of unique) {
+        if (!next[text] || next[text].status === 'idle') {
+          next[text] = { status: 'pending', text };
+        }
+      }
+      return next;
+    });
+
+    (async () => {
+      for (const text of unique) {
+        const outcome = await translateTextDetailed(text, language);
+        if (cancelled) return;
+        setTranslations(prev => ({
+          ...prev,
+          [text]: {
+            status: outcome.translated ? 'done' : 'unavailable',
+            text: outcome.text,
+          },
+        }));
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [textsKey, language]);
+
+  return translations;
+};
+
 export const Messages: React.FC = () => {
+  const { t, language } = useLanguage();
   const [selectedId, setSelectedId] = useState('1');
   const [messageText, setMessageText] = useState('');
   const [conversations, setConversations] = useState(MOCK_CONVERSATIONS);
+  // Message ids the reader has chosen to see in the original wording.
+  const [showingOriginal, setShowingOriginal] = useState<Record<string, boolean>>({});
 
   const selected = conversations.find(c => c.id === selectedId);
+
+  // Everything the reader can currently see: thread bodies + list previews.
+  const translatableTexts = useMemo(
+    () => [
+      ...conversations.map(c => c.lastMessage),
+      ...(selected ? selected.messages.map(m => m.text) : []),
+    ],
+    [conversations, selected]
+  );
+
+  const translations = useTranslatedMessages(translatableTexts, language);
+
+  // Display copy for a stored message. Returns the raw text unless a real
+  // translation exists and the reader has not asked for the original.
+  const displayFor = (id: string, raw: string) => {
+    const entry = translations[raw];
+    const wantsOriginal = showingOriginal[id];
+    const hasTranslation = entry?.status === 'done';
+
+    return {
+      text: hasTranslation && !wantsOriginal ? entry.text : raw,
+      hasTranslation,
+      isPending: entry?.status === 'pending',
+      isUnavailable: entry?.status === 'unavailable',
+      showingOriginal: !!wantsOriginal,
+    };
+  };
+
+  const toggleOriginal = (id: string) =>
+    setShowingOriginal(prev => ({ ...prev, [id]: !prev[id] }));
 
   const handleSendMessage = () => {
     if (!messageText.trim() || !selected) return;
@@ -75,7 +171,7 @@ export const Messages: React.FC = () => {
   return (
     <div className="messages-container">
       <div className="conversations-list">
-        <h2>Messages</h2>
+        <h2>{t('messagesPage.title')}</h2>
         {conversations.map(conv => (
           <div
             key={conv.id}
@@ -87,7 +183,7 @@ export const Messages: React.FC = () => {
               <div className="conv-time">{conv.lastMessageTime}</div>
             </div>
             <div className="conv-service">{conv.providerService}</div>
-            <div className="conv-preview">{conv.lastMessage}</div>
+            <div className="conv-preview">{displayFor(`preview-${conv.id}`, conv.lastMessage).text}</div>
           </div>
         ))}
       </div>
@@ -101,32 +197,69 @@ export const Messages: React.FC = () => {
             </div>
             {selected.contactInfo && (
               <div className="contact-info">
-                {selected.contactInfo.phone && <div>📞 {selected.contactInfo.phone}</div>}
-                {selected.contactInfo.email && <div>📧 {selected.contactInfo.email}</div>}
+                {selected.contactInfo.phone && <div>{t('messagesPage.phone')}: {selected.contactInfo.phone}</div>}
+                {selected.contactInfo.email && <div>{t('messagesPage.email')}: {selected.contactInfo.email}</div>}
               </div>
             )}
           </div>
 
           <div className="messages-list">
-            {selected.messages.map(msg => (
-              <div key={msg.id} className={`message ${msg.sender}`}>
-                <div className="message-content">{msg.text}</div>
-                <div className="message-time">{msg.timestamp}</div>
-              </div>
-            ))}
+            {selected.messages.map(msg => {
+              const view = displayFor(msg.id, msg.text);
+              return (
+                <div key={msg.id} className={`message ${msg.sender}`}>
+                  <div className="message-content">{view.text}</div>
+
+                  {view.isPending && (
+                    <div className="message-translation-note">{t('messagesPage.translating')}</div>
+                  )}
+
+                  {view.hasTranslation && (
+                    <div className="message-translation-note">
+                      <span>
+                        {view.showingOriginal
+                          ? t('messagesPage.originalLabel')
+                          : t('messagesPage.translatedNotice')}
+                      </span>
+                      <button
+                        type="button"
+                        className="translation-toggle"
+                        onClick={() => toggleOriginal(msg.id)}
+                      >
+                        {view.showingOriginal
+                          ? t('messagesPage.showTranslation')
+                          : t('messagesPage.showOriginal')}
+                      </button>
+                    </div>
+                  )}
+
+                  {view.isUnavailable && (
+                    <div className="message-translation-note is-warning">
+                      {t('messagesPage.translationUnavailable')}
+                    </div>
+                  )}
+
+                  <div className="message-time">{msg.timestamp}</div>
+                </div>
+              );
+            })}
           </div>
 
-          <div className="message-input">
-            <input
-              type="text"
-              placeholder="Type a message..."
-              value={messageText}
-              onChange={e => setMessageText(e.target.value)}
-              onKeyPress={e => e.key === 'Enter' && handleSendMessage()}
-            />
-            <button onClick={handleSendMessage} disabled={!messageText.trim()}>
-              Send
-            </button>
+          <div className="message-composer">
+            <p className="composer-note">{t('messagesPage.sentRawNotice')}</p>
+            <div className="message-input">
+              {/* What the user types is stored and sent verbatim - never translated. */}
+              <input
+                type="text"
+                placeholder={t('messagesPage.inputPlaceholder')}
+                value={messageText}
+                onChange={e => setMessageText(e.target.value)}
+                onKeyPress={e => e.key === 'Enter' && handleSendMessage()}
+              />
+              <button onClick={handleSendMessage} disabled={!messageText.trim()}>
+                {t('messagesPage.send')}
+              </button>
+            </div>
           </div>
         </div>
       )}

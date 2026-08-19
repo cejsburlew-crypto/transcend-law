@@ -8,6 +8,7 @@ import { query } from '../database/connection';
 import { v4 as uuidv4 } from 'uuid';
 import { auditLogger } from './auditLogger';
 import * as Redis from 'redis';
+import { encryptField, decryptField } from '../src/services/fieldEncryption';
 
 // ============================================
 // TYPES & INTERFACES
@@ -240,7 +241,8 @@ class P2PMessagingService {
           senderId,
           recipientId,
           messageType,
-          content,
+          // Privileged: encrypted before it reaches Postgres.
+          encryptField(content),
           JSON.stringify(attachments || []),
           now,
           now,
@@ -947,7 +949,8 @@ class P2PMessagingService {
       recipientId: row.recipient_id,
       messageType: row.message_type,
       subject: row.subject,
-      content: row.content,
+      // Decrypts the AES-256-GCM envelope; passes through legacy plaintext rows.
+      content: decryptField(row.content),
       caseId: row.case_id,
       referralId: row.referral_id,
       subcontractId: row.subcontract_id,

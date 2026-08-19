@@ -36,7 +36,7 @@ interface DashboardMetrics {
   averageRating: number;
 }
 
-export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsite?: () => void; onNavigateNotary?: () => void; onNavigateLawServices?: () => void; onNavigateProviderProfile?: () => void; onNavigateServicesDirectory?: () => void; onViewAdminPreview?: () => void }> = ({ onLogout, onNavigateLawyerWebsite, onNavigateNotary, onNavigateLawServices, onNavigateProviderProfile, onNavigateServicesDirectory, onViewAdminPreview }) => {
+export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsite?: () => void; onNavigateNotary?: () => void; onNavigateLawServices?: () => void; onNavigateProviderProfile?: () => void; onNavigateServicesDirectory?: () => void; onViewAdminPreview?: () => void; onViewCaseDetails?: (caseId: string) => void }> = ({ onLogout, onNavigateLawyerWebsite, onNavigateNotary, onNavigateLawServices, onNavigateProviderProfile, onNavigateServicesDirectory, onViewAdminPreview, onViewCaseDetails }) => {
   const [currentPage, setCurrentPage] = useState<'home' | 'cases' | 'profile'>('home');
   const [user, setUser] = useState<UserProfile | null>(null);
   const [toast, setToast] = useState<any>(null);
@@ -209,7 +209,7 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
                         <span className="cost-value">${caseItem.cost.toLocaleString()}</span>
                       </div>
                       <PrimaryButton
-                        onClick={() => showToast('info', `Opening ${caseItem.service}...`)}
+                        onClick={() => onViewCaseDetails?.(caseItem.id)}
                         style={{ width: '100%', marginTop: '12px' }}
                       >
                         View Details →
@@ -243,7 +243,7 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
                         <span className="cost-value">${caseItem.cost.toLocaleString()}</span>
                       </div>
                       <PrimaryButton
-                        onClick={() => showToast('info', `Viewing completed ${caseItem.service}...`)}
+                        onClick={() => onViewCaseDetails?.(caseItem.id)}
                         style={{ width: '100%', marginTop: '12px' }}
                       >
                         View Summary →

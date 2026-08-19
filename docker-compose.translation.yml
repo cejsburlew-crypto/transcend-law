@@ -1,0 +1,37 @@
+# Self-hosted translation engine for Transcend Law.
+#
+# Runs LibreTranslate (Apache-2.0, Argos/OpenNMT models) entirely inside our own
+# network. Privileged client communications are translated here and cached in
+# Transcend Law's own Postgres — nothing is sent to a third-party service.
+#
+#   docker compose -f docker-compose.translation.yml up -d
+#
+# First boot downloads the language models (a few hundred MB), then the
+# container runs fully offline.
+
+services:
+  translation:
+    image: libretranslate/libretranslate:latest
+    container_name: transcend-translation
+    restart: unless-stopped
+    # Bound to loopback only: reachable from the API host, not from the network.
+    ports:
+      - '127.0.0.1:5000:5000'
+    environment:
+      # Only the four languages the product supports, to keep the image small.
+      LT_LOAD_ONLY: 'en,es,zh,vi'
+      LT_DISABLE_WEB_UI: 'true'
+      # No outbound calls once models are cached.
+      LT_UPDATE_MODELS: 'false'
+      LT_THREADS: '4'
+    volumes:
+      - translation-models:/home/libretranslate/.local/share/argos-translate
+    healthcheck:
+      test: ['CMD', 'python', '-c', "import urllib.request;urllib.request.urlopen('http://localhost:5000/languages')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 300s
+
+volumes:
+  translation-models:

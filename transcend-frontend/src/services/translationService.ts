@@ -31,37 +31,82 @@ export const SUPPORTED_LANGUAGES = [
   { code: 'sv', name: 'Svenska', flag: '🇸🇪' },
 ];
 
-// Translate text using Google Translate API (backend should handle this)
-export const translateText = async (text: string, targetLanguage: string): Promise<string> => {
-  // Check cache first
+export interface TranslationOutcome {
+  /** Text to display. Equals the input when translation was unavailable. */
+  text: string;
+  /** True only when a provider actually returned a translation. */
+  translated: boolean;
+}
+
+/**
+ * Is in-house translation live? Reports engine availability only, never config.
+ */
+export const getTranslationStatus = async (): Promise<{ available: boolean; status: string }> => {
+  try {
+    const response = await fetch('/api/v2/translate/status');
+    if (!response.ok) return { available: false, status: 'unreachable' };
+    const data = await response.json();
+    return { available: !!data.available, status: data.status ?? 'unknown' };
+  } catch {
+    return { available: false, status: 'unreachable' };
+  }
+};
+
+/**
+ * Translate a single string for DISPLAY.
+ *
+ * Callers must keep the original text as the source of truth and render this
+ * result alongside it - never overwrite stored content with the return value.
+ * `translated: false` means the text came back unchanged (our self-hosted
+ * engine is not configured or is down), so the UI can say so honestly instead
+ * of implying the reader is looking at a translation.
+ *
+ * Translation is performed by an engine Transcend Law runs itself and cached in
+ * our own database - content is never sent to a third-party service.
+ */
+export const translateTextDetailed = async (
+  text: string,
+  targetLanguage: string
+): Promise<TranslationOutcome> => {
+  if (!text.trim()) return { text, translated: false };
+
   if (translationCache[targetLanguage]?.[text]) {
-    return translationCache[targetLanguage][text];
+    return { text: translationCache[targetLanguage][text], translated: true };
   }
 
   try {
-    // Call backend endpoint that uses Google Translate API
     const response = await fetch('/api/v2/translate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text, targetLanguage }),
     });
 
-    if (!response.ok) throw new Error('Translation failed');
+    if (!response.ok) throw new Error(`Translation failed (${response.status})`);
 
-    const { translatedText } = await response.json();
+    const { translatedText, translated } = await response.json();
+    // Trust the server's flag: it distinguishes "translated in-house" from
+    // "engine offline, original returned". Identical text can be a legitimate
+    // translation (proper nouns, numbers), so never infer from equality alone.
+    const didTranslate = translated === true;
 
-    // Cache the result
-    if (!translationCache[targetLanguage]) {
-      translationCache[targetLanguage] = {};
+    // Only cache genuine translations.
+    if (didTranslate) {
+      if (!translationCache[targetLanguage]) {
+        translationCache[targetLanguage] = {};
+      }
+      translationCache[targetLanguage][text] = translatedText;
     }
-    translationCache[targetLanguage][text] = translatedText;
 
-    return translatedText;
+    return { text: translatedText ?? text, translated: didTranslate };
   } catch (error) {
     console.error('Translation error:', error);
-    return text; // Fallback to original text
+    return { text, translated: false }; // Fall back to the original wording
   }
 };
+
+// Back-compat wrapper: returns display text only.
+export const translateText = async (text: string, targetLanguage: string): Promise<string> =>
+  (await translateTextDetailed(text, targetLanguage)).text;
 
 // Batch translate multiple texts
 export const translateBatch = async (

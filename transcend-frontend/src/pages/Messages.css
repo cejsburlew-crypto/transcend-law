@@ -227,3 +227,70 @@
     max-width: 100%;
   }
 }
+
+/* Translation state on a message bubble.
+   The bubble always renders the stored text or a display-only translation of
+   it — the underlying message is never rewritten. */
+.message-translation-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+  font-size: 11px;
+  font-style: italic;
+  opacity: 0.75;
+}
+
+.message-translation-note.is-warning {
+  font-style: normal;
+  opacity: 0.9;
+  color: #92400e;
+}
+
+.message.provider .message-translation-note.is-warning {
+  color: #92400e;
+}
+
+.translation-toggle {
+  background: none;
+  border: none;
+  padding: 4px 0;
+  min-height: 24px;
+  font-size: 11px;
+  font-weight: 600;
+  font-style: normal;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  opacity: 0.95;
+}
+
+.translation-toggle:hover {
+  opacity: 1;
+}
+
+.message-composer {
+  display: flex;
+  flex-direction: column;
+}
+
+.composer-note {
+  margin: 0;
+  padding: 8px 16px 0;
+  font-size: 11px;
+  color: #6b7280;
+}
+
+@media (max-width: 768px) {
+  .composer-note {
+    padding: 8px 12px 0;
+    font-size: 10px;
+  }
+
+  /* Keep the toggle a real tap target on phones */
+  .translation-toggle {
+    min-height: 32px;
+    padding: 6px 0;
+  }
+}

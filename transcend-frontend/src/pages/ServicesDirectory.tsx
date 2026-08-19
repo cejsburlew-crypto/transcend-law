@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { generateMockNotaries, getNotaryCountForState, NOTARY_COUNTS } from '../data/notaries-loader';
 import { ServiceIcon } from '../components/ServiceIcon';
+import { useLanguage } from '../context/LanguageContext';
 import './ServicesDirectory.css';
 
 interface Professional {
@@ -16,6 +17,37 @@ interface Professional {
   type: 'attorney' | 'notary';
   tier?: 'tier1' | 'tier2' | 'tier3';
 }
+
+// Maps the canonical (English) service name stored on provider records to its
+// translation key. Records keep their raw English values — only the label the
+// user reads is translated, so filtering and matching are unaffected.
+const SPEC_KEYS: Record<string, string> = {
+  'Corporate Law': 'corporateLaw',
+  'Estate Planning': 'estatePlanning',
+  'Family Law': 'familyLaw',
+  'Intellectual Property': 'intellectualProperty',
+  'Personal Injury': 'personalInjury',
+  'Real Estate': 'realEstate',
+  'Notary Services': 'notaryServices',
+  'Mobile Notary': 'mobileNotary',
+  'eNotary': 'eNotary',
+  'Document Preparation': 'documentPreparation',
+  'Family Mediation': 'familyMediation',
+  'Business Mediation': 'businessMediation',
+  'Divorce Mediation': 'divorceMediation',
+  'Conflict Resolution': 'conflictResolution',
+  'Felony Bonds': 'felonyBonds',
+  'Misdemeanor Bonds': 'misdemeanorBonds',
+  'Immigration Bonds': 'immigrationBonds',
+  '24/7 Service': 'service247',
+  'Court Interpretation': 'courtInterpretation',
+  'Certified Translation': 'certifiedTranslation',
+  'Legal Documents': 'legalDocuments',
+  'Multi-Language': 'multiLanguage',
+  'Legal Research': 'legalResearch',
+  'Client Services': 'clientServices',
+  'Compliance': 'compliance',
+};
 
 // Max notaries rendered at once in the directory preview.
 const NOTARY_PREVIEW_LIMIT = 200;
@@ -88,6 +120,7 @@ const MOCK_ATTORNEYS: Record<string, Professional[]> = {
 };
 
 export const ServicesDirectory: React.FC = () => {
+  const { t } = useLanguage();
   const [selectedState, setSelectedState] = useState('CA');
   const [selectedCounty, setSelectedCounty] = useState('');
   const [selectedSpecializations, setSelectedSpecializations] = useState<string[]>([]);
@@ -113,56 +146,44 @@ export const ServicesDirectory: React.FC = () => {
   const categories = [
     {
       id: 'attorney-services',
-      name: 'Attorney Services',
-      subtitle: 'Licensed attorneys and law firms',
+      tKey: 'attorneyServices',
       icon: 'scales',
       attorney: true,
-      cta: 'Find an Attorney',
       specializations: ['Corporate Law', 'Estate Planning', 'Family Law', 'Intellectual Property', 'Personal Injury', 'Real Estate'],
     },
     {
       id: 'documentation-services',
-      name: 'Documentation Services',
-      subtitle: 'Non-attorney providers — notarization and document handling',
+      tKey: 'documentationServices',
       icon: 'stamp',
       attorney: false,
-      cta: 'Request Notary',
       specializations: ['Notary Services', 'Mobile Notary', 'eNotary', 'Document Preparation'],
     },
     {
       id: 'dispute-resolution',
-      name: 'Dispute Resolution Services',
-      subtitle: 'Non-attorney providers — neutral mediators',
+      tKey: 'disputeResolution',
       icon: 'converge',
       attorney: false,
-      cta: 'Request Mediator',
       specializations: ['Family Mediation', 'Business Mediation', 'Divorce Mediation', 'Conflict Resolution'],
     },
     {
       id: 'bail-bond-services',
-      name: 'Bail Bond Services',
-      subtitle: 'Non-attorney providers — licensed bail agents',
+      tKey: 'bailBondServices',
       icon: 'bars',
       attorney: false,
-      cta: 'Request Bail Agent',
       specializations: ['Felony Bonds', 'Misdemeanor Bonds', 'Immigration Bonds', '24/7 Service'],
     },
     {
       id: 'language-services',
-      name: 'Language Services',
-      subtitle: 'Non-attorney providers — interpreters and translators',
+      tKey: 'languageServices',
       icon: 'globe',
       attorney: false,
-      cta: 'Request Interpreter',
       specializations: ['Court Interpretation', 'Certified Translation', 'Legal Documents', 'Multi-Language'],
     },
     {
       id: 'legal-support-services',
-      name: 'Legal Support Services',
-      subtitle: 'Non-attorney providers — paralegal and compliance support',
+      tKey: 'legalSupportServices',
       icon: 'documents',
       attorney: false,
-      cta: 'Request Support',
       specializations: ['Legal Research', 'Client Services', 'Compliance'],
     },
   ] as const;
@@ -261,6 +282,18 @@ export const ServicesDirectory: React.FC = () => {
     );
   };
 
+  // Translated display label for a canonical service name. Falls back to the
+  // raw record value when the taxonomy has no entry, so unknown data still shows.
+  const specName = (spec: string) => {
+    const key = SPEC_KEYS[spec];
+    return key ? t(`servicesDirectory.specs.${key}.name`) : spec;
+  };
+
+  const specDescription = (spec: string) => {
+    const key = SPEC_KEYS[spec];
+    return key ? t(`servicesDirectory.specs.${key}.description`) : '';
+  };
+
   // Providers offering at least one service in the given category.
   const categoryProfessionals = (specs: readonly string[]) =>
     filteredProfessionals.filter(p =>
@@ -278,14 +311,14 @@ export const ServicesDirectory: React.FC = () => {
   return (
     <div className="services-directory-container">
       <div className="services-header">
-        <h1><ServiceIcon name="courthouse" className="page-title-icon" /> Legal Services Directory</h1>
-        <p>Find verified, vetted legal professionals and service providers in your area.</p>
+        <h1><ServiceIcon name="courthouse" className="page-title-icon" /> {t('servicesDirectory.title')}</h1>
+        <p>{t('servicesDirectory.subtitle')}</p>
       </div>
 
       {/* GLOBAL FILTERS */}
       <div className="filters-bar">
         <div className="filter-group">
-          <label htmlFor="state-select">State</label>
+          <label htmlFor="state-select">{t('servicesDirectory.state')}</label>
           <select
             id="state-select"
             value={selectedState}
@@ -301,19 +334,19 @@ export const ServicesDirectory: React.FC = () => {
               </option>
             ))}
           </select>
-          <span className="filter-badge">{getNotaryCountForState(selectedState).toLocaleString()} notaries</span>
+          <span className="filter-badge">{t('servicesDirectory.notariesAvailable', { count: getNotaryCountForState(selectedState).toLocaleString() })}</span>
         </div>
 
         {counties.length > 0 && (
           <div className="filter-group">
-            <label htmlFor="county-select">County</label>
+            <label htmlFor="county-select">{t('servicesDirectory.county')}</label>
             <select
               id="county-select"
               value={selectedCounty}
               onChange={(e) => setSelectedCounty(e.target.value)}
               className="filter-select"
             >
-              <option value="">All Counties ({counties.length})</option>
+              <option value="">{t('servicesDirectory.allCounties', { count: String(counties.length) })}</option>
               {counties.map((county) => (
                 <option key={county} value={county}>
                   {county}
@@ -331,7 +364,7 @@ export const ServicesDirectory: React.FC = () => {
               onChange={(e) => setShowNotaries(e.target.checked)}
               className="filter-checkbox"
             />
-            Notary Services
+            {t('servicesDirectory.notaryToggle')}
           </label>
         </div>
       </div>
@@ -342,18 +375,20 @@ export const ServicesDirectory: React.FC = () => {
           <div className="category-heading">
             <h2 className="category-header">
               <ServiceIcon name={category.icon} className="category-icon" />
-              {category.name}
+              {t(`servicesDirectory.categories.${category.tKey}.name`)}
               <span className={`provider-type-badge ${category.attorney ? 'is-attorney' : ''}`}>
-                {category.attorney ? 'Attorney' : 'Non-attorney'}
+                {category.attorney ? t('servicesDirectory.attorneyBadge') : t('servicesDirectory.nonAttorneyBadge')}
               </span>
             </h2>
-            <p className="category-subtitle">{category.subtitle}</p>
+            <p className="category-subtitle">{t(`servicesDirectory.categories.${category.tKey}.subtitle`)}</p>
           </div>
 
           {/* SPECIALIZATION CARDS FOR THIS CATEGORY - ALPHABETICAL */}
           <div className="specialization-cards">
             <div className="specialization-grid">
-              {[...category.specializations].sort().map((spec) => {
+              {[...category.specializations]
+                .sort((a, b) => specName(a).localeCompare(specName(b)))
+                .map((spec) => {
                 const details = specializationDetails[spec] || { icon: 'scales', description: '' };
                 const count = professionals.filter(p => p.specializations && p.specializations.includes(spec)).length;
                 return (
@@ -363,9 +398,9 @@ export const ServicesDirectory: React.FC = () => {
                       onClick={() => toggleSpecialization(spec)}
                     >
                       <ServiceIcon name={details.icon} className="spec-icon" />
-                      <span className="spec-name">{spec}</span>
-                      <span className="spec-description">{details.description}</span>
-                      <span className="spec-count">{count} available</span>
+                      <span className="spec-name">{specName(spec)}</span>
+                      <span className="spec-description">{specDescription(spec)}</span>
+                      <span className="spec-count">{t('servicesDirectory.available', { count: String(count) })}</span>
                     </button>
                     <button
                       className="intake-btn"
@@ -376,7 +411,7 @@ export const ServicesDirectory: React.FC = () => {
                         setFormData({...formData, specialization: spec});
                       }}
                     >
-                      {category.cta}
+                      {t(`servicesDirectory.categories.${category.tKey}.cta`)}
                     </button>
                   </div>
                 );
@@ -393,35 +428,35 @@ export const ServicesDirectory: React.FC = () => {
                   <div className="attorney-header">
                     <h3 className="attorney-name">{professional.name}</h3>
                     <div className="card-badges">
-                      {professional.verified && <span className="verified-badge">✓ Verified</span>}
-                      {professional.type === 'notary' && <span className="notary-badge"><ServiceIcon name="stamp" className="badge-icon" /> Notary</span>}
-                      {professional.tier && <span className="tier-badge">{professional.tier === 'tier1' ? '⭐ Premium' : professional.tier === 'tier2' ? 'Standard' : 'Basic'}</span>}
+                      {professional.verified && <span className="verified-badge">✓ {t('servicesDirectory.verified')}</span>}
+                      {professional.type === 'notary' && <span className="notary-badge"><ServiceIcon name="stamp" className="badge-icon" /> {t('servicesDirectory.notary')}</span>}
+                      {professional.tier && <span className="tier-badge">{professional.tier === 'tier1' ? t('servicesDirectory.tierPremium') : professional.tier === 'tier2' ? t('servicesDirectory.tierStandard') : t('servicesDirectory.tierBasic')}</span>}
                     </div>
                   </div>
-                  <p className="specialization">{professional.specializations && professional.specializations.length > 0 ? professional.specializations.join(', ') : 'General Services'}</p>
+                  <p className="specialization">{professional.specializations && professional.specializations.length > 0 ? professional.specializations.map(specName).join(', ') : t('servicesDirectory.generalServices')}</p>
                   <div className="attorney-info">
                     <div className="info-item">
-                      <span className="label">Rating:</span>
+                      <span className="label">{t('servicesDirectory.rating')}:</span>
                       <span className="value">⭐ {professional.rating}/5.0</span>
                     </div>
                     <div className="info-item">
-                      <span className="label">Reviews:</span>
+                      <span className="label">{t('servicesDirectory.reviews')}:</span>
                       <span className="value">{professional.reviews}</span>
                     </div>
                     <div className="info-item">
-                      <span className="label">Experience:</span>
-                      <span className="value">{professional.yearsExperience} years</span>
+                      <span className="label">{t('servicesDirectory.experience')}:</span>
+                      <span className="value">{professional.yearsExperience} {t('servicesDirectory.yearsSuffix')}</span>
                     </div>
                     <div className="info-item">
-                      <span className="label">Rate:</span>
-                      <span className="value">${professional.hourlyRate}/hr</span>
+                      <span className="label">{t('servicesDirectory.rate')}:</span>
+                      <span className="value">${professional.hourlyRate}{t('servicesDirectory.perHour')}</span>
                     </div>
                   </div>
                   <button className="contact-btn" onClick={() => {
                     setSelectedProfessional(professional);
                     setIntakeFormType(professional.type === 'notary' ? 'notary' : 'attorney');
                     setFormData({...formData, specialization: professional.specializations?.[0] || '', preferredTier: professional.tier || ''});
-                  }}>Request Service →</button>
+                  }}>{t('servicesDirectory.requestService')}</button>
                 </div>
               ))}
             </div>
@@ -430,8 +465,8 @@ export const ServicesDirectory: React.FC = () => {
       ))}
 
       <div className="services-footer">
-        <h2>About Our Directory</h2>
-        <p>Find verified professionals across all service types. Use the filters to narrow by location and specialization, then fill out an intake form to get connected.</p>
+        <h2>{t('servicesDirectory.aboutTitle')}</h2>
+        <p>{t('servicesDirectory.aboutBody')}</p>
       </div>
 
       {/* SERVICE INTAKE FORM */}
@@ -440,42 +475,42 @@ export const ServicesDirectory: React.FC = () => {
           <div className="intake-form-overlay" onClick={() => { setIntakeFormType(null); setSelectedService(null); }}></div>
           <div className="intake-form-container">
             <button className="close-btn" onClick={() => { setIntakeFormType(null); setSelectedService(null); }}>✕</button>
-            <h2><ServiceIcon name="clipboardCheck" className="modal-icon" /> {selectedService} Request</h2>
+            <h2><ServiceIcon name="clipboardCheck" className="modal-icon" /> {t('servicesDirectory.intake.heading', { service: specName(selectedService) })}</h2>
             <p className="form-subtitle">
               {serviceIsAttorney
-                ? `Tell us about your ${selectedService} matter and we'll match you with licensed attorneys.`
-                : `Tell us what you need and we'll match you with verified ${selectedService} providers. These are non-attorney service providers and cannot give legal advice.`}
+                ? t('servicesDirectory.intake.attorneySubtitle', { service: specName(selectedService) })
+                : t('servicesDirectory.intake.providerSubtitle', { service: specName(selectedService) })}
             </p>
 
             <form onSubmit={(e) => {
               e.preventDefault();
               alert(serviceIsAttorney
-                ? `Your ${selectedService} request has been submitted. We'll match you with licensed attorneys.`
-                : `Your ${selectedService} request has been submitted. We'll match you with verified ${selectedService} providers.`);
+                ? t('servicesDirectory.intake.attorneySuccess', { service: specName(selectedService) })
+                : t('servicesDirectory.intake.providerSuccess', { service: specName(selectedService) }));
               setIntakeFormType(null);
               setSelectedService(null);
               setFormData({ name: '', email: '', phone: '', caseDescription: '', specialization: '', preferredTier: '' });
             }}>
               <div className="form-group">
-                <label>Your Full Name *</label>
-                <input type="text" placeholder="John Doe" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
+                <label>{t('servicesDirectory.intake.fullName')}</label>
+                <input type="text" placeholder={t('servicesDirectory.intake.fullNamePlaceholder')} value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
               </div>
               <div className="form-row">
                 <div className="form-group">
-                  <label>Email *</label>
+                  <label>{t('servicesDirectory.intake.email')}</label>
                   <input type="email" placeholder="john@example.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} required />
                 </div>
                 <div className="form-group">
-                  <label>Phone *</label>
+                  <label>{t('servicesDirectory.intake.phone')}</label>
                   <input type="tel" placeholder="(555) 123-4567" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} required />
                 </div>
               </div>
               <div className="form-group">
-                <label>{serviceIsAttorney ? 'Legal Matter Description *' : 'What do you need? *'}</label>
+                <label>{serviceIsAttorney ? t('servicesDirectory.intake.attorneyDescLabel') : t('servicesDirectory.intake.providerDescLabel')}</label>
                 <textarea
                   placeholder={serviceIsAttorney
-                    ? 'Describe your legal matter...'
-                    : `Describe the documents, dates, and location for your ${selectedService} request...`}
+                    ? t('servicesDirectory.intake.attorneyDescPlaceholder')
+                    : t('servicesDirectory.intake.providerDescPlaceholder', { service: specName(selectedService) })}
                   value={formData.caseDescription}
                   onChange={(e) => setFormData({...formData, caseDescription: e.target.value})}
                   rows={6}
@@ -483,8 +518,8 @@ export const ServicesDirectory: React.FC = () => {
                 ></textarea>
               </div>
               <div className="form-actions">
-                <button type="button" className="cancel-btn" onClick={() => { setIntakeFormType(null); setSelectedService(null); }}>Cancel</button>
-                <button type="submit" className="submit-btn">Submit {selectedService} Request</button>
+                <button type="button" className="cancel-btn" onClick={() => { setIntakeFormType(null); setSelectedService(null); }}>{t('common.cancel')}</button>
+                <button type="submit" className="submit-btn">{t('servicesDirectory.intake.submit', { service: specName(selectedService) })}</button>
               </div>
             </form>
           </div>
@@ -497,37 +532,37 @@ export const ServicesDirectory: React.FC = () => {
           <div className="intake-form-overlay" onClick={() => { setIntakeFormType(null); setSelectedProfessional(null); }}></div>
           <div className="intake-form-container">
             <button className="close-btn" onClick={() => { setIntakeFormType(null); setSelectedProfessional(null); }}>✕</button>
-            <h2><ServiceIcon name="scales" className="modal-icon" /> Attorney Service Request</h2>
-            <p className="form-subtitle">Requesting <strong>{selectedProfessional.name}</strong></p>
+            <h2><ServiceIcon name="scales" className="modal-icon" /> {t('servicesDirectory.attorneyRequest.heading')}</h2>
+            <p className="form-subtitle">{t('servicesDirectory.attorneyRequest.requesting')} <strong>{selectedProfessional.name}</strong></p>
 
             <form onSubmit={(e) => {
               e.preventDefault();
-              alert(`Your request has been sent to ${selectedProfessional.name}. They will contact you shortly.`);
+              alert(t('servicesDirectory.attorneyRequest.success', { name: selectedProfessional.name }));
               setIntakeFormType(null);
               setSelectedProfessional(null);
               setFormData({ name: '', email: '', phone: '', caseDescription: '', specialization: '', preferredTier: '' });
             }}>
               <div className="form-group">
-                <label>Your Full Name *</label>
-                <input type="text" placeholder="John Doe" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
+                <label>{t('servicesDirectory.intake.fullName')}</label>
+                <input type="text" placeholder={t('servicesDirectory.intake.fullNamePlaceholder')} value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
               </div>
               <div className="form-row">
                 <div className="form-group">
-                  <label>Email *</label>
+                  <label>{t('servicesDirectory.intake.email')}</label>
                   <input type="email" placeholder="john@example.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} required />
                 </div>
                 <div className="form-group">
-                  <label>Phone *</label>
+                  <label>{t('servicesDirectory.intake.phone')}</label>
                   <input type="tel" placeholder="(555) 123-4567" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} required />
                 </div>
               </div>
               <div className="form-group">
-                <label>Legal Matter Description *</label>
-                <textarea placeholder="Describe your case in detail..." value={formData.caseDescription} onChange={(e) => setFormData({...formData, caseDescription: e.target.value})} rows={6} required></textarea>
+                <label>{t('servicesDirectory.attorneyRequest.descLabel')}</label>
+                <textarea placeholder={t('servicesDirectory.attorneyRequest.descPlaceholder')} value={formData.caseDescription} onChange={(e) => setFormData({...formData, caseDescription: e.target.value})} rows={6} required></textarea>
               </div>
               <div className="form-actions">
-                <button type="button" className="cancel-btn" onClick={() => { setIntakeFormType(null); setSelectedProfessional(null); }}>Cancel</button>
-                <button type="submit" className="submit-btn">Send to Attorney</button>
+                <button type="button" className="cancel-btn" onClick={() => { setIntakeFormType(null); setSelectedProfessional(null); }}>{t('common.cancel')}</button>
+                <button type="submit" className="submit-btn">{t('servicesDirectory.attorneyRequest.submit')}</button>
               </div>
             </form>
           </div>
@@ -540,37 +575,37 @@ export const ServicesDirectory: React.FC = () => {
           <div className="intake-form-overlay" onClick={() => { setIntakeFormType(null); setSelectedProfessional(null); }}></div>
           <div className="intake-form-container">
             <button className="close-btn" onClick={() => { setIntakeFormType(null); setSelectedProfessional(null); }}>✕</button>
-            <h2><ServiceIcon name="stamp" className="modal-icon" /> Notary Service Request</h2>
-            <p className="form-subtitle">Booking <strong>{selectedProfessional.name}</strong></p>
+            <h2><ServiceIcon name="stamp" className="modal-icon" /> {t('servicesDirectory.notaryRequest.heading')}</h2>
+            <p className="form-subtitle">{t('servicesDirectory.notaryRequest.booking')} <strong>{selectedProfessional.name}</strong></p>
 
             <form onSubmit={(e) => {
               e.preventDefault();
-              alert(`Your notary request has been sent to ${selectedProfessional.name}. They will contact you to confirm.`);
+              alert(t('servicesDirectory.notaryRequest.success', { name: selectedProfessional.name }));
               setIntakeFormType(null);
               setSelectedProfessional(null);
               setFormData({ name: '', email: '', phone: '', caseDescription: '', specialization: '', preferredTier: '' });
             }}>
               <div className="form-group">
-                <label>Your Full Name *</label>
-                <input type="text" placeholder="John Doe" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
+                <label>{t('servicesDirectory.intake.fullName')}</label>
+                <input type="text" placeholder={t('servicesDirectory.intake.fullNamePlaceholder')} value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
               </div>
               <div className="form-row">
                 <div className="form-group">
-                  <label>Email *</label>
+                  <label>{t('servicesDirectory.intake.email')}</label>
                   <input type="email" placeholder="john@example.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} required />
                 </div>
                 <div className="form-group">
-                  <label>Phone *</label>
+                  <label>{t('servicesDirectory.intake.phone')}</label>
                   <input type="tel" placeholder="(555) 123-4567" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} required />
                 </div>
               </div>
               <div className="form-group">
-                <label>Document Details *</label>
-                <textarea placeholder="What documents need to be notarized?" value={formData.caseDescription} onChange={(e) => setFormData({...formData, caseDescription: e.target.value})} rows={6} required></textarea>
+                <label>{t('servicesDirectory.notaryRequest.descLabel')}</label>
+                <textarea placeholder={t('servicesDirectory.notaryRequest.descPlaceholder')} value={formData.caseDescription} onChange={(e) => setFormData({...formData, caseDescription: e.target.value})} rows={6} required></textarea>
               </div>
               <div className="form-actions">
-                <button type="button" className="cancel-btn" onClick={() => { setIntakeFormType(null); setSelectedProfessional(null); }}>Cancel</button>
-                <button type="submit" className="submit-btn">Request Notary Service</button>
+                <button type="button" className="cancel-btn" onClick={() => { setIntakeFormType(null); setSelectedProfessional(null); }}>{t('common.cancel')}</button>
+                <button type="submit" className="submit-btn">{t('servicesDirectory.notaryRequest.submit')}</button>
               </div>
             </form>
           </div>

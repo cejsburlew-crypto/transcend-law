@@ -2,7 +2,7 @@
 // Supports 16+ languages with automatic translation API
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import translations from '../translations/index';
+import translations, { FALLBACK_LOCALE } from '../translations/index';
 import { translateText, isRTLLanguage, SUPPORTED_LANGUAGES } from '../services/translationService';
 
 export type Language = string; // Any language code
@@ -37,27 +37,40 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setLanguageState(newLanguage);
   }, []);
 
-  // Static translation for predefined keys (EN/ES)
+  // Static translation. Resolves the key in the active locale, then falls back
+  // to English, then to the key itself. Params are interpolated as {name}.
+  //
+  // NOTE: this translates UI chrome only. User-entered values, uploaded files,
+  // and provider records must be rendered directly, never passed through t().
   const t = (key: string, params?: Record<string, string>): string => {
-    if (language !== 'en' && language !== 'es') {
-      // For non-static languages, return the key (will be translated dynamically)
+    const lookup = (locale: string): unknown => {
+      let value: any = (translations as any)[locale];
+      for (const k of key.split('.')) {
+        if (value == null) return undefined;
+        value = value[k];
+      }
+      return value;
+    };
+
+    let value = lookup(language);
+
+    if (typeof value !== 'string' && language !== FALLBACK_LOCALE) {
+      value = lookup(FALLBACK_LOCALE);
+      if (typeof value === 'string') {
+        console.warn(`Missing ${language} translation for "${key}" - using ${FALLBACK_LOCALE}`);
+      }
+    }
+
+    if (typeof value !== 'string') {
+      console.warn(`Missing translation: ${key}`);
       return key;
     }
 
-    const keys = key.split('.');
-    let value: any = (translations as any)[language];
-
-    for (const k of keys) {
-      value = value?.[k];
-    }
-
-    if (!value) {
-      console.warn(`Missing translation: ${language}.${key}`);
-      return key;
-    }
-
-    if (params && typeof value === 'string') {
-      return Object.entries(params).reduce((str, [k, v]) => str.replace(`{${k}}`, v), value);
+    if (params) {
+      return Object.entries(params).reduce(
+        (str, [k, v]) => str.split(`{${k}}`).join(v),
+        value
+      );
     }
 
     return value;

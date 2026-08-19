@@ -11,6 +11,7 @@ import { LawServices } from './pages/LawServices';
 import { MyProviderProfile } from './pages/MyProviderProfile';
 import { ServicesDirectory } from './pages/ServicesDirectory';
 import { Messages } from './pages/Messages';
+import { CaseDetails } from './pages/CaseDetails';
 import Breadcrumbs from './components/Navigation/Breadcrumbs';
 import type { BreadcrumbItem } from './components/Navigation/Breadcrumbs';
 import { LanguageSelector } from './components/LanguageSelector';
@@ -20,9 +21,10 @@ import './App.css';
 const AppContent: React.FC = () => {
   const { t } = useLanguage();
   const { user, token, logout } = useAuth();
-  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website' | 'admin-role-preview' | 'notary' | 'law-services' | 'provider-profile' | 'services-directory' | 'messages'>(
+  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website' | 'admin-role-preview' | 'notary' | 'law-services' | 'provider-profile' | 'services-directory' | 'messages' | 'case-details'>(
     token && user ? 'services-directory' : 'landing'
   );
+  const [selectedCaseId, setSelectedCaseId] = useState<string>('1');
 
   React.useEffect(() => {
     // Ensure light mode is always active
@@ -111,7 +113,7 @@ const AppContent: React.FC = () => {
           <header className="global-header">
             <div className="global-header__brand">
               <ServiceIcon name="scales" className="global-header__logo-icon" />
-              <span>Transcend Law</span>
+              <span>{t('nav.brand')}</span>
             </div>
             <nav className="global-nav">
               <button
@@ -120,7 +122,7 @@ const AppContent: React.FC = () => {
                 onClick={() => setCurrentView('dashboard')}
               >
                 <ServiceIcon name="dashboard" className="global-nav__icon" />
-                <span>Dashboard</span>
+                <span>{t('nav.dashboard')}</span>
               </button>
               <button
                 type="button"
@@ -128,7 +130,7 @@ const AppContent: React.FC = () => {
                 onClick={() => setCurrentView('services-directory')}
               >
                 <ServiceIcon name="courthouse" className="global-nav__icon" />
-                <span>Services</span>
+                <span>{t('nav.services')}</span>
               </button>
               <button
                 type="button"
@@ -136,7 +138,7 @@ const AppContent: React.FC = () => {
                 onClick={() => setCurrentView('messages')}
               >
                 <ServiceIcon name="chat" className="global-nav__icon" />
-                <span>Messages</span>
+                <span>{t('nav.messages')}</span>
               </button>
             </nav>
             <div className="global-header__lang">
@@ -148,7 +150,9 @@ const AppContent: React.FC = () => {
         </>
       )}
       {/* Breadcrumbs hidden - use navigation menus instead */}
-      {currentView === 'admin-role-preview' && token && user ? (
+      {currentView === 'case-details' && token && user ? (
+        <CaseDetails caseId={selectedCaseId} onBack={() => setCurrentView('dashboard')} />
+      ) : currentView === 'admin-role-preview' && token && user ? (
         <AdminRolePreview />
       ) : currentView === 'provider-profile' && token && user ? (
         <MyProviderProfile onBack={() => setCurrentView('dashboard')} />
@@ -163,7 +167,7 @@ const AppContent: React.FC = () => {
       ) : currentView === 'lawyer-website' && token && user ? (
         <LawyerWebsiteSetup onBack={() => setCurrentView('dashboard')} />
       ) : currentView === 'dashboard' && token && user ? (
-        <Dashboard onLogout={handleLogout} onNavigateLawyerWebsite={() => setCurrentView('lawyer-website')} onNavigateNotary={() => setCurrentView('notary')} onNavigateLawServices={() => setCurrentView('law-services')} onNavigateProviderProfile={() => setCurrentView('provider-profile')} onNavigateServicesDirectory={() => setCurrentView('services-directory')} onViewAdminPreview={() => setCurrentView('admin-role-preview')} />
+        <Dashboard onLogout={handleLogout} onNavigateLawyerWebsite={() => setCurrentView('lawyer-website')} onNavigateNotary={() => setCurrentView('notary')} onNavigateLawServices={() => setCurrentView('law-services')} onNavigateProviderProfile={() => setCurrentView('provider-profile')} onNavigateServicesDirectory={() => setCurrentView('services-directory')} onViewAdminPreview={() => setCurrentView('admin-role-preview')} onViewCaseDetails={(caseId) => { setSelectedCaseId(caseId); setCurrentView('case-details'); }} />
       ) : currentView === 'login' ? (
         <Login onSuccess={handleLoginSuccess} />
       ) : (

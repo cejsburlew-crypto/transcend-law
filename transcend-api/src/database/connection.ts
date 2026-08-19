@@ -3,12 +3,45 @@
 
 import { Pool, PoolClient } from 'pg';
 
+/**
+ * TLS for app-to-database traffic.
+ *
+ * Privileged content moves over this connection, so it must not travel in the
+ * clear outside the host. Defaults:
+ *   - remote host  -> TLS required
+ *   - localhost    -> TLS off (loopback never leaves the machine)
+ *
+ * DB_SSL=true|false overrides. DB_SSL_CA lets us verify the server certificate
+ * properly; without it we fall back to encrypted-but-unverified, which still
+ * defeats passive interception but not an active MITM - so supply the CA in
+ * production.
+ */
+const buildSslConfig = () => {
+  const host = process.env.DB_HOST || 'localhost';
+  const isLoopback = host === 'localhost' || host === '127.0.0.1' || host === '::1';
+  const explicit = process.env.DB_SSL;
+
+  const enabled = explicit ? explicit === 'true' : !isLoopback;
+  if (!enabled) return undefined;
+
+  if (process.env.DB_SSL_CA) {
+    return { ca: process.env.DB_SSL_CA, rejectUnauthorized: true };
+  }
+
+  console.warn(
+    '[security] Database TLS is on but DB_SSL_CA is not set - the server certificate ' +
+      'is not verified. Set DB_SSL_CA in production.'
+  );
+  return { rejectUnauthorized: false };
+};
+
 const pool = new Pool({
   user: process.env.DB_USER || 'transcend_admin',
   password: process.env.DB_PASSWORD,
   host: process.env.DB_HOST || 'localhost',
   port: parseInt(process.env.DB_PORT || '5432'),
   database: process.env.DB_NAME || 'transcend_law',
+  ssl: buildSslConfig(),
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,

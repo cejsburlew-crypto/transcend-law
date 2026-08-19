@@ -663,7 +663,12 @@
       "Bash(node scripts/generate-contacts-from-csv.js)",
       "Bash(git rebase *)",
       "Bash(kill 54545)",
-      "Bash(rm -rf /Users/jbconsultingassociatesinc./code/transcend-ssp/.vercel && git add -A && git commit -m \"Remove: Delete .vercel config pointing to wrong account *)"
+      "Bash(rm -rf /Users/jbconsultingassociatesinc./code/transcend-ssp/.vercel && git add -A && git commit -m \"Remove: Delete .vercel config pointing to wrong account *)",
+      "Bash(cp /Users/jbconsultingassociatesinc./Downloads/_notary_work/active-notary.txt /Users/jbconsultingassociatesinc./code/transcend-ssp/transcend-frontend/src/data/)",
+      "Bash(node scripts/parse-notaries.js)",
+      "Bash(rm /Users/jbconsultingassociatesinc./code/transcend-ssp/transcend-frontend/src/data/notaries-parsed.ts)",
+      "Bash(node scripts/deduplicate-notaries.js)",
+      "Bash(curl -s -w \"\\\\nStatus: %{http_code}\\\\n\" https://transcend-law.com)"
     ]
   }
 }

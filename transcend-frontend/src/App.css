@@ -224,14 +224,28 @@ textarea::placeholder {
     min-height: 56px;
   }
 
+  /* Flags only on phones — the EN/ES/ZH/VI labels push the row past 375px */
+  .global-header__lang .lang-text {
+    display: none;
+  }
+
+  .global-header__lang .language-selector-container {
+    gap: 4px;
+  }
+
+  .global-header__lang .language-button {
+    min-width: 36px;
+    min-height: 40px;
+    padding: 6px 6px;
+    justify-content: center;
+  }
+
   .global-nav {
     order: 3;
     flex: 1 0 100%;
     gap: 4px;
     justify-content: space-between;
     border-top: 1px solid #f1f2f4;
-    margin: 0 -14px;
-    padding: 0 8px;
   }
 
   .global-nav__link {
