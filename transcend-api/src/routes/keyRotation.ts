@@ -252,14 +252,17 @@ router.get('/keys', async (req: Request, res: Response) => {
     const keys = await getAllEncryptionKeys();
 
     // Don't expose the actual encrypted key data
+    // The rows are snake_case (SELECT * from encryption_keys); mapped to
+    // camelCase here for the response. Reading camelCase off the row directly
+    // yielded undefined, so these fields were coming back null.
     const sanitized = keys.map((key) => ({
-      keyId: key.keyId,
+      keyId: key.key_id,
       version: key.version,
       algorithm: key.algorithm,
       status: key.status,
-      createdAt: key.createdAt,
-      rotatedAt: key.rotatedAt,
-      archivedAt: key.archivedAt,
+      createdAt: key.created_at,
+      rotatedAt: key.rotated_at,
+      archivedAt: key.archived_at,
     }));
 
     res.json({
@@ -396,10 +399,12 @@ router.get('/scheduler/status', (req: Request, res: Response) => {
   try {
     const status = getSchedulerStatus();
 
+    // `status` also carries `running`, and spreading it last overwrote the
+    // explicit value. Spread first so the authoritative call wins.
     res.json({
       success: true,
-      running: isSchedulerRunning(),
       ...status,
+      running: isSchedulerRunning(),
     });
   } catch (error) {
     console.error('Failed to get scheduler status:', error);
@@ -509,7 +514,7 @@ router.put('/scheduler/job/:jobName', (req: Request, res: Response) => {
  * PUT /api/key-rotation/scheduler/config
  * Update scheduler configuration
  */
-router.put('/scheduler/config', (req: Request, res: Response) => {
+router.put('/scheduler/config', async (req: Request, res: Response) => {
   try {
     const { config } = req.body;
 

@@ -208,8 +208,9 @@ export class BulkMessagingService {
 
       const message: BroadcastMessage = {
         id,
-        adminId,
+        // Spread first: ...messageData was overwriting the explicit adminId.
         ...messageData,
+        adminId,
         createdAt: now,
         updatedAt: now,
         deliveredCount: 0,
@@ -565,15 +566,15 @@ export class BulkMessagingService {
     try {
       let whereClause = 'WHERE 1=1';
 
-      if (filters.lifecycles?.length > 0) {
+      if ((filters.lifecycles?.length ?? 0) > 0) {
         whereClause += ` AND lifecycle = ANY($1)`;
       }
 
-      if (filters.valueSegments?.length > 0) {
+      if ((filters.valueSegments?.length ?? 0) > 0) {
         whereClause += ` AND value = ANY($2)`;
       }
 
-      if (filters.engagementLevels?.length > 0) {
+      if ((filters.engagementLevels?.length ?? 0) > 0) {
         whereClause += ` AND engagement = ANY($3)`;
       }
 
@@ -696,17 +697,17 @@ export class BulkMessagingService {
       if (message.targetAudience !== 'all_users' && message.targetFilters) {
         const filters = message.targetFilters;
 
-        if (filters.lifecycles?.length > 0) {
+        if ((filters.lifecycles?.length ?? 0) > 0) {
           query_str += ` AND lifecycle = ANY($${params.length + 1})`;
           params.push(filters.lifecycles);
         }
 
-        if (filters.valueSegments?.length > 0) {
+        if ((filters.valueSegments?.length ?? 0) > 0) {
           query_str += ` AND value = ANY($${params.length + 1})`;
           params.push(filters.valueSegments);
         }
 
-        if (filters.engagementLevels?.length > 0) {
+        if ((filters.engagementLevels?.length ?? 0) > 0) {
           query_str += ` AND engagement = ANY($${params.length + 1})`;
           params.push(filters.engagementLevels);
         }
@@ -728,9 +729,11 @@ export class BulkMessagingService {
     recipient: any,
     message: BroadcastMessage
   ): Promise<void> {
-    try {
-      const recipientId = uuidv4();
+    // Declared outside the try: the catch block marks this recipient failed and
+    // previously threw a ReferenceError instead, losing the failure entirely.
+    const recipientId = uuidv4();
 
+    try {
       // Create recipient record
       await query(
         `INSERT INTO message_recipients
@@ -905,6 +908,8 @@ export class BulkMessagingService {
       const event: ClickEvent = {
         id,
         messageId,
+        // Resolved from message_recipients below; '' until then.
+        recipientId: '',
         userId,
         url,
         clickedAt: now,

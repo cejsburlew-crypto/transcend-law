@@ -1072,8 +1072,8 @@ export interface AuditLogInput {
 // disambiguates them.
 
 export async function logAction(
-  userId: string,
-  action: AuditLogEntry['action'],
+  userId: string | undefined,
+  action: AuditLogEntry['action'] | string,
   entityType: string,
   entityId: string,
   // Partial + extra keys: callers attach domain context (e.g. `denied`,
@@ -1098,6 +1098,14 @@ export async function logAction(
 ): Promise<void>;
 export async function logAction(...args: any[]): Promise<any> {
   if (args.length >= 5) {
+    const VALID: AuditLogEntry['action'][] = [
+      'create','read','update','delete','export','access','admin','auth','permission',
+    ];
+    const rawAction = args[1] as string;
+    const action: AuditLogEntry['action'] = VALID.includes(rawAction as any)
+      ? (rawAction as AuditLogEntry['action'])
+      : 'admin';
+
     const { ipAddress, ...rest } = args[4] || {};
     // Split known option keys from arbitrary domain context.
     const known = [
@@ -1109,10 +1117,14 @@ export async function logAction(...args: any[]): Promise<any> {
     for (const [k, v] of Object.entries(rest)) {
       (known.includes(k) ? options : extra)[k] = v;
     }
+    if (action !== rawAction) {
+      // Preserve the caller's original action name.
+      extra.action = rawAction;
+    }
     if (Object.keys(extra).length) {
       options.metadata = { ...(options.metadata || {}), ...extra };
     }
-    return logActionDetailed(args[0], args[1], args[2], args[3], options as any);
+    return logActionDetailed(args[0] || 'system', action, args[2], args[3], options as any);
   }
 
   // 4-arg form: (userId, action, entityType, entityId | options)
@@ -1270,4 +1282,3 @@ export async function auditLog(
   });
 }
 
-export default auditLogger;

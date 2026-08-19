@@ -447,7 +447,7 @@ export async function updateMigrationProgress(
 ): Promise<MigrationRecord> {
   try {
     const updateFields = ['status = $1', 'updated_at = $2'];
-    const params = [status, new Date()];
+    const params: any[] = [status, new Date()];
     let paramIndex = 3;
 
     if (status === 'in_progress') {

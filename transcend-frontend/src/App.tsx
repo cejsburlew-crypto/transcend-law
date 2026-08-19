@@ -16,7 +16,8 @@ import Breadcrumbs from './components/Navigation/Breadcrumbs';
 import type { BreadcrumbItem } from './components/Navigation/Breadcrumbs';
 import { LanguageSelector } from './components/LanguageSelector';
 import { ServiceIcon } from './components/ServiceIcon';
-import { UserProfile } from './pages/UserProfile';
+import UserProfile from './pages/UserProfile';
+import ProviderProfile from './pages/ProviderProfile';
 import './App.css';
 
 const AppContent: React.FC = () => {
@@ -174,7 +175,7 @@ const AppContent: React.FC = () => {
       ) : currentView === 'admin-role-preview' && token && user ? (
         <AdminRolePreview />
       ) : currentView === 'provider-profile' && token && user ? (
-        <MyProviderProfile onBack={() => setCurrentView('dashboard')} />
+        <ProviderProfile onBack={() => setCurrentView('dashboard')} />
       ) : currentView === 'messages' && token && user ? (
         <Messages />
       ) : currentView === 'services-directory' && token && user ? (

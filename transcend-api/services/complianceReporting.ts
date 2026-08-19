@@ -2,7 +2,7 @@ import * as nodemailer from 'nodemailer';
 import * as PDFDocument from 'pdfkit';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Database } from '../database';
+import { ComplianceRepository } from '../database';
 import { Logger } from '../utils/logger';
 import * as schedule from 'node-schedule';
 
@@ -111,13 +111,13 @@ export interface ComplianceSchedule {
 }
 
 export class ComplianceReportingService {
-  private db: Database;
+  private db: ComplianceRepository;
   private logger: Logger;
   private emailTransporter: nodemailer.Transporter;
   private schedules: Map<string, schedule.Job> = new Map();
   private reportCachePath: string;
 
-  constructor(db: Database, logger: Logger) {
+  constructor(db: ComplianceRepository, logger: Logger) {
     this.db = db;
     this.logger = logger;
     this.reportCachePath = path.join(process.cwd(), 'reports');

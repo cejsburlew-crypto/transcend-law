@@ -403,7 +403,7 @@ export async function archiveEncryptionKey(version: number): Promise<void> {
      (key_id, version, archived_key_data, archived_at, reason)
      VALUES ($1, $2, $3, NOW(), $4)`,
     [
-      key.keyId,
+      key.key_id,
       key.version,
       key.encryption_key, // Still encrypted with master key
       'Key rotated to new version',
@@ -528,7 +528,7 @@ export async function executeKeyRotation(
     const currentKey = await getActiveEncryptionKey();
 
     // Check if rotation is needed
-    const timeSinceLastRotation = new Date().getTime() - new Date(currentKey.createdAt).getTime();
+    const timeSinceLastRotation = new Date().getTime() - new Date(currentKey.created_at).getTime();
     const daysSinceRotation = timeSinceLastRotation / (1000 * 60 * 60 * 24);
 
     if (daysSinceRotation < config.rotationIntervalDays) {
