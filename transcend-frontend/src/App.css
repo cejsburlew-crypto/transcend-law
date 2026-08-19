@@ -96,3 +96,167 @@ textarea::placeholder {
   color: #999999 !important;
 }
 
+
+/* ==========================================================================
+   Global header (authenticated pages)
+   Fixed to the top; --global-header-h keeps the spacer in sync with its
+   real height at every breakpoint.
+   ========================================================================== */
+
+:root {
+  --global-header-h: 64px;
+}
+
+.global-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  min-height: var(--global-header-h);
+  box-sizing: border-box;
+  padding: 0 32px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.global-header-spacer {
+  height: var(--global-header-h);
+  flex-shrink: 0;
+}
+
+.global-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  white-space: nowrap;
+}
+
+.global-header__logo-icon {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  color: #2563eb;
+}
+
+.global-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.global-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  min-height: 40px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #666666;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.global-nav__link:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.global-nav__link.is-active {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.global-nav__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.global-header__lang {
+  margin-left: auto;
+}
+
+/* Phones: brand + language on the first row, nav on its own full-width row
+   so nothing is clipped and every tap target clears 44px. */
+@media (max-width: 768px) {
+  :root {
+    --global-header-h: 104px;
+  }
+
+  .global-header {
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 0 14px;
+    align-items: stretch;
+  }
+
+  .global-header__brand {
+    font-size: 17px;
+    min-height: 56px;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .global-header__brand span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .global-header__logo-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .global-header__lang {
+    display: flex;
+    align-items: center;
+    min-height: 56px;
+  }
+
+  .global-nav {
+    order: 3;
+    flex: 1 0 100%;
+    gap: 4px;
+    justify-content: space-between;
+    border-top: 1px solid #f1f2f4;
+    margin: 0 -14px;
+    padding: 0 8px;
+  }
+
+  .global-nav__link {
+    flex: 1 1 0;
+    justify-content: center;
+    min-height: 44px;
+    padding: 6px 4px;
+    font-size: 13px;
+    gap: 5px;
+    border-radius: 0;
+  }
+
+  .global-nav__icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .global-header__brand {
+    font-size: 15px;
+  }
+
+  .global-nav__link {
+    font-size: 12px;
+    gap: 4px;
+  }
+}

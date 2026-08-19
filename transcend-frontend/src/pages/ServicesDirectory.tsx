@@ -1,83 +1,581 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { generateMockNotaries, getNotaryCountForState, NOTARY_COUNTS } from '../data/notaries-loader';
+import { ServiceIcon } from '../components/ServiceIcon';
 import './ServicesDirectory.css';
 
-interface Service {
+interface Professional {
   id: string;
   name: string;
-  icon: string;
-  description: string;
-  category: string;
+  specializations: string[];
+  rating: string;
+  reviews: number;
+  yearsExperience: number;
+  hourlyRate: number;
+  phone: string;
+  verified: boolean;
+  type: 'attorney' | 'notary';
+  tier?: 'tier1' | 'tier2' | 'tier3';
 }
 
-const LEGAL_SERVICES: Service[] = [
-  { id: 'family-law', name: 'Family Law', icon: '👨‍👩‍👧‍👦', description: 'Divorce, custody, adoption, child support', category: 'legal' },
-  { id: 'criminal', name: 'Criminal Defense', icon: '⚖️', description: 'DUI, felony, misdemeanor defense', category: 'legal' },
-  { id: 'immigration', name: 'Immigration Law', icon: '🌍', description: 'Visas, green cards, citizenship', category: 'legal' },
-  { id: 'bankruptcy', name: 'Bankruptcy', icon: '💰', description: 'Chapter 7, Chapter 13 protection', category: 'legal' },
-  { id: 'personal-injury', name: 'Personal Injury', icon: '🏥', description: 'Auto accidents, slip & fall', category: 'legal' },
-  { id: 'employment', name: 'Employment Law', icon: '💼', description: 'Wrongful termination, discrimination', category: 'legal' },
-  { id: 'real-estate', name: 'Real Estate', icon: '🏠', description: 'Property disputes, contracts, title issues', category: 'legal' },
-  { id: 'estate-planning', name: 'Estate Planning', icon: '📋', description: 'Wills, trusts, probate', category: 'legal' },
-  { id: 'business', name: 'Business Law', icon: '🏢', description: 'Formation, contracts, partnerships', category: 'legal' },
-  { id: 'intellectual-property', name: 'Intellectual Property', icon: '💡', description: 'Patents, trademarks, copyrights', category: 'legal' },
-  { id: 'tax-law', name: 'Tax Law', icon: '📊', description: 'Tax planning, IRS issues', category: 'legal' },
-  { id: 'medical-malpractice', name: 'Medical Malpractice', icon: '⚕️', description: 'Healthcare negligence claims', category: 'legal' },
-  { id: 'securities', name: 'Securities Law', icon: '📈', description: 'Investment disputes, securities fraud', category: 'legal' },
-  { id: 'healthcare', name: 'Healthcare Law', icon: '🏥', description: 'HIPAA, licensing, regulations', category: 'legal' },
-  { id: 'environmental', name: 'Environmental Law', icon: '🌱', description: 'EPA compliance, pollution', category: 'legal' },
-  { id: 'labor', name: 'Labor Law', icon: '🤝', description: 'Unions, workers rights', category: 'legal' },
-  { id: 'landlord-tenant', name: 'Landlord & Tenant', icon: '🔑', description: 'Eviction, lease disputes', category: 'legal' },
-  { id: 'contract-law', name: 'Contract Law', icon: '📝', description: 'Drafting, disputes, enforcement', category: 'legal' },
-  { id: 'litigation', name: 'Civil Litigation', icon: '⚔️', description: 'Lawsuits, disputes, appeals', category: 'legal' },
-  { id: 'entertainment', name: 'Entertainment Law', icon: '🎬', description: 'Contracts, copyright, licensing', category: 'legal' },
-  { id: 'consumer-protection', name: 'Consumer Protection', icon: '🛡️', description: 'Fraud, debt, rights', category: 'legal' },
-  { id: 'animal-law', name: 'Animal Law', icon: '🐕', description: 'Pet ownership, abuse, liability', category: 'legal' },
-  { id: 'notary', name: 'Notary Services', icon: '📝', description: '951K+ notaries, document signing, mobile notary', category: 'services' },
-  { id: 'bail-bondsman', name: 'Bail Bondsman', icon: '🔓', description: 'Bail bonds, bond reduction, release assistance', category: 'services' },
-  { id: 'mediator', name: 'Mediator', icon: '🤝', description: 'Dispute resolution, family mediation, conflict resolution', category: 'services' },
-  { id: 'process-server', name: 'Process Server', icon: '📬', description: 'Serve legal documents, court filings', category: 'services' },
-  { id: 'paralegal', name: 'Paralegal Services', icon: '📋', description: 'Document preparation, legal research, case support', category: 'services' },
-  { id: 'legal-translator', name: 'Legal Translator', icon: '🌐', description: 'Document translation, certified interpretation', category: 'services' },
-  { id: 'court-reporting', name: 'Court Reporting', icon: '🎙️', description: 'Deposition transcripts, real-time reporting', category: 'services' },
-  { id: 'arbitrator', name: 'Arbitrator', icon: '⚖️', description: 'Binding arbitration, dispute resolution', category: 'services' },
-  { id: 'investigator', name: 'Private Investigator', icon: '🔍', description: 'Background checks, case investigation, surveillance', category: 'services' },
-  { id: 'expert-witness', name: 'Expert Witness', icon: '👨‍🎓', description: 'Professional expertise testimony, report writing', category: 'services' },
-  { id: 'document-prep', name: 'Document Preparation', icon: '📄', description: 'Legal forms, contracts, agreements', category: 'services' },
-  { id: 'legal-aid', name: 'Legal Aid', icon: '🆘', description: 'Low-cost legal services, pro bono assistance', category: 'services' },
-  { id: 'compliance', name: 'Compliance Consulting', icon: '✅', description: 'Regulatory compliance, audit preparation', category: 'services' },
-  { id: 'mediation-center', name: 'Mediation Center', icon: '🏛️', description: 'Community mediation, restorative justice', category: 'services' },
-  { id: 'legal-accounting', name: 'Legal Accounting', icon: '💼', description: 'Forensic accounting, financial analysis', category: 'services' },
-];
+// Max notaries rendered at once in the directory preview.
+const NOTARY_PREVIEW_LIMIT = 200;
 
-export const ServicesDirectory: React.FC<{ onSelectService?: (service: Service) => void }> = ({ onSelectService }) => {
+interface IntakeFormData {
+  name: string;
+  email: string;
+  phone: string;
+  caseDescription: string;
+  specialization: string;
+  preferredTier: string;
+}
+
+const MOCK_ATTORNEYS: Record<string, Professional[]> = {
+  CA: [
+    { id: 'CA-001', name: 'Smith & Johnson Law Group', specializations: ['Corporate Law', 'Real Estate'], rating: '4.8', reviews: 245, yearsExperience: 22, hourlyRate: 350, phone: '(510) 555-1000', verified: true, type: 'attorney', tier: 'tier1' },
+    { id: 'CA-002', name: 'Jones Attorneys', specializations: ['Intellectual Property', 'Corporate Law'], rating: '4.7', reviews: 189, yearsExperience: 18, hourlyRate: 325, phone: '(650) 555-1001', verified: true, type: 'attorney', tier: 'tier1' },
+    { id: 'CA-003', name: 'Williams & Associates', specializations: ['Family Law', 'Personal Injury', 'Estate Planning'], rating: '4.9', reviews: 312, yearsExperience: 25, hourlyRate: 300, phone: '(408) 555-1002', verified: true, type: 'attorney', tier: 'tier1' },
+    { id: 'CA-004', name: 'Brown Law Office', specializations: ['Personal Injury', 'Real Estate'], rating: '4.6', reviews: 156, yearsExperience: 15, hourlyRate: 275, phone: '(415) 555-1003', verified: true, type: 'attorney', tier: 'tier2' },
+    { id: 'CA-005', name: 'Martinez Legal Group', specializations: ['Real Estate', 'Family Law', 'Estate Planning'], rating: '4.7', reviews: 203, yearsExperience: 20, hourlyRate: 290, phone: '(619) 555-1004', verified: true, type: 'attorney', tier: 'tier2' },
+    { id: 'CA-006', name: 'Silicon Valley IP Law', specializations: ['Intellectual Property', 'Corporate Law'], rating: '4.9', reviews: 287, yearsExperience: 24, hourlyRate: 400, phone: '(650) 555-1005', verified: true, type: 'attorney', tier: 'tier1' },
+    { id: 'CA-007', name: 'Bay Area Family Law', specializations: ['Family Law', 'Personal Injury'], rating: '4.8', reviews: 198, yearsExperience: 19, hourlyRate: 310, phone: '(510) 555-1006', verified: true, type: 'attorney', tier: 'tier2' },
+    { id: 'CA-008', name: 'Los Angeles Real Estate', specializations: ['Real Estate', 'Corporate Law'], rating: '4.7', reviews: 223, yearsExperience: 21, hourlyRate: 340, phone: '(213) 555-1007', verified: true, type: 'attorney', tier: 'tier2' },
+    { id: 'CA-009', name: 'San Diego Personal Injury', specializations: ['Personal Injury', 'Family Law'], rating: '4.6', reviews: 167, yearsExperience: 16, hourlyRate: 295, phone: '(619) 555-1008', verified: true, type: 'attorney', tier: 'tier3' },
+    { id: 'CA-010', name: 'Sacramento Corporate Law', specializations: ['Corporate Law', 'Intellectual Property', 'Estate Planning'], rating: '4.8', reviews: 201, yearsExperience: 20, hourlyRate: 330, phone: '(916) 555-1009', verified: true, type: 'attorney', tier: 'tier3' },
+  ],
+  TX: [
+    { id: 'TX-001', name: 'Houston Energy Law', specializations: ['Corporate Law', 'Real Estate'], rating: '4.9', reviews: 267, yearsExperience: 25, hourlyRate: 360, phone: '(713) 555-2001', verified: true, type: 'attorney', tier: 'tier1' },
+    { id: 'TX-002', name: 'Dallas Personal Injury', specializations: ['Personal Injury', 'Family Law'], rating: '4.7', reviews: 198, yearsExperience: 18, hourlyRate: 310, phone: '(214) 555-2002', verified: true, type: 'attorney', tier: 'tier2' },
+    { id: 'TX-003', name: 'Austin Tech Law', specializations: ['Intellectual Property', 'Corporate Law'], rating: '4.8', reviews: 234, yearsExperience: 21, hourlyRate: 345, phone: '(512) 555-2003', verified: true, type: 'attorney', tier: 'tier1' },
+    { id: 'TX-004', name: 'San Antonio Real Estate', specializations: ['Real Estate', 'Family Law', 'Estate Planning'], rating: '4.6', reviews: 156, yearsExperience: 16, hourlyRate: 295, phone: '(210) 555-2004', verified: true, type: 'attorney', tier: 'tier3' },
+    { id: 'TX-005', name: 'Fort Worth Law Partners', specializations: ['Corporate Law', 'Personal Injury'], rating: '4.7', reviews: 189, yearsExperience: 19, hourlyRate: 320, phone: '(817) 555-2005', verified: true, type: 'attorney', tier: 'tier2' },
+  ],
+  NY: [
+    { id: 'NY-001', name: 'Manhattan Corporate Law', specializations: ['Corporate Law', 'Real Estate'], rating: '4.9', reviews: 312, yearsExperience: 28, hourlyRate: 450, phone: '(212) 555-3001', verified: true, type: 'attorney', tier: 'tier1' },
+    { id: 'NY-002', name: 'Brooklyn Family Law', specializations: ['Family Law', 'Personal Injury'], rating: '4.8', reviews: 267, yearsExperience: 23, hourlyRate: 380, phone: '(718) 555-3002', verified: true, type: 'attorney', tier: 'tier1' },
+    { id: 'NY-003', name: 'New York IP Law', specializations: ['Intellectual Property', 'Corporate Law'], rating: '4.7', reviews: 234, yearsExperience: 22, hourlyRate: 420, phone: '(212) 555-3003', verified: true, type: 'attorney', tier: 'tier1' },
+    { id: 'NY-004', name: 'Queens Real Estate Law', specializations: ['Real Estate', 'Family Law', 'Estate Planning'], rating: '4.6', reviews: 189, yearsExperience: 18, hourlyRate: 340, phone: '(718) 555-3004', verified: true, type: 'attorney', tier: 'tier2' },
+  ],
+  FL: [
+    { id: 'FL-001', name: 'Miami Personal Injury', specializations: ['Personal Injury', 'Family Law'], rating: '4.8', reviews: 245, yearsExperience: 21, hourlyRate: 330, phone: '(305) 555-4001', verified: true, type: 'attorney', tier: 'tier2' },
+    { id: 'FL-002', name: 'Orlando Corporate Law', specializations: ['Corporate Law', 'Real Estate'], rating: '4.7', reviews: 203, yearsExperience: 20, hourlyRate: 310, phone: '(407) 555-4002', verified: true, type: 'attorney', tier: 'tier2' },
+    { id: 'FL-003', name: 'Tampa Family Law', specializations: ['Family Law', 'Intellectual Property', 'Estate Planning'], rating: '4.9', reviews: 267, yearsExperience: 25, hourlyRate: 340, phone: '(813) 555-4003', verified: true, type: 'attorney', tier: 'tier1' },
+  ],
+  PA: [
+    { id: 'PA-001', name: 'Philadelphia Corporate Law', specializations: ['Corporate Law', 'Real Estate', 'Estate Planning'], rating: '4.8', reviews: 234, yearsExperience: 23, hourlyRate: 370, phone: '(215) 555-5001', verified: true, type: 'attorney', tier: 'tier1' },
+    { id: 'PA-002', name: 'Pittsburgh Personal Injury', specializations: ['Personal Injury', 'Family Law'], rating: '4.7', reviews: 198, yearsExperience: 19, hourlyRate: 310, phone: '(412) 555-5002', verified: true, type: 'attorney', tier: 'tier2' },
+  ],
+  GA: [
+    { id: 'GA-001', name: 'Atlanta Legal Associates', specializations: ['Personal Injury', 'Corporate Law'], rating: '4.8', reviews: 234, yearsExperience: 20, hourlyRate: 320, phone: '(404) 555-6001', verified: true, type: 'attorney', tier: 'tier1' },
+    { id: 'GA-002', name: 'Georgia Law Partners', specializations: ['Family Law', 'Intellectual Property'], rating: '4.7', reviews: 178, yearsExperience: 17, hourlyRate: 310, phone: '(678) 555-6002', verified: true, type: 'attorney', tier: 'tier3' },
+    { id: 'GA-003', name: 'Savannah Legal Firm', specializations: ['Real Estate', 'Corporate Law', 'Estate Planning'], rating: '4.9', reviews: 290, yearsExperience: 28, hourlyRate: 340, phone: '(912) 555-6003', verified: true, type: 'attorney', tier: 'tier1' },
+  ],
+  IL: [
+    { id: 'IL-001', name: 'Chicago Corporate Law', specializations: ['Corporate Law', 'Real Estate'], rating: '4.8', reviews: 267, yearsExperience: 24, hourlyRate: 380, phone: '(312) 555-7001', verified: true, type: 'attorney', tier: 'tier1' },
+    { id: 'IL-002', name: 'Chicago Family Law Center', specializations: ['Family Law', 'Personal Injury', 'Estate Planning'], rating: '4.9', reviews: 298, yearsExperience: 26, hourlyRate: 340, phone: '(312) 555-7002', verified: true, type: 'attorney', tier: 'tier1' },
+  ],
+  WA: [
+    { id: 'WA-001', name: 'Seattle Tech Law', specializations: ['Intellectual Property', 'Corporate Law'], rating: '4.8', reviews: 245, yearsExperience: 21, hourlyRate: 360, phone: '(206) 555-8001', verified: true, type: 'attorney', tier: 'tier2' },
+    { id: 'WA-002', name: 'Seattle Family Law', specializations: ['Family Law', 'Personal Injury', 'Estate Planning'], rating: '4.7', reviews: 201, yearsExperience: 19, hourlyRate: 310, phone: '(206) 555-8002', verified: true, type: 'attorney', tier: 'tier2' },
+  ],
+  MA: [
+    { id: 'MA-001', name: 'Boston Corporate Law', specializations: ['Corporate Law', 'Real Estate', 'Estate Planning'], rating: '4.9', reviews: 289, yearsExperience: 26, hourlyRate: 420, phone: '(617) 555-9001', verified: true, type: 'attorney', tier: 'tier1' },
+    { id: 'MA-002', name: 'Boston IP Law', specializations: ['Intellectual Property', 'Corporate Law'], rating: '4.8', reviews: 267, yearsExperience: 24, hourlyRate: 410, phone: '(617) 555-9002', verified: true, type: 'attorney', tier: 'tier1' },
+  ],
+  CO: [
+    { id: 'CO-001', name: 'Denver Corporate Law', specializations: ['Corporate Law', 'Real Estate', 'Estate Planning'], rating: '4.7', reviews: 212, yearsExperience: 20, hourlyRate: 340, phone: '(303) 555-10001', verified: true, type: 'attorney', tier: 'tier2' },
+    { id: 'CO-002', name: 'Denver Personal Injury', specializations: ['Personal Injury', 'Family Law'], rating: '4.8', reviews: 234, yearsExperience: 21, hourlyRate: 320, phone: '(303) 555-10002', verified: true, type: 'attorney', tier: 'tier2' },
+  ],
+};
+
+export const ServicesDirectory: React.FC = () => {
+  const [selectedState, setSelectedState] = useState('CA');
+  const [selectedCounty, setSelectedCounty] = useState('');
+  const [selectedSpecializations, setSelectedSpecializations] = useState<string[]>([]);
+  const [professionals, setProfessionals] = useState<Professional[]>(MOCK_ATTORNEYS.CA);
+  const [filteredProfessionals, setFilteredProfessionals] = useState<Professional[]>(MOCK_ATTORNEYS.CA);
+  const [loading, setLoading] = useState(false);
+  const [selectedProfessional, setSelectedProfessional] = useState<Professional | null>(null);
+  const [showNotaries, setShowNotaries] = useState(false);
+  const [serviceIsAttorney, setServiceIsAttorney] = useState(false);
+  const [selectedService, setSelectedService] = useState<string | null>(null);
+  const [intakeFormType, setIntakeFormType] = useState<'service' | 'attorney' | 'notary' | 'professional' | null>(null);
+  const [formData, setFormData] = useState<IntakeFormData>({
+    name: '',
+    email: '',
+    phone: '',
+    caseDescription: '',
+    specialization: '',
+    preferredTier: '',
+  });
+
+  // Grouped by who delivers the service. `attorney: false` categories are
+  // non-attorney providers, so their copy and CTAs never say "lawyer".
+  const categories = [
+    {
+      id: 'attorney-services',
+      name: 'Attorney Services',
+      subtitle: 'Licensed attorneys and law firms',
+      icon: 'scales',
+      attorney: true,
+      cta: 'Find an Attorney',
+      specializations: ['Corporate Law', 'Estate Planning', 'Family Law', 'Intellectual Property', 'Personal Injury', 'Real Estate'],
+    },
+    {
+      id: 'documentation-services',
+      name: 'Documentation Services',
+      subtitle: 'Non-attorney providers — notarization and document handling',
+      icon: 'stamp',
+      attorney: false,
+      cta: 'Request Notary',
+      specializations: ['Notary Services', 'Mobile Notary', 'eNotary', 'Document Preparation'],
+    },
+    {
+      id: 'dispute-resolution',
+      name: 'Dispute Resolution Services',
+      subtitle: 'Non-attorney providers — neutral mediators',
+      icon: 'converge',
+      attorney: false,
+      cta: 'Request Mediator',
+      specializations: ['Family Mediation', 'Business Mediation', 'Divorce Mediation', 'Conflict Resolution'],
+    },
+    {
+      id: 'bail-bond-services',
+      name: 'Bail Bond Services',
+      subtitle: 'Non-attorney providers — licensed bail agents',
+      icon: 'bars',
+      attorney: false,
+      cta: 'Request Bail Agent',
+      specializations: ['Felony Bonds', 'Misdemeanor Bonds', 'Immigration Bonds', '24/7 Service'],
+    },
+    {
+      id: 'language-services',
+      name: 'Language Services',
+      subtitle: 'Non-attorney providers — interpreters and translators',
+      icon: 'globe',
+      attorney: false,
+      cta: 'Request Interpreter',
+      specializations: ['Court Interpretation', 'Certified Translation', 'Legal Documents', 'Multi-Language'],
+    },
+    {
+      id: 'legal-support-services',
+      name: 'Legal Support Services',
+      subtitle: 'Non-attorney providers — paralegal and compliance support',
+      icon: 'documents',
+      attorney: false,
+      cta: 'Request Support',
+      specializations: ['Legal Research', 'Client Services', 'Compliance'],
+    },
+  ] as const;
+
+  const states = [
+    { code: 'CA', name: 'California' },
+    { code: 'TX', name: 'Texas' },
+    { code: 'NY', name: 'New York' },
+    { code: 'FL', name: 'Florida' },
+    { code: 'PA', name: 'Pennsylvania' },
+    { code: 'GA', name: 'Georgia' },
+    { code: 'IL', name: 'Illinois' },
+    { code: 'WA', name: 'Washington' },
+    { code: 'MA', name: 'Massachusetts' },
+    { code: 'CO', name: 'Colorado' },
+  ];
+
+  // Load professionals by state
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      let items: Professional[] = MOCK_ATTORNEYS[selectedState] || [];
+
+      // Add notaries if enabled - load ALL notaries for the state
+      if (showNotaries) {
+        // Cap the preview: CA alone has 136,747 notaries and the list is rendered
+        // once per category section, which locks up the browser if uncapped.
+        const notaryCount = Math.min(getNotaryCountForState(selectedState), NOTARY_PREVIEW_LIMIT);
+        if (notaryCount > 0) {
+          const mockNotaries = generateMockNotaries(selectedState, notaryCount).map((n: any) => ({
+            ...n,
+            type: 'notary' as const,
+            tier: Math.random() > 0.7 ? 'tier1' : Math.random() > 0.6 ? 'tier2' : 'tier3'
+          }));
+          items = [...items, ...mockNotaries];
+        }
+      }
+
+      setProfessionals(items);
+      setLoading(false);
+    }, 300);
+  }, [selectedState, showNotaries]);
+
+  // Apply filters to professionals
+  useEffect(() => {
+    let filtered = professionals.filter(p => p.specializations && Array.isArray(p.specializations));
+
+    if (selectedCounty) {
+      filtered = filtered.filter(p => (p as any).county === selectedCounty);
+    }
+
+    if (selectedSpecializations.length > 0) {
+      filtered = filtered.filter(p => p.specializations && p.specializations.some(spec => selectedSpecializations.includes(spec)));
+    }
+
+    setFilteredProfessionals(filtered);
+  }, [professionals, selectedCounty, selectedSpecializations]);
+
+  // Get unique values for filter dropdowns
+  const counties = [...new Set(professionals.filter((p: any) => p.county).map((p: any) => p.county))].sort();
+
+  // Specialization icons and descriptions
+  const specializationDetails: Record<string, { icon: string; description: string }> = {
+    'Corporate Law': { icon: 'building', description: 'Formation, contracts, partnerships' },
+    'Family Law': { icon: 'people', description: 'Divorce, custody, adoption, child support' },
+    'Intellectual Property': { icon: 'bulb', description: 'Patents, trademarks, copyrights' },
+    'Notary Services': { icon: 'signedDocument', description: 'Document signing, acknowledgments' },
+    'Personal Injury': { icon: 'falling', description: 'Slip & fall, auto accidents, liability' },
+    'Estate Planning': { icon: 'sealedDocument', description: 'Wills, trusts, probate, succession' },
+    'Real Estate': { icon: 'house', description: 'Property disputes, contracts, title issues' },
+    'Mobile Notary': { icon: 'pin', description: 'Notary travels to your location' },
+    'eNotary': { icon: 'monitorCheck', description: 'Remote online notarization' },
+    'Family Mediation': { icon: 'mediation', description: 'Family dispute resolution' },
+    'Business Mediation': { icon: 'briefcase', description: 'Commercial conflict resolution' },
+    'Divorce Mediation': { icon: 'separatedRings', description: 'Negotiated dissolution agreements' },
+    'Conflict Resolution': { icon: 'converge', description: 'General dispute mediation' },
+    'Felony Bonds': { icon: 'bars', description: 'Serious charge bail bonds' },
+    'Misdemeanor Bonds': { icon: 'key', description: 'Minor offense bonds' },
+    'Immigration Bonds': { icon: 'globe', description: 'Immigration detention bonds' },
+    '24/7 Service': { icon: 'clock', description: 'Round-the-clock availability' },
+    'Legal Documents': { icon: 'documents', description: 'Document translation' },
+    'Court Interpretation': { icon: 'microphone', description: 'In-court interpretation' },
+    'Certified Translation': { icon: 'certificate', description: 'Certified, sworn translations' },
+    'Multi-Language': { icon: 'bubbles', description: 'Multiple language support' },
+    'Legal Research': { icon: 'search', description: 'Case law and statutory research' },
+    'Document Preparation': { icon: 'documentPen', description: 'Prepare and file legal documents' },
+    'Client Services': { icon: 'headset', description: 'Client support & communication' },
+    'Compliance': { icon: 'clipboardCheck', description: 'Regulatory compliance' },
+  };
+
+  const toggleSpecialization = (spec: string) => {
+    setSelectedSpecializations(prev =>
+      prev.includes(spec)
+        ? prev.filter(s => s !== spec)
+        : [...prev, spec]
+    );
+  };
+
+  // Providers offering at least one service in the given category.
+  const categoryProfessionals = (specs: readonly string[]) =>
+    filteredProfessionals.filter(p =>
+      p.specializations?.some(spec => specs.includes(spec))
+    );
+
+  const getAllSpecializations = () => {
+    const allSpecs = new Set<string>();
+    categories.forEach(cat => {
+      cat.specializations.forEach(spec => allSpecs.add(spec));
+    });
+    return Array.from(allSpecs).sort();
+  };
+
   return (
     <div className="services-directory-container">
       <div className="services-header">
-        <h1>🏛️ Complete Services Directory</h1>
-        <p>Access 37+ legal services, notaries, mediators, bail bondsmen, and professional service providers. Find verified, vetted professionals for all your needs.</p>
+        <h1><ServiceIcon name="courthouse" className="page-title-icon" /> Legal Services Directory</h1>
+        <p>Find verified, vetted legal professionals and service providers in your area.</p>
       </div>
 
-      <div className="services-grid">
-        {LEGAL_SERVICES.map((service) => (
-          <div
-            key={service.id}
-            className="service-card"
-            onClick={() => onSelectService?.(service)}
+      {/* GLOBAL FILTERS */}
+      <div className="filters-bar">
+        <div className="filter-group">
+          <label htmlFor="state-select">State</label>
+          <select
+            id="state-select"
+            value={selectedState}
+            onChange={(e) => {
+              setSelectedState(e.target.value);
+              setSelectedCounty('');
+            }}
+            className="filter-select"
           >
-            <div className="service-icon">{service.icon}</div>
-            <h3 className="service-name">{service.name}</h3>
-            <p className="service-description">{service.description}</p>
-            <button className="service-button">
-              Find Attorneys →
-            </button>
+            {states.map((state) => (
+              <option key={state.code} value={state.code}>
+                {state.name}
+              </option>
+            ))}
+          </select>
+          <span className="filter-badge">{getNotaryCountForState(selectedState).toLocaleString()} notaries</span>
+        </div>
+
+        {counties.length > 0 && (
+          <div className="filter-group">
+            <label htmlFor="county-select">County</label>
+            <select
+              id="county-select"
+              value={selectedCounty}
+              onChange={(e) => setSelectedCounty(e.target.value)}
+              className="filter-select"
+            >
+              <option value="">All Counties ({counties.length})</option>
+              {counties.map((county) => (
+                <option key={county} value={county}>
+                  {county}
+                </option>
+              ))}
+            </select>
           </div>
-        ))}
+        )}
+
+        <div className="filter-group checkbox-group">
+          <label>
+            <input
+              type="checkbox"
+              checked={showNotaries}
+              onChange={(e) => setShowNotaries(e.target.checked)}
+              className="filter-checkbox"
+            />
+            Notary Services
+          </label>
+        </div>
       </div>
+
+      {/* CATEGORIES WITH SPECIALIZATION CARDS */}
+      {categories.map((category) => (
+        <div key={category.id} className="category-section">
+          <div className="category-heading">
+            <h2 className="category-header">
+              <ServiceIcon name={category.icon} className="category-icon" />
+              {category.name}
+              <span className={`provider-type-badge ${category.attorney ? 'is-attorney' : ''}`}>
+                {category.attorney ? 'Attorney' : 'Non-attorney'}
+              </span>
+            </h2>
+            <p className="category-subtitle">{category.subtitle}</p>
+          </div>
+
+          {/* SPECIALIZATION CARDS FOR THIS CATEGORY - ALPHABETICAL */}
+          <div className="specialization-cards">
+            <div className="specialization-grid">
+              {[...category.specializations].sort().map((spec) => {
+                const details = specializationDetails[spec] || { icon: 'scales', description: '' };
+                const count = professionals.filter(p => p.specializations && p.specializations.includes(spec)).length;
+                return (
+                  <div key={spec} className="spec-card-wrapper">
+                    <button
+                      className={`spec-card ${selectedSpecializations.includes(spec) ? 'active' : ''}`}
+                      onClick={() => toggleSpecialization(spec)}
+                    >
+                      <ServiceIcon name={details.icon} className="spec-icon" />
+                      <span className="spec-name">{spec}</span>
+                      <span className="spec-description">{details.description}</span>
+                      <span className="spec-count">{count} available</span>
+                    </button>
+                    <button
+                      className="intake-btn"
+                      onClick={() => {
+                        setSelectedService(spec);
+                        setServiceIsAttorney(category.attorney);
+                        setIntakeFormType('service');
+                        setFormData({...formData, specialization: spec});
+                      }}
+                    >
+                      {category.cta}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* PROFESSIONAL CARDS FOR THIS CATEGORY — only providers who
+              actually offer one of this category's services */}
+          {categoryProfessionals(category.specializations).length > 0 && (
+            <div className="attorneys-grid">
+              {categoryProfessionals(category.specializations).map((professional) => (
+                <div key={professional.id} className="attorney-card">
+                  <div className="attorney-header">
+                    <h3 className="attorney-name">{professional.name}</h3>
+                    <div className="card-badges">
+                      {professional.verified && <span className="verified-badge">✓ Verified</span>}
+                      {professional.type === 'notary' && <span className="notary-badge"><ServiceIcon name="stamp" className="badge-icon" /> Notary</span>}
+                      {professional.tier && <span className="tier-badge">{professional.tier === 'tier1' ? '⭐ Premium' : professional.tier === 'tier2' ? 'Standard' : 'Basic'}</span>}
+                    </div>
+                  </div>
+                  <p className="specialization">{professional.specializations && professional.specializations.length > 0 ? professional.specializations.join(', ') : 'General Services'}</p>
+                  <div className="attorney-info">
+                    <div className="info-item">
+                      <span className="label">Rating:</span>
+                      <span className="value">⭐ {professional.rating}/5.0</span>
+                    </div>
+                    <div className="info-item">
+                      <span className="label">Reviews:</span>
+                      <span className="value">{professional.reviews}</span>
+                    </div>
+                    <div className="info-item">
+                      <span className="label">Experience:</span>
+                      <span className="value">{professional.yearsExperience} years</span>
+                    </div>
+                    <div className="info-item">
+                      <span className="label">Rate:</span>
+                      <span className="value">${professional.hourlyRate}/hr</span>
+                    </div>
+                  </div>
+                  <button className="contact-btn" onClick={() => {
+                    setSelectedProfessional(professional);
+                    setIntakeFormType(professional.type === 'notary' ? 'notary' : 'attorney');
+                    setFormData({...formData, specialization: professional.specializations?.[0] || '', preferredTier: professional.tier || ''});
+                  }}>Request Service →</button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
 
       <div className="services-footer">
-        <h2>Need Help Finding the Right Service?</h2>
-        <p>Contact our support team or browse by service above. All attorneys are verified and have privacy protection enabled.</p>
+        <h2>About Our Directory</h2>
+        <p>Find verified professionals across all service types. Use the filters to narrow by location and specialization, then fill out an intake form to get connected.</p>
       </div>
+
+      {/* SERVICE INTAKE FORM */}
+      {intakeFormType === 'service' && selectedService && (
+        <div className="intake-form-modal">
+          <div className="intake-form-overlay" onClick={() => { setIntakeFormType(null); setSelectedService(null); }}></div>
+          <div className="intake-form-container">
+            <button className="close-btn" onClick={() => { setIntakeFormType(null); setSelectedService(null); }}>✕</button>
+            <h2><ServiceIcon name="clipboardCheck" className="modal-icon" /> {selectedService} Request</h2>
+            <p className="form-subtitle">
+              {serviceIsAttorney
+                ? `Tell us about your ${selectedService} matter and we'll match you with licensed attorneys.`
+                : `Tell us what you need and we'll match you with verified ${selectedService} providers. These are non-attorney service providers and cannot give legal advice.`}
+            </p>
+
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              alert(serviceIsAttorney
+                ? `Your ${selectedService} request has been submitted. We'll match you with licensed attorneys.`
+                : `Your ${selectedService} request has been submitted. We'll match you with verified ${selectedService} providers.`);
+              setIntakeFormType(null);
+              setSelectedService(null);
+              setFormData({ name: '', email: '', phone: '', caseDescription: '', specialization: '', preferredTier: '' });
+            }}>
+              <div className="form-group">
+                <label>Your Full Name *</label>
+                <input type="text" placeholder="John Doe" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
+              </div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Email *</label>
+                  <input type="email" placeholder="john@example.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} required />
+                </div>
+                <div className="form-group">
+                  <label>Phone *</label>
+                  <input type="tel" placeholder="(555) 123-4567" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} required />
+                </div>
+              </div>
+              <div className="form-group">
+                <label>{serviceIsAttorney ? 'Legal Matter Description *' : 'What do you need? *'}</label>
+                <textarea
+                  placeholder={serviceIsAttorney
+                    ? 'Describe your legal matter...'
+                    : `Describe the documents, dates, and location for your ${selectedService} request...`}
+                  value={formData.caseDescription}
+                  onChange={(e) => setFormData({...formData, caseDescription: e.target.value})}
+                  rows={6}
+                  required
+                ></textarea>
+              </div>
+              <div className="form-actions">
+                <button type="button" className="cancel-btn" onClick={() => { setIntakeFormType(null); setSelectedService(null); }}>Cancel</button>
+                <button type="submit" className="submit-btn">Submit {selectedService} Request</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ATTORNEY INTAKE FORM */}
+      {intakeFormType === 'attorney' && selectedProfessional && (
+        <div className="intake-form-modal">
+          <div className="intake-form-overlay" onClick={() => { setIntakeFormType(null); setSelectedProfessional(null); }}></div>
+          <div className="intake-form-container">
+            <button className="close-btn" onClick={() => { setIntakeFormType(null); setSelectedProfessional(null); }}>✕</button>
+            <h2><ServiceIcon name="scales" className="modal-icon" /> Attorney Service Request</h2>
+            <p className="form-subtitle">Requesting <strong>{selectedProfessional.name}</strong></p>
+
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              alert(`Your request has been sent to ${selectedProfessional.name}. They will contact you shortly.`);
+              setIntakeFormType(null);
+              setSelectedProfessional(null);
+              setFormData({ name: '', email: '', phone: '', caseDescription: '', specialization: '', preferredTier: '' });
+            }}>
+              <div className="form-group">
+                <label>Your Full Name *</label>
+                <input type="text" placeholder="John Doe" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
+              </div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Email *</label>
+                  <input type="email" placeholder="john@example.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} required />
+                </div>
+                <div className="form-group">
+                  <label>Phone *</label>
+                  <input type="tel" placeholder="(555) 123-4567" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} required />
+                </div>
+              </div>
+              <div className="form-group">
+                <label>Legal Matter Description *</label>
+                <textarea placeholder="Describe your case in detail..." value={formData.caseDescription} onChange={(e) => setFormData({...formData, caseDescription: e.target.value})} rows={6} required></textarea>
+              </div>
+              <div className="form-actions">
+                <button type="button" className="cancel-btn" onClick={() => { setIntakeFormType(null); setSelectedProfessional(null); }}>Cancel</button>
+                <button type="submit" className="submit-btn">Send to Attorney</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* NOTARY INTAKE FORM */}
+      {intakeFormType === 'notary' && selectedProfessional && (
+        <div className="intake-form-modal">
+          <div className="intake-form-overlay" onClick={() => { setIntakeFormType(null); setSelectedProfessional(null); }}></div>
+          <div className="intake-form-container">
+            <button className="close-btn" onClick={() => { setIntakeFormType(null); setSelectedProfessional(null); }}>✕</button>
+            <h2><ServiceIcon name="stamp" className="modal-icon" /> Notary Service Request</h2>
+            <p className="form-subtitle">Booking <strong>{selectedProfessional.name}</strong></p>
+
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              alert(`Your notary request has been sent to ${selectedProfessional.name}. They will contact you to confirm.`);
+              setIntakeFormType(null);
+              setSelectedProfessional(null);
+              setFormData({ name: '', email: '', phone: '', caseDescription: '', specialization: '', preferredTier: '' });
+            }}>
+              <div className="form-group">
+                <label>Your Full Name *</label>
+                <input type="text" placeholder="John Doe" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
+              </div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Email *</label>
+                  <input type="email" placeholder="john@example.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} required />
+                </div>
+                <div className="form-group">
+                  <label>Phone *</label>
+                  <input type="tel" placeholder="(555) 123-4567" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} required />
+                </div>
+              </div>
+              <div className="form-group">
+                <label>Document Details *</label>
+                <textarea placeholder="What documents need to be notarized?" value={formData.caseDescription} onChange={(e) => setFormData({...formData, caseDescription: e.target.value})} rows={6} required></textarea>
+              </div>
+              <div className="form-actions">
+                <button type="button" className="cancel-btn" onClick={() => { setIntakeFormType(null); setSelectedProfessional(null); }}>Cancel</button>
+                <button type="submit" className="submit-btn">Request Notary Service</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

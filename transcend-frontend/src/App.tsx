@@ -10,15 +10,17 @@ import { NotaryServices } from './pages/NotaryServices';
 import { LawServices } from './pages/LawServices';
 import { MyProviderProfile } from './pages/MyProviderProfile';
 import { ServicesDirectory } from './pages/ServicesDirectory';
+import { Messages } from './pages/Messages';
 import Breadcrumbs from './components/Navigation/Breadcrumbs';
 import type { BreadcrumbItem } from './components/Navigation/Breadcrumbs';
 import { LanguageSelector } from './components/LanguageSelector';
+import { ServiceIcon } from './components/ServiceIcon';
 import './App.css';
 
 const AppContent: React.FC = () => {
   const { t } = useLanguage();
   const { user, token, logout } = useAuth();
-  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website' | 'admin-role-preview' | 'notary' | 'law-services' | 'provider-profile' | 'services-directory'>(
+  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website' | 'admin-role-preview' | 'notary' | 'law-services' | 'provider-profile' | 'services-directory' | 'messages'>(
     token && user ? 'services-directory' : 'landing'
   );
 
@@ -103,22 +105,55 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="app">
-      {/* Global Header for all authenticated pages */}
+      {/* Global Header for all authenticated pages - PINNED */}
       {token && user && currentView !== 'landing' && currentView !== 'login' && (
-        <div style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: '16px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
-            <div style={{ fontSize: '40px', fontWeight: '700' }}>⚖️ Transcend Law</div>
-            <button onClick={() => setCurrentView('dashboard')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', color: currentView === 'dashboard' ? '#2563eb' : '#666', fontWeight: currentView === 'dashboard' ? '600' : '500' }}>📊 Dashboard</button>
-            <button onClick={() => setCurrentView('services-directory')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', color: currentView === 'services-directory' ? '#2563eb' : '#666', fontWeight: currentView === 'services-directory' ? '600' : '500' }}>🏛️ Services</button>
-          </div>
-          <LanguageSelector />
-        </div>
+        <>
+          <header className="global-header">
+            <div className="global-header__brand">
+              <ServiceIcon name="scales" className="global-header__logo-icon" />
+              <span>Transcend Law</span>
+            </div>
+            <nav className="global-nav">
+              <button
+                type="button"
+                className={`global-nav__link ${currentView === 'dashboard' ? 'is-active' : ''}`}
+                onClick={() => setCurrentView('dashboard')}
+              >
+                <ServiceIcon name="dashboard" className="global-nav__icon" />
+                <span>Dashboard</span>
+              </button>
+              <button
+                type="button"
+                className={`global-nav__link ${currentView === 'services-directory' ? 'is-active' : ''}`}
+                onClick={() => setCurrentView('services-directory')}
+              >
+                <ServiceIcon name="courthouse" className="global-nav__icon" />
+                <span>Services</span>
+              </button>
+              <button
+                type="button"
+                className={`global-nav__link ${currentView === 'messages' ? 'is-active' : ''}`}
+                onClick={() => setCurrentView('messages')}
+              >
+                <ServiceIcon name="chat" className="global-nav__icon" />
+                <span>Messages</span>
+              </button>
+            </nav>
+            <div className="global-header__lang">
+              <LanguageSelector />
+            </div>
+          </header>
+          {/* Offsets the fixed header; height is driven by --global-header-h */}
+          <div className="global-header-spacer" />
+        </>
       )}
       {/* Breadcrumbs hidden - use navigation menus instead */}
       {currentView === 'admin-role-preview' && token && user ? (
         <AdminRolePreview />
       ) : currentView === 'provider-profile' && token && user ? (
         <MyProviderProfile onBack={() => setCurrentView('dashboard')} />
+      ) : currentView === 'messages' && token && user ? (
+        <Messages />
       ) : currentView === 'services-directory' && token && user ? (
         <ServicesDirectory />
       ) : currentView === 'law-services' && token && user ? (

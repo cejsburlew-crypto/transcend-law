@@ -25,6 +25,7 @@ interface ActiveCase {
   service: string;
   status: 'pending' | 'active' | 'completed';
   createdAt: string;
+  cost: number;
   provider?: { name: string; rating: number };
 }
 
@@ -38,12 +39,6 @@ interface DashboardMetrics {
 export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsite?: () => void; onNavigateNotary?: () => void; onNavigateLawServices?: () => void; onNavigateProviderProfile?: () => void; onNavigateServicesDirectory?: () => void; onViewAdminPreview?: () => void }> = ({ onLogout, onNavigateLawyerWebsite, onNavigateNotary, onNavigateLawServices, onNavigateProviderProfile, onNavigateServicesDirectory, onViewAdminPreview }) => {
   const [currentPage, setCurrentPage] = useState<'home' | 'cases' | 'profile'>('home');
   const [user, setUser] = useState<UserProfile | null>(null);
-  const [metrics] = useState<DashboardMetrics>({
-    activeCases: 3,
-    completedCases: 12,
-    totalSpent: 4850,
-    averageRating: 4.8,
-  });
   const [toast, setToast] = useState<any>(null);
   const [activeCases] = useState<ActiveCase[]>([
     {
@@ -51,6 +46,7 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
       service: 'Employment Law - Wrongful Termination',
       status: 'active',
       createdAt: '2026-08-01',
+      cost: 2150,
       provider: { name: 'Sarah Johnson, Esq.', rating: 4.9 },
     },
     {
@@ -58,6 +54,7 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
       service: 'Personal Injury - Auto Accident',
       status: 'active',
       createdAt: '2026-08-05',
+      cost: 1875,
       provider: { name: 'James Miller, Esq.', rating: 4.7 },
     },
     {
@@ -65,8 +62,52 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
       service: 'Divorce & Separation',
       status: 'pending',
       createdAt: '2026-08-10',
+      cost: 0,
     },
   ]);
+
+  const [completedCases] = useState<ActiveCase[]>([
+    {
+      id: 'C1',
+      service: 'Contract Review & Negotiation',
+      status: 'completed',
+      createdAt: '2026-06-15',
+      cost: 850,
+      provider: { name: 'Michael Chen, Esq.', rating: 4.8 },
+    },
+    {
+      id: 'C2',
+      service: 'Trademark Registration',
+      status: 'completed',
+      createdAt: '2026-06-20',
+      cost: 625,
+      provider: { name: 'Rebecca Martinez, Esq.', rating: 4.9 },
+    },
+    {
+      id: 'C3',
+      service: 'Property Dispute Resolution',
+      status: 'completed',
+      createdAt: '2026-07-01',
+      cost: 1200,
+      provider: { name: 'David Kim, Esq.', rating: 4.6 },
+    },
+    {
+      id: 'C4',
+      service: 'Business Formation LLC',
+      status: 'completed',
+      createdAt: '2026-07-10',
+      cost: 500,
+      provider: { name: 'Jennifer Lee, Esq.', rating: 4.7 },
+    },
+  ]);
+
+  // Calculate metrics from cases
+  const metrics: DashboardMetrics = {
+    activeCases: activeCases.filter(c => c.status === 'active' || c.status === 'pending').length,
+    completedCases: completedCases.length,
+    totalSpent: [...activeCases, ...completedCases].reduce((sum, c) => sum + c.cost, 0),
+    averageRating: 4.8, // Average of all provider ratings used
+  };
 
   const showToast = (type: 'success' | 'error' | 'warning' | 'info', message: string) => {
     setToast({ type, message, duration: 3000, onClose: () => setToast(null) });
@@ -163,11 +204,49 @@ export const Dashboard: React.FC<{ onLogout?: () => void; onNavigateLawyerWebsit
                         </div>
                       )}
                       <p className="case-date">Started {new Date(caseItem.createdAt).toLocaleDateString()}</p>
+                      <div className="case-cost">
+                        <span className="cost-label">Cost to Date:</span>
+                        <span className="cost-value">${caseItem.cost.toLocaleString()}</span>
+                      </div>
                       <PrimaryButton
                         onClick={() => showToast('info', `Opening ${caseItem.service}...`)}
                         style={{ width: '100%', marginTop: '12px' }}
                       >
                         View Details →
+                      </PrimaryButton>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Completed Cases Section */}
+            {completedCases.length > 0 && (
+              <div className="dashboard-section">
+                <h2>Completed Cases</h2>
+                <div className="dashboard-cases-grid">
+                  {completedCases.map(caseItem => (
+                    <div key={caseItem.id} className="case-card-clean case-card-completed">
+                      <div className="case-header-clean">
+                        <h3>{caseItem.service}</h3>
+                        <span className="case-status-badge completed">✓ Completed</span>
+                      </div>
+                      {caseItem.provider && (
+                        <div className="case-provider">
+                          <p className="provider-name">{caseItem.provider.name}</p>
+                          <p className="provider-rating">⭐ {caseItem.provider.rating}</p>
+                        </div>
+                      )}
+                      <p className="case-date">Completed {new Date(caseItem.createdAt).toLocaleDateString()}</p>
+                      <div className="case-cost">
+                        <span className="cost-label">Final Cost:</span>
+                        <span className="cost-value">${caseItem.cost.toLocaleString()}</span>
+                      </div>
+                      <PrimaryButton
+                        onClick={() => showToast('info', `Viewing completed ${caseItem.service}...`)}
+                        style={{ width: '100%', marginTop: '12px' }}
+                      >
+                        View Summary →
                       </PrimaryButton>
                     </div>
                   ))}
