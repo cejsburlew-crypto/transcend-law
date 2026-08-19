@@ -1,268 +1,273 @@
-import React, { useState } from 'react'
-import './ProviderProfile.css'
+import React, { useState } from 'react';
+import { ServiceIcon } from '../components/ServiceIcon';
+import { useLanguage } from '../context/LanguageContext';
+import './ProviderProfile.css';
 
-interface Provider {
-  id: string
-  name: string
-  title: string
-  rating: number
-  reviews: number
-  firmId: string
-  firmName: string
-  firmWebsite: string
-  avatar: string
-  verified: boolean
-  yearsExperience: number
-  specialties: string[]
-  availability: 'available' | 'busy' | 'unavailable'
-  hourlyRate?: number
-  bio?: string
-  languages?: string[]
-  certifications?: string[]
-  awards?: string[]
+interface ProviderFormData {
+  profileType: 'client' | 'provider' | 'interested' | '';
+  fullName: string;
+  email: string;
+  phone: string;
+  company: string;
+  website: string;
+  selectedServices: string[];
+  serviceArea: string;
+  yearsExperience: string;
+  bio: string;
+  idVerified: boolean;
+  agreedToTerms: boolean;
 }
 
-interface ProviderProfileProps {
-  provider: Provider
-  onBack: () => void
-  onStartRequest: () => void
-}
+const PROVIDER_SERVICES = [
+  { id: 'attorney', label: 'Attorney Services', icon: 'scales' },
+  { id: 'notary', label: 'Notary Services', icon: 'stamp' },
+  { id: 'mediation', label: 'Mediation Services', icon: 'handshake' },
+  { id: 'bailbond', label: 'Bail Bond Services', icon: 'bars' },
+  { id: 'interpretation', label: 'Interpretation Services', icon: 'microphone' },
+  { id: 'translation', label: 'Translation Services', icon: 'globe' },
+  { id: 'legalresearch', label: 'Legal Research', icon: 'search' },
+  { id: 'compliance', label: 'Compliance Services', icon: 'clipboardCheck' },
+];
 
-export const ProviderProfile: React.FC<ProviderProfileProps> = ({
-  provider,
-  onBack,
-  onStartRequest,
-}) => {
-  const [activeTab, setActiveTab] = useState('overview')
+const STATES = [
+  'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
+  'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
+  'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
+  'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico',
+  'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania',
+  'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+];
 
-  const mockReviews = [
-    {
-      id: 1,
-      author: 'Jane Doe',
-      rating: 5,
-      date: '2 weeks ago',
-      text: 'Excellent service! Very professional and thorough. Highly recommend.',
-    },
-    {
-      id: 2,
-      author: 'John Smith',
-      rating: 4,
-      date: '1 month ago',
-      text: 'Great experience. Very knowledgeable and responsive.',
-    },
-    {
-      id: 3,
-      author: 'Sarah Johnson',
-      rating: 5,
-      date: '2 months ago',
-      text: 'Outstanding work. Exceeded all expectations.',
-    },
-  ]
+export const ProviderProfile: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
+  const { t } = useLanguage();
+  const [step, setStep] = useState<'type' | 'section1' | 'section2' | 'verification' | 'complete'>(
+    'type'
+  );
+  const [formData, setFormData] = useState<ProviderFormData>({
+    profileType: '',
+    fullName: '',
+    email: '',
+    phone: '',
+    company: '',
+    website: '',
+    selectedServices: [],
+    serviceArea: '',
+    yearsExperience: '',
+    bio: '',
+    idVerified: false,
+    agreedToTerms: false,
+  });
+
+  const handleProfileTypeSelect = (type: 'client' | 'provider' | 'interested') => {
+    setFormData({ ...formData, profileType: type });
+    if (type === 'client') {
+      handleSaveAndComplete();
+    } else {
+      setStep('section1');
+    }
+  };
+
+  const handleServiceToggle = (serviceId: string) => {
+    const isSelected = formData.selectedServices.includes(serviceId);
+    setFormData({
+      ...formData,
+      selectedServices: isSelected
+        ? formData.selectedServices.filter(s => s !== serviceId)
+        : [...formData.selectedServices, serviceId],
+    });
+  };
+
+  const handleStartVerification = async () => {
+    await saveProviderData();
+    setStep('verification');
+    initiateIDMeVerification();
+  };
+
+  const initiateIDMeVerification = () => {
+    console.log('Initiating ID.me verification for:', formData.email);
+    setTimeout(() => {
+      setFormData({ ...formData, idVerified: true });
+      setStep('complete');
+    }, 2000);
+  };
+
+  const saveProviderData = async () => {
+    try {
+      const response = await fetch('/api/v2/provider-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          timestamp: new Date().toISOString(),
+          status: 'pending_verification',
+        }),
+      });
+      return response.ok;
+    } catch (error) {
+      console.error('Failed to save provider data:', error);
+      return false;
+    }
+  };
+
+  const handleSaveAndComplete = async () => {
+    await saveProviderData();
+    setStep('complete');
+    if (onComplete) onComplete();
+  };
 
   return (
-    <div className="provider-profile-page">
-      {/* Header with back button */}
-      <div className="profile-header">
-        <button className="back-btn" onClick={onBack}>
-          ← Back
-        </button>
-      </div>
-
-      {/* Profile Hero */}
-      <div className="profile-hero">
-        <div className="profile-avatar-large">{provider.avatar}</div>
-        <div className="profile-hero-info">
-          <div className="profile-name-section">
-            <h1>{provider.name}</h1>
-            <p className="profile-title">{provider.title}</p>
-            {provider.verified && <span className="verified-badge">✓ Verified Professional</span>}
+    <div className="provider-profile-container">
+      {step === 'type' && (
+        <div className="provider-step">
+          <div className="step-header">
+            <h1>Join Transcend Law</h1>
+            <p>Tell us how you'd like to use Transcend Law</p>
           </div>
-          <div className="profile-stats">
-            <div className="stat">
-              <div className="stat-value">⭐ {provider.rating}</div>
-              <div className="stat-label">{provider.reviews} Reviews</div>
-            </div>
-            <div className="stat">
-              <div className="stat-value">{provider.yearsExperience}</div>
-              <div className="stat-label">Years Experience</div>
-            </div>
-            {provider.hourlyRate && (
-              <div className="stat">
-                <div className="stat-value">${provider.hourlyRate}/hr</div>
-                <div className="stat-label">Hourly Rate</div>
-              </div>
-            )}
-            <div className="stat">
-              <div className={`stat-value ${provider.availability}`}>
-                {provider.availability === 'available' && '🟢 Available'}
-                {provider.availability === 'busy' && '🟡 Busy'}
-                {provider.availability === 'unavailable' && '🔴 Unavailable'}
-              </div>
-              <div className="stat-label">Status</div>
-            </div>
+          <div className="profile-type-selector">
+            <button className="type-card client" onClick={() => handleProfileTypeSelect('client')}>
+              <ServiceIcon name="document" className="card-icon" />
+              <h3>Client</h3>
+              <p>I need legal services</p>
+            </button>
+            <button className="type-card provider" onClick={() => handleProfileTypeSelect('provider')}>
+              <ServiceIcon name="scales" className="card-icon" />
+              <h3>Service Provider</h3>
+              <p>I provide legal services</p>
+            </button>
+            <button className="type-card interested" onClick={() => handleProfileTypeSelect('interested')}>
+              <ServiceIcon name="star" className="card-icon" />
+              <h3>Interested</h3>
+              <p>I'd like to provide services</p>
+            </button>
           </div>
         </div>
+      )}
 
-        <div className="profile-actions">
-          <button className="btn-primary" onClick={onStartRequest}>
-            Start Request
-          </button>
-          <button className="btn-secondary" onClick={() => {}}>
-            Message
-          </button>
-        </div>
-      </div>
-
-      {/* Navigation Tabs */}
-      <div className="profile-tabs">
-        <button
-          className={`tab-btn ${activeTab === 'overview' ? 'active' : ''}`}
-          onClick={() => setActiveTab('overview')}
-        >
-          Overview
-        </button>
-        <button
-          className={`tab-btn ${activeTab === 'reviews' ? 'active' : ''}`}
-          onClick={() => setActiveTab('reviews')}
-        >
-          Reviews ({provider.reviews})
-        </button>
-        <button
-          className={`tab-btn ${activeTab === 'firm' ? 'active' : ''}`}
-          onClick={() => setActiveTab('firm')}
-        >
-          Firm Info
-        </button>
-      </div>
-
-      <div className="profile-content">
-        {/* Overview Tab */}
-        {activeTab === 'overview' && (
-          <div className="tab-content">
-            {/* Bio */}
-            <div className="content-section">
-              <h2>About</h2>
-              <p>
-                {provider.bio ||
-                  `Highly experienced ${provider.title.toLowerCase()} with a proven track record of success. Specialized in ${provider.specialties.join(
-                    ', '
-                  )}. Dedicated to providing exceptional service to all clients.`}
-              </p>
+      {step === 'section1' && (
+        <div className="provider-step">
+          <div className="step-header">
+            <h2>Step 1: Confirm Your Contact Information</h2>
+            <p>Help us verify your identity</p>
+          </div>
+          <form className="provider-form">
+            <div className="form-group">
+              <label>Full Name *</label>
+              <input type="text" placeholder="Your full name" value={formData.fullName} onChange={(e) => setFormData({ ...formData, fullName: e.target.value })} required />
             </div>
+            <div className="form-row">
+              <div className="form-group">
+                <label>Email *</label>
+                <input type="email" placeholder="your@email.com" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required />
+              </div>
+              <div className="form-group">
+                <label>Phone *</label>
+                <input type="tel" placeholder="(555) 123-4567" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} required />
+              </div>
+            </div>
+            <div className="form-row">
+              <div className="form-group">
+                <label>Company/Firm (if applicable)</label>
+                <input type="text" placeholder="Your company name" value={formData.company} onChange={(e) => setFormData({ ...formData, company: e.target.value })} />
+              </div>
+              <div className="form-group">
+                <label>Website (if applicable)</label>
+                <input type="url" placeholder="https://yourwebsite.com" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} />
+              </div>
+            </div>
+            <div className="form-actions">
+              <button type="button" className="btn-secondary" onClick={() => setStep('type')}>Back</button>
+              <button type="button" className="btn-primary" onClick={() => setStep('section2')} disabled={!formData.fullName || !formData.email || !formData.phone}>Next: Confirm Services</button>
+            </div>
+          </form>
+        </div>
+      )}
 
-            {/* Specialties */}
-            <div className="content-section">
-              <h2>Specialties</h2>
-              <div className="specialty-tags">
-                {provider.specialties.map((spec) => (
-                  <span key={spec} className="specialty-tag">
-                    {spec}
-                  </span>
+      {step === 'section2' && (
+        <div className="provider-step">
+          <div className="step-header">
+            <h2>Step 2: Confirm Your Skills & Services</h2>
+            <p>Select the services you provide or want to provide</p>
+          </div>
+          <form className="provider-form">
+            <div className="form-group">
+              <label>Service Areas *</label>
+              <div className="services-grid">
+                {PROVIDER_SERVICES.map((service) => (
+                  <button key={service.id} type="button" className={`service-checkbox ${formData.selectedServices.includes(service.id) ? 'selected' : ''}`} onClick={() => handleServiceToggle(service.id)}>
+                    <ServiceIcon name={service.icon} className="service-icon" />
+                    <span>{service.label}</span>
+                  </button>
                 ))}
               </div>
             </div>
-
-            {/* Languages */}
-            {provider.languages && provider.languages.length > 0 && (
-              <div className="content-section">
-                <h2>Languages</h2>
-                <div className="language-list">
-                  {provider.languages.map((lang) => (
-                    <span key={lang} className="language-badge">
-                      {lang}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Certifications */}
-            {provider.certifications && provider.certifications.length > 0 && (
-              <div className="content-section">
-                <h2>Certifications & Credentials</h2>
-                <ul className="credentials-list">
-                  {provider.certifications.map((cert) => (
-                    <li key={cert}>✓ {cert}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Awards */}
-            {provider.awards && provider.awards.length > 0 && (
-              <div className="content-section">
-                <h2>Awards & Recognition</h2>
-                <ul className="awards-list">
-                  {provider.awards.map((award) => (
-                    <li key={award}>🏆 {award}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Reviews Tab */}
-        {activeTab === 'reviews' && (
-          <div className="tab-content">
-            <div className="reviews-summary">
-              <div className="rating-display">
-                <div className="rating-stars">⭐⭐⭐⭐⭐</div>
-                <div className="rating-value">{provider.rating}</div>
-                <div className="rating-count">Based on {provider.reviews} reviews</div>
+            <div className="form-group">
+              <label>Service State/Region *</label>
+              <select value={formData.serviceArea} onChange={(e) => setFormData({ ...formData, serviceArea: e.target.value })} required>
+                <option value="">Select a state or region...</option>
+                {STATES.map((state) => (<option key={state} value={state}>{state}</option>))}
+              </select>
+            </div>
+            <div className="form-row">
+              <div className="form-group">
+                <label>Years of Experience</label>
+                <input type="number" placeholder="e.g., 10" min="0" max="70" value={formData.yearsExperience} onChange={(e) => setFormData({ ...formData, yearsExperience: e.target.value })} />
               </div>
             </div>
-
-            <div className="reviews-list">
-              {mockReviews.map((review) => (
-                <div key={review.id} className="review-item">
-                  <div className="review-header">
-                    <div className="review-author">{review.author}</div>
-                    <div className="review-date">{review.date}</div>
-                  </div>
-                  <div className="review-rating">
-                    {'⭐'.repeat(review.rating)}
-                  </div>
-                  <p className="review-text">{review.text}</p>
-                </div>
-              ))}
+            <div className="form-group">
+              <label>Professional Bio (optional)</label>
+              <textarea placeholder="Tell us about your background and expertise..." value={formData.bio} onChange={(e) => setFormData({ ...formData, bio: e.target.value })} rows={4} />
             </div>
-          </div>
-        )}
-
-        {/* Firm Info Tab */}
-        {activeTab === 'firm' && (
-          <div className="tab-content">
-            <div className="firm-card">
-              <h2>Firm Information</h2>
-              <div className="firm-details">
-                <div className="firm-item">
-                  <span className="firm-label">Firm Name:</span>
-                  <span className="firm-value">{provider.firmName}</span>
-                </div>
-                <div className="firm-item">
-                  <span className="firm-label">Website:</span>
-                  <a href={provider.firmWebsite} target="_blank" rel="noopener noreferrer" className="firm-link">
-                    {provider.firmWebsite}
-                  </a>
-                </div>
-                <div className="firm-item">
-                  <span className="firm-label">Contact:</span>
-                  <span className="firm-value">
-                    Email through platform or visit website
-                  </span>
-                </div>
-              </div>
-
-              <div className="firm-action-section">
-                <button className="btn-secondary-large">
-                  Visit Firm Profile →
-                </button>
-              </div>
+            <div className="checkbox-group">
+              <label>
+                <input type="checkbox" checked={formData.agreedToTerms} onChange={(e) => setFormData({ ...formData, agreedToTerms: e.target.checked })} required />
+                <span>I agree to the Terms of Service and Privacy Policy</span>
+              </label>
             </div>
+            <div className="form-actions">
+              <button type="button" className="btn-secondary" onClick={() => setStep('section1')}>Back</button>
+              <button type="button" className="btn-primary" onClick={handleStartVerification} disabled={!formData.selectedServices.length || !formData.serviceArea || !formData.agreedToTerms}>Verify with ID.me</button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {step === 'verification' && (
+        <div className="provider-step">
+          <div className="step-header">
+            <h2>Verifying Your Identity</h2>
+            <p>Completing ID.me verification...</p>
           </div>
-        )}
-      </div>
+          <div className="verification-loading">
+            <div className="spinner"></div>
+            <p>Please wait while we verify your information through ID.me</p>
+          </div>
+        </div>
+      )}
+
+      {step === 'complete' && (
+        <div className="provider-step">
+          <div className="step-header success">
+            <ServiceIcon name="check" className="success-icon" />
+            <h2>Profile Complete!</h2>
+            <p>Your provider profile has been created and verified</p>
+          </div>
+          <div className="completion-info">
+            <h3>What's Next?</h3>
+            <ul>
+              <li>Your profile will appear in the Transcend Law directory</li>
+              <li>Clients can find and contact you for your services</li>
+              <li>You'll receive notifications when clients request your services</li>
+              <li>Update your profile anytime from your dashboard</li>
+            </ul>
+          </div>
+          <div className="form-actions">
+            <button type="button" className="btn-primary" onClick={() => onComplete?.()}>Go to Dashboard</button>
+          </div>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
+
+export default ProviderProfile;
