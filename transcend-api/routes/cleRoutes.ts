@@ -15,6 +15,11 @@ import {
   getCLEProvider,
 } from '../services/cleService';
 import { authenticateToken, authorize } from '../middleware/auth';
+import { queryParam, routeParam } from '../src/utils/httpParams';
+
+// NOTE: `req.user!` assertions below are sound - this router applies
+// authentication middleware, so a handler cannot run without an authenticated
+// user. TypeScript cannot see that guarantee across the middleware boundary.
 
 const router = express.Router();
 
@@ -33,7 +38,7 @@ router.post(
   authorize(['attorney', 'admin']),
   async (req, res) => {
     try {
-      const { attorneyId } = req.params;
+      const attorneyId = routeParam(req.params.attorneyId);
       const {
         courseName,
         courseDescription,
@@ -46,7 +51,7 @@ router.post(
       } = req.body;
 
       // Validate authorization
-      if (req.user.role === 'attorney' && req.user.id !== attorneyId) {
+      if (req.user!.role === 'attorney' && req.user!.id !== attorneyId) {
         return res.status(403).json({ error: 'Unauthorized' });
       }
 
@@ -89,11 +94,11 @@ router.post(
  */
 router.get('/:attorneyId', authenticateToken, async (req, res) => {
   try {
-    const { attorneyId } = req.params;
-    const { state = 'CA', year = new Date().getFullYear() } = req.query;
+    const attorneyId = routeParam(req.params.attorneyId);
+    const state = queryParam(req.query.state); const year = queryParam(req.query.year);
 
     // Validate authorization
-    if (req.user.role === 'attorney' && req.user.id !== attorneyId) {
+    if (req.user!.role === 'attorney' && req.user!.id !== attorneyId) {
       return res.status(403).json({ error: 'Unauthorized' });
     }
 
@@ -127,11 +132,11 @@ router.get('/:attorneyId', authenticateToken, async (req, res) => {
  */
 router.get('/:attorneyId/credits', authenticateToken, async (req, res) => {
   try {
-    const { attorneyId } = req.params;
-    const { state, year } = req.query;
+    const attorneyId = routeParam(req.params.attorneyId);
+    const state = queryParam(req.query.state); const year = queryParam(req.query.year);
 
     // Validate authorization
-    if (req.user.role === 'attorney' && req.user.id !== attorneyId) {
+    if (req.user!.role === 'attorney' && req.user!.id !== attorneyId) {
       return res.status(403).json({ error: 'Unauthorized' });
     }
 
@@ -164,11 +169,11 @@ router.get('/:attorneyId/credits', authenticateToken, async (req, res) => {
  */
 router.get('/:attorneyId/compliance', authenticateToken, async (req, res) => {
   try {
-    const { attorneyId } = req.params;
-    const { state = 'CA', year = new Date().getFullYear() } = req.query;
+    const attorneyId = routeParam(req.params.attorneyId);
+    const state = queryParam(req.query.state); const year = queryParam(req.query.year);
 
     // Validate authorization
-    if (req.user.role === 'attorney' && req.user.id !== attorneyId) {
+    if (req.user!.role === 'attorney' && req.user!.id !== attorneyId) {
       return res.status(403).json({ error: 'Unauthorized' });
     }
 
@@ -207,7 +212,7 @@ router.post(
   authorize(['admin']),
   async (req, res) => {
     try {
-      const { attorneyId } = req.params;
+      const attorneyId = routeParam(req.params.attorneyId);
       const { state = 'CA', year = new Date().getFullYear() } = req.body;
 
       const compliance = await updateCLEComplianceStatus(attorneyId, state, year);
@@ -241,7 +246,7 @@ router.post(
   authorize(['admin']),
   async (req, res) => {
     try {
-      const { attorneyId } = req.params;
+      const attorneyId = routeParam(req.params.attorneyId);
       const { state = 'CA', year } = req.body;
 
       const deadline = await createOrUpdateCLEDeadline(attorneyId, state, year);
@@ -283,7 +288,7 @@ router.get('/states/requirements', (req, res) => {
  */
 router.get('/states/requirements/:state', (req, res) => {
   try {
-    const { state } = req.params;
+    const state = routeParam(req.params.state);
     const requirements = STATE_CLE_REQUIREMENTS[state.toUpperCase()];
 
     if (!requirements) {
@@ -313,11 +318,11 @@ router.get('/states/requirements/:state', (req, res) => {
  */
 router.get('/:attorneyId/report', authenticateToken, async (req, res) => {
   try {
-    const { attorneyId } = req.params;
-    const { state = 'CA', year = new Date().getFullYear() } = req.query;
+    const attorneyId = routeParam(req.params.attorneyId);
+    const state = queryParam(req.query.state); const year = queryParam(req.query.year);
 
     // Validate authorization
-    if (req.user.role === 'attorney' && req.user.id !== attorneyId) {
+    if (req.user!.role === 'attorney' && req.user!.id !== attorneyId) {
       return res.status(403).json({ error: 'Unauthorized' });
     }
 
@@ -345,11 +350,11 @@ router.get('/:attorneyId/report', authenticateToken, async (req, res) => {
  */
 router.get('/:attorneyId/export', authenticateToken, async (req, res) => {
   try {
-    const { attorneyId } = req.params;
-    const { state = 'CA', year = new Date().getFullYear(), format = 'pdf' } = req.query;
+    const attorneyId = routeParam(req.params.attorneyId);
+    const state = queryParam(req.query.state); const year = queryParam(req.query.year); const format = queryParam(req.query.format);
 
     // Validate authorization
-    if (req.user.role === 'attorney' && req.user.id !== attorneyId) {
+    if (req.user!.role === 'attorney' && req.user!.id !== attorneyId) {
       return res.status(403).json({ error: 'Unauthorized' });
     }
 
@@ -446,7 +451,7 @@ router.post(
  */
 router.get('/providers/:providerId', authenticateToken, async (req, res) => {
   try {
-    const { providerId } = req.params;
+    const providerId = routeParam(req.params.providerId);
 
     const provider = await getCLEProvider(providerId);
 

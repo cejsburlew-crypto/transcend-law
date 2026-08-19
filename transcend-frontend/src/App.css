@@ -183,8 +183,36 @@ textarea::placeholder {
   flex-shrink: 0;
 }
 
-.global-header__lang {
+.global-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   margin-left: auto;
+}
+
+.global-header__profile-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.global-header__profile-btn:hover {
+  background: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+.global-header__profile-icon {
+  width: 20px;
+  height: 20px;
+  color: #667eea;
 }
 
 /* Phones: brand + language on the first row, nav on its own full-width row

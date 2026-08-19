@@ -16,12 +16,13 @@ import Breadcrumbs from './components/Navigation/Breadcrumbs';
 import type { BreadcrumbItem } from './components/Navigation/Breadcrumbs';
 import { LanguageSelector } from './components/LanguageSelector';
 import { ServiceIcon } from './components/ServiceIcon';
+import { UserProfile } from './pages/UserProfile';
 import './App.css';
 
 const AppContent: React.FC = () => {
   const { t } = useLanguage();
   const { user, token, logout } = useAuth();
-  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website' | 'admin-role-preview' | 'notary' | 'law-services' | 'provider-profile' | 'services-directory' | 'messages' | 'case-details'>(
+  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website' | 'admin-role-preview' | 'notary' | 'law-services' | 'provider-profile' | 'services-directory' | 'messages' | 'case-details' | 'user-profile'>(
     token && user ? 'services-directory' : 'landing'
   );
   const [selectedCaseId, setSelectedCaseId] = useState<string>('1');
@@ -100,6 +101,11 @@ const AppContent: React.FC = () => {
           { label: t('dashboard'), icon: '📊', onClick: () => setCurrentView('dashboard') },
           { label: 'Services', icon: '📚' },
         ];
+      case 'user-profile':
+        return [
+          { label: t('home'), icon: '⚖️', onClick: () => setCurrentView('landing') },
+          { label: 'Profile', icon: '👤' },
+        ];
       default:
         return [];
     }
@@ -141,8 +147,19 @@ const AppContent: React.FC = () => {
                 <span>{t('nav.messages')}</span>
               </button>
             </nav>
-            <div className="global-header__lang">
-              <LanguageSelector />
+            <div className="global-header__actions">
+              <button
+                type="button"
+                className="global-header__profile-btn"
+                onClick={() => setCurrentView('user-profile')}
+                title="Profile"
+                aria-label="User profile"
+              >
+                <ServiceIcon name="user" className="global-header__profile-icon" />
+              </button>
+              <div className="global-header__lang">
+                <LanguageSelector />
+              </div>
             </div>
           </header>
           {/* Offsets the fixed header; height is driven by --global-header-h */}
@@ -150,7 +167,9 @@ const AppContent: React.FC = () => {
         </>
       )}
       {/* Breadcrumbs hidden - use navigation menus instead */}
-      {currentView === 'case-details' && token && user ? (
+      {currentView === 'user-profile' && token && user ? (
+        <UserProfile onNavigateProvider={() => setCurrentView('provider-profile')} onBack={() => setCurrentView('dashboard')} />
+      ) : currentView === 'case-details' && token && user ? (
         <CaseDetails caseId={selectedCaseId} onBack={() => setCurrentView('dashboard')} />
       ) : currentView === 'admin-role-preview' && token && user ? (
         <AdminRolePreview />

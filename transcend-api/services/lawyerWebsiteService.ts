@@ -6,7 +6,7 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-import { query } from '../../../transcend-law/backend/src/db/connection.js';
+import { query } from '../src/database/connection';
 
 const CLOVER_API_BASE = 'https://api.clover.com';
 const CLOVER_API_KEY = process.env.CLOVER_API_KEY;

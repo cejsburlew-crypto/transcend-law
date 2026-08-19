@@ -23,6 +23,7 @@ import {
 } from '../services/dataResidencyService';
 import { authMiddleware } from '../middleware/authMiddleware';
 import { logAuditEvent } from '../services/securityService';
+import { queryParam, routeParam } from '../utils/httpParams';
 
 const router = express.Router();
 
@@ -205,7 +206,7 @@ router.post('/compliance-report', authMiddleware, async (req: Request, res: Resp
 router.get('/audit-trail', authMiddleware, async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    const { limit = 50 } = req.query;
+    const limit = queryParam(req.query.limit);
 
     if (!userId) {
       return res.status(401).json({
@@ -326,7 +327,7 @@ router.post('/transfer-request', authMiddleware, async (req: Request, res: Respo
  */
 router.post('/transfer/approve/:requestId', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const { requestId } = req.params;
+    const requestId = routeParam(req.params.requestId);
     const adminId = req.user?.id;
 
     if (!adminId || req.user?.userType !== 'admin') {
@@ -365,7 +366,7 @@ router.post('/transfer/approve/:requestId', authMiddleware, async (req: Request,
  */
 router.post('/transfer/execute/:requestId', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const { requestId } = req.params;
+    const requestId = routeParam(req.params.requestId);
     const adminId = req.user?.id;
 
     if (!adminId || req.user?.userType !== 'admin') {
@@ -459,7 +460,7 @@ router.post('/rotate-keys', authMiddleware, async (req: Request, res: Response) 
  */
 router.get('/volume/:region', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const { region } = req.params;
+    const region = routeParam(req.params.region);
 
     if (req.user?.userType !== 'admin') {
       return res.status(403).json({

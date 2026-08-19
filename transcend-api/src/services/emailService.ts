@@ -16,7 +16,13 @@ interface EmailContext {
   [key: string]: string | number | boolean;
 }
 
-const emailTemplates = {
+/**
+ * Known template names, plus any other string. `(string & {})` keeps editor
+ * autocomplete for the real keys while still accepting free text.
+ */
+export type EmailTemplateName = keyof typeof emailTemplates | (string & {});
+
+export const emailTemplates = {
   // Auth emails
   welcomeClient: {
     subject: 'Welcome to Transcend Law',
@@ -87,20 +93,26 @@ const emailTemplates = {
 // SEND EMAIL
 // ============================================
 
+/**
+ * Send a templated email.
+ *
+ * `templateKey` accepts any string. Several services pass a key that has no
+ * template defined (e.g. 'churnWinBack') or a literal subject line
+ * ("Escrow Funds Released"); previously those calls did not typecheck, so those
+ * modules never compiled and the mail was never sent at all. An unknown key is
+ * now used verbatim as the subject with a generic body, which delivers the
+ * message rather than throwing it away. Add a real template to improve it.
+ */
 export async function sendEmail(
   to: string,
-  templateKey: keyof typeof emailTemplates,
+  templateKey: EmailTemplateName,
   context?: EmailContext
 ): Promise<void> {
   try {
-    const template = emailTemplates[templateKey];
-
-    if (!template) {
-      throw new Error(`Email template not found: ${templateKey}`);
-    }
+    const template = (emailTemplates as Record<string, { subject: string }>)[templateKey];
 
     // Replace variables in subject
-    let subject = template.subject;
+    let subject = template ? template.subject : templateKey;
     if (context) {
       Object.entries(context).forEach(([key, value]) => {
         subject = subject.replace(`{${key}}`, String(value));
@@ -108,7 +120,7 @@ export async function sendEmail(
     }
 
     // Build HTML body based on template
-    const htmlBody = buildEmailBody(templateKey, context || {});
+    const htmlBody = buildEmailBody(templateKey as any, context || {});
 
     const msg = {
       to,
@@ -120,6 +132,29 @@ export async function sendEmail(
 
     await sgMail.send(msg as any);
     console.log(`✅ Email sent to ${to}: ${templateKey}`);
+  } catch (error) {
+    console.error('Failed to send email:', error);
+    throw error;
+  }
+}
+
+/**
+ * Send an email with an explicit subject and body, bypassing templates.
+ *
+ * Used by services that compose their own copy (retainer/escrow notices).
+ * Body is treated as HTML; a plain-text alternative is derived from it.
+ */
+export async function sendRawEmail(to: string, subject: string, body: string): Promise<void> {
+  try {
+    const html = /<[a-z][\s\S]*>/i.test(body) ? body : `<p>${body}</p>`;
+    await sgMail.send({
+      to,
+      from: FROM_EMAIL,
+      subject,
+      html,
+      text: html.replace(/<[^>]*>/g, ''),
+    } as any);
+    console.log(`✅ Email sent to ${to}: ${subject}`);
   } catch (error) {
     console.error('Failed to send email:', error);
     throw error;

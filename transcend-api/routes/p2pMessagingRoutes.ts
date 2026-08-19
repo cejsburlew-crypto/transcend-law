@@ -12,6 +12,20 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 const router = Router();
+
+// Attorney-to-attorney threads are privileged. `authenticate` was imported but
+// never applied, so req.user was always undefined and every handler returned
+// 401. Applied router-wide so it cannot be omitted per route.
+router.use(authenticate);
+
+/**
+ * Express 5 types route params as `string | string[]` to accommodate wildcard
+ * routes. Every route here binds a single value, so narrow explicitly rather
+ * than casting - an array would otherwise reach the query layer as a value.
+ */
+const routeParam = (value: string | string[] | undefined): string =>
+  Array.isArray(value) ? value[0] ?? '' : value ?? '';
+
 const uploadDir = process.env.UPLOAD_DIR || './uploads/p2p';
 
 // Ensure upload directory exists
@@ -120,7 +134,7 @@ router.get('/conversations', async (req: Request, res: Response) => {
 router.get('/conversations/:conversationId', async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    const { conversationId } = req.params;
+    const conversationId = routeParam(req.params.conversationId);
 
     if (!userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -142,7 +156,7 @@ router.get('/conversations/:conversationId', async (req: Request, res: Response)
 router.post('/conversations/:conversationId/archive', async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    const { conversationId } = req.params;
+    const conversationId = routeParam(req.params.conversationId);
 
     if (!userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -168,7 +182,7 @@ router.post('/conversations/:conversationId/archive', async (req: Request, res: 
 router.post('/conversations/:conversationId/messages', async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    const { conversationId } = req.params;
+    const conversationId = routeParam(req.params.conversationId);
     const { content, messageType, attachments } = req.body;
 
     if (!userId || !content || !messageType) {
@@ -206,7 +220,7 @@ router.post('/conversations/:conversationId/messages', async (req: Request, res:
 router.get('/conversations/:conversationId/messages', async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    const { conversationId } = req.params;
+    const conversationId = routeParam(req.params.conversationId);
     const limit = parseInt(req.query.limit as string) || 100;
     const offset = parseInt(req.query.offset as string) || 0;
 
@@ -235,7 +249,7 @@ router.get('/conversations/:conversationId/messages', async (req: Request, res: 
 router.put('/messages/:messageId/read', async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    const { messageId } = req.params;
+    const messageId = routeParam(req.params.messageId);
 
     if (!userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -284,7 +298,7 @@ router.post('/upload', upload.single('file'), async (req: Request, res: Response
 router.get('/files/:filename', async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    const { filename } = req.params;
+    const filename = routeParam(req.params.filename);
 
     if (!userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -351,7 +365,7 @@ router.post('/referrals', async (req: Request, res: Response) => {
 router.get('/referrals/:referralId', async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    const { referralId } = req.params;
+    const referralId = routeParam(req.params.referralId);
 
     if (!userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -373,7 +387,7 @@ router.get('/referrals/:referralId', async (req: Request, res: Response) => {
 router.patch('/referrals/:referralId', async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    const { referralId } = req.params;
+    const referralId = routeParam(req.params.referralId);
     const { status } = req.body;
 
     if (!userId || !status) {
@@ -445,7 +459,7 @@ router.post('/subcontracts', async (req: Request, res: Response) => {
 router.get('/subcontracts/:subcontractId', async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    const { subcontractId } = req.params;
+    const subcontractId = routeParam(req.params.subcontractId);
 
     if (!userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -467,7 +481,7 @@ router.get('/subcontracts/:subcontractId', async (req: Request, res: Response) =
 router.patch('/subcontracts/:subcontractId', async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    const { subcontractId } = req.params;
+    const subcontractId = routeParam(req.params.subcontractId);
     const { status, newRate } = req.body;
 
     if (!userId || !status) {
@@ -533,7 +547,7 @@ router.post('/disputes', async (req: Request, res: Response) => {
 router.get('/disputes/:disputeId', async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    const { disputeId } = req.params;
+    const disputeId = routeParam(req.params.disputeId);
 
     if (!userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -555,7 +569,7 @@ router.get('/disputes/:disputeId', async (req: Request, res: Response) => {
 router.patch('/disputes/:disputeId/resolve', async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    const { disputeId } = req.params;
+    const disputeId = routeParam(req.params.disputeId);
     const { resolutionDetails } = req.body;
 
     if (!userId || !resolutionDetails) {

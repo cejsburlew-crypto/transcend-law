@@ -4,6 +4,7 @@
 import { Router, Request, Response } from 'express';
 import ChurnPredictionService from '../services/churnPrediction';
 import { authenticateUser, authorizeAdmin } from '../middleware/auth';
+import { routeParam } from '../src/utils/httpParams';
 
 const router = Router();
 
@@ -41,7 +42,7 @@ router.get('/prediction/current', authenticateUser, async (req: Request, res: Re
  */
 router.get('/prediction/:userId', authenticateUser, authorizeAdmin, async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
+    const userId = routeParam(req.params.userId);
     const prediction = await ChurnPredictionService.predictChurnForUser(userId);
 
     if (!prediction) {
@@ -108,7 +109,7 @@ router.get('/at-risk-users', authenticateUser, authorizeAdmin, async (req: Reque
  */
 router.get('/at-risk-users/:segment', authenticateUser, authorizeAdmin, async (req: Request, res: Response) => {
   try {
-    const { segment } = req.params;
+    const segment = routeParam(req.params.segment);
     const validSegments = ['low', 'medium', 'high', 'critical'];
 
     if (!validSegments.includes(segment)) {
@@ -232,7 +233,7 @@ router.post('/send-winback-email', authenticateUser, authorizeAdmin, async (req:
  */
 router.get('/winback-offer/:userId', authenticateUser, async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
+    const userId = routeParam(req.params.userId);
 
     // Check if request user matches userId or is admin
     if (req.user?.id !== userId && !req.user?.isAdmin) {
@@ -343,7 +344,7 @@ router.post('/track-event', authenticateUser, async (req: Request, res: Response
  */
 router.post('/track-open/:token', async (req: Request, res: Response) => {
   try {
-    const { token } = req.params;
+    const token = routeParam(req.params.token);
 
     // Decode token to get campaign ID
     const decoded = Buffer.from(token, 'base64').toString('utf-8');
@@ -369,7 +370,7 @@ router.post('/track-open/:token', async (req: Request, res: Response) => {
  */
 router.post('/track-click/:token', async (req: Request, res: Response) => {
   try {
-    const { token } = req.params;
+    const token = routeParam(req.params.token);
 
     const decoded = Buffer.from(token, 'base64').toString('utf-8');
     const [campaignId] = decoded.split(':');

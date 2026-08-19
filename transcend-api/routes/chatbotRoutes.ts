@@ -21,6 +21,7 @@ import {
 } from '../services/aiChatbot';
 import { logAction } from '../services/auditLogger';
 import { authMiddleware, adminMiddleware } from '../middleware/auth';
+import { queryParam, routeParam } from '../src/utils/httpParams';
 
 const router = Router();
 
@@ -54,7 +55,7 @@ router.post('/conversations', authMiddleware, async (req: Request, res: Response
  */
 router.get('/conversations/:conversationId', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const { conversationId } = req.params;
+    const conversationId = routeParam(req.params.conversationId);
 
     const conversation = await getConversation(conversationId);
 
@@ -296,8 +297,8 @@ router.post('/close', authMiddleware, async (req: Request, res: Response) => {
  */
 router.get('/analytics', authMiddleware, adminMiddleware, async (req: Request, res: Response) => {
   try {
-    const startDate = req.query.startDate ? new Date(req.query.startDate as string) : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-    const endDate = req.query.endDate ? new Date(req.query.endDate as string) : new Date();
+    const startDate = queryParam(req.query.startDate) ? new Date(req.query.startDate as string) : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const endDate = queryParam(req.query.endDate) ? new Date(req.query.endDate as string) : new Date();
 
     if (startDate > endDate) {
       return res.status(400).json({
@@ -320,7 +321,7 @@ router.get('/analytics', authMiddleware, adminMiddleware, async (req: Request, r
  */
 router.get('/analytics/conversation/:conversationId', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const { conversationId } = req.params;
+    const conversationId = routeParam(req.params.conversationId);
 
     // Verify user owns this conversation
     const conversation = await getConversation(conversationId);
@@ -364,7 +365,7 @@ router.get('/common-questions', authMiddleware, adminMiddleware, async (req: Req
  */
 router.get('/kb/search', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const query = req.query.q as string;
+    const query = queryParam(req.query.q) as string;
     const limit = parseInt(req.query.limit as string) || 5;
 
     if (!query) {

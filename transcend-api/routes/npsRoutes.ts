@@ -6,6 +6,7 @@
 import type { Request, Response } from 'express';
 import { npsService, NPSDashboardMetrics } from '../services/npsService';
 import { logAction } from '../services/auditLogger';
+import { queryParam, routeParam } from '../src/utils/httpParams';
 
 /**
  * POST /api/nps/submit
@@ -44,7 +45,7 @@ export async function submitNPSSurvey(req: Request, res: Response) {
  */
 export async function checkSurveyEligibility(req: Request, res: Response) {
   try {
-    const userId = req.user?.id || req.query.userId;
+    const userId = req.user?.id || queryParam(req.query.userId);
 
     if (!userId) {
       return res.status(400).json({ error: 'User ID required' });
@@ -68,7 +69,7 @@ export async function checkSurveyEligibility(req: Request, res: Response) {
  */
 export async function getNPSSurvey(req: Request, res: Response) {
   try {
-    const { id } = req.params;
+    const id = routeParam(req.params.id);
 
     const survey = await npsService.getSurvey(id);
 
@@ -89,8 +90,8 @@ export async function getNPSSurvey(req: Request, res: Response) {
  */
 export async function getUserSurveyHistory(req: Request, res: Response) {
   try {
-    const { userId } = req.params;
-    const limit = parseInt(req.query.limit as string) || 12;
+    const userId = routeParam(req.params.userId);
+    const limit = parseInt(queryParam(req.query.limit) as string) || 12;
 
     const history = await npsService.getUserSurveyHistory(userId, limit);
 
@@ -112,8 +113,8 @@ export async function getUserSurveyHistory(req: Request, res: Response) {
  */
 export async function getNPSTrends(req: Request, res: Response) {
   try {
-    const { period } = req.params;
-    const limit = parseInt(req.query.limit as string) || 12;
+    const period = routeParam(req.params.period);
+    const limit = parseInt(queryParam(req.query.limit) as string) || 12;
 
     if (!['daily', 'weekly', 'monthly'].includes(period)) {
       return res.status(400).json({ error: 'Invalid period' });
@@ -172,7 +173,7 @@ export async function getNPSActionItems(req: Request, res: Response) {
       return res.status(403).json({ error: 'Admin access required' });
     }
 
-    const { trendId, status } = req.query;
+    const trendId = queryParam(req.query.trendId); const status = queryParam(req.query.status);
 
     const actionItems = await npsService.getActionItems(
       trendId as string | undefined,
@@ -202,7 +203,7 @@ export async function updateNPSActionItem(req: Request, res: Response) {
       return res.status(403).json({ error: 'Admin access required' });
     }
 
-    const { id } = req.params;
+    const id = routeParam(req.params.id);
     const { status } = req.body;
 
     if (!['open', 'in_progress', 'resolved'].includes(status)) {
@@ -237,7 +238,7 @@ export async function exportNPSData(req: Request, res: Response) {
       return res.status(403).json({ error: 'Admin access required' });
     }
 
-    const { startDate, endDate, format = 'json' } = req.query;
+    const startDate = queryParam(req.query.startDate); const endDate = queryParam(req.query.endDate); const format = queryParam(req.query.format);
 
     if (!startDate || !endDate) {
       return res.status(400).json({ error: 'startDate and endDate required' });

@@ -5,6 +5,7 @@ import express, { Request, Response } from 'express';
 import { authenticateToken, isAdmin } from '../middleware/auth';
 import { kycRateLimit, detectSuspiciousActivity } from '../middleware/kycRateLimit';
 import kycService from '../services/kycService';
+import { routeParam } from '../utils/httpParams';
 
 const router = express.Router();
 
@@ -38,7 +39,7 @@ router.post('/email/initiate', authenticateToken, kycRateLimit('email'), async (
 // Verify email token
 router.post('/email/verify/:token', authenticateToken, async (req: Request, res: Response) => {
   try {
-    const { token } = req.params;
+    const token = routeParam(req.params.token);
 
     if (!token) {
       return res.status(400).json({ success: false, message: 'Token is required' });
@@ -257,7 +258,7 @@ router.post(
   isAdmin,
   async (req: Request, res: Response) => {
     try {
-      const { verificationId } = req.params;
+      const verificationId = routeParam(req.params.verificationId);
       const { userId, agentNotes } = req.body;
 
       if (!userId || !agentNotes) {
@@ -322,7 +323,7 @@ router.post(
   isAdmin,
   async (req: Request, res: Response) => {
     try {
-      const { verificationId } = req.params;
+      const verificationId = routeParam(req.params.verificationId);
 
       const result = await kycService.approveVerification(
         verificationId,
@@ -346,7 +347,7 @@ router.post(
   isAdmin,
   async (req: Request, res: Response) => {
     try {
-      const { verificationId } = req.params;
+      const verificationId = routeParam(req.params.verificationId);
       const { reason } = req.body;
 
       if (!reason) {

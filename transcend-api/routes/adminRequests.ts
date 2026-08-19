@@ -6,6 +6,7 @@
 import { Router, Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { query } from '../database/connection';
+import { queryParam, routeParam } from '../src/utils/httpParams';
 
 const router = Router();
 
@@ -29,7 +30,7 @@ function validateRequest(title: string, description: string) {
 // GET /api/admin/requests - List requests with optional filtering
 router.get('/api/admin/requests', async (req: Request, res: Response) => {
   try {
-    const { status, type, priority, limit = 50, offset = 0 } = req.query;
+    const status = queryParam(req.query.status); const type = queryParam(req.query.type); const priority = queryParam(req.query.priority); const limit = queryParam(req.query.limit); const offset = queryParam(req.query.offset);
 
     let queryStr = 'SELECT * FROM admin_requests WHERE archived = FALSE';
     const params: any[] = [];
@@ -190,7 +191,7 @@ router.post('/api/admin/requests', async (req: Request, res: Response) => {
 // GET /api/admin/requests/:id - Get request details
 router.get('/api/admin/requests/:id', async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = routeParam(req.params.id);
 
     // Validate UUID format
     if (!id.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {
@@ -223,7 +224,7 @@ router.get('/api/admin/requests/:id', async (req: Request, res: Response) => {
 // PATCH /api/admin/requests/:id - Update request status/progress
 router.patch('/api/admin/requests/:id', async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = routeParam(req.params.id);
     const { status, completionPercentage, estimatedCompletion } = req.body;
 
     // Validate UUID format
@@ -340,7 +341,7 @@ router.patch('/api/admin/requests/:id', async (req: Request, res: Response) => {
 // DELETE /api/admin/requests/:id - Archive request (soft delete)
 router.delete('/api/admin/requests/:id', async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = routeParam(req.params.id);
 
     // Validate UUID format
     if (!id.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {
@@ -380,7 +381,7 @@ router.delete('/api/admin/requests/:id', async (req: Request, res: Response) => 
 // GET /api/admin/requests/:id/history - Get request audit history
 router.get('/api/admin/requests/:id/history', async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = routeParam(req.params.id);
 
     // Validate UUID format
     if (!id.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {

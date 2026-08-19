@@ -9,6 +9,30 @@ import { logAuditEvent } from './securityService';
 // TYPES AND INTERFACES
 // ============================================
 
+/**
+ * A row from `encryption_keys` exactly as Postgres returns it.
+ *
+ * These functions do `SELECT *` and return `result.rows` directly, so the
+ * runtime shape is snake_case. The camelCase `EncryptionKey` below was being
+ * used as the return type, which made every property read a type error while
+ * the (correct) snake_case reads looked wrong. Rewriting the reads to camelCase
+ * would have broken key decryption at runtime - the type was the thing that was
+ * wrong, not the code.
+ */
+export interface EncryptionKeyRow {
+  key_id: string;
+  version: number;
+  algorithm: string;
+  /** Encrypted key material as stored. */
+  encryption_key: string;
+  master_key_id: string;
+  created_at: Date;
+  rotated_at?: Date;
+  archived_at?: Date;
+  status: 'active' | 'rotating' | 'archived' | string;
+}
+
+/** Camel-cased view of a key, for callers that map rows explicitly. */
 export interface EncryptionKey {
   keyId: string;
   version: number;
@@ -134,7 +158,7 @@ function generateNewKey(): Buffer {
 /**
  * Store a new encryption key in the database
  */
-export async function storeEncryptionKey(keyData: Buffer): Promise<EncryptionKey> {
+export async function storeEncryptionKey(keyData: Buffer): Promise<EncryptionKeyRow> {
   const keyId = crypto.randomUUID();
   const encryptedKey = encryptKeyWithMaster(keyData);
 
@@ -159,13 +183,13 @@ export async function storeEncryptionKey(keyData: Buffer): Promise<EncryptionKey
     ]
   );
 
-  return result.rows[0] as EncryptionKey;
+  return result.rows[0] as EncryptionKeyRow;
 }
 
 /**
  * Get the current active encryption key
  */
-export async function getActiveEncryptionKey(): Promise<EncryptionKey> {
+export async function getActiveEncryptionKey(): Promise<EncryptionKeyRow> {
   const result = await query(
     `SELECT * FROM encryption_keys
      WHERE status = 'active'
@@ -177,13 +201,13 @@ export async function getActiveEncryptionKey(): Promise<EncryptionKey> {
     throw new Error('No active encryption key found. Initialize keys first.');
   }
 
-  return result.rows[0] as EncryptionKey;
+  return result.rows[0] as EncryptionKeyRow;
 }
 
 /**
  * Get an encryption key by version
  */
-export async function getEncryptionKeyByVersion(version: number): Promise<EncryptionKey> {
+export async function getEncryptionKeyByVersion(version: number): Promise<EncryptionKeyRow> {
   const result = await query(
     `SELECT * FROM encryption_keys WHERE version = $1`,
     [version]
@@ -193,18 +217,18 @@ export async function getEncryptionKeyByVersion(version: number): Promise<Encryp
     throw new Error(`Encryption key version ${version} not found`);
   }
 
-  return result.rows[0] as EncryptionKey;
+  return result.rows[0] as EncryptionKeyRow;
 }
 
 /**
  * Get all encryption keys (for rotation and archival tracking)
  */
-export async function getAllEncryptionKeys(): Promise<EncryptionKey[]> {
+export async function getAllEncryptionKeys(): Promise<EncryptionKeyRow[]> {
   const result = await query(
     `SELECT * FROM encryption_keys ORDER BY version DESC`
   );
 
-  return result.rows as EncryptionKey[];
+  return result.rows as EncryptionKeyRow[];
 }
 
 // ============================================

@@ -3,6 +3,7 @@
 
 import { Router, Request, Response } from 'express';
 import { authMiddleware, requireUserType } from '../middleware/authMiddleware';
+import { queryParam, routeParam } from '../utils/httpParams';
 import {
   deviceFingerprintingMiddleware,
   validateDeviceFingerprintMiddleware,
@@ -92,7 +93,7 @@ router.delete('/trust-device/:deviceId', authMiddleware, async (req: Request, re
       return res.status(401).json({ error: 'User not authenticated' });
     }
 
-    const { deviceId } = req.params;
+    const deviceId = routeParam(req.params.deviceId);
     const success = await revokeDevice(userId, deviceId);
 
     if (!success) {
@@ -170,7 +171,7 @@ router.get('/mismatch-history', authMiddleware, async (req: Request, res: Respon
       return res.status(401).json({ error: 'User not authenticated' });
     }
 
-    const { limit = 50 } = req.query;
+    const limit = queryParam(req.query.limit);
     const history = await getFingerprintMismatchHistory(userId, parseInt(limit as string));
 
     res.json({
@@ -202,7 +203,7 @@ router.post('/verify-mismatch/:mismatchId', authMiddleware, async (req: Request,
       return res.status(401).json({ error: 'User not authenticated' });
     }
 
-    const { mismatchId } = req.params;
+    const mismatchId = routeParam(req.params.mismatchId);
     const { trusted = false } = req.body;
 
     const { query } = require('../database/connection');
@@ -318,7 +319,7 @@ router.get('/admin/alerts',
   requireUserType('admin'),
   async (req: Request, res: Response) => {
     try {
-      const { severity = 'HIGH', limit = 100 } = req.query;
+      const severity = queryParam(req.query.severity); const limit = queryParam(req.query.limit);
       const alerts = await getAdminAlerts(parseInt(limit as string), severity as string);
 
       res.json({
@@ -351,7 +352,7 @@ router.post('/admin/alerts/:alertId/acknowledge',
   requireUserType('admin'),
   async (req: Request, res: Response) => {
     try {
-      const { alertId } = req.params;
+      const alertId = routeParam(req.params.alertId);
       const adminId = req.user?.userId;
 
       const { query } = require('../database/connection');
@@ -412,7 +413,7 @@ router.get('/admin/user-security-status/:userId',
   requireUserType('admin'),
   async (req: Request, res: Response) => {
     try {
-      const { userId } = req.params;
+      const userId = routeParam(req.params.userId);
       const { query } = require('../database/connection');
 
       const status = await query(

@@ -4,6 +4,7 @@
 import { Router, Request, Response } from 'express';
 import multer from 'multer';
 import { authMiddleware } from '../middleware/authMiddleware';
+import { queryParam, routeParam } from '../utils/httpParams';
 import {
   uploadCaseDocument,
   downloadCaseDocument,
@@ -34,7 +35,7 @@ router.post(
   upload.single('file'),
   async (req: Request, res: Response) => {
     try {
-      const { caseId } = req.params;
+      const caseId = routeParam(req.params.caseId);
       const userId = req.userId;
 
       if (!req.file) {
@@ -74,7 +75,7 @@ router.post(
  */
 router.get('/:caseId', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const { caseId } = req.params;
+    const caseId = routeParam(req.params.caseId);
 
     const documents = await getCaseDocuments(caseId);
 
@@ -94,7 +95,7 @@ router.get(
   authMiddleware,
   async (req: Request, res: Response) => {
     try {
-      const { documentId } = req.params;
+      const documentId = routeParam(req.params.documentId);
       const userId = req.userId;
 
       const document = await downloadCaseDocument(documentId, userId);
@@ -123,8 +124,8 @@ router.get(
   authMiddleware,
   async (req: Request, res: Response) => {
     try {
-      const { documentId } = req.params;
-      const { expiresIn } = req.query;
+      const documentId = routeParam(req.params.documentId);
+      const expiresIn = queryParam(req.query.expiresIn);
 
       const url = await getPresignedDownloadUrl(
         documentId,
@@ -148,8 +149,8 @@ router.get(
   authMiddleware,
   async (req: Request, res: Response) => {
     try {
-      const { caseId } = req.params;
-      const { fileName, mimeType } = req.query;
+      const caseId = routeParam(req.params.caseId);
+      const fileName = queryParam(req.query.fileName); const mimeType = queryParam(req.query.mimeType);
 
       if (!fileName || !mimeType) {
         return res.status(400).json({ error: 'fileName and mimeType required' });
@@ -178,7 +179,7 @@ router.delete(
   authMiddleware,
   async (req: Request, res: Response) => {
     try {
-      const { documentId } = req.params;
+      const documentId = routeParam(req.params.documentId);
 
       await deleteCaseDocument(documentId);
 
@@ -199,7 +200,7 @@ router.get(
   authMiddleware,
   async (req: Request, res: Response) => {
     try {
-      const { caseId } = req.params;
+      const caseId = routeParam(req.params.caseId);
 
       const usage = await getCaseStorageUsage(caseId);
 

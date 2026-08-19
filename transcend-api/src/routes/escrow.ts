@@ -5,6 +5,7 @@ import { Router, Request, Response } from 'express';
 import { authMiddleware } from '../middleware/authMiddleware';
 import { adminMiddleware } from '../middleware/adminMiddleware';
 import * as escrowService from '../services/escrowService';
+import { queryParam, routeParam } from '../utils/httpParams';
 
 const router = Router();
 
@@ -117,7 +118,7 @@ router.post('/holds', authMiddleware, async (req: Request, res: Response) => {
  */
 router.get('/holds/:id', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const escrowHold = await escrowService.getEscrowHold(req.params.id);
+    const escrowHold = await escrowService.getEscrowHold(routeParam(req.params.id));
 
     if (!escrowHold) {
       return res.status(404).json({
@@ -142,7 +143,7 @@ router.get('/holds/:id', authMiddleware, async (req: Request, res: Response) => 
  */
 router.get('/case/:caseId', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const escrowHolds = await escrowService.getEscrowHoldsByCase(req.params.caseId);
+    const escrowHolds = await escrowService.getEscrowHoldsByCase(routeParam(req.params.caseId));
     const disputes = [];
 
     // Get disputes for all holds
@@ -170,10 +171,10 @@ router.get('/case/:caseId', authMiddleware, async (req: Request, res: Response) 
  */
 router.get('/user/:userId', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const { type = 'client' } = req.query;
+    const type = queryParam(req.query.type);
     const userType = (type === 'provider' ? 'provider' : 'client') as 'client' | 'provider';
 
-    const escrowHolds = await escrowService.getEscrowHoldsByUser(req.params.userId, userType);
+    const escrowHolds = await escrowService.getEscrowHoldsByUser(routeParam(req.params.userId), userType);
 
     return res.json({
       escrowHolds,
@@ -198,7 +199,7 @@ router.get('/user/:userId', authMiddleware, async (req: Request, res: Response) 
 router.post('/:id/approve', authMiddleware, async (req: Request, res: Response) => {
   try {
     const { userId } = req.body;
-    const escrowHoldId = req.params.id;
+    const escrowHoldId = routeParam(req.params.id);
 
     if (!userId) {
       return res.status(400).json({
@@ -231,7 +232,7 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const { reason } = req.body;
-      const escrowHoldId = req.params.id;
+      const escrowHoldId = routeParam(req.params.id);
       const releasedBy = req.userId;
 
       if (!reason) {
@@ -301,7 +302,7 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const { reason } = req.body;
-      const escrowHoldId = req.params.id;
+      const escrowHoldId = routeParam(req.params.id);
       const refundedBy = req.userId;
 
       if (!reason) {
@@ -341,7 +342,7 @@ router.post(
 router.post('/:id/dispute', authMiddleware, async (req: Request, res: Response) => {
   try {
     const { reason, initiatedBy } = req.body;
-    const escrowHoldId = req.params.id;
+    const escrowHoldId = routeParam(req.params.id);
 
     if (!reason || !initiatedBy) {
       return res.status(400).json({
@@ -369,7 +370,7 @@ router.post('/:id/dispute', authMiddleware, async (req: Request, res: Response) 
  */
 router.get('/dispute/:disputeId', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const dispute = await escrowService.getDispute(req.params.disputeId);
+    const dispute = await escrowService.getDispute(routeParam(req.params.disputeId));
 
     if (!dispute) {
       return res.status(404).json({
@@ -399,7 +400,7 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const { resolution, resolution_action } = req.body;
-      const disputeId = req.params.disputeId;
+      const disputeId = routeParam(req.params.disputeId);
       const resolvedBy = req.userId;
 
       if (!resolution || !resolution_action) {
@@ -474,7 +475,7 @@ router.get(
   adminMiddleware,
   async (req: Request, res: Response) => {
     try {
-      const { days = 30 } = req.query;
+      const days = queryParam(req.query.days);
       const reconciliations = await escrowService.getReconciliationHistory(
         parseInt(days as string) || 30
       );

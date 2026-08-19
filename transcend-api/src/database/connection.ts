@@ -3,6 +3,9 @@
 
 import { Pool, PoolClient } from 'pg';
 
+// Re-exported: callers type their own client params from this module.
+export type { Pool, PoolClient };
+
 /**
  * TLS for app-to-database traffic.
  *

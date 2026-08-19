@@ -4,6 +4,7 @@
 import { Router, Request, Response } from 'express';
 import { authMiddleware, adminAuthMiddleware } from '../middleware/auth';
 import * as helpCenterService from '../services/helpCenterService';
+import { queryParam, routeParam } from '../src/utils/httpParams';
 
 const router = Router();
 
@@ -17,7 +18,7 @@ const router = Router();
  */
 router.get('/articles', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const { category, userType, isFaq, limit, offset } = req.query;
+    const category = queryParam(req.query.category); const userType = queryParam(req.query.userType); const isFaq = queryParam(req.query.isFaq); const limit = queryParam(req.query.limit); const offset = queryParam(req.query.offset);
     const currentUserType = req.user?.userType || 'client';
 
     const articles = await helpCenterService.getArticles({
@@ -41,7 +42,7 @@ router.get('/articles', authMiddleware, async (req: Request, res: Response) => {
  */
 router.get('/articles/:id', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const article = await helpCenterService.getArticle(req.params.id);
+    const article = await helpCenterService.getArticle(routeParam(req.params.id));
 
     if (!article) {
       return res.status(404).json({ error: 'Article not found' });
@@ -103,7 +104,7 @@ router.post('/articles', adminAuthMiddleware, async (req: Request, res: Response
  */
 router.put('/articles/:id', adminAuthMiddleware, async (req: Request, res: Response) => {
   try {
-    const article = await helpCenterService.updateArticle(req.params.id, req.body);
+    const article = await helpCenterService.updateArticle(routeParam(req.params.id), req.body);
     res.json(article);
   } catch (error) {
     console.error('Failed to update article:', error);
@@ -117,7 +118,7 @@ router.put('/articles/:id', adminAuthMiddleware, async (req: Request, res: Respo
  */
 router.delete('/articles/:id', adminAuthMiddleware, async (req: Request, res: Response) => {
   try {
-    await helpCenterService.deleteArticle(req.params.id);
+    await helpCenterService.deleteArticle(routeParam(req.params.id));
     res.json({ success: true });
   } catch (error) {
     console.error('Failed to delete article:', error);
@@ -176,7 +177,7 @@ router.post('/categories', adminAuthMiddleware, async (req: Request, res: Respon
  */
 router.put('/categories/:id', adminAuthMiddleware, async (req: Request, res: Response) => {
   try {
-    const category = await helpCenterService.updateCategory(req.params.id, req.body);
+    const category = await helpCenterService.updateCategory(routeParam(req.params.id), req.body);
     res.json(category);
   } catch (error) {
     console.error('Failed to update category:', error);
@@ -194,7 +195,7 @@ router.put('/categories/:id', adminAuthMiddleware, async (req: Request, res: Res
  */
 router.get('/search', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const { q, userType } = req.query;
+    const q = queryParam(req.query.q); const userType = queryParam(req.query.userType);
     const currentUserType = req.user?.userType || 'client';
 
     if (!q || typeof q !== 'string') {
@@ -231,7 +232,7 @@ router.get('/search', authMiddleware, async (req: Request, res: Response) => {
  */
 router.post('/articles/:id/view', authMiddleware, async (req: Request, res: Response) => {
   try {
-    await helpCenterService.trackArticleView(req.params.id);
+    await helpCenterService.trackArticleView(routeParam(req.params.id));
     res.json({ success: true });
   } catch (error) {
     console.error('Failed to track view:', error);
@@ -245,7 +246,7 @@ router.post('/articles/:id/view', authMiddleware, async (req: Request, res: Resp
  */
 router.get('/articles/:id/analytics', adminAuthMiddleware, async (req: Request, res: Response) => {
   try {
-    const analytics = await helpCenterService.getArticleAnalytics(req.params.id);
+    const analytics = await helpCenterService.getArticleAnalytics(routeParam(req.params.id));
 
     if (!analytics) {
       return res.status(404).json({ error: 'Article not found' });
@@ -271,7 +272,7 @@ router.post('/articles/:id/feedback', async (req: Request, res: Response) => {
     const { helpful, comment, email, userType } = req.body;
 
     const feedback = await helpCenterService.submitFeedback({
-      articleId: req.params.id,
+      articleId: routeParam(req.params.id),
       helpful: helpful === true || helpful === 'true',
       comment,
       email,
@@ -291,7 +292,7 @@ router.post('/articles/:id/feedback', async (req: Request, res: Response) => {
  */
 router.get('/articles/:id/feedback', adminAuthMiddleware, async (req: Request, res: Response) => {
   try {
-    const feedback = await helpCenterService.getArticleFeedback(req.params.id);
+    const feedback = await helpCenterService.getArticleFeedback(routeParam(req.params.id));
     res.json(feedback);
   } catch (error) {
     console.error('Failed to get feedback:', error);
@@ -332,7 +333,7 @@ router.post('/analytics/search', async (req: Request, res: Response) => {
  */
 router.get('/analytics/searches', adminAuthMiddleware, async (req: Request, res: Response) => {
   try {
-    const { days } = req.query;
+    const days = queryParam(req.query.days);
     const searches = await helpCenterService.getTopSearches(
       days ? parseInt(days as string) : 30
     );
@@ -350,7 +351,7 @@ router.get('/analytics/searches', adminAuthMiddleware, async (req: Request, res:
  */
 router.get('/analytics/feedback', adminAuthMiddleware, async (req: Request, res: Response) => {
   try {
-    const { days } = req.query;
+    const days = queryParam(req.query.days);
     const analytics = await helpCenterService.getFeedbackAnalytics(
       days ? parseInt(days as string) : 30
     );

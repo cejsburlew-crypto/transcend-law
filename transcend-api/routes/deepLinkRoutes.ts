@@ -6,6 +6,7 @@
 import { Router, Request, Response } from 'express';
 import * as deepLinkService from '../services/deepLinkService';
 import { authenticateToken, requireRole } from '../middleware/auth';
+import { queryParam, routeParam } from '../src/utils/httpParams';
 
 const router = Router();
 
@@ -59,7 +60,7 @@ router.post('/generate', authenticateToken, async (req: Request, res: Response) 
  */
 router.get('/:linkId', authenticateToken, async (req: Request, res: Response) => {
   try {
-    const { linkId } = req.params;
+    const linkId = routeParam(req.params.linkId);
 
     const deepLink = await deepLinkService.getDeepLink(linkId);
 
@@ -90,7 +91,7 @@ router.get('/:linkId', authenticateToken, async (req: Request, res: Response) =>
 router.get('/', authenticateToken, async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    const { screen, sortBy, limit, offset } = req.query;
+    const screen = queryParam(req.query.screen); const sortBy = queryParam(req.query.sortBy); const limit = queryParam(req.query.limit); const offset = queryParam(req.query.offset);
 
     if (!userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -124,7 +125,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response) => {
  */
 router.patch('/:linkId', authenticateToken, async (req: Request, res: Response) => {
   try {
-    const { linkId } = req.params;
+    const linkId = routeParam(req.params.linkId);
     const { campaign, expiresAt, isActive, params } = req.body;
 
     // Verify access
@@ -160,7 +161,7 @@ router.patch('/:linkId', authenticateToken, async (req: Request, res: Response) 
  */
 router.delete('/:linkId', authenticateToken, async (req: Request, res: Response) => {
   try {
-    const { linkId } = req.params;
+    const linkId = routeParam(req.params.linkId);
 
     // Verify access
     const deepLink = await deepLinkService.getDeepLink(linkId);
@@ -195,8 +196,8 @@ router.delete('/:linkId', authenticateToken, async (req: Request, res: Response)
  */
 router.get('/:linkId/analytics', authenticateToken, async (req: Request, res: Response) => {
   try {
-    const { linkId } = req.params;
-    const { startDate, endDate } = req.query;
+    const linkId = routeParam(req.params.linkId);
+    const startDate = queryParam(req.query.startDate); const endDate = queryParam(req.query.endDate);
 
     // Verify access
     const deepLink = await deepLinkService.getDeepLink(linkId);
@@ -234,7 +235,7 @@ router.get('/:linkId/analytics', authenticateToken, async (req: Request, res: Re
  */
 router.post('/:linkId/click', async (req: Request, res: Response) => {
   try {
-    const { linkId } = req.params;
+    const linkId = routeParam(req.params.linkId);
     const { userAgent, platform, appInstalled, referrer, ipAddress } = req.body;
 
     const click = await deepLinkService.trackDeepLinkClick(linkId, {
@@ -263,7 +264,7 @@ router.post('/:linkId/click', async (req: Request, res: Response) => {
  */
 router.post('/:linkId/conversion', async (req: Request, res: Response) => {
   try {
-    const { linkId } = req.params;
+    const linkId = routeParam(req.params.linkId);
     const { value, data, clickId } = req.body;
 
     await deepLinkService.trackDeepLinkConversion(linkId, {
@@ -320,7 +321,7 @@ router.post('/short-url/generate', authenticateToken, async (req: Request, res: 
  */
 router.get('/short-url/:shortCode/redirect', async (req: Request, res: Response) => {
   try {
-    const { shortCode } = req.params;
+    const shortCode = routeParam(req.params.shortCode);
 
     const mapping = await deepLinkService.resolveShortUrl(shortCode);
 
@@ -342,7 +343,7 @@ router.get('/short-url/:shortCode/redirect', async (req: Request, res: Response)
  */
 router.get('/short-url/:shortCode', authenticateToken, async (req: Request, res: Response) => {
   try {
-    const { shortCode } = req.params;
+    const shortCode = routeParam(req.params.shortCode);
 
     const mapping = await deepLinkService.resolveShortUrl(shortCode);
 

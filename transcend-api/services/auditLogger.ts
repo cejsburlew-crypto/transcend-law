@@ -241,7 +241,7 @@ export async function initializeAuditTables(): Promise<void> {
 /**
  * Log an action - Primary logging function
  */
-export async function logAction(
+async function logActionDetailed(
   userId: string,
   action: AuditLogEntry['action'],
   entityType: string,
@@ -1036,3 +1036,238 @@ export default {
   getEntityAuditTrail,
   getAuditLogHealthCheck,
 };
+
+// ---------------------------------------------------------------------------
+// Object-style adapter
+// ---------------------------------------------------------------------------
+// Several modules (p2p messaging, and route handlers) were written against an
+// `auditLogger.log({...})` object that was never exported. This adapter maps
+// that shape onto logAction above so both call styles share one implementation.
+
+export interface AuditLogInput {
+  userId: string;
+  action: AuditLogEntry['action'];
+  entityType: string;
+  entityId: string;
+  entityName?: string;
+  changes?: AuditLogEntry['changes'];
+  ipAddress?: string;
+  userAgent?: string;
+  status?: 'success' | 'failure' | 'pending';
+  errorMessage?: string;
+  sessionId?: string;
+  requestId?: string;
+  metadata?: Record<string, any>;
+  dataClassification?: 'public' | 'internal' | 'confidential' | 'restricted';
+  sensitiveDataAccessed?: boolean;
+}
+
+// ---------------------------------------------------------------------------
+// logAction: two call shapes
+// ---------------------------------------------------------------------------
+// logActionDetailed above is canonical. Roughly fifty call sites across the
+// routes use a shorter event style, `logAction(action, userId, metadata)`,
+// which previously did not typecheck - so those modules never compiled and
+// nothing was ever audited from them. Both shapes are supported; arity
+// disambiguates them.
+
+export async function logAction(
+  userId: string,
+  action: AuditLogEntry['action'],
+  entityType: string,
+  entityId: string,
+  // Partial + extra keys: callers attach domain context (e.g. `denied`,
+  // `reportType`) and often omit ipAddress, which the implementation defaults.
+  // Folding unknown keys into metadata beats rejecting the call.
+  options: Partial<Parameters<typeof logActionDetailed>[4]> & Record<string, any>
+): Promise<AuditLogEntry>;
+export async function logAction(
+  userId: string,
+  action: string,
+  entityType: string,
+  entityIdOrOptions?: string | Record<string, any>
+): Promise<void>;
+export async function logAction(
+  action: string,
+  userId: string | undefined,
+  metadata?: Record<string, any>
+): Promise<void>;
+export async function logAction(
+  action: string,
+  metadata?: Record<string, any>
+): Promise<void>;
+export async function logAction(...args: any[]): Promise<any> {
+  if (args.length >= 5) {
+    const { ipAddress, ...rest } = args[4] || {};
+    // Split known option keys from arbitrary domain context.
+    const known = [
+      'entityName','changes','userAgent','status','errorMessage','sessionId',
+      'requestId','metadata','dataClassification','sensitiveDataAccessed',
+    ];
+    const options: Record<string, any> = { ipAddress: ipAddress || 'internal' };
+    const extra: Record<string, any> = {};
+    for (const [k, v] of Object.entries(rest)) {
+      (known.includes(k) ? options : extra)[k] = v;
+    }
+    if (Object.keys(extra).length) {
+      options.metadata = { ...(options.metadata || {}), ...extra };
+    }
+    return logActionDetailed(args[0], args[1], args[2], args[3], options as any);
+  }
+
+  // 4-arg form: (userId, action, entityType, entityId | options)
+  if (args.length === 4) {
+    const [userId, action, entityType, last] = args;
+    const isOptions = last && typeof last === 'object';
+    return logActionDetailed(
+      userId,
+      'admin',
+      entityType,
+      isOptions ? String(action) : String(last),
+      { ipAddress: 'internal', metadata: { event: action, ...(isOptions ? last : {}) } }
+    );
+  }
+
+  // Event form: the action name is free text rather than one of the enum
+  // values, so it is recorded as an 'admin' class event with the original name
+  // preserved in metadata.
+  // Three variants reach here:
+  //   (action)                       (action, userId)
+  //   (action, metadataObject)       (action, userId, metadata)
+  const action = args[0] as string;
+  const second = args[1];
+  const userId = typeof second === 'string' ? second : (second?.userId as string | undefined);
+  const metadata = typeof second === 'string'
+    ? (args[2] as Record<string, any> | undefined)
+    : (second as Record<string, any> | undefined);
+
+  try {
+    await logActionDetailed(userId || 'system', 'admin', 'event', action, {
+      ipAddress: 'internal',
+      metadata: { event: action, ...(metadata || {}) },
+    });
+  } catch (error) {
+    console.error('[audit] failed to record event', action, error);
+  }
+}
+
+/**
+ * Record an audit event.
+ *
+ * Two call shapes: a full AuditLogInput, or the shorter event style
+ * `log('EVENT_NAME', { ...metadata })` used by several services. Overload
+ * signatures cannot live inside an object literal, so this is a standalone
+ * function that the exported object delegates to.
+ *
+ * Never throws: a failed audit write must not take down the operation being
+ * audited, but it is logged loudly because gaps in the trail are themselves a
+ * compliance problem.
+ */
+async function writeAuditEntry(entry: AuditLogInput): Promise<void>;
+async function writeAuditEntry(event: string, metadata?: Record<string, any>): Promise<void>;
+async function writeAuditEntry(
+  entryOrEvent: AuditLogInput | string,
+  metadata?: Record<string, any>
+): Promise<void> {
+  const entry: AuditLogInput =
+    typeof entryOrEvent === 'string'
+      ? {
+          userId: (metadata?.userId as string) || 'system',
+          action: 'admin',
+          entityType: 'event',
+          entityId: entryOrEvent,
+          metadata: { event: entryOrEvent, ...(metadata || {}) },
+        }
+      : entryOrEvent;
+
+  try {
+    await logAction(entry.userId, entry.action, entry.entityType, entry.entityId, {
+      entityName: entry.entityName,
+      changes: entry.changes,
+      // Audit rows require an IP; 'unknown' is preferable to dropping the event.
+      ipAddress: entry.ipAddress || 'unknown',
+      userAgent: entry.userAgent,
+      status: entry.status,
+      errorMessage: entry.errorMessage,
+      sessionId: entry.sessionId,
+      requestId: entry.requestId,
+      metadata: entry.metadata,
+      dataClassification: entry.dataClassification,
+      sensitiveDataAccessed: entry.sensitiveDataAccessed,
+    });
+  } catch (error) {
+    console.error('[audit] failed to write audit entry:', error, {
+      action: entry.action,
+      entityType: entry.entityType,
+      entityId: entry.entityId,
+    });
+  }
+}
+
+export const auditLogger = { log: writeAuditEntry };
+
+/**
+ * `auditLog` - the loosely-typed entry point used across services.
+ *
+ * Two shapes are in use in the codebase, neither of which matched any existing
+ * export (so those modules did not compile and produced no audit trail at all):
+ *
+ *   auditLog({ userId, action: 'VIEW_X', resourceId })      // object form
+ *   auditLog('wait_time', 'client_arrival_recorded', {...})  // scope/event form
+ *
+ * Both are normalised onto writeAuditEntry. `action` here is free text, so it
+ * is recorded under the 'admin' action class with the original name kept in
+ * metadata rather than being dropped to fit the enum.
+ */
+export interface FlexibleAuditInput {
+  userId?: string;
+  action?: string;
+  resourceId?: string;
+  resourceType?: string;
+  entityType?: string;
+  entityId?: string;
+  ipAddress?: string;
+  userAgent?: string;
+  metadata?: Record<string, any>;
+  [key: string]: any;
+}
+
+export async function auditLog(entry: FlexibleAuditInput): Promise<void>;
+export async function auditLog(
+  scope: string,
+  event: string,
+  metadata?: Record<string, any>
+): Promise<void>;
+export async function auditLog(
+  first: FlexibleAuditInput | string,
+  event?: string,
+  metadata?: Record<string, any>
+): Promise<void> {
+  if (typeof first === 'string') {
+    return writeAuditEntry({
+      userId: (metadata?.userId as string) || 'system',
+      action: 'admin',
+      entityType: first,
+      entityId: event || first,
+      ipAddress: 'internal',
+      metadata: { scope: first, event, ...(metadata || {}) },
+    });
+  }
+
+  const {
+    userId, action, resourceId, resourceType, entityType, entityId,
+    ipAddress, userAgent, metadata: meta, ...rest
+  } = first;
+
+  return writeAuditEntry({
+    userId: userId || 'system',
+    action: 'admin',
+    entityType: entityType || resourceType || 'event',
+    entityId: entityId || resourceId || action || 'unknown',
+    ipAddress: ipAddress || 'internal',
+    userAgent,
+    metadata: { event: action, ...(meta || {}), ...rest },
+  });
+}
+
+export default auditLogger;

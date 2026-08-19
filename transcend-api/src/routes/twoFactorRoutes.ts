@@ -3,6 +3,7 @@
 
 import { Router, Request, Response } from 'express';
 import { authMiddleware } from '../middleware/authMiddleware';
+import { routeParam } from '../utils/httpParams';
 import {
   generateTOTPSecret,
   verifyTOTP,
@@ -486,7 +487,7 @@ router.get('/trusted-devices', authMiddleware, async (req: Request, res: Respons
 router.delete('/trusted-devices/:deviceId', authMiddleware, async (req: Request, res: Response) => {
   try {
     const userId = req.userId!;
-    const { deviceId } = req.params;
+    const deviceId = routeParam(req.params.deviceId);
 
     await revokeTrustedDevice(userId, deviceId);
 

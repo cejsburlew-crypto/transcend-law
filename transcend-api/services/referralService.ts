@@ -665,7 +665,7 @@ export class ReferralService {
       });
 
       const verifiedReferrals = referrals.filter(
-        (r) => r.status === ReferralStatus.VERIFIED
+        (r: any) => r.status === ReferralStatus.VERIFIED
       );
 
       const rewards = await this.dbClient.referralReward.findMany({
@@ -673,20 +673,20 @@ export class ReferralService {
       });
 
       const paidRewards = rewards.filter(
-        (r) => r.status === RewardStatus.PAID
+        (r: any) => r.status === RewardStatus.PAID
       );
 
       const totalRewardsEarned = rewards
-        .filter((r) => r.rewardType === 'credit')
-        .reduce((sum, r) => sum + r.amount, 0);
+        .filter((r: any) => r.rewardType === 'credit')
+        .reduce((sum: any, r: any) => sum + r.amount, 0);
 
       const totalRewardsPaid = paidRewards
-        .filter((r) => r.rewardType === 'credit')
-        .reduce((sum, r) => sum + r.amount, 0);
+        .filter((r: any) => r.rewardType === 'credit')
+        .reduce((sum: any, r: any) => sum + r.amount, 0);
 
       const pendingRewards = rewards
-        .filter((r) => r.status === RewardStatus.PENDING && r.rewardType === 'credit')
-        .reduce((sum, r) => sum + r.amount, 0);
+        .filter((r: any) => r.status === RewardStatus.PENDING && r.rewardType === 'credit')
+        .reduce((sum: any, r: any) => sum + r.amount, 0);
 
       return {
         totalReferrals: referrals.length,
@@ -760,7 +760,7 @@ export class ReferralService {
 
       // Fetch user details for each referrer
       const enriched = await Promise.all(
-        leaderboard.map(async (entry) => {
+        leaderboard.map(async (entry: any) => {
           const user = await this.dbClient.user.findUnique({
             where: { id: entry.referrerId },
             select: { name: true, email: true },
@@ -829,7 +829,7 @@ export class ReferralService {
       });
 
       const exportData: BulkExportData[] = await Promise.all(
-        referrals.map(async (referral) => {
+        referrals.map(async (referral: any) => {
           const referrerUser = await this.dbClient.user.findUnique({
             where: { id: referral.referrerId },
             select: { name: true, email: true },
@@ -845,8 +845,8 @@ export class ReferralService {
           });
 
           const rewardAmount = rewards
-            .filter((r) => r.rewardType === 'credit')
-            .reduce((sum, r) => sum + r.amount, 0);
+            .filter((r: any) => r.rewardType === 'credit')
+            .reduce((sum: any, r: any) => sum + r.amount, 0);
 
           const rewardStatus = rewards[0]?.status || RewardStatus.PENDING;
 

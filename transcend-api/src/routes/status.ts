@@ -5,6 +5,7 @@ import express, { Router, Request, Response } from 'express';
 import Redis from 'ioredis';
 import { createStatusPageService } from '../services/statusPage';
 import { logger } from '../utils/logger';
+import { routeParam } from '../utils/httpParams';
 
 // Initialize Redis client
 const redisClient = new Redis({
@@ -60,7 +61,7 @@ router.get('/components', async (req: Request, res: Response) => {
  */
 router.get('/components/:id', async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = routeParam(req.params.id);
     const component = await statusPageService.getComponent(id);
 
     if (!component) {
@@ -167,7 +168,7 @@ router.post('/subscribe', async (req: Request, res: Response) => {
  */
 router.get('/verify/:subscriptionId', async (req: Request, res: Response) => {
   try {
-    const { subscriptionId } = req.params;
+    const subscriptionId = routeParam(req.params.subscriptionId);
 
     await statusPageService.verifySubscription(subscriptionId);
 
@@ -192,7 +193,7 @@ router.get('/verify/:subscriptionId', async (req: Request, res: Response) => {
 router.put('/components/:id', async (req: Request, res: Response) => {
   try {
     // TODO: Add authentication middleware
-    const { id } = req.params;
+    const id = routeParam(req.params.id);
     const { status, uptime, responseTime, description } = req.body;
 
     const component = await statusPageService.getComponent(id);
@@ -258,7 +259,7 @@ router.post('/incidents', async (req: Request, res: Response) => {
 router.patch('/incidents/:id', async (req: Request, res: Response) => {
   try {
     // TODO: Add authentication middleware
-    const { id } = req.params;
+    const id = routeParam(req.params.id);
     const { status, message } = req.body;
 
     if (!status || !message) {
@@ -336,7 +337,7 @@ router.post('/maintenance', async (req: Request, res: Response) => {
 router.patch('/maintenance/:id/start', async (req: Request, res: Response) => {
   try {
     // TODO: Add authentication middleware
-    const { id } = req.params;
+    const id = routeParam(req.params.id);
 
     const maintenance = await statusPageService.startMaintenance(id);
 
@@ -357,7 +358,7 @@ router.patch('/maintenance/:id/start', async (req: Request, res: Response) => {
 router.patch('/maintenance/:id/complete', async (req: Request, res: Response) => {
   try {
     // TODO: Add authentication middleware
-    const { id } = req.params;
+    const id = routeParam(req.params.id);
 
     const maintenance = await statusPageService.completeMaintenance(id);
 

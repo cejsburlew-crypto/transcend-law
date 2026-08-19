@@ -22,6 +22,7 @@ import {
   ConversionEvent,
 } from '../services/freemiumService';
 import { logAction } from '../services/auditLogger';
+import { queryParam, routeParam } from '../src/utils/httpParams';
 
 const router = Router();
 
@@ -234,7 +235,7 @@ router.get(
         return res.status(401).json({ error: 'Unauthorized' });
       }
 
-      const { feature } = req.params;
+      const feature = routeParam(req.params.feature);
 
       const featureCheck = await checkFeatureLimit(userId, feature);
       const subscription = await getUserSubscription(userId);
@@ -262,7 +263,7 @@ router.get(
         return res.status(401).json({ error: 'Unauthorized' });
       }
 
-      const { feature } = req.params;
+      const feature = routeParam(req.params.feature);
 
       const promptContext = await generateUpgradePromptContext(userId, feature);
       if (!promptContext) {
@@ -425,7 +426,7 @@ router.get(
         return res.status(403).json({ error: 'Forbidden' });
       }
 
-      const { startDate, endDate } = req.query;
+      const startDate = queryParam(req.query.startDate); const endDate = queryParam(req.query.endDate);
 
       const start = startDate ? new Date(startDate as string) : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
       const end = endDate ? new Date(endDate as string) : new Date();

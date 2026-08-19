@@ -99,14 +99,14 @@ describe('SessionManager', () => {
       const originalTime = session.lastActivityAt;
 
       // Wait a bit and update activity
-      vi.useFakeTimers();
-      vi.advanceTimersByTime(1000);
+      jest.useFakeTimers();
+      jest.advanceTimersByTime(1000);
       sessionManager.updateActivity(session.sessionId);
 
       const updated = sessionManager.getSession(session.sessionId)!;
       expect(updated.lastActivityAt).toBeGreaterThan(originalTime);
 
-      vi.useRealTimers();
+      jest.useRealTimers();
     });
 
     it('should reset warning notification on activity update', () => {
@@ -122,33 +122,33 @@ describe('SessionManager', () => {
 
   describe('Session Expiration', () => {
     it('should detect expired session', () => {
-      vi.useFakeTimers();
+      jest.useFakeTimers();
 
       const session = sessionManager.createSession('user-123', 'client', '192.168.1.1', 'UA');
       expect(sessionManager.isSessionExpired(session.sessionId)).toBe(false);
 
       // Advance time past inactivity timeout
       const config = sessionManager.getTimeoutConfig('client');
-      vi.advanceTimersByTime(config.inactivityTimeout + 1000);
+      jest.advanceTimersByTime(config.inactivityTimeout + 1000);
 
       expect(sessionManager.isSessionExpired(session.sessionId)).toBe(true);
 
-      vi.useRealTimers();
+      jest.useRealTimers();
     });
 
     it('should not expire session with recent activity', () => {
-      vi.useFakeTimers();
+      jest.useFakeTimers();
 
       const session = sessionManager.createSession('user-123', 'client', '192.168.1.1', 'UA');
 
       // Advance time and update activity
-      vi.advanceTimersByTime(5 * 60 * 1000); // 5 minutes
+      jest.advanceTimersByTime(5 * 60 * 1000); // 5 minutes
       sessionManager.updateActivity(session.sessionId);
 
       // Should not be expired yet (config is 15 minutes)
       expect(sessionManager.isSessionExpired(session.sessionId)).toBe(false);
 
-      vi.useRealTimers();
+      jest.useRealTimers();
     });
 
     it('should return 0 for non-existent session', () => {
@@ -159,26 +159,26 @@ describe('SessionManager', () => {
 
   describe('Warning System', () => {
     it('should detect when warning should be shown', () => {
-      vi.useFakeTimers();
+      jest.useFakeTimers();
 
       const session = sessionManager.createSession('user-123', 'client', '192.168.1.1', 'UA');
       const config = sessionManager.getTimeoutConfig('client');
 
       // Advance to warning threshold
-      vi.advanceTimersByTime(config.inactivityTimeout - config.warningTime + 1000);
+      jest.advanceTimersByTime(config.inactivityTimeout - config.warningTime + 1000);
 
       expect(sessionManager.shouldShowWarning(session.sessionId)).toBe(true);
 
-      vi.useRealTimers();
+      jest.useRealTimers();
     });
 
     it('should not show warning multiple times', () => {
-      vi.useFakeTimers();
+      jest.useFakeTimers();
 
       const session = sessionManager.createSession('user-123', 'client', '192.168.1.1', 'UA');
       const config = sessionManager.getTimeoutConfig('client');
 
-      vi.advanceTimersByTime(config.inactivityTimeout - config.warningTime + 1000);
+      jest.advanceTimersByTime(config.inactivityTimeout - config.warningTime + 1000);
 
       expect(sessionManager.shouldShowWarning(session.sessionId)).toBe(true);
 
@@ -186,7 +186,7 @@ describe('SessionManager', () => {
 
       expect(sessionManager.shouldShowWarning(session.sessionId)).toBe(false);
 
-      vi.useRealTimers();
+      jest.useRealTimers();
     });
 
     it('should not show warning if activity is too recent', () => {
@@ -197,12 +197,12 @@ describe('SessionManager', () => {
 
   describe('Session Extension', () => {
     it('should extend session', () => {
-      vi.useFakeTimers();
+      jest.useFakeTimers();
 
       const session = sessionManager.createSession('user-123', 'client', '192.168.1.1', 'UA');
       const originalLastActivity = session.lastActivityAt;
 
-      vi.advanceTimersByTime(1000);
+      jest.advanceTimersByTime(1000);
       const success = sessionManager.extendSession(session.sessionId);
 
       expect(success).toBe(true);
@@ -210,7 +210,7 @@ describe('SessionManager', () => {
       const updated = sessionManager.getSession(session.sessionId)!;
       expect(updated.lastActivityAt).toBeGreaterThan(originalLastActivity);
 
-      vi.useRealTimers();
+      jest.useRealTimers();
     });
 
     it('should return false for non-existent session', () => {
@@ -242,32 +242,32 @@ describe('SessionManager', () => {
 
   describe('Remaining Time', () => {
     it('should calculate remaining time correctly', () => {
-      vi.useFakeTimers();
+      jest.useFakeTimers();
 
       const session = sessionManager.createSession('user-123', 'client', '192.168.1.1', 'UA');
       const config = sessionManager.getTimeoutConfig('client');
 
-      vi.advanceTimersByTime(5 * 60 * 1000); // 5 minutes
+      jest.advanceTimersByTime(5 * 60 * 1000); // 5 minutes
 
       const remaining = sessionManager.getRemainingTime(session.sessionId);
       expect(remaining).toBeLessThanOrEqual(config.inactivityTimeout);
       expect(remaining).toBeGreaterThan(9 * 60 * 1000); // At least 9 minutes
 
-      vi.useRealTimers();
+      jest.useRealTimers();
     });
 
     it('should return 0 for expired session', () => {
-      vi.useFakeTimers();
+      jest.useFakeTimers();
 
       const session = sessionManager.createSession('user-123', 'client', '192.168.1.1', 'UA');
       const config = sessionManager.getTimeoutConfig('client');
 
-      vi.advanceTimersByTime(config.inactivityTimeout + 1000);
+      jest.advanceTimersByTime(config.inactivityTimeout + 1000);
 
       const remaining = sessionManager.getRemainingTime(session.sessionId);
       expect(remaining).toBe(0);
 
-      vi.useRealTimers();
+      jest.useRealTimers();
     });
   });
 

@@ -7,7 +7,7 @@
 import { query } from '../database/connection';
 import { v4 as uuidv4 } from 'uuid';
 import { auditLogger } from './auditLogger';
-import * as Redis from 'redis';
+import { MessageRateLimiter } from '../src/services/messageRateLimiter';
 import { encryptField, decryptField } from '../src/services/fieldEncryption';
 
 // ============================================
@@ -135,17 +135,13 @@ export interface MessageStats {
 // ============================================
 
 class P2PMessagingService {
-  private redisClient: Redis.RedisClient;
   private readonly RATE_LIMIT_WINDOW = 3600; // 1 hour
   private readonly MESSAGE_LIMIT = 100; // Messages per hour
   private readonly CONVERSATION_TTL = 7776000; // 90 days
+  private readonly rateLimiter: MessageRateLimiter;
 
   constructor() {
-    // Initialize Redis for rate limiting and caching
-    this.redisClient = Redis.createClient({
-      host: process.env.REDIS_HOST || 'localhost',
-      port: parseInt(process.env.REDIS_PORT || '6379'),
-    });
+    this.rateLimiter = new MessageRateLimiter(this.MESSAGE_LIMIT, this.RATE_LIMIT_WINDOW);
   }
 
   /**
@@ -851,64 +847,14 @@ class P2PMessagingService {
    * Check rate limit for a user
    */
   async checkRateLimit(userId: string): Promise<RateLimitStatus> {
-    try {
-      const key = `p2p_messages:${userId}`;
-      const count = await new Promise<number>((resolve, reject) => {
-        this.redisClient.get(key, (err, data) => {
-          if (err) reject(err);
-          resolve(parseInt(data || '0'));
-        });
-      });
-
-      const isLimited = count >= this.MESSAGE_LIMIT;
-
-      // Get TTL
-      const ttl = await new Promise<number>((resolve, reject) => {
-        this.redisClient.ttl(key, (err, data) => {
-          if (err) reject(err);
-          resolve(data === -1 ? this.RATE_LIMIT_WINDOW : data);
-        });
-      });
-
-      return {
-        remaining: Math.max(0, this.MESSAGE_LIMIT - count),
-        resetTime: ttl,
-        isLimited,
-      };
-    } catch (error) {
-      console.error('Error checking rate limit:', error);
-      // Fail open if Redis is unavailable
-      return {
-        remaining: this.MESSAGE_LIMIT,
-        resetTime: this.RATE_LIMIT_WINDOW,
-        isLimited: false,
-      };
-    }
+    return this.rateLimiter.check(userId);
   }
 
   /**
    * Increment message count for rate limiting
    */
   private async incrementMessageCount(userId: string): Promise<void> {
-    try {
-      const key = `p2p_messages:${userId}`;
-      await new Promise<void>((resolve, reject) => {
-        this.redisClient.incr(key, (err) => {
-          if (err) reject(err);
-          resolve();
-        });
-      });
-
-      // Set expiration on first increment
-      await new Promise<void>((resolve, reject) => {
-        this.redisClient.expire(key, this.RATE_LIMIT_WINDOW, (err) => {
-          if (err) reject(err);
-          resolve();
-        });
-      });
-    } catch (error) {
-      console.error('Error incrementing message count:', error);
-    }
+    this.rateLimiter.increment(userId);
   }
 
   /**

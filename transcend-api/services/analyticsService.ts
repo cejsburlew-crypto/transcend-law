@@ -773,8 +773,8 @@ export class AnalyticsService {
     const avgMemFirst = firstHalf.reduce((sum, m) => sum + (m.memory_usage || 0), 0) / firstHalf.length;
     const avgMemSecond = secondHalf.reduce((sum, m) => sum + (m.memory_usage || 0), 0) / secondHalf.length;
 
-    const avgErrorFirst = apiMetrics.slice(0, Math.floor(apiMetrics.length / 2)).reduce((sum, m) => sum + (m.error_rate || 0), 0) / Math.floor(apiMetrics.length / 2);
-    const avgErrorSecond = apiMetrics.slice(Math.floor(apiMetrics.length / 2)).reduce((sum, m) => sum + (m.error_rate || 0), 0) / Math.floor(apiMetrics.length / 2);
+    const avgErrorFirst = apiMetrics.slice(0, Math.floor(apiMetrics.length / 2)).reduce((sum, m) => sum + (m.errorRate || 0), 0) / Math.floor(apiMetrics.length / 2);
+    const avgErrorSecond = apiMetrics.slice(Math.floor(apiMetrics.length / 2)).reduce((sum, m) => sum + (m.errorRate || 0), 0) / Math.floor(apiMetrics.length / 2);
 
     const avgUptimeFirst = apiMetrics.slice(0, Math.floor(apiMetrics.length / 2)).reduce((sum, m) => sum + (m.uptime || 100), 0) / Math.floor(apiMetrics.length / 2);
     const avgUptimeSecond = apiMetrics.slice(Math.floor(apiMetrics.length / 2)).reduce((sum, m) => sum + (m.uptime || 100), 0) / Math.floor(apiMetrics.length / 2);
@@ -791,12 +791,12 @@ export class AnalyticsService {
     const apiMetrics = historicalData.apiMetrics;
 
     return {
-      avgCallsPerMinute: apiMetrics.reduce((sum, m) => sum + (m.calls_per_minute || 0), 0) / (apiMetrics.length || 1),
-      avgErrorRate: apiMetrics.reduce((sum, m) => sum + (m.error_rate || 0), 0) / (apiMetrics.length || 1),
+      avgCallsPerMinute: apiMetrics.reduce((sum, m) => sum + (m.callsPerMinute || 0), 0) / (apiMetrics.length || 1),
+      avgErrorRate: apiMetrics.reduce((sum, m) => sum + (m.errorRate || 0), 0) / (apiMetrics.length || 1),
       avgUptime: apiMetrics.reduce((sum, m) => sum + (m.uptime || 100), 0) / (apiMetrics.length || 1),
-      avgLatencyP95: apiMetrics.reduce((sum, m) => sum + (m.p95 || 0), 0) / (apiMetrics.length || 1),
-      avgCpuUsage: historicalData.resourceUtilization.reduce((sum, r) => sum + (r.cpu_usage || 0), 0) / (historicalData.resourceUtilization.length || 1),
-      avgMemoryUsage: historicalData.resourceUtilization.reduce((sum, r) => sum + (r.memory_usage || 0), 0) / (historicalData.resourceUtilization.length || 1),
+      avgLatencyP95: apiMetrics.reduce((sum, m) => sum + (m.latency?.p95 || 0), 0) / (apiMetrics.length || 1),
+      avgCpuUsage: historicalData.resourceUtilization.reduce((sum, r) => sum + (r.cpuUsage || 0), 0) / (historicalData.resourceUtilization.length || 1),
+      avgMemoryUsage: historicalData.resourceUtilization.reduce((sum, r) => sum + (r.memoryUsage || 0), 0) / (historicalData.resourceUtilization.length || 1),
       peakLoadTime: new Date(Math.max(...apiMetrics.map(m => new Date(m.timestamp).getTime()))),
       lowestPerformanceTime: new Date(Math.max(...apiMetrics.map(m => new Date(m.timestamp).getTime()))),
     };

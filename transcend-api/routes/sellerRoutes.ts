@@ -4,6 +4,7 @@
 import { Router, Request, Response } from 'express';
 import * as sellerMetrics from '../services/sellerMetrics';
 import { authenticateToken, requireRole } from '../middleware/auth';
+import { queryParam, routeParam } from '../src/utils/httpParams';
 
 const router = Router();
 
@@ -20,7 +21,7 @@ router.get(
   authenticateToken,
   async (req: Request, res: Response) => {
     try {
-      const { providerId } = req.params;
+      const providerId = routeParam(req.params.providerId);
 
       // Verify seller access (seller viewing own data, or admin)
       if (req.user?.role !== 'admin' && req.user?.id !== providerId) {
@@ -50,7 +51,7 @@ router.get(
   authenticateToken,
   async (req: Request, res: Response) => {
     try {
-      const { providerId } = req.params;
+      const providerId = routeParam(req.params.providerId);
 
       // Verify seller access
       if (req.user?.role !== 'admin' && req.user?.id !== providerId) {
@@ -80,7 +81,7 @@ router.get(
   authenticateToken,
   async (req: Request, res: Response) => {
     try {
-      const { providerId } = req.params;
+      const providerId = routeParam(req.params.providerId);
 
       // Get seller metrics first to get service type
       const metrics = await sellerMetrics.getSellerMetrics(providerId);
@@ -110,7 +111,7 @@ router.get(
   authenticateToken,
   async (req: Request, res: Response) => {
     try {
-      const { providerId } = req.params;
+      const providerId = routeParam(req.params.providerId);
 
       // Verify seller access
       if (req.user?.role !== 'admin' && req.user?.id !== providerId) {
@@ -136,7 +137,7 @@ router.post(
   authenticateToken,
   async (req: Request, res: Response) => {
     try {
-      const { alertId } = req.params;
+      const alertId = routeParam(req.params.alertId);
       const providerId = req.user?.id;
 
       if (!providerId) {
@@ -166,7 +167,7 @@ router.get(
   authenticateToken,
   async (req: Request, res: Response) => {
     try {
-      const { providerId } = req.params;
+      const providerId = routeParam(req.params.providerId);
 
       // Verify seller access
       if (req.user?.role !== 'admin' && req.user?.id !== providerId) {
@@ -192,7 +193,7 @@ router.get(
   authenticateToken,
   async (req: Request, res: Response) => {
     try {
-      const { providerId } = req.params;
+      const providerId = routeParam(req.params.providerId);
 
       // Verify seller access
       if (req.user?.role !== 'admin' && req.user?.id !== providerId) {
@@ -226,7 +227,7 @@ router.get(
   authenticateToken,
   async (req: Request, res: Response) => {
     try {
-      const { providerId } = req.params;
+      const providerId = routeParam(req.params.providerId);
 
       const metrics = await sellerMetrics.getSellerMetrics(providerId);
       if (!metrics) {
@@ -256,7 +257,7 @@ router.get(
   requireRole(['admin']),
   async (req: Request, res: Response) => {
     try {
-      const { serviceType, limit = '5' } = req.query;
+      const serviceType = queryParam(req.query.serviceType); const limit = queryParam(req.query.limit);
 
       if (!serviceType || typeof serviceType !== 'string') {
         return res.status(400).json({ error: 'Service type required' });
@@ -284,7 +285,7 @@ router.get(
   authenticateToken,
   async (req: Request, res: Response) => {
     try {
-      const { providerId } = req.params;
+      const providerId = routeParam(req.params.providerId);
 
       const metrics = await sellerMetrics.getSellerMetrics(providerId);
       if (!metrics) {
@@ -320,7 +321,7 @@ router.get(
   requireRole(['admin']),
   async (req: Request, res: Response) => {
     try {
-      const { serviceType } = req.query;
+      const serviceType = queryParam(req.query.serviceType);
 
       if (!serviceType || typeof serviceType !== 'string') {
         return res.status(400).json({ error: 'Service type required' });

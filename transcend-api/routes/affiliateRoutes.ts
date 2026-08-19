@@ -6,6 +6,11 @@ import * as affiliateService from '../services/affiliateService';
 import { authenticate } from '../middleware/auth';
 import { validateInput } from '../middleware/validation';
 import { rateLimitAffiliate } from '../middleware/rateLimiting';
+import { queryParam, routeParam } from '../src/utils/httpParams';
+
+// NOTE: `req.user!` assertions below are sound - this router applies
+// authentication middleware, so a handler cannot run without an authenticated
+// user. TypeScript cannot see that guarantee across the middleware boundary.
 
 const router = Router();
 
@@ -29,7 +34,7 @@ router.post('/signup', validateInput({
   try {
     const { companyName, email, taxId } = req.body;
     const profile = await affiliateService.registerAffiliate(
-      req.user.id,
+      req.user!.id,
       email,
       companyName,
       taxId
@@ -58,7 +63,7 @@ router.get('/profile', async (req: Request, res: Response, next: NextFunction) =
       0
     );
 
-    const profile = affiliates.find(a => a.userId === req.user.id);
+    const profile = affiliates.find(a => a.userId === req.user!.id);
 
     if (!profile) {
       return res.status(404).json({
@@ -90,7 +95,7 @@ router.put('/profile', validateInput({
 
     // Get current affiliate
     const affiliates = await affiliateService.listAffiliates({}, 1, 0);
-    const affiliate = affiliates.find(a => a.userId === req.user.id);
+    const affiliate = affiliates.find(a => a.userId === req.user!.id);
 
     if (!affiliate) {
       return res.status(404).json({
@@ -135,7 +140,7 @@ router.post('/links', validateInput({
 
     // Get current affiliate
     const affiliates = await affiliateService.listAffiliates({}, 1, 0);
-    const affiliate = affiliates.find(a => a.userId === req.user.id);
+    const affiliate = affiliates.find(a => a.userId === req.user!.id);
 
     if (!affiliate) {
       return res.status(404).json({
@@ -168,7 +173,7 @@ router.get('/links', async (req: Request, res: Response, next: NextFunction) => 
   try {
     // Get current affiliate
     const affiliates = await affiliateService.listAffiliates({}, 1, 0);
-    const affiliate = affiliates.find(a => a.userId === req.user.id);
+    const affiliate = affiliates.find(a => a.userId === req.user!.id);
 
     if (!affiliate) {
       return res.status(404).json({
@@ -195,7 +200,7 @@ router.get('/links', async (req: Request, res: Response, next: NextFunction) => 
  */
 router.put('/links/:linkId/disable', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { linkId } = req.params;
+    const linkId = routeParam(req.params.linkId);
 
     await affiliateService.disableTrackingLink(linkId);
 
@@ -264,12 +269,12 @@ router.post('/track-click', async (req: Request, res: Response, next: NextFuncti
  */
 router.get('/commissions', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { status } = req.query;
+    const status = queryParam(req.query.status);
     const limit = Math.min(parseInt(req.query.limit as string) || 100, 1000);
 
     // Get current affiliate
     const affiliates = await affiliateService.listAffiliates({}, 1, 0);
-    const affiliate = affiliates.find(a => a.userId === req.user.id);
+    const affiliate = affiliates.find(a => a.userId === req.user!.id);
 
     if (!affiliate) {
       return res.status(404).json({
@@ -308,7 +313,7 @@ router.post('/record-commission', validateInput({
 }), async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Only admins can record commissions
-    if (req.user.role !== 'admin') {
+    if (req.user!.role !== 'admin') {
       return res.status(403).json({
         success: false,
         message: 'Insufficient permissions'
@@ -350,7 +355,7 @@ router.get('/stats', async (req: Request, res: Response, next: NextFunction) => 
   try {
     // Get current affiliate
     const affiliates = await affiliateService.listAffiliates({}, 1, 0);
-    const affiliate = affiliates.find(a => a.userId === req.user.id);
+    const affiliate = affiliates.find(a => a.userId === req.user!.id);
 
     if (!affiliate) {
       return res.status(404).json({
@@ -380,7 +385,7 @@ router.get('/stats', async (req: Request, res: Response, next: NextFunction) => 
  */
 router.get('/analytics', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    if (req.user.role !== 'admin') {
+    if (req.user!.role !== 'admin') {
       return res.status(403).json({
         success: false,
         message: 'Insufficient permissions'
@@ -414,7 +419,7 @@ router.post('/payouts', validateInput({
 
     // Get current affiliate
     const affiliates = await affiliateService.listAffiliates({}, 1, 0);
-    const affiliate = affiliates.find(a => a.userId === req.user.id);
+    const affiliate = affiliates.find(a => a.userId === req.user!.id);
 
     if (!affiliate) {
       return res.status(404).json({
@@ -452,7 +457,7 @@ router.get('/payouts', async (req: Request, res: Response, next: NextFunction) =
 
     // Get current affiliate
     const affiliates = await affiliateService.listAffiliates({}, 1, 0);
-    const affiliate = affiliates.find(a => a.userId === req.user.id);
+    const affiliate = affiliates.find(a => a.userId === req.user!.id);
 
     if (!affiliate) {
       return res.status(404).json({
@@ -487,7 +492,7 @@ router.post('/process-payouts', async (req: Request, res: Response, next: NextFu
     // Verify admin or cron secret
     const cronSecret = req.headers['x-cron-secret'];
 
-    if (req.user.role !== 'admin' && cronSecret !== process.env.CRON_SECRET) {
+    if (req.user!.role !== 'admin' && cronSecret !== process.env.CRON_SECRET) {
       return res.status(403).json({
         success: false,
         message: 'Insufficient permissions'
@@ -518,11 +523,11 @@ router.post('/process-payouts', async (req: Request, res: Response, next: NextFu
  */
 router.get('/marketing-materials', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { type } = req.query;
+    const type = queryParam(req.query.type);
 
     // Get current affiliate
     const affiliates = await affiliateService.listAffiliates({}, 1, 0);
-    const affiliate = affiliates.find(a => a.userId === req.user.id);
+    const affiliate = affiliates.find(a => a.userId === req.user!.id);
 
     const materials = await affiliateService.getMarketingMaterials(
       type as string | undefined,
@@ -550,7 +555,7 @@ router.post('/marketing-materials', validateInput({
   downloadUrl: 'string?'
 }), async (req: Request, res: Response, next: NextFunction) => {
   try {
-    if (req.user.role !== 'admin') {
+    if (req.user!.role !== 'admin') {
       return res.status(403).json({
         success: false,
         message: 'Insufficient permissions'
@@ -587,14 +592,14 @@ router.post('/marketing-materials', validateInput({
  */
 router.get('/fraud-analysis/:affiliateId', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    if (req.user.role !== 'admin') {
+    if (req.user!.role !== 'admin') {
       return res.status(403).json({
         success: false,
         message: 'Insufficient permissions'
       });
     }
 
-    const { affiliateId } = req.params;
+    const affiliateId = routeParam(req.params.affiliateId);
 
     const indicators = await affiliateService.analyzeClickPatterns(affiliateId);
 
@@ -620,7 +625,7 @@ router.post('/fraud-resolution', validateInput({
   approved: 'boolean'
 }), async (req: Request, res: Response, next: NextFunction) => {
   try {
-    if (req.user.role !== 'admin') {
+    if (req.user!.role !== 'admin') {
       return res.status(403).json({
         success: false,
         message: 'Insufficient permissions'
@@ -650,14 +655,14 @@ router.post('/fraud-resolution', validateInput({
  */
 router.get('/admin/list', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    if (req.user.role !== 'admin') {
+    if (req.user!.role !== 'admin') {
       return res.status(403).json({
         success: false,
         message: 'Insufficient permissions'
       });
     }
 
-    const { status, tier, minFraud } = req.query;
+    const status = queryParam(req.query.status); const tier = queryParam(req.query.tier); const minFraud = queryParam(req.query.minFraud);
     const limit = Math.min(parseInt(req.query.limit as string) || 50, 500);
     const offset = parseInt(req.query.offset as string) || 0;
 
@@ -691,7 +696,7 @@ router.post('/admin/approve', validateInput({
   commissionRate: 'number'
 }), async (req: Request, res: Response, next: NextFunction) => {
   try {
-    if (req.user.role !== 'admin') {
+    if (req.user!.role !== 'admin') {
       return res.status(403).json({
         success: false,
         message: 'Insufficient permissions'
@@ -721,7 +726,7 @@ router.post('/admin/suspend', validateInput({
   reason: 'string'
 }), async (req: Request, res: Response, next: NextFunction) => {
   try {
-    if (req.user.role !== 'admin') {
+    if (req.user!.role !== 'admin') {
       return res.status(403).json({
         success: false,
         message: 'Insufficient permissions'

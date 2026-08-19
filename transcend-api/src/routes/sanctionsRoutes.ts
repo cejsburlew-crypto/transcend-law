@@ -15,6 +15,7 @@ import {
 } from '../services/sanctionsService';
 import { authenticateToken } from '../middleware/auth';
 import { query } from '../database/connection';
+import { queryParam, routeParam } from '../utils/httpParams';
 
 const router = Router();
 
@@ -163,7 +164,7 @@ router.post('/screen', authenticateToken, async (req: Request, res: Response): P
  */
 router.get('/screening/:screeningId', authenticateToken, async (req: Request, res: Response): Promise<void> => {
   try {
-    const { screeningId } = req.params;
+    const screeningId = routeParam(req.params.screeningId);
     const userId = (req as any).user?.userId;
 
     const result = await getScreeningResult(screeningId);
@@ -251,7 +252,7 @@ router.get('/admin/pending-reviews', authenticateToken, isAdmin, async (req: Req
  */
 router.post('/admin/review/:screeningId', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
   try {
-    const { screeningId } = req.params;
+    const screeningId = routeParam(req.params.screeningId);
     const { status, reviewNotes } = req.body;
     const reviewedBy = (req as any).user?.userId;
 
@@ -395,7 +396,7 @@ router.post('/admin/force-update', authenticateToken, isAdmin, async (req: Reque
  */
 router.get('/admin/audit-log', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.query.userId as string;
+    const userId = queryParam(req.query.userId) as string;
     const limit = Math.min(parseInt(req.query.limit as string) || 100, 500);
 
     const auditLog = await getSanctionsAuditTrail(userId, limit);
@@ -468,7 +469,7 @@ router.get('/admin/blocked-users', authenticateToken, isAdmin, async (req: Reque
  */
 router.post('/admin/unblock-user/:userId', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
   try {
-    const { userId } = req.params;
+    const userId = routeParam(req.params.userId);
     const { reason } = req.body;
     const unblockBy = (req as any).user?.userId;
 
@@ -651,7 +652,7 @@ router.get('/admin/appeals', authenticateToken, isAdmin, async (req: Request, re
  */
 router.post('/admin/appeal/review/:appealId', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
   try {
-    const { appealId } = req.params;
+    const appealId = routeParam(req.params.appealId);
     const { status, reviewNotes } = req.body;
     const reviewerId = (req as any).user?.userId;
 

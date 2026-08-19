@@ -59,7 +59,7 @@ const corsOptions: CorsOptions = {
 };
 
 // Enhanced CORS middleware with logging
-export const corsMiddleware = (req: Request, res, next) => {
+export const corsMiddleware = (req: Request, res, next: any) => {
   const origin = req.get('origin');
 
   if (origin && !finalOrigins.includes(origin)) {

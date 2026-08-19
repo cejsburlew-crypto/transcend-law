@@ -4,6 +4,7 @@
 import express, { Request, Response, Router } from 'express';
 import { authenticateToken } from '../middleware/auth';
 import * as waitTimeService from '../services/waitTimeService';
+import { queryParam, routeParam } from '../src/utils/httpParams';
 
 const router: Router = express.Router();
 
@@ -50,7 +51,7 @@ router.post('/client-arrival', async (req: Request, res: Response) => {
  */
 router.post('/:eventId/provider-response', async (req: Request, res: Response) => {
   try {
-    const { eventId } = req.params;
+    const eventId = routeParam(req.params.eventId);
     const { providerId } = req.body;
 
     if (!providerId) {
@@ -76,7 +77,7 @@ router.post('/:eventId/provider-response', async (req: Request, res: Response) =
  */
 router.post('/:eventId/completion', async (req: Request, res: Response) => {
   try {
-    const { eventId } = req.params;
+    const eventId = routeParam(req.params.eventId);
     const { providerId } = req.body;
 
     if (!providerId) {
@@ -106,7 +107,7 @@ router.post('/:eventId/completion', async (req: Request, res: Response) => {
  */
 router.get('/current', async (req: Request, res: Response) => {
   try {
-    const { caseId, providerId } = req.query;
+    const caseId = queryParam(req.query.caseId); const providerId = queryParam(req.query.providerId);
 
     // This would typically query the database
     // For now, returning the structure
@@ -128,7 +129,7 @@ router.get('/current', async (req: Request, res: Response) => {
  */
 router.get('/:eventId', async (req: Request, res: Response) => {
   try {
-    const { eventId } = req.params;
+    const eventId = routeParam(req.params.eventId);
 
     const waitTime = await waitTimeService.getCurrentWaitTime(eventId);
 
@@ -157,8 +158,8 @@ router.get('/:eventId', async (req: Request, res: Response) => {
  */
 router.get('/metrics/:providerId', async (req: Request, res: Response) => {
   try {
-    const { providerId } = req.params;
-    const { daysBack } = req.query;
+    const providerId = routeParam(req.params.providerId);
+    const daysBack = queryParam(req.query.daysBack);
 
     const days = daysBack ? parseInt(daysBack as string) : 30;
     const metrics = await waitTimeService.generateProviderMetrics(providerId, days);
@@ -178,7 +179,7 @@ router.get('/metrics/:providerId', async (req: Request, res: Response) => {
  */
 router.get('/metrics', async (req: Request, res: Response) => {
   try {
-    const { limit, daysBack } = req.query;
+    const limit = queryParam(req.query.limit); const daysBack = queryParam(req.query.daysBack);
 
     const topLimit = limit ? parseInt(limit as string) : 10;
     const days = daysBack ? parseInt(daysBack as string) : 30;
@@ -200,8 +201,8 @@ router.get('/metrics', async (req: Request, res: Response) => {
  */
 router.get('/average/:providerId', async (req: Request, res: Response) => {
   try {
-    const { providerId } = req.params;
-    const { daysBack } = req.query;
+    const providerId = routeParam(req.params.providerId);
+    const daysBack = queryParam(req.query.daysBack);
 
     const days = daysBack ? parseInt(daysBack as string) : 30;
     const averages = await waitTimeService.getProviderAverageWaitTimes(providerId, days);
@@ -225,7 +226,7 @@ router.get('/average/:providerId', async (req: Request, res: Response) => {
  */
 router.get('/satisfaction-correlation', async (req: Request, res: Response) => {
   try {
-    const { daysBack } = req.query;
+    const daysBack = queryParam(req.query.daysBack);
 
     const days = daysBack ? parseInt(daysBack as string) : 30;
     const correlation = await waitTimeService.correlateWaitTimesWithSatisfaction(days);
@@ -249,7 +250,7 @@ router.get('/satisfaction-correlation', async (req: Request, res: Response) => {
  */
 router.get('/alerts', async (req: Request, res: Response) => {
   try {
-    const { providerId } = req.query;
+    const providerId = queryParam(req.query.providerId);
 
     const alerts = await waitTimeService.getActiveAlerts(providerId as string | undefined);
 
@@ -268,7 +269,7 @@ router.get('/alerts', async (req: Request, res: Response) => {
  */
 router.patch('/alerts/:alertId/acknowledge', async (req: Request, res: Response) => {
   try {
-    const { alertId } = req.params;
+    const alertId = routeParam(req.params.alertId);
     const userId = (req as any).user?.userId;
 
     if (!userId) {
@@ -294,7 +295,7 @@ router.patch('/alerts/:alertId/acknowledge', async (req: Request, res: Response)
  */
 router.patch('/alerts/:alertId/resolve', async (req: Request, res: Response) => {
   try {
-    const { alertId } = req.params;
+    const alertId = routeParam(req.params.alertId);
 
     const alert = await waitTimeService.resolveAlert(alertId);
 
@@ -317,7 +318,7 @@ router.patch('/alerts/:alertId/resolve', async (req: Request, res: Response) => 
  */
 router.get('/analytics/:period', async (req: Request, res: Response) => {
   try {
-    const { period } = req.params;
+    const period = routeParam(req.params.period);
 
     // Validate period format
     if (!/^\d{4}-\d{2}$/.test(period)) {

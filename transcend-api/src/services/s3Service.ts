@@ -4,6 +4,12 @@
 import AWS from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import { query } from '../database/connection';
+import {
+  encryptDocument,
+  decryptDocument,
+  isDocumentEncryptionConfigured,
+} from './documentEncryption';
+import { encryptField, decryptField } from './fieldEncryption';
 
 const s3 = new AWS.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -46,32 +52,54 @@ export async function uploadCaseDocument(
       throw new Error(`File type not allowed. Allowed: ${ALLOWED_TYPES.join(', ')}`);
     }
 
-    // Generate unique file name
     const documentId = uuidv4();
     const timestamp = new Date().toISOString().split('T')[0];
-    const s3Key = `cases/${caseId}/${timestamp}/${documentId}_${fileName}`;
 
-    // Upload to S3
+    // The original filename is itself sensitive ("Smith_v_Jones_medical.pdf"),
+    // so it is kept out of the S3 key and stored encrypted in the database.
+    const s3Key = `cases/${caseId}/${timestamp}/${documentId}`;
+
+    // Client-side envelope encryption: S3 receives ciphertext only we can open.
+    const encryptedBody = encryptDocument(fileBuffer);
+
+    // SSE stays on as defence in depth. SSE-KMS with a customer-managed key is
+    // preferred when configured - it gives key-level revocation and CloudTrail
+    // visibility that SSE-S3 does not.
+    const sseParams = process.env.AWS_KMS_KEY_ID
+      ? { ServerSideEncryption: 'aws:kms', SSEKMSKeyId: process.env.AWS_KMS_KEY_ID }
+      : { ServerSideEncryption: 'AES256' };
+
     const params = {
       Bucket: BUCKET_NAME,
       Key: s3Key,
-      Body: fileBuffer,
-      ContentType: mimeType,
-      ServerSideEncryption: 'AES256',
+      Body: encryptedBody,
+      // Opaque: the real type is in the database, not exposed on the object.
+      ContentType: 'application/octet-stream',
+      ...sseParams,
       Metadata: {
         caseId,
         userId,
         uploadedAt: new Date().toISOString(),
+        clientEncrypted: 'true',
       },
     };
 
     const result = await s3.upload(params).promise();
 
-    // Save to database
     await query(
-      `INSERT INTO case_documents (case_id, file_name, file_url, file_size, file_type, uploaded_by)
-       VALUES ($1, $2, $3, $4, $5, $6)`,
-      [caseId, fileName, result.Location, fileBuffer.length, mimeType, userId]
+      `INSERT INTO case_documents
+         (id, case_id, file_name, file_url, file_size, file_type, uploaded_by, client_encrypted)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, TRUE)`,
+      [
+        documentId,
+        caseId,
+        encryptField(fileName),
+        result.Location,
+        // Plaintext length, so size reporting stays accurate.
+        fileBuffer.length,
+        mimeType,
+        userId,
+      ]
     );
 
     console.log(`✅ Document uploaded: ${documentId}`);
@@ -107,8 +135,26 @@ export async function downloadCaseDocument(
 
     const document = result.rows[0];
 
-    // Verify user has access (todo: implement proper ACL)
-    // For now, any authenticated user can download
+    // Authorisation. Previously ANY authenticated user could download ANY case
+    // document - including medical records. Access is now limited to the case's
+    // client and attorneys who have an active offer on it.
+    const allowed = await query(
+      `SELECT 1
+         FROM cases c
+    LEFT JOIN case_offers o
+           ON o.case_id = c.id
+          AND o.status IN ('quoted', 'accepted', 'retained')
+    LEFT JOIN attorneys a
+           ON a.id = o.attorney_id
+        WHERE c.id = $1
+          AND (c.client_id = $2 OR a.user_id = $2)
+        LIMIT 1`,
+      [document.case_id, userId]
+    );
+
+    if (allowed.rows.length === 0) {
+      throw new Error('Document not found');
+    }
 
     // Extract S3 key from URL
     const s3Key = document.file_url.split('.s3.')[1]?.split('/').slice(1).join('/');
@@ -126,8 +172,9 @@ export async function downloadCaseDocument(
     const data = await s3.getObject(params).promise();
 
     return {
-      buffer: data.Body as Buffer,
-      fileName: document.file_name,
+      // Reverses the envelope; legacy unencrypted objects pass through.
+      buffer: decryptDocument(data.Body as Buffer),
+      fileName: decryptField(document.file_name),
       mimeType: document.file_type,
     };
   } catch (error) {
@@ -281,6 +328,15 @@ export async function getPresignedDownloadUrl(
       Expires: expiresIn,
     };
 
+    // WARNING: a presigned URL streams the raw S3 object, bypassing
+    // decryptDocument - so for client-encrypted documents the caller receives
+    // ciphertext, not a readable file. Route document reads through
+    // downloadCaseDocument instead. Kept for legacy objects only.
+    console.warn(
+      '[security] getSignedUrl bypasses client-side decryption; ' +
+        'client-encrypted documents will download as ciphertext. Use downloadCaseDocument.'
+    );
+
     const url = s3.getSignedUrl('getObject', params);
     return url;
   } catch (error) {
@@ -306,6 +362,14 @@ export async function getPresignedUploadUrl(
       ContentType: mimeType,
       Expires: expiresIn,
     };
+
+    // WARNING: a presigned upload writes whatever the client sends, bypassing
+    // encryptDocument - the object would land as PLAINTEXT. Uploads must go
+    // through uploadCaseDocument.
+    console.warn(
+      '[security] getSignedUrl(putObject) bypasses client-side encryption; ' +
+        'documents uploaded this way are stored in plaintext. Use uploadCaseDocument.'
+    );
 
     const url = s3.getSignedUrl('putObject', params);
     return url;

@@ -4,6 +4,7 @@
  */
 
 import { Router, Request, Response } from 'express';
+import { queryParam, routeParam } from '../src/utils/httpParams';
 import { authenticateToken } from '../middleware/auth'; // Assuming auth middleware exists
 import {
   sendNotification,
@@ -205,7 +206,7 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const userId = (req as any).user?.id;
-      const { category } = req.params;
+      const category = routeParam(req.params.category);
 
       const preferences = await getNotificationPreferences(userId);
       const mutedCategories = Array.from(
@@ -237,7 +238,7 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const userId = (req as any).user?.id;
-      const { category } = req.params;
+      const category = routeParam(req.params.category);
 
       const preferences = await getNotificationPreferences(userId);
       const mutedCategories = preferences.mutedCategories.filter(
@@ -379,7 +380,7 @@ router.post('/process-scheduled', authenticateToken, async (req: Request, res: R
 router.post('/:id/read', authenticateToken, async (req: Request, res: Response) => {
   try {
     const userId = (req as any).user?.id;
-    const { id } = req.params;
+    const id = routeParam(req.params.id);
 
     await trackNotificationRead(id, userId);
 
@@ -400,7 +401,7 @@ router.post('/:id/read', authenticateToken, async (req: Request, res: Response) 
 router.post('/:id/clicked', authenticateToken, async (req: Request, res: Response) => {
   try {
     const userId = (req as any).user?.id;
-    const { id } = req.params;
+    const id = routeParam(req.params.id);
     const { deepLink } = req.body;
 
     await trackNotificationClick(id, userId, deepLink);
@@ -459,7 +460,7 @@ router.post('/:id/dismissed', authenticateToken, async (req: Request, res: Respo
  */
 router.get('/analytics', authenticateToken, async (req: Request, res: Response) => {
   try {
-    const { startDate, endDate, userId, category, channel } = req.query;
+    const startDate = queryParam(req.query.startDate); const endDate = queryParam(req.query.endDate); const userId = queryParam(req.query.userId); const category = queryParam(req.query.category); const channel = queryParam(req.query.channel);
 
     if (!startDate || !endDate) {
       return res.status(400).json({
@@ -534,7 +535,7 @@ router.post(
   authenticateToken,
   async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
+      const id = routeParam(req.params.id);
       const { variables } = req.body;
 
       if (!variables) {

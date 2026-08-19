@@ -301,6 +301,14 @@ const ICONS: Record<string, React.ReactNode> = {
       <path d="M8.6 13.2l2.5 2.5 4.6-4.6" />
     </>
   ),
+
+  // User profile — account/profile page
+  user: (
+    <>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M3 20a9 9 0 1 0 18 0" />
+    </>
+  ),
 };
 
 export type ServiceIconName = keyof typeof ICONS;

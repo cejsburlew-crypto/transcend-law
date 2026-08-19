@@ -12,6 +12,7 @@ import {
   OperationResult,
 } from '../services/bulkOperations';
 import { authenticateUser, authorizeAdmin } from '../middleware/auth';
+import { queryParam, routeParam } from '../src/utils/httpParams';
 
 const router = Router();
 
@@ -53,7 +54,7 @@ router.post(
         return res.status(400).json({ error: 'CSV file is required' });
       }
 
-      const { template, dryRun, stopOnError } = req.query;
+      const template = queryParam(req.query.template); const dryRun = queryParam(req.query.dryRun); const stopOnError = queryParam(req.query.stopOnError);
       const userId = req.user?.id;
 
       if (!template || typeof template !== 'string') {
@@ -137,7 +138,7 @@ router.post(
         return res.status(400).json({ error: 'CSV file is required' });
       }
 
-      const { template } = req.query;
+      const template = queryParam(req.query.template);
 
       if (!template || typeof template !== 'string') {
         return res
@@ -175,7 +176,7 @@ router.post(
  */
 router.get('/import/template/:templateName', (req: Request, res: Response) => {
   try {
-    const { templateName } = req.params;
+    const templateName = routeParam(req.params.templateName);
     const template = bulkOperationsService.generateTemplate(templateName);
 
     res.setHeader('Content-Type', 'text/csv');
@@ -265,7 +266,7 @@ router.post(
  */
 router.get('/jobs/:jobId', authenticateUser, (req: Request, res: Response) => {
   try {
-    const { jobId } = req.params;
+    const jobId = routeParam(req.params.jobId);
     const job = bulkOperationsService.getJob(jobId);
 
     if (!job) {
@@ -333,7 +334,7 @@ router.post(
   authenticateUser,
   async (req: Request, res: Response) => {
     try {
-      const { jobId } = req.params;
+      const jobId = routeParam(req.params.jobId);
       const job = bulkOperationsService.getJob(jobId);
 
       if (!job) {
@@ -371,7 +372,7 @@ router.post(
   authenticateUser,
   async (req: Request, res: Response) => {
     try {
-      const { jobId } = req.params;
+      const jobId = routeParam(req.params.jobId);
       const job = bulkOperationsService.getJob(jobId);
 
       if (!job) {
@@ -414,7 +415,7 @@ router.delete(
   authorizeAdmin,
   (req: Request, res: Response) => {
     try {
-      const { jobId } = req.params;
+      const jobId = routeParam(req.params.jobId);
       const job = bulkOperationsService.getJob(jobId);
 
       if (!job) {

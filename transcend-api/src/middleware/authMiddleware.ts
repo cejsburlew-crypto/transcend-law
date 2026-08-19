@@ -4,10 +4,44 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyAccessToken, JWTPayload } from '../services/authService';
 
+/**
+ * The authenticated user as attached to the request.
+ *
+ * `id` is a runtime alias for `userId`: route code across the codebase reads
+ * `req.user.id`, so it is set here rather than patched at 20+ call sites.
+ */
+export type AuthenticatedUser = JWTPayload & {
+  /** Runtime alias for `userId` - route code reads `req.user.id`. */
+  id: string;
+  /** Runtime alias for `userType` - route code reads `req.user.role`. */
+  role: string;
+  /**
+   * Derived from userType. Currently always false: the users table constrains
+   * user_type to ('client','attorney','firm'), so no account can be an admin
+   * until that role is added deliberately. Fails closed.
+   */
+  isAdmin: boolean;
+  /**
+   * Whether the account has completed identity verification. The access token
+   * carries no such claim today, so this is false until one is added - callers
+   * treating it as a gate therefore fail closed.
+   */
+  isVerified: boolean;
+};
+
+/** Build the request-scoped user, including the derived aliases above. */
+const toAuthenticatedUser = (payload: JWTPayload): AuthenticatedUser => ({
+  ...payload,
+  id: payload.userId,
+  role: payload.userType,
+  isAdmin: (payload.userType as string) === 'admin',
+  isVerified: false,
+});
+
 declare global {
   namespace Express {
     interface Request {
-      user?: JWTPayload;
+      user?: AuthenticatedUser;
       userId?: string;
     }
   }
@@ -27,7 +61,7 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
     return res.status(401).json({ error: 'Invalid or expired token' });
   }
 
-  req.user = payload;
+  req.user = toAuthenticatedUser(payload);
   req.userId = payload.userId;
   next();
 }
@@ -40,7 +74,7 @@ export function optionalAuthMiddleware(req: Request, res: Response, next: NextFu
     const payload = verifyAccessToken(token);
 
     if (payload) {
-      req.user = payload;
+      req.user = toAuthenticatedUser(payload);
       req.userId = payload.userId;
     }
   }

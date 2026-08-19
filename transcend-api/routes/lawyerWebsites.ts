@@ -7,7 +7,8 @@
 import { Router, Request, Response } from 'express';
 import axios from 'axios';
 import lawyerWebsiteService, { LawyerWebsite } from '../services/lawyerWebsiteService';
-import { query } from '../../../transcend-law/backend/src/db/connection.js';
+import { query } from '../src/database/connection';
+import { routeParam } from '../src/utils/httpParams';
 
 const CLOVER_API_BASE = 'https://api.clover.com';
 const CLOVER_API_KEY = process.env.CLOVER_API_KEY;
@@ -99,7 +100,7 @@ router.post('/api/lawyer-websites', async (req: Request, res: Response) => {
  */
 router.get('/api/lawyer-websites/:websiteId', async (req: Request, res: Response) => {
   try {
-    const { websiteId } = req.params;
+    const websiteId = routeParam(req.params.websiteId);
 
     // TODO: Get from database
     // const website = await db.lawyerWebsites.findById(websiteId);
@@ -118,7 +119,7 @@ router.get('/api/lawyer-websites/:websiteId', async (req: Request, res: Response
  */
 router.put('/api/lawyer-websites/:websiteId', async (req: Request, res: Response) => {
   try {
-    const { websiteId } = req.params;
+    const websiteId = routeParam(req.params.websiteId);
     const updates = req.body;
 
     // Validate user owns website
@@ -141,7 +142,7 @@ router.put('/api/lawyer-websites/:websiteId', async (req: Request, res: Response
  */
 router.post('/api/lawyer-websites/:websiteId/testimonials', async (req: Request, res: Response) => {
   try {
-    const { websiteId } = req.params;
+    const websiteId = routeParam(req.params.websiteId);
     const { clientName, rating, review } = req.body;
 
     if (!clientName || !rating || !review) {
@@ -176,7 +177,7 @@ router.post('/api/lawyer-websites/:websiteId/testimonials', async (req: Request,
  */
 router.post('/api/lawyer-websites/:websiteId/renew', async (req: Request, res: Response) => {
   try {
-    const { websiteId } = req.params;
+    const websiteId = routeParam(req.params.websiteId);
     const { months = 1 } = req.body;
 
     // TODO: Process payment via Stripe
@@ -198,7 +199,7 @@ router.post('/api/lawyer-websites/:websiteId/renew', async (req: Request, res: R
  */
 router.post('/api/lawyer-websites/:websiteId/cancel', async (req: Request, res: Response) => {
   try {
-    const { websiteId } = req.params;
+    const websiteId = routeParam(req.params.websiteId);
     // TODO: Get website from database to get cloverSubscriptionId
     // const website = await db.lawyerWebsites.findById(websiteId);
 
@@ -227,7 +228,7 @@ router.post('/api/lawyer-websites/:websiteId/cancel', async (req: Request, res: 
  */
 router.get('/:subdomain', async (req: Request, res: Response) => {
   try {
-    const { subdomain } = req.params;
+    const subdomain = routeParam(req.params.subdomain);
 
     const website = await lawyerWebsiteService.getWebsiteBySubdomain(subdomain);
 
@@ -276,7 +277,7 @@ router.get('/:subdomain', async (req: Request, res: Response) => {
  */
 router.post('/:subdomain/contact', async (req: Request, res: Response) => {
   try {
-    const { subdomain } = req.params;
+    const subdomain = routeParam(req.params.subdomain);
     const { name, email, phone, message, serviceInterest } = req.body;
 
     if (!name || !email || !message) {
@@ -329,7 +330,7 @@ router.post('/:subdomain/contact', async (req: Request, res: Response) => {
  */
 router.post('/:subdomain/track/service-click', async (req: Request, res: Response) => {
   try {
-    const { subdomain } = req.params;
+    const subdomain = routeParam(req.params.subdomain);
     const { serviceId } = req.body;
 
     const website = await lawyerWebsiteService.getWebsiteBySubdomain(subdomain);

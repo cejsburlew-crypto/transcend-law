@@ -6,6 +6,7 @@
 
 import { Router, Request, Response } from 'express';
 import axios from 'axios';
+import { queryParam } from '../src/utils/httpParams';
 
 const router = Router();
 
@@ -206,7 +207,7 @@ router.post('/api/admin/security/report-threat', async (req: Request, res: Respo
  */
 router.get('/api/admin/security/quarantine', async (req: Request, res: Response) => {
   try {
-    const { limit = 50, offset = 0 } = req.query;
+    const limit = queryParam(req.query.limit); const offset = queryParam(req.query.offset);
 
     // TODO: Query quarantine database
     // const quarantined = await db.query(

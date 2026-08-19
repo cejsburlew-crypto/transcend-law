@@ -15,6 +15,7 @@ import {
 } from '../services/reviewCredibility';
 import { authenticateToken, requireRole } from '../middleware/auth';
 import { auditLog } from '../services/auditLogger';
+import { queryParam, routeParam } from '../src/utils/httpParams';
 
 const router = Router();
 
@@ -28,7 +29,7 @@ const router = Router();
  */
 router.get('/api/reviews/:reviewId/credibility', authenticateToken, async (req: Request, res: Response) => {
   try {
-    const { reviewId } = req.params;
+    const reviewId = routeParam(req.params.reviewId);
 
     // Get review credibility data
     const result = await (global.db || {}).query?.(
@@ -75,7 +76,7 @@ router.get('/api/reviews/:reviewId/credibility', authenticateToken, async (req: 
  */
 router.get('/api/providers/:providerId/reputation', authenticateToken, async (req: Request, res: Response) => {
   try {
-    const { providerId } = req.params;
+    const providerId = routeParam(req.params.providerId);
 
     const reputation = await calculateProviderReputation(providerId);
 
@@ -100,8 +101,8 @@ router.get('/api/providers/:providerId/reputation', authenticateToken, async (re
  */
 router.get('/api/providers/:providerId/review-trends', authenticateToken, async (req: Request, res: Response) => {
   try {
-    const { providerId } = req.params;
-    const { days = '30' } = req.query;
+    const providerId = routeParam(req.params.providerId);
+    const days = queryParam(req.query.days);
 
     const trends = await getReviewCredibilityTrends(providerId, parseInt(days as string));
 
@@ -196,7 +197,7 @@ router.post(
   requireRole('admin'),
   async (req: Request, res: Response) => {
     try {
-      const { reviewId } = req.params;
+      const reviewId = routeParam(req.params.reviewId);
 
       // Get review details
       const reviewResult = await (global.db || {}).query?.(
@@ -251,7 +252,7 @@ router.post(
  */
 router.get('/api/admin/review-queue', authenticateToken, requireRole('admin'), async (req: Request, res: Response) => {
   try {
-    const { status = 'pending', priority = '', limit = '50' } = req.query;
+    const status = queryParam(req.query.status); const priority = queryParam(req.query.priority); const limit = queryParam(req.query.limit);
 
     const queue = await getAdminReviewQueue(
       status as string,
@@ -284,7 +285,7 @@ router.post(
   requireRole('admin'),
   async (req: Request, res: Response) => {
     try {
-      const { queueId } = req.params;
+      const queueId = routeParam(req.params.queueId);
       const { action, resolution } = req.body;
 
       if (!['approved', 'rejected', 'modified', 'escalated'].includes(action)) {
@@ -325,7 +326,7 @@ router.post(
   requireRole('admin'),
   async (req: Request, res: Response) => {
     try {
-      const { reviewId } = req.params;
+      const reviewId = routeParam(req.params.reviewId);
       const { reason, priority = 'medium' } = req.body;
 
       if (!reason) {
@@ -376,7 +377,7 @@ router.post(
   requireRole('admin'),
   async (req: Request, res: Response) => {
     try {
-      const { providerId } = req.params;
+      const providerId = routeParam(req.params.providerId);
 
       const count = await filterOutFakeReviews(providerId);
 
@@ -411,7 +412,7 @@ router.post(
   requireRole('admin'),
   async (req: Request, res: Response) => {
     try {
-      const { providerId } = req.params;
+      const providerId = routeParam(req.params.providerId);
 
       const reputation = await calculateProviderReputation(providerId);
 
@@ -449,8 +450,8 @@ router.get(
   requireRole('admin'),
   async (req: Request, res: Response) => {
     try {
-      const { providerId } = req.params;
-      const { days = '90' } = req.query;
+      const providerId = routeParam(req.params.providerId);
+      const days = queryParam(req.query.days);
 
       const trends = await getReviewCredibilityTrends(providerId, parseInt(days as string));
 
@@ -481,7 +482,7 @@ router.get(
   requireRole('admin'),
   async (req: Request, res: Response) => {
     try {
-      const { limit = '100', offset = '0' } = req.query;
+      const limit = queryParam(req.query.limit); const offset = queryParam(req.query.offset);
 
       const result = await (global.db || {}).query?.(
         `SELECT * FROM suspicious_reviews_view LIMIT $1 OFFSET $2`,

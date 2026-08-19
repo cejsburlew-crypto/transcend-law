@@ -4,6 +4,7 @@
 import { Router, Request, Response } from 'express';
 import UserSegmentationService from '../services/userSegmentation';
 import { authenticateJWT } from '../middleware/auth';
+import { routeParam } from '../src/utils/httpParams';
 
 const router = Router();
 
@@ -20,7 +21,7 @@ router.use(authenticateJWT);
  */
 router.get('/segment/:userId', async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
+    const userId = routeParam(req.params.userId);
 
     // Verify user is accessing their own data
     if ((req as any).user.id !== userId && (req as any).user.role !== 'admin') {
@@ -49,7 +50,7 @@ router.get('/segment/:userId', async (req: Request, res: Response) => {
  */
 router.post('/segment/:userId/refresh', async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
+    const userId = routeParam(req.params.userId);
 
     if ((req as any).user.id !== userId && (req as any).user.role !== 'admin') {
       return res.status(403).json({ error: 'Unauthorized' });
@@ -81,7 +82,7 @@ router.post('/segment/:userId/refresh', async (req: Request, res: Response) => {
  */
 router.get('/ctas/:userId', async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
+    const userId = routeParam(req.params.userId);
 
     if ((req as any).user.id !== userId && (req as any).user.role !== 'admin') {
       return res.status(403).json({ error: 'Unauthorized' });
@@ -147,7 +148,7 @@ router.post('/track-cta', async (req: Request, res: Response) => {
  */
 router.get('/journey/:userId', async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
+    const userId = routeParam(req.params.userId);
 
     if ((req as any).user.id !== userId && (req as any).user.role !== 'admin') {
       return res.status(403).json({ error: 'Unauthorized' });
@@ -182,7 +183,7 @@ router.get('/journey/:userId', async (req: Request, res: Response) => {
  */
 router.get('/analytics/:userId', async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
+    const userId = routeParam(req.params.userId);
 
     if ((req as any).user.id !== userId && (req as any).user.role !== 'admin') {
       return res.status(403).json({ error: 'Unauthorized' });
@@ -242,7 +243,7 @@ router.post('/ab-tests', async (req: Request, res: Response) => {
  */
 router.get('/ab-tests/:testId/variant/:userId', async (req: Request, res: Response) => {
   try {
-    const { testId, userId } = req.params;
+    const testId = routeParam(req.params.testId); const userId = routeParam(req.params.userId);
 
     if ((req as any).user.id !== userId && (req as any).user.role !== 'admin') {
       return res.status(403).json({ error: 'Unauthorized' });
@@ -277,7 +278,7 @@ router.post('/ab-tests/:testId/result', async (req: Request, res: Response) => {
       return res.status(403).json({ error: 'Admin access required' });
     }
 
-    const { testId } = req.params;
+    const testId = routeParam(req.params.testId);
     const { variant, result } = req.body;
 
     if (!['variant1', 'variant2'].includes(variant)) {
@@ -309,7 +310,7 @@ router.post('/ab-tests/:testId/end', async (req: Request, res: Response) => {
       return res.status(403).json({ error: 'Admin access required' });
     }
 
-    const { testId } = req.params;
+    const testId = routeParam(req.params.testId);
 
     const result = await UserSegmentationService.endABTest(testId);
 

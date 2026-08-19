@@ -6,6 +6,7 @@ import { Router, Request, Response } from 'express';
 import ConflictCheckerService from '../services/conflictChecker';
 import { auditLogger } from '../services/auditLogger';
 import { authenticate, requireRole } from '../middleware/auth';
+import { queryParam, routeParam } from '../src/utils/httpParams';
 
 const router = Router();
 
@@ -22,7 +23,7 @@ router.use(authenticate);
  */
 router.get('/check/:attorneyId/:clientId', async (req: Request, res: Response) => {
   try {
-    const { attorneyId, clientId } = req.params;
+    const attorneyId = routeParam(req.params.attorneyId); const clientId = routeParam(req.params.clientId);
     const userId = req.user?.id;
 
     // Check if match is already blocked
@@ -76,7 +77,7 @@ router.post('/perform-check', async (req: Request, res: Response) => {
  */
 router.get('/is-blocked/:attorneyId/:clientId', async (req: Request, res: Response) => {
   try {
-    const { attorneyId, clientId } = req.params;
+    const attorneyId = routeParam(req.params.attorneyId); const clientId = routeParam(req.params.clientId);
 
     const isBlocked = await ConflictCheckerService.isMatchBlocked(attorneyId, clientId);
 
@@ -93,7 +94,7 @@ router.get('/is-blocked/:attorneyId/:clientId', async (req: Request, res: Respon
  */
 router.get('/summary/:attorneyId', async (req: Request, res: Response) => {
   try {
-    const { attorneyId } = req.params;
+    const attorneyId = routeParam(req.params.attorneyId);
 
     const summary = await ConflictCheckerService.getConflictSummary(attorneyId);
 
@@ -190,7 +191,7 @@ router.post(
  */
 router.post('/appeal/:conflictMatchId', async (req: Request, res: Response) => {
   try {
-    const { conflictMatchId } = req.params;
+    const conflictMatchId = routeParam(req.params.conflictMatchId);
     const { reason, documents, additionalInfo } = req.body;
     const userId = req.user?.id;
 
@@ -246,7 +247,7 @@ router.post(
   requireRole(['admin', 'compliance']),
   async (req: Request, res: Response) => {
     try {
-      const { appealId } = req.params;
+      const appealId = routeParam(req.params.appealId);
       const { decision, rationale } = req.body;
       const userId = req.user?.id;
 
@@ -319,7 +320,7 @@ router.post(
   requireRole(['admin']),
   async (req: Request, res: Response) => {
     try {
-      const { conflictMatchId } = req.params;
+      const conflictMatchId = routeParam(req.params.conflictMatchId);
       const { reason } = req.body;
       const userId = req.user?.id;
 
@@ -377,7 +378,7 @@ router.get(
   requireRole(['admin', 'compliance']),
   async (req: Request, res: Response) => {
     try {
-      const { format = 'json', startDate, endDate } = req.query;
+      const format = queryParam(req.query.format); const startDate = queryParam(req.query.startDate); const endDate = queryParam(req.query.endDate);
 
       // Generate report based on parameters
       res.json({

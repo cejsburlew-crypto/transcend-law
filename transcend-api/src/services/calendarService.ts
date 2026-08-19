@@ -811,7 +811,7 @@ class CalendarService extends EventEmitter {
    */
   private clearSlotCaches(userId: string): void {
     const keys = this.cache.keys();
-    keys.forEach((key) => {
+    keys.forEach((key: any) => {
       if (key.startsWith(`slots:${userId}:`)) {
         this.cache.del(key);
       }

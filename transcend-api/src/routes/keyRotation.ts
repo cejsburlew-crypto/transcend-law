@@ -25,6 +25,7 @@ import {
   getExecutionHistory,
 } from '../services/keyRotationScheduler';
 import { logAuditEvent } from '../services/securityService';
+import { queryParam, routeParam } from '../utils/httpParams';
 
 const router = express.Router();
 
@@ -102,7 +103,7 @@ router.post('/rotate', async (req: Request, res: Response) => {
  */
 router.post('/rollback/:jobId', async (req: Request, res: Response) => {
   try {
-    const { jobId } = req.params;
+    const jobId = routeParam(req.params.jobId);
     const { reason } = req.body;
 
     if (!reason) {
@@ -179,7 +180,7 @@ router.post('/test', async (req: Request, res: Response) => {
  */
 router.get('/status/:jobId', async (req: Request, res: Response) => {
   try {
-    const { jobId } = req.params;
+    const jobId = routeParam(req.params.jobId);
     const job = await getRotationJobStatus(jobId);
 
     res.json({
@@ -202,7 +203,7 @@ router.get('/status/:jobId', async (req: Request, res: Response) => {
  */
 router.get('/history', async (req: Request, res: Response) => {
   try {
-    const { limit = 50 } = req.query;
+    const limit = queryParam(req.query.limit);
     const history = await getRotationHistory(parseInt(limit as string));
 
     res.json({
@@ -440,7 +441,7 @@ router.get('/scheduler/health', async (req: Request, res: Response) => {
  */
 router.post('/scheduler/trigger/:jobName', async (req: Request, res: Response) => {
   try {
-    const { jobName } = req.params;
+    const jobName = routeParam(req.params.jobName);
 
     console.log(`⚡ Manually triggering job: ${jobName}`);
 
@@ -475,7 +476,7 @@ router.post('/scheduler/trigger/:jobName', async (req: Request, res: Response) =
  */
 router.put('/scheduler/job/:jobName', (req: Request, res: Response) => {
   try {
-    const { jobName } = req.params;
+    const jobName = routeParam(req.params.jobName);
     const { enabled } = req.body;
 
     if (typeof enabled !== 'boolean') {
@@ -543,7 +544,7 @@ router.put('/scheduler/config', (req: Request, res: Response) => {
  */
 router.get('/scheduler/execution-history', (req: Request, res: Response) => {
   try {
-    const { limit = 100, job } = req.query;
+    const limit = queryParam(req.query.limit); const job = queryParam(req.query.job);
 
     const history = getExecutionHistory(
       parseInt(limit as string),

@@ -27,6 +27,11 @@ import {
 } from '../services/deprecationService';
 import { logAction } from '../services/auditLogger';
 import { authMiddleware, adminMiddleware } from '../middleware/auth';
+import { queryParam, routeParam } from '../src/utils/httpParams';
+
+// NOTE: `req.user!` assertions below are sound - this router applies
+// authentication middleware, so a handler cannot run without an authenticated
+// user. TypeScript cannot see that guarantee across the middleware boundary.
 
 const router = Router();
 
@@ -69,7 +74,7 @@ router.post('/admin/deprecations', authMiddleware, adminMiddleware, async (req: 
       migrationGuideUrl,
       breakingChanges,
       affectedServices,
-      req.user.id
+      req.user!.id
     );
 
     res.status(201).json(deprecation);
@@ -85,7 +90,7 @@ router.post('/admin/deprecations', authMiddleware, adminMiddleware, async (req: 
  */
 router.get('/admin/deprecations', authMiddleware, adminMiddleware, async (req: Request, res: Response) => {
   try {
-    const { status, limit = 100 } = req.query;
+    const status = queryParam(req.query.status); const limit = queryParam(req.query.limit);
 
     const deprecations = await getDeprecatedFeatures(status as any, parseInt(limit as string));
 
@@ -128,7 +133,7 @@ router.get('/admin/deprecations/upcoming', authMiddleware, adminMiddleware, asyn
  */
 router.patch('/admin/deprecations/:featureId', authMiddleware, adminMiddleware, async (req: Request, res: Response) => {
   try {
-    const { featureId } = req.params;
+    const featureId = routeParam(req.params.featureId);
     const { status } = req.body;
 
     if (!status || !['announced', 'active', 'disabled', 'removed'].includes(status)) {
@@ -137,7 +142,7 @@ router.patch('/admin/deprecations/:featureId', authMiddleware, adminMiddleware, 
       });
     }
 
-    const deprecation = await updateDeprecationStatus(featureId, status, req.user.id);
+    const deprecation = await updateDeprecationStatus(featureId, status, req.user!.id);
 
     res.json(deprecation);
   } catch (error) {
@@ -168,7 +173,7 @@ router.post('/admin/deprecations/auto-disable', authMiddleware, adminMiddleware,
   try {
     const result = await autoDisableDeprecatedFeatures();
 
-    await logAction(req.user.id, 'admin', 'auto_disable', 'deprecation_system', {
+    await logAction(req.user!.id, 'admin', 'auto_disable', 'deprecation_system', {
       ipAddress: req.ip || '0.0.0.0',
       metadata: { disabled_count: result.disabled },
       dataClassification: 'internal',
@@ -192,7 +197,7 @@ router.post('/admin/deprecations/auto-remove', authMiddleware, adminMiddleware, 
   try {
     const result = await autoRemoveEOLFeatures();
 
-    await logAction(req.user.id, 'admin', 'auto_remove', 'deprecation_system', {
+    await logAction(req.user!.id, 'admin', 'auto_remove', 'deprecation_system', {
       ipAddress: req.ip || '0.0.0.0',
       metadata: { removed_count: result.removed },
       dataClassification: 'internal',
@@ -227,7 +232,7 @@ router.post('/user/migrations', authMiddleware, async (req: Request, res: Respon
     }
 
     const migration = await createMigrationRecord(
-      req.user.id,
+      req.user!.id,
       fromFeature,
       toFeature,
       notes
@@ -246,14 +251,14 @@ router.post('/user/migrations', authMiddleware, async (req: Request, res: Respon
  */
 router.get('/user/migrations', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const { status, limit = 50 } = req.query;
+    const status = queryParam(req.query.status); const limit = queryParam(req.query.limit);
 
     // In real implementation, query from database with user_id filter
     // This is a placeholder - implement database query in your service
 
     res.json({
       message: 'User migrations endpoint',
-      userId: req.user.id,
+      userId: req.user!.id,
       filters: { status, limit },
     });
   } catch (error) {
@@ -268,7 +273,7 @@ router.get('/user/migrations', authMiddleware, async (req: Request, res: Respons
  */
 router.patch('/user/migrations/:migrationId', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const { migrationId } = req.params;
+    const migrationId = routeParam(req.params.migrationId);
     const { status, failureReason, migrationData } = req.body;
 
     if (!status) {
@@ -295,7 +300,7 @@ router.patch('/user/migrations/:migrationId', authMiddleware, async (req: Reques
  */
 router.get('/user/migrations/progress', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const progress = await getUserMigrationProgress(req.user.id);
+    const progress = await getUserMigrationProgress(req.user!.id);
     res.json(progress);
   } catch (error) {
     console.error('Error fetching migration progress:', error);
@@ -348,7 +353,7 @@ router.post('/admin/legacy-versions', authMiddleware, adminMiddleware, async (re
  */
 router.get('/admin/legacy-versions/:version', authMiddleware, adminMiddleware, async (req: Request, res: Response) => {
   try {
-    const { version } = req.params;
+    const version = routeParam(req.params.version);
 
     const legacyVersion = await getLegacyAPIVersion(version);
 
@@ -369,11 +374,11 @@ router.get('/admin/legacy-versions/:version', authMiddleware, adminMiddleware, a
  */
 router.post('/admin/legacy-versions/:version/deactivate', authMiddleware, adminMiddleware, async (req: Request, res: Response) => {
   try {
-    const { version } = req.params;
+    const version = routeParam(req.params.version);
 
-    await deactivateLegacyAPIVersion(version, req.user.id);
+    await deactivateLegacyAPIVersion(version, req.user!.id);
 
-    await logAction(req.user.id, 'admin', 'api_version_deactivation', version, {
+    await logAction(req.user!.id, 'admin', 'api_version_deactivation', version, {
       ipAddress: req.ip || '0.0.0.0',
       metadata: { deactivated_version: version },
       dataClassification: 'internal',
@@ -396,7 +401,7 @@ router.post('/admin/legacy-versions/:version/deactivate', authMiddleware, adminM
  */
 router.get('/user/warnings', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const warnings = await getUnacknowledgedWarnings(req.user.id);
+    const warnings = await getUnacknowledgedWarnings(req.user!.id);
 
     res.json({
       total: warnings.length,
@@ -414,7 +419,7 @@ router.get('/user/warnings', authMiddleware, async (req: Request, res: Response)
  */
 router.post('/user/warnings/:warningId/acknowledge', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const { warningId } = req.params;
+    const warningId = routeParam(req.params.warningId);
 
     await acknowledgeDeprecationWarning(warningId);
 
@@ -435,7 +440,7 @@ router.post('/user/warnings/:warningId/acknowledge', authMiddleware, async (req:
  */
 router.get('/public/deprecations/:featureName/guide', async (req: Request, res: Response) => {
   try {
-    const { featureName } = req.params;
+    const featureName = routeParam(req.params.featureName);
 
     const guide = await getMigrationGuide(featureName);
 
@@ -456,7 +461,7 @@ router.get('/public/deprecations/:featureName/guide', async (req: Request, res: 
  */
 router.get('/public/deprecations/:featureName/status', async (req: Request, res: Response) => {
   try {
-    const { featureName } = req.params;
+    const featureName = routeParam(req.params.featureName);
 
     const deprecated = await isFeatureDeprecated(featureName);
     const disabled = await isFeatureDisabled(featureName);
@@ -482,7 +487,7 @@ router.get('/public/deprecations/:featureName/status', async (req: Request, res:
  */
 router.get('/admin/deprecations/reports/overview', authMiddleware, adminMiddleware, async (req: Request, res: Response) => {
   try {
-    const report = await generateDeprecationReport(req.user.id);
+    const report = await generateDeprecationReport(req.user!.id);
 
     res.json(report);
   } catch (error) {
