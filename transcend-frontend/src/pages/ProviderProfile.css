@@ -246,6 +246,29 @@
   font-size: 16px;
 }
 
+.company-locked {
+  opacity: 0.6;
+}
+
+.company-locked-message {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #f5f5f5;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  color: #666;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.lock-icon {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));

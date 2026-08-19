@@ -183,53 +183,64 @@ export const ProviderProfile: React.FC<{ onComplete?: () => void }> = ({ onCompl
                 <input type="tel" placeholder="(555) 123-4567" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} required />
               </div>
             </div>
-            <div className="form-group company-lookup">
-              <label>Company/Firm (if applicable)</label>
-              <p className="form-hint">Search for an existing firm to link your profile, or create a new one</p>
-              <div className="company-search-container">
-                <input
-                  type="text"
-                  placeholder="Search for your company..."
-                  value={formData.company}
-                  onChange={(e) => {
-                    setFormData({ ...formData, company: e.target.value });
-                    handleCompanySearch(e.target.value);
-                  }}
-                  onFocus={() => setShowCompanySearch(true)}
-                />
-                {showCompanySearch && companyOptions.length > 0 && (
-                  <div className="company-dropdown">
-                    {companyOptions.map((company) => (
+            {/* Company linking is only available after ID.me verification */}
+            {formData.idVerified ? (
+              <div className="form-group company-lookup">
+                <label>Company/Firm (if applicable)</label>
+                <p className="form-hint">Search for an existing firm to link your profile, or create a new one</p>
+                <div className="company-search-container">
+                  <input
+                    type="text"
+                    placeholder="Search for your company..."
+                    value={formData.company}
+                    onChange={(e) => {
+                      setFormData({ ...formData, company: e.target.value });
+                      handleCompanySearch(e.target.value);
+                    }}
+                    onFocus={() => setShowCompanySearch(true)}
+                  />
+                  {showCompanySearch && companyOptions.length > 0 && (
+                    <div className="company-dropdown">
+                      {companyOptions.map((company) => (
+                        <button
+                          key={company.id}
+                          type="button"
+                          className="company-option"
+                          onClick={() => handleCompanySelect(company.id, company.name)}
+                        >
+                          <span className="company-name">{company.name}</span>
+                          <span className="company-link-icon">🔗</span>
+                        </button>
+                      ))}
                       <button
-                        key={company.id}
                         type="button"
-                        className="company-option"
-                        onClick={() => handleCompanySelect(company.id, company.name)}
+                        className="company-option create-new"
+                        onClick={() => {
+                          setShowCompanySearch(false);
+                          setFormData({ ...formData, companyId: 'new' });
+                        }}
                       >
-                        <span className="company-name">{company.name}</span>
-                        <span className="company-link-icon">🔗</span>
+                        <span className="company-name">+ Create new firm "{formData.company}"</span>
                       </button>
-                    ))}
-                    <button
-                      type="button"
-                      className="company-option create-new"
-                      onClick={() => {
-                        setShowCompanySearch(false);
-                        setFormData({ ...formData, companyId: 'new' });
-                      }}
-                    >
-                      <span className="company-name">+ Create new firm "{formData.company}"</span>
-                    </button>
-                  </div>
-                )}
-                {formData.companyId && (
-                  <div className="company-linked">
-                    <span className="linked-icon">✓</span>
-                    <span>Linked to company profile</span>
-                  </div>
-                )}
+                    </div>
+                  )}
+                  {formData.companyId && (
+                    <div className="company-linked">
+                      <span className="linked-icon">✓</span>
+                      <span>Linked to company profile</span>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="form-group company-locked">
+                <label>Company/Firm Linking</label>
+                <div className="company-locked-message">
+                  <span className="lock-icon">🔒</span>
+                  <span>Complete ID.me verification to link your company profile</span>
+                </div>
+              </div>
+            )}
             <div className="form-group">
               <label>Website (if applicable)</label>
               <input type="url" placeholder="https://yourwebsite.com" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} />
