@@ -22,12 +22,20 @@ interface Professional {
 // translation key. Records keep their raw English values — only the label the
 // user reads is translated, so filtering and matching are unaffected.
 const SPEC_KEYS: Record<string, string> = {
+  'Bankruptcy': 'bankruptcy',
+  'Business Law': 'businessLaw',
   'Corporate Law': 'corporateLaw',
+  'Criminal Law': 'criminalLaw',
   'Estate Planning': 'estatePlanning',
   'Family Law': 'familyLaw',
+  'Immigration Law': 'immigrationLaw',
   'Intellectual Property': 'intellectualProperty',
+  'Labor Law': 'laborLaw',
+  'Litigation': 'litigation',
   'Personal Injury': 'personalInjury',
   'Real Estate': 'realEstate',
+  'Tax Law': 'taxLaw',
+  'Contracts': 'contracts',
   'Notary Services': 'notaryServices',
   'Mobile Notary': 'mobileNotary',
   'eNotary': 'eNotary',
@@ -149,7 +157,7 @@ export const ServicesDirectory: React.FC = () => {
       tKey: 'attorneyServices',
       icon: 'scales',
       attorney: true,
-      specializations: ['Corporate Law', 'Estate Planning', 'Family Law', 'Intellectual Property', 'Personal Injury', 'Real Estate'],
+      specializations: ['Bankruptcy', 'Business Law', 'Corporate Law', 'Criminal Law', 'Estate Planning', 'Family Law', 'Immigration Law', 'Intellectual Property', 'Labor Law', 'Litigation', 'Personal Injury', 'Real Estate', 'Tax Law', 'Contracts'],
     },
     {
       id: 'documentation-services',
@@ -247,13 +255,21 @@ export const ServicesDirectory: React.FC = () => {
 
   // Specialization icons and descriptions
   const specializationDetails: Record<string, { icon: string; description: string }> = {
+    'Bankruptcy': { icon: 'chartDown', description: 'Chapter 7, 11, 13 filings' },
+    'Business Law': { icon: 'briefcase', description: 'Business formation and operations' },
     'Corporate Law': { icon: 'building', description: 'Formation, contracts, partnerships' },
+    'Criminal Law': { icon: 'gavel', description: 'Criminal defense and prosecution' },
     'Family Law': { icon: 'people', description: 'Divorce, custody, adoption, child support' },
+    'Immigration Law': { icon: 'passport', description: 'Visas, green cards, citizenship' },
     'Intellectual Property': { icon: 'bulb', description: 'Patents, trademarks, copyrights' },
-    'Notary Services': { icon: 'signedDocument', description: 'Document signing, acknowledgments' },
+    'Labor Law': { icon: 'handshake', description: 'Employment disputes, contracts' },
+    'Litigation': { icon: 'scales', description: 'Lawsuits and court proceedings' },
     'Personal Injury': { icon: 'falling', description: 'Slip & fall, auto accidents, liability' },
-    'Estate Planning': { icon: 'sealedDocument', description: 'Wills, trusts, probate, succession' },
     'Real Estate': { icon: 'house', description: 'Property disputes, contracts, title issues' },
+    'Tax Law': { icon: 'calculator', description: 'Tax planning and compliance' },
+    'Contracts': { icon: 'document', description: 'Contract drafting and review' },
+    'Estate Planning': { icon: 'sealedDocument', description: 'Wills, trusts, probate, succession' },
+    'Notary Services': { icon: 'signedDocument', description: 'Document signing, acknowledgments' },
     'Mobile Notary': { icon: 'pin', description: 'Notary travels to your location' },
     'eNotary': { icon: 'monitorCheck', description: 'Remote online notarization' },
     'Family Mediation': { icon: 'mediation', description: 'Family dispute resolution' },
