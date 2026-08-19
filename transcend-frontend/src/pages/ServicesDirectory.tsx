@@ -444,8 +444,8 @@ export const ServicesDirectory: React.FC = () => {
         </div>
       </div>
 
-      {/* CATEGORIES WITH SPECIALIZATION CARDS */}
-      {categories.map((category) => (
+      {/* ONLY SHOW SPECIALIZATION CARDS IF NO SELECTION MADE */}
+      {selectedSpecializations.length === 0 && categories.map((category) => (
         <div key={category.id} className="category-section">
           <div className="category-heading">
             <h2 className="category-header">
@@ -494,9 +494,8 @@ export const ServicesDirectory: React.FC = () => {
             </div>
           </div>
 
-          {/* PROFESSIONAL CARDS FOR THIS CATEGORY — only providers who
-              actually offer one of this category's services */}
-          {categoryProfessionals(category.specializations).length > 0 && (
+          {/* PROFESSIONAL CARDS FOR THIS CATEGORY — only show when a specialization is selected */}
+          {selectedSpecializations.length > 0 && categoryProfessionals(category.specializations).length > 0 && (
             <div className="attorneys-grid">
               {categoryProfessionals(category.specializations).map((professional) => (
                 <div key={professional.id} className="attorney-card">
