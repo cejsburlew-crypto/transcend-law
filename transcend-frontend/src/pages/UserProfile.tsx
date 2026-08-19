@@ -11,15 +11,36 @@ interface UserProfileProps {
 export const UserProfile: React.FC<UserProfileProps> = ({ onNavigateProvider, onBack }) => {
   const { user } = useAuth();
   const { t } = useLanguage();
+
   const [profile, setProfile] = useState({
-    firstName: user?.name?.split(' ')[0] || 'User',
-    lastName: user?.name?.split(' ').slice(1).join(' ') || '',
-    email: user?.email || '',
-    phone: localStorage.getItem('userPhone') || '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
   });
 
+  // Initialize profile from authenticated user data
+  useEffect(() => {
+    if (user) {
+      // Parse user name into first and last name
+      const nameParts = user.name?.split(' ') || ['User'];
+      const firstName = nameParts[0] || '';
+      const lastName = nameParts.slice(1).join(' ') || '';
+
+      setProfile({
+        firstName,
+        lastName,
+        email: user.email || '',
+        phone: user.phone || localStorage.getItem('userPhone') || '',
+      });
+    }
+  }, [user]);
+
   const getInitials = () => {
-    return `${profile.firstName[0]}${profile.lastName[0]}`.toUpperCase();
+    if (!profile.firstName) return 'U';
+    const firstInitial = profile.firstName[0] || '';
+    const lastInitial = profile.lastName[0] || '';
+    return (firstInitial + lastInitial).toUpperCase();
   };
 
   return (

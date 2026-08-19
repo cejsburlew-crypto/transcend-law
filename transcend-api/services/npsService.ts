@@ -476,7 +476,8 @@ export class NPSService {
           ORDER BY end_date DESC LIMIT 1
         `, [period, startDate]);
 
-        let trends = { direction: 'stable' as const, changePercentage: 0 };
+        let trends: { direction: 'improving' | 'declining' | 'stable'; changePercentage: number } =
+          { direction: 'stable', changePercentage: 0 };
         if (previousResult.rows.length > 0) {
           const previousNPS = previousResult.rows[0].nps_score;
           const change = npsScore - previousNPS;

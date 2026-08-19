@@ -931,7 +931,7 @@ export async function getCurrentSLAStatus(): Promise<SLAStatus> {
       daysIntoMonth,
       requiredUptimeRemaining: Math.round(requiredUptimeRemaining * 100) / 100,
       currentMonthIncidents: incidents,
-      projectedMonthlyCredit: compliance.creditPercentage > 0 ? compliance.creditPercentage : undefined,
+      projectedMonthlyCredit: compliance.creditCalculation.creditPercentage > 0 ? compliance.creditCalculation.creditPercentage : undefined,
       creditHistory,
       lastIncident,
       healthStatus,
@@ -1043,7 +1043,7 @@ export async function processMonthlyCompliance(month: Date): Promise<{
           user.id,
           user.account_id,
           user.monthly_fee || 0,
-          compliance.creditPercentage,
+          compliance.creditCalculation.creditPercentage,
           month,
           `SLA Breach - Uptime ${compliance.uptime}% (Target: ${compliance.targetUptime}%)`
         );

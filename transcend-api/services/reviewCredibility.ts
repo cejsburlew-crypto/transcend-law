@@ -3,7 +3,7 @@
 // Integrates AI-generated text detection, timing analysis, and statistical anomalies
 
 import { query } from '../database/connection';
-import { sendEmailNotification } from '../src/services/emailService';
+import { sendEmailNotification } from './emailService';
 
 // ============================================
 // TYPES & INTERFACES
@@ -219,7 +219,9 @@ export async function analyzeReviewCredibility(
     const timingScore = await calculateTimingScore(userId, providerId);
     const textAnalysisScore = await analyzeTextCredibility(content);
     const ratingClusteringScore = calculateRatingClusteringScore(rating, providerReviews);
-    const userHistoryScore = calculateUserHistoryScore(userHistory);
+    // Awaited: this function is async, and without it a Promise entered the
+    // weighted sum below and made every overall score NaN.
+    const userHistoryScore = await calculateUserHistoryScore(userHistory);
     const contentConsistencyScore = await checkContentConsistency(userId, content);
 
     // Detect flags and AI-generated text
@@ -241,7 +243,7 @@ export async function analyzeReviewCredibility(
         textAnalysisScore * CREDIBILITY_WEIGHTS.textAnalysis +
         ratingClusteringScore * CREDIBILITY_WEIGHTS.ratingClustering +
         userHistoryScore * CREDIBILITY_WEIGHTS.userHistory +
-        contentConsistencyScore * CREDIBILITY_WEIGHTS.contentConsistency) as number
+        contentConsistencyScore * CREDIBILITY_WEIGHTS.contentConsistency
     );
 
     // Determine if likely fake
