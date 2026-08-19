@@ -52,8 +52,6 @@ const SPEC_KEYS: Record<string, string> = {
   'Intellectual Property': 'intellectualProperty',
   'International Law': 'internationalLaw',
   'Land Use & Zoning': 'landUseZoning',
-  'Litigation': 'litigation',
-  'Mediation': 'mediation',
   'Medical Malpractice': 'medicalMalpractice',
   'Mergers & Acquisitions': 'mergerAcquisitions',
   'Patent Law': 'patentLaw',
@@ -81,13 +79,10 @@ const SPEC_KEYS: Record<string, string> = {
   'Felony Bonds': 'felonyBonds',
   'Misdemeanor Bonds': 'misdemeanorBonds',
   'Immigration Bonds': 'immigrationBonds',
-  '24/7 Service': 'service247',
   'Court Interpretation': 'courtInterpretation',
   'Certified Translation': 'certifiedTranslation',
   'Legal Documents': 'legalDocuments',
-  'Multi-Language': 'multiLanguage',
   'Legal Research': 'legalResearch',
-  'Client Services': 'clientServices',
   'Compliance': 'compliance',
 };
 
@@ -191,7 +186,7 @@ export const ServicesDirectory: React.FC = () => {
       tKey: 'attorneyServices',
       icon: 'scales',
       attorney: true,
-      specializations: ['Administrative Law', 'Adoption Law', 'Antitrust Law', 'Arbitration', 'Bankruptcy', 'Business Law', 'Civil Rights', 'Commercial Leasing', 'Construction Law', 'Contracts', 'Copyright Law', 'Corporate Law', 'Criminal Law', 'Disability Law', 'Discrimination Law', 'DUI/DWI', 'Education Law', 'Employment Law', 'Entertainment Law', 'Environmental Law', 'Estate Planning', 'Estate Tax', 'Family Law', 'Franchise Law', 'Healthcare Law', 'Immigration Law', 'Insurance Law', 'Intellectual Property', 'International Law', 'Land Use & Zoning', 'Litigation', 'Mediation', 'Medical Malpractice', 'Mergers & Acquisitions', 'Patent Law', 'Personal Injury', 'Probate Law', 'Product Liability', 'Real Estate', 'Real Estate Development', 'Regulatory Compliance', 'Securities Law', 'Social Security', 'Sports Law', 'Trademark Law', 'Trust Law', 'White Collar Crime', 'Workers Compensation'],
+      specializations: ['Administrative Law', 'Adoption Law', 'Antitrust Law', 'Arbitration', 'Bankruptcy', 'Business Law', 'Civil Rights', 'Commercial Leasing', 'Construction Law', 'Contracts', 'Copyright Law', 'Corporate Law', 'Criminal Law', 'Disability Law', 'Discrimination Law', 'DUI/DWI', 'Education Law', 'Employment Law', 'Entertainment Law', 'Environmental Law', 'Estate Planning', 'Estate Tax', 'Family Law', 'Franchise Law', 'Healthcare Law', 'Immigration Law', 'Insurance Law', 'Intellectual Property', 'International Law', 'Land Use & Zoning', 'Medical Malpractice', 'Mergers & Acquisitions', 'Patent Law', 'Personal Injury', 'Probate Law', 'Product Liability', 'Real Estate', 'Real Estate Development', 'Regulatory Compliance', 'Securities Law', 'Social Security', 'Sports Law', 'Trademark Law', 'Trust Law', 'White Collar Crime', 'Workers Compensation'],
     },
     {
       id: 'documentation-services',
@@ -212,21 +207,21 @@ export const ServicesDirectory: React.FC = () => {
       tKey: 'bailBondServices',
       icon: 'bars',
       attorney: false,
-      specializations: ['Felony Bonds', 'Misdemeanor Bonds', 'Immigration Bonds', '24/7 Service'],
+      specializations: ['Felony Bonds', 'Misdemeanor Bonds', 'Immigration Bonds'],
     },
     {
       id: 'language-services',
       tKey: 'languageServices',
       icon: 'globe',
       attorney: false,
-      specializations: ['Court Interpretation', 'Certified Translation', 'Legal Documents', 'Multi-Language'],
+      specializations: ['Court Interpretation', 'Certified Translation', 'Legal Documents'],
     },
     {
       id: 'legal-support-services',
       tKey: 'legalSupportServices',
       icon: 'documents',
       attorney: false,
-      specializations: ['Legal Research', 'Client Services', 'Compliance'],
+      specializations: ['Legal Research', 'Compliance'],
     },
   ] as const;
 
@@ -319,8 +314,6 @@ export const ServicesDirectory: React.FC = () => {
     'Intellectual Property': { icon: 'bulb', description: 'Patents, trademarks, copyrights' },
     'International Law': { icon: 'globe', description: 'Cross-border transactions and disputes' },
     'Land Use & Zoning': { icon: 'map', description: 'Zoning, planning, and land use' },
-    'Litigation': { icon: 'scales', description: 'Lawsuits and court proceedings' },
-    'Mediation': { icon: 'mediation', description: 'Dispute mediation and resolution' },
     'Medical Malpractice': { icon: 'stethoscope', description: 'Medical negligence claims' },
     'Mergers & Acquisitions': { icon: 'chartUp', description: 'Business mergers and acquisitions' },
     'Patent Law': { icon: 'lock', description: 'Patent registration and protection' },
@@ -351,10 +344,8 @@ export const ServicesDirectory: React.FC = () => {
     'Legal Documents': { icon: 'documents', description: 'Document translation' },
     'Court Interpretation': { icon: 'microphone', description: 'In-court interpretation' },
     'Certified Translation': { icon: 'certificate', description: 'Certified, sworn translations' },
-    'Multi-Language': { icon: 'bubbles', description: 'Multiple language support' },
     'Legal Research': { icon: 'search', description: 'Case law and statutory research' },
     'Document Preparation': { icon: 'documentPen', description: 'Prepare and file legal documents' },
-    'Client Services': { icon: 'headset', description: 'Client support & communication' },
     'Compliance': { icon: 'clipboardCheck', description: 'Regulatory compliance' },
   };
 
