@@ -1,7 +1,8 @@
 {
   "version": 2,
-  "buildCommand": "cd transcend-frontend && npm install --legacy-peer-deps && npm run build",
-  "outputDirectory": "transcend-frontend/dist",
+  "rootDirectory": "transcend-frontend",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "installCommand": "npm ci --legacy-peer-deps",
   "env": {
     "NODE_ENV": "production"
