@@ -1,5 +1,5 @@
 import * as nodemailer from 'nodemailer';
-import * as PDFDocument from 'pdfkit';
+import PDFDocument from 'pdfkit';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ComplianceRepository } from '../database';
@@ -415,39 +415,43 @@ export class ComplianceReportingService {
   // ==================== Data Retrieval ====================
 
   private async getDataBreaches(startDate: Date, endDate: Date): Promise<DataBreachEntry[]> {
-    return this.db.query(
+    const result = await this.db.query(
       `SELECT * FROM data_breaches
        WHERE reported_date >= ? AND reported_date <= ?
        ORDER BY reported_date DESC`,
       [startDate, endDate]
     );
+    return result.rows;
   }
 
   private async getAccessLogs(startDate: Date, endDate: Date): Promise<AccessLogEntry[]> {
-    return this.db.query(
+    const result = await this.db.query(
       `SELECT * FROM access_logs
        WHERE timestamp >= ? AND timestamp <= ?
        ORDER BY timestamp DESC`,
       [startDate, endDate]
     );
+    return result.rows;
   }
 
   private async getChangeLogs(startDate: Date, endDate: Date): Promise<ChangeLogEntry[]> {
-    return this.db.query(
+    const result = await this.db.query(
       `SELECT * FROM change_logs
        WHERE timestamp >= ? AND timestamp <= ?
        ORDER BY timestamp DESC`,
       [startDate, endDate]
     );
+    return result.rows;
   }
 
   private async getIncidents(startDate: Date, endDate: Date): Promise<IncidentReport[]> {
-    return this.db.query(
+    const result = await this.db.query(
       `SELECT * FROM incidents
        WHERE reported_date >= ? AND reported_date <= ?
        ORDER BY reported_date DESC`,
       [startDate, endDate]
     );
+    return result.rows;
   }
 
   // ==================== Compliance Validation ====================
@@ -1078,7 +1082,7 @@ export class ComplianceReportingService {
 
         // Update last run time
         config.lastRun = new Date();
-        config.nextRun = new Date(job.nextInvocation());
+        config.nextRun = job.nextInvocation() ?? undefined;
         await this.db.saveSchedule(config);
       } catch (error) {
         this.logger.error('Error running scheduled compliance report', { error, scheduleId: config.id });
@@ -1086,7 +1090,7 @@ export class ComplianceReportingService {
     });
 
     this.schedules.set(config.id, job);
-    config.nextRun = new Date(job.nextInvocation());
+    config.nextRun = job.nextInvocation() ?? undefined;
 
     this.logger.info('Report schedule registered', {
       scheduleId: config.id,

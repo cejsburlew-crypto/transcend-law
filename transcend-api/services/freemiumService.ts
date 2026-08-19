@@ -89,8 +89,8 @@ export interface PricingTier {
   annualPrice: number;
   description: string;
   features: string[];
-  maxCases: number | null;
-  maxStorage: number;
+  maxCases: number | null; // null = unlimited
+  maxStorage: number | null; // null = unlimited
   supportLevel: 'email' | 'email_priority' | '24_7_phone';
 }
 
@@ -98,7 +98,8 @@ export interface PricingTier {
 // FEATURE LIMITS MATRIX
 // ============================================
 
-const FEATURE_LIMITS: Record<UserTier, Record<string, number | boolean>> = {
+// `null` means unlimited (enterprise tier), so the value type must admit it.
+const FEATURE_LIMITS: Record<UserTier, Record<string, number | boolean | null>> = {
   free: {
     maxCases: 5,
     maxDocuments: 50,
@@ -556,8 +557,11 @@ export async function checkFeatureLimit(
     if (!limit) limit = null;
   }
 
-  const percentageUsed = limit ? Math.round((current / limit) * 100) : 0;
-  const allowed = !limit || current < limit;
+  // `limit` may be a boolean flag or null (unlimited) in the matrix; only a
+  // numeric limit participates in the percentage/allowance maths.
+  const numericLimit = typeof limit === 'number' ? limit : null;
+  const percentageUsed = numericLimit ? Math.round((current / numericLimit) * 100) : 0;
+  const allowed = numericLimit === null || current < numericLimit;
   const needsUpgrade = percentageUsed >= 80 && subscription.tier === 'free';
 
   return {

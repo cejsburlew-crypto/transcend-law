@@ -1015,7 +1015,12 @@ export async function getDeprecationStats(): Promise<Record<string, any>> {
       ORDER BY count DESC
     `);
 
-    const stats = {
+    // Keys come from the query rows, so the buckets need index signatures.
+    const stats: {
+      byStatus: Record<string, number>;
+      bySeverity: Record<string, number>;
+      total: number;
+    } = {
       byStatus: {},
       bySeverity: {},
       total: 0,

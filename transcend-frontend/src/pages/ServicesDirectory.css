@@ -4,6 +4,30 @@
   min-height: 100vh;
 }
 
+.services-back-button-container {
+  max-width: 1400px;
+  margin: 0 auto 24px;
+  padding: 0 20px;
+}
+
+.services-back-button {
+  background: none;
+  border: none;
+  color: #667eea;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 0;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.services-back-button:hover {
+  color: #764ba2;
+}
+
 .services-header {
   text-align: center;
   margin-bottom: 50px;

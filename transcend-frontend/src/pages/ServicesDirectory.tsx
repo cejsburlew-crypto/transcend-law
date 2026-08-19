@@ -444,6 +444,18 @@ export const ServicesDirectory: React.FC = () => {
         </div>
       </div>
 
+      {/* BACK BUTTON — shows when a service is selected */}
+      {selectedSpecializations.length > 0 && (
+        <div className="services-back-button-container">
+          <button
+            className="services-back-button"
+            onClick={() => setSelectedSpecializations([])}
+          >
+            ← {t('common.back')}
+          </button>
+        </div>
+      )}
+
       {/* ONLY SHOW SPECIALIZATION CARDS IF NO SELECTION MADE */}
       {selectedSpecializations.length === 0 && categories.map((category) => (
         <div key={category.id} className="category-section">

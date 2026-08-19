@@ -28,7 +28,7 @@ export interface Database {
 export interface ComplianceRepository extends Database {
   saveReport(report: any): Promise<any>;
   getReport(id: string): Promise<any>;
-  listReports(filter?: any): Promise<any[]>;
+  listReports(type?: string, limit?: number): Promise<any[]>;
   saveSchedule(schedule: any): Promise<any>;
   getSchedule(id: string): Promise<any>;
   getAllSchedules(): Promise<any[]>;
