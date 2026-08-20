@@ -306,7 +306,11 @@ declare global {
  * Session timeout middleware
  * Tracks user sessions and enforces inactivity timeouts
  */
-export function sessionTimeoutMiddleware(req: Request, res: Response, next: NextFunction) {
+export async function sessionTimeoutMiddleware(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   // Skip session tracking for public endpoints and health checks
   const publicPaths = ['/health', '/status', '/api/public', '/api/auth/login', '/api/auth/register'];
   if (publicPaths.some(p => req.path.startsWith(p))) {

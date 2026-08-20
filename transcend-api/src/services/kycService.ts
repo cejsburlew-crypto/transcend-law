@@ -901,7 +901,9 @@ async function updateUserKYCStatus(userId: string, stage: string, verified: bool
         insertValues
       );
     } else {
-      const stageIndex = STAGE_ORDER.indexOf(stage);
+      // `stage` is typed as string on this function; STAGE_ORDER is a tuple of
+      // KYC_STAGES literals, so narrow for the lookup.
+      const stageIndex = STAGE_ORDER.indexOf(stage as (typeof STAGE_ORDER)[number]);
       await query(updateQuery, [verified, userId]);
     }
   } catch (error) {

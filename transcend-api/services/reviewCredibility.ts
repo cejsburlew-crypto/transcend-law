@@ -850,17 +850,17 @@ export async function addToAdminReviewQueue(
     );
 
     // Notify admins
-    await sendEmailNotification({
-      to: process.env.ADMIN_EMAIL || 'admin@transcend-law.com',
-      subject: `Review Flagged for Manual Review - Priority: ${priority}`,
-      template: 'review-flagged-admin',
-      context: {
-        reviewId,
-        providerId,
-        reason,
-        priority,
-      },
-    });
+    await sendEmailNotification(
+      process.env.ADMIN_EMAIL || 'admin@transcend-law.com',
+      `Review Flagged for Manual Review - Priority: ${priority}`,
+      `<p>A review has been flagged for manual review.</p>
+       <ul>
+         <li>Review: ${reviewId}</li>
+         <li>Provider: ${providerId}</li>
+         <li>Reason: ${reason}</li>
+         <li>Priority: ${priority}</li>
+       </ul>`
+    );
 
     return {
       id: result.rows[0].id,
