@@ -23,12 +23,13 @@ export const twilioIntegration = {
   // Generate access token for video room
   generateAccessToken: (identity: string, roomName: string) => {
     try {
-      const token = twilio.jwt.AccessToken(
+      // The SDK requires the identity in the constructor options.
+      const token = new twilio.jwt.AccessToken(
         process.env.TWILIO_ACCOUNT_SID || '',
         process.env.TWILIO_API_KEY || '',
-        process.env.TWILIO_API_SECRET || ''
+        process.env.TWILIO_API_SECRET || '',
+        { identity }
       );
-      token.identity = identity;
       const videoGrant = new twilio.jwt.AccessToken.VideoGrant({ room: roomName });
       token.addGrant(videoGrant);
       return { success: true, token: token.toJwt() };

@@ -396,11 +396,10 @@ async function sendThreatAlert(reportId: string, resourceId: string, threats: Th
       reportId,
       resourceId,
       threatCount: threats.length,
-      threats: threats.map((t) => ({
-        name: t.name,
-        type: t.type,
-        severity: t.severity,
-      })),
+      // EmailContext is scalar-only; serialise the detail.
+      threats: JSON.stringify(
+        threats.map((t) => ({ name: t.name, type: t.type, severity: t.severity }))
+      ),
       alertTime: new Date().toISOString(),
     });
   } catch (error) {

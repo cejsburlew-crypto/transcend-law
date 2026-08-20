@@ -215,7 +215,8 @@ router.get('/api/admin/security/quarantine', async (req: Request, res: Response)
     //   [parseInt(limit as string), parseInt(offset as string)]
     // );
 
-    const quarantined = [];
+    // Placeholder: the quarantine query above is commented out.
+    const quarantined: any[] = [];
 
     res.json({
       success: true,

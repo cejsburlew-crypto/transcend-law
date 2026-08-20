@@ -421,7 +421,7 @@ export async function deviceFingerprintingMiddleware(
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> {
+): Promise<void | Response> {
   // Only check on login endpoint
   if (!req.path.includes('/login') && !req.path.includes('/auth')) {
     return next();
@@ -539,7 +539,7 @@ export function validateDeviceFingerprintMiddleware(
   req: Request,
   res: Response,
   next: NextFunction
-): void {
+): void | Response {
   if (!req.user?.userId) {
     return res.status(401).json({ error: 'Authentication required' });
   }

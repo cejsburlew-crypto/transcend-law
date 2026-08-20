@@ -132,7 +132,8 @@ router.post('/screen', authenticateToken, async (req: Request, res: Response): P
       passportNumber,
       taxId,
       companyName,
-      checkType,
+      // Narrowed: checkType arrives from the request body as a plain string.
+      checkType: checkType as 'manual_review' | 'payment_processing' | 'account_creation',
     };
 
     // Perform screening

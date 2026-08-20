@@ -80,6 +80,12 @@ router.post('/articles', adminAuthMiddleware, async (req: Request, res: Response
 
     const article = await helpCenterService.createArticle({
       title,
+      // Required by HelpArticle and previously omitted, so creation could never
+      // typecheck. Derived from the title.
+      slug: String(title)
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, ''),
       category,
       tags: tags || [],
       content,

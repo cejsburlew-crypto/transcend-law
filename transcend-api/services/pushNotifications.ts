@@ -92,7 +92,7 @@ export interface PushNotification {
   sentAt?: Date;
   readAt?: Date;
   clickedAt?: Date;
-  deliveryStatus: 'pending' | 'sent' | 'delivered' | 'failed' | 'expired';
+  deliveryStatus: 'pending' | 'sent' | 'delivered' | 'failed' | 'expired' | 'dismissed';
   deliveryAttempts: number;
   lastErrorMessage?: string;
 }
@@ -949,13 +949,14 @@ function buildAndroidConfig(
     notification: {
       title: notification.title,
       body: notification.body,
-      image: notification.imageUrl,
+      imageUrl: notification.imageUrl,
       tag: notification.category,
       clickAction: notification.deepLink,
     },
+    // FCM data payloads must be string-valued.
     data: {
       category: notification.category,
-      deepLink: notification.deepLink,
+      deepLink: notification.deepLink ?? '',
     },
   };
 }

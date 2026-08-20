@@ -2,7 +2,7 @@
 // Strict origin validation and security headers
 
 import cors, { CorsOptions } from 'cors';
-import { Request } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 // Allowed origins per environment
 const allowedOrigins = {
@@ -26,7 +26,8 @@ const allowedOrigins = {
 };
 
 const env = process.env.NODE_ENV || 'development';
-const origins = allowedOrigins[env] || allowedOrigins.development;
+const origins =
+  allowedOrigins[env as keyof typeof allowedOrigins] || allowedOrigins.development;
 
 // Parse additional origins from environment
 const envOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
@@ -59,7 +60,7 @@ const corsOptions: CorsOptions = {
 };
 
 // Enhanced CORS middleware with logging
-export const corsMiddleware = (req: Request, res, next: any) => {
+export const corsMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const origin = req.get('origin');
 
   if (origin && !finalOrigins.includes(origin)) {

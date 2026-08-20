@@ -885,7 +885,7 @@ async function updateUserKYCStatus(userId: string, stage: string, verified: bool
     ]);
 
     if (existsResult.rows.length === 0) {
-      const insertValues = [userId];
+      const insertValues: any[] = [userId];
       const insertColumns = ['user_id'];
       const placeholders = ['$1'];
 

@@ -74,8 +74,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Demo mode: Allow login if backend is unavailable
       if (email && password) {
         console.log('🎭 Demo mode enabled - using mock authentication');
+        // Parse name from email (first part before @)
+        const namePart = email.split('@')[0];
+        const name = namePart
+          .replace(/[._]/g, ' ')
+          .split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+
         const demoUser: User = {
           email,
+          name: name || 'User',
+          phone: '+1 (555) 123-4567',
           role: 'client',
           authorized_at: new Date().toISOString(),
         };

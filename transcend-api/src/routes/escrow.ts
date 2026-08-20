@@ -7,6 +7,8 @@ import { adminMiddleware } from '../middleware/adminMiddleware';
 import * as escrowService from '../services/escrowService';
 import { queryParam, routeParam } from '../utils/httpParams';
 
+// NOTE: `req.userId!` is sound - this router applies authentication middleware.
+
 const router = Router();
 
 // ============================================
@@ -233,7 +235,7 @@ router.post(
     try {
       const { reason } = req.body;
       const escrowHoldId = routeParam(req.params.id);
-      const releasedBy = req.userId;
+      const releasedBy = req.userId!;
 
       if (!reason) {
         return res.status(400).json({
@@ -303,7 +305,7 @@ router.post(
     try {
       const { reason } = req.body;
       const escrowHoldId = routeParam(req.params.id);
-      const refundedBy = req.userId;
+      const refundedBy = req.userId!;
 
       if (!reason) {
         return res.status(400).json({
@@ -401,7 +403,7 @@ router.post(
     try {
       const { resolution, resolution_action } = req.body;
       const disputeId = routeParam(req.params.disputeId);
-      const resolvedBy = req.userId;
+      const resolvedBy = req.userId!;
 
       if (!resolution || !resolution_action) {
         return res.status(400).json({

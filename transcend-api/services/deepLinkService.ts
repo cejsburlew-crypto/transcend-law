@@ -505,7 +505,7 @@ export async function trackDeepLinkClick(
       id: clickId,
       linkId,
       timestamp: new Date(),
-      userAgent: clickData.userAgent,
+      userAgent: clickData.userAgent ?? '',
       platform: clickData.platform || 'unknown',
       appInstalled: clickData.appInstalled || false,
       referrer: clickData.referrer,

@@ -19,7 +19,12 @@ const DEFAULT_CONFIGS = {
 /**
  * Rate limiting middleware for KYC endpoints
  */
-export async function kycRateLimit(limitType: 'email' | 'sms' | 'verification') {
+/**
+ * Middleware factory. NOT async: an async factory returns a Promise, which
+ * Express cannot mount as a handler - so these endpoints previously had no
+ * rate limiting at all.
+ */
+export function kycRateLimit(limitType: 'email' | 'sms' | 'verification') {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userId = req.user?.id as string;

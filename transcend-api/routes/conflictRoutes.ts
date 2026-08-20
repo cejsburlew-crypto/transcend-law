@@ -206,7 +206,9 @@ router.post('/appeal/:conflictMatchId', async (req: Request, res: Response) => {
 
     const appealId = await ConflictCheckerService.submitConflictAppeal(
       conflictMatchId,
-      req.user?.attorneyId || userId,
+      // The access token carries no attorneyId claim; userId is the attorney's
+      // user id for attorney-type accounts.
+      userId,
       reason,
       documents,
       userId

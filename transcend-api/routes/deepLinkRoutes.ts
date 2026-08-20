@@ -44,7 +44,7 @@ router.post('/generate', authenticateToken, async (req: Request, res: Response) 
     res.json({
       success: true,
       data: deepLink,
-      shortUrl: deepLink.shortUrl,
+      shortUrl: deepLink.fullUrl,
       appUrl: deepLink.appUrl,
       webUrl: deepLink.webUrl,
     });

@@ -64,3 +64,6 @@ export function adminMiddleware(req: Request, res: Response, next: NextFunction)
 }
 
 export { adminMiddleware as adminAuthMiddleware, adminMiddleware as authorizeAdmin };
+
+/** Alias for the fail-closed admin guard, used as `isAdmin` by some routers. */
+export const isAdmin = adminMiddleware;

@@ -61,7 +61,9 @@ export async function generateSMSOTP(): Promise<string> {
 export async function sendSMSOTP(phoneNumber: string, otp: string): Promise<boolean> {
   try {
     const message = `Your Transcend Legal verification code is: ${otp}. Valid for 10 minutes.`;
-    return await sendSMS(phoneNumber, message);
+    // sendSMS returns { success, sid?, reason? } - surface just the outcome.
+    const result = await sendSMS(phoneNumber, message);
+    return result.success;
   } catch (error) {
     console.error('Error sending SMS OTP:', error);
     return false;

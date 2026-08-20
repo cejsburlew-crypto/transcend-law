@@ -55,7 +55,7 @@ class ContinuousScrapingService extends EventEmitter {
     ],
   };
 
-  private scrapingInterval: NodeJS.Timer | null = null;
+  private scrapingInterval: ReturnType<typeof setInterval> | null = null;
   private scrapingStopped = false;
 
   constructor() {

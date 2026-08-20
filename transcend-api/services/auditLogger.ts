@@ -251,7 +251,7 @@ async function logActionDetailed(
     changes?: AuditLogEntry['changes'];
     ipAddress: string;
     userAgent?: string;
-    status?: 'success' | 'failure' | 'pending';
+    status?: 'success' | 'failure' | 'pending' | string;
     errorMessage?: string;
     sessionId?: string;
     requestId?: string;
@@ -281,7 +281,7 @@ async function logActionDetailed(
         latitude: location.ll?.[0],
         longitude: location.ll?.[1],
       } : undefined,
-      status: options.status || 'success',
+      status: (options.status as 'success' | 'failure' | 'pending') || 'success',
       errorMessage: options.errorMessage,
       sessionId: options.sessionId,
       requestId: options.requestId,
@@ -1046,7 +1046,12 @@ export default {
 
 export interface AuditLogInput {
   userId: string;
-  action: AuditLogEntry['action'];
+  /**
+   * Free-form action names are accepted (e.g. 'conflict_check'). Anything
+   * outside the enum is recorded under the 'admin' class with the original name
+   * preserved in metadata, rather than rejected.
+   */
+  action: AuditLogEntry['action'] | string;
   entityType: string;
   entityId: string;
   entityName?: string;
@@ -1192,18 +1197,27 @@ async function writeAuditEntry(
         }
       : entryOrEvent;
 
+  const VALID_ACTIONS: AuditLogEntry['action'][] = [
+    'create','read','update','delete','export','access','admin','auth','permission',
+  ];
+  const normalisedAction: AuditLogEntry['action'] = VALID_ACTIONS.includes(entry.action as any)
+    ? (entry.action as AuditLogEntry['action'])
+    : 'admin';
+
   try {
-    await logAction(entry.userId, entry.action, entry.entityType, entry.entityId, {
+    await logAction(entry.userId, normalisedAction, entry.entityType, entry.entityId, {
       entityName: entry.entityName,
       changes: entry.changes,
       // Audit rows require an IP; 'unknown' is preferable to dropping the event.
       ipAddress: entry.ipAddress || 'unknown',
       userAgent: entry.userAgent,
-      status: entry.status,
+      status: entry.status as 'success' | 'failure' | 'pending' | undefined,
       errorMessage: entry.errorMessage,
       sessionId: entry.sessionId,
       requestId: entry.requestId,
-      metadata: entry.metadata,
+      metadata: normalisedAction === entry.action
+        ? entry.metadata
+        : { ...(entry.metadata || {}), action: entry.action },
       dataClassification: entry.dataClassification,
       sensitiveDataAccessed: entry.sensitiveDataAccessed,
     });

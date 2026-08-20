@@ -209,7 +209,7 @@ function calculateRiskScore(matches: SanctionsMatch[]): number {
 
   const totalScore = matches.reduce((sum, match) => {
     const baseScore = match.matchScore * 100;
-    const listWeights = match.sanctionsList.map((list) => SANCTIONS_LISTS[list]?.weight || 0.5);
+    const listWeights = match.sanctionsList.map((list) => SANCTIONS_LISTS[list as keyof typeof SANCTIONS_LISTS]?.weight || 0.5);
     const maxWeight = Math.max(...listWeights);
     return sum + baseScore * maxWeight;
   }, 0);

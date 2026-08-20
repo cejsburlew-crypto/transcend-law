@@ -5,6 +5,14 @@ import Stripe from 'stripe';
 import { query } from '../database/connection';
 import { sendEmailNotification } from './emailService';
 
+/**
+ * `charges` was removed from Stripe's PaymentIntent typings in newer SDK
+ * releases but is still returned by the pinned API version (2023-10-16).
+ */
+type LegacyPaymentIntentFields = {
+  charges?: { data: Array<{ id: string }> };
+};
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   // Cast: the installed SDK's types pin this literal to its own release.
   // Keep the pinned version - upgrading Stripe's API is a deliberate decision,
@@ -725,9 +733,10 @@ export async function processRefund(
     if (depositResult.rows.length > 0) {
       const paymentIntent = await stripe.paymentIntents.retrieve(depositResult.rows[0].payment_intent_id);
 
-      if (paymentIntent.charges.data.length > 0) {
+      const legacyPI = paymentIntent as typeof paymentIntent & LegacyPaymentIntentFields;
+      if ((legacyPI.charges?.data.length ?? 0) > 0) {
         const stripeRefund = await stripe.refunds.create({
-          charge: paymentIntent.charges.data[0].id,
+          charge: legacyPI.charges!.data[0].id,
           amount: Math.round(refund.amount * 100),
           metadata: {
             refundRequestId,

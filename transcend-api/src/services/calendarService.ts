@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { EventEmitter } from 'events';
-import * as nodeCache from 'node-cache';
+import NodeCache from 'node-cache';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -75,14 +75,14 @@ class CalendarService extends EventEmitter {
   private googleClient: AxiosInstance;
   private outlookClient: AxiosInstance;
   private calendlyClient: AxiosInstance;
-  private cache: nodeCache.NodeCache;
+  private cache: NodeCache;
   private appointmentCache: Map<string, Appointment[]>;
   private syncQueue: CalendarSyncEvent[];
   private isSyncing: boolean;
 
   constructor() {
     super();
-    this.cache = new nodeCache({ stdTTL: 300 }); // 5-minute default TTL
+    this.cache = new NodeCache({ stdTTL: 300 }); // 5-minute default TTL
     this.appointmentCache = new Map();
     this.syncQueue = [];
     this.isSyncing = false;

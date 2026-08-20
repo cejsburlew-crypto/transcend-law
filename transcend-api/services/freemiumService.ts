@@ -12,7 +12,14 @@ import { logAction } from './auditLogger';
 
 export type UserTier = 'free' | 'pro' | 'enterprise';
 export type TrialStatus = 'active' | 'expired' | 'converted' | 'cancelled';
-export type ConversionEvent = 'prompt_shown' | 'comparison_viewed' | 'trial_started' | 'upgrade_clicked' | 'payment_completed' | 'upgrade_cancelled';
+export type ConversionEvent =
+  | 'prompt_shown'
+  | 'comparison_viewed'
+  | 'trial_started'
+  | 'trial_extended'
+  | 'upgrade_clicked'
+  | 'payment_completed'
+  | 'upgrade_cancelled';
 
 export interface UserSubscription {
   id: string;

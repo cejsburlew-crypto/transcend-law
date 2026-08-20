@@ -14,6 +14,19 @@ export const generateCSRFToken = (): string => {
   return randomBytes(32).toString('hex');
 };
 
+/**
+ * express-session's Request augmentation is not present (the package's types are
+ * not installed), so `req.session` was unknown to the compiler even though the
+ * session middleware populates it at runtime. Declared here.
+ */
+declare global {
+  namespace Express {
+    interface Request {
+      session?: any;
+    }
+  }
+}
+
 // CSRF token middleware
 export const csrfTokenMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const session = req.session as SessionWithCSRF;

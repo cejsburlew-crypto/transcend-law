@@ -47,10 +47,20 @@ export const sendNotification = async (notification: Notification): Promise<void
  * to on-call rather than a client mailbox later.
  */
 export const sendAlert = async (
-  subject: string,
+  subjectOrUserId: string,
+  subjectOrDetail?: string | Record<string, any>,
   detail?: Record<string, any>
 ): Promise<void> => {
-  log.warn(`ALERT: ${subject}`, detail || {});
+  // Two shapes in use: sendAlert(subject, detail) and
+  // sendAlert(userId, subject, detail).
+  const isUserScoped = typeof subjectOrDetail === 'string';
+  const subject = isUserScoped ? (subjectOrDetail as string) : subjectOrUserId;
+  const context = isUserScoped ? detail : (subjectOrDetail as Record<string, any> | undefined);
+
+  log.warn(`ALERT: ${subject}`, {
+    ...(isUserScoped ? { userId: subjectOrUserId } : {}),
+    ...(context || {}),
+  });
 };
 
 export const notificationService = { send: sendNotification, sendNotification, sendAlert };
