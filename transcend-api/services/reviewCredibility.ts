@@ -243,7 +243,7 @@ export async function analyzeReviewCredibility(
         textAnalysisScore * CREDIBILITY_WEIGHTS.textAnalysis +
         ratingClusteringScore * CREDIBILITY_WEIGHTS.ratingClustering +
         userHistoryScore * CREDIBILITY_WEIGHTS.userHistory +
-        contentConsistencyScore * CREDIBILITY_WEIGHTS.contentConsistency
+        contentConsistencyScore * CREDIBILITY_WEIGHTS.contentConsistency)
     );
 
     // Determine if likely fake

@@ -19,6 +19,29 @@ export const UserProfile: React.FC<UserProfileProps> = ({ onNavigateProvider, on
     phone: '',
   });
 
+  const [connections, setConnections] = useState<Array<{
+    id: string;
+    name: string;
+    title: string;
+    company: string;
+    status: 'connected' | 'blocked';
+  }>>([
+    {
+      id: '1',
+      name: 'Sarah Johnson',
+      title: 'Senior Attorney',
+      company: 'Smith & Associates',
+      status: 'connected',
+    },
+    {
+      id: '2',
+      name: 'Michael Chen',
+      title: 'Corporate Counsel',
+      company: 'Smith & Associates',
+      status: 'connected',
+    },
+  ]);
+
   // Initialize profile from authenticated user data
   useEffect(() => {
     if (user) {
@@ -113,6 +136,71 @@ export const UserProfile: React.FC<UserProfileProps> = ({ onNavigateProvider, on
           >
             Create Provider Profile →
           </button>
+        </div>
+
+        {/* Network Connections */}
+        <div className="profile-section network-section">
+          <h2 className="section-title">Your Network</h2>
+          <p className="section-subtitle">
+            Professionals connected through your company or past companies
+          </p>
+          {connections.filter(c => c.status === 'connected').length > 0 ? (
+            <div className="connections-list">
+              {connections.filter(c => c.status === 'connected').map((connection) => (
+                <div key={connection.id} className="connection-card">
+                  <div className="connection-info">
+                    <h3 className="connection-name">{connection.name}</h3>
+                    <p className="connection-title">{connection.title}</p>
+                    <p className="connection-company">🏢 {connection.company}</p>
+                  </div>
+                  <div className="connection-actions">
+                    <button
+                      className="btn-view"
+                      onClick={() => alert(`Viewing ${connection.name}'s profile`)}
+                    >
+                      View Profile
+                    </button>
+                    <button
+                      className="btn-block"
+                      onClick={() => {
+                        setConnections(connections.map(c =>
+                          c.id === connection.id ? { ...c, status: 'blocked' } : c
+                        ));
+                      }}
+                      title="This user won't be able to see your profile"
+                    >
+                      Block
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="no-connections">No connections yet. Link to a company to connect with other professionals.</p>
+          )}
+
+          {connections.filter(c => c.status === 'blocked').length > 0 && (
+            <div className="blocked-section">
+              <h3 className="blocked-title">Blocked Users ({connections.filter(c => c.status === 'blocked').length})</h3>
+              <div className="blocked-list">
+                {connections.filter(c => c.status === 'blocked').map((connection) => (
+                  <div key={connection.id} className="blocked-user">
+                    <span className="blocked-name">{connection.name}</span>
+                    <button
+                      className="btn-unblock"
+                      onClick={() => {
+                        setConnections(connections.map(c =>
+                          c.id === connection.id ? { ...c, status: 'connected' } : c
+                        ));
+                      }}
+                    >
+                      Unblock
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Quick Actions */}

@@ -168,6 +168,154 @@
   transform: translateY(0);
 }
 
+/* Network Connections */
+.network-section {
+  background: #f9fafb;
+}
+
+.connections-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.connection-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  transition: all 0.2s;
+}
+
+.connection-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+}
+
+.connection-info {
+  flex: 1;
+}
+
+.connection-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 4px 0;
+}
+
+.connection-title {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 6px 0;
+}
+
+.connection-company {
+  font-size: 13px;
+  color: #999;
+  margin: 0;
+}
+
+.connection-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: 16px;
+}
+
+.btn-view,
+.btn-block,
+.btn-unblock {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-view {
+  background: #f0f4ff;
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.btn-view:hover {
+  background: #667eea;
+  color: white;
+}
+
+.btn-block {
+  background: white;
+  border-color: #e0e0e0;
+  color: #666;
+}
+
+.btn-block:hover {
+  background: #fee;
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.no-connections {
+  color: #999;
+  font-style: italic;
+  padding: 20px;
+  text-align: center;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.blocked-section {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.blocked-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ef4444;
+  margin: 0 0 16px 0;
+}
+
+.blocked-list {
+  display: grid;
+  gap: 12px;
+}
+
+.blocked-user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background: #fee;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.blocked-name {
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.btn-unblock {
+  background: white;
+  border-color: #ef4444;
+  color: #ef4444;
+  padding: 6px 12px;
+}
+
+.btn-unblock:hover {
+  background: #ef4444;
+  color: white;
+}
+
 /* Actions */
 .actions-section {
   background: #f9fafb;
