@@ -12,6 +12,7 @@ import { MyProviderProfile } from './pages/MyProviderProfile';
 import { ServicesDirectory } from './pages/ServicesDirectory';
 import { Messages } from './pages/Messages';
 import { CaseDetails } from './pages/CaseDetails';
+import ClientPortal from './pages/ClientPortal';
 import Breadcrumbs from './components/Navigation/Breadcrumbs';
 import type { BreadcrumbItem } from './components/Navigation/Breadcrumbs';
 import { LanguageSelector } from './components/LanguageSelector';
@@ -23,7 +24,7 @@ import './App.css';
 const AppContent: React.FC = () => {
   const { t } = useLanguage();
   const { user, token, logout } = useAuth();
-  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website' | 'admin-role-preview' | 'notary' | 'law-services' | 'provider-profile' | 'services-directory' | 'messages' | 'case-details' | 'user-profile'>(
+  const [currentView, setCurrentView] = useState<'landing' | 'login' | 'dashboard' | 'lawyer-website' | 'admin-role-preview' | 'notary' | 'law-services' | 'provider-profile' | 'services-directory' | 'messages' | 'case-details' | 'user-profile' | 'client-portal'>(
     token && user ? 'services-directory' : 'landing'
   );
   const [selectedCaseId, setSelectedCaseId] = useState<string>('1');
@@ -170,6 +171,8 @@ const AppContent: React.FC = () => {
       {/* Breadcrumbs hidden - use navigation menus instead */}
       {currentView === 'user-profile' && token && user ? (
         <UserProfile onNavigateProvider={() => setCurrentView('provider-profile')} onBack={() => setCurrentView('dashboard')} />
+      ) : currentView === 'client-portal' && token && user ? (
+        <ClientPortal />
       ) : currentView === 'case-details' && token && user ? (
         <CaseDetails caseId={selectedCaseId} onBack={() => setCurrentView('dashboard')} />
       ) : currentView === 'admin-role-preview' && token && user ? (
