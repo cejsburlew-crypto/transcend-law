@@ -108,8 +108,15 @@
 - [x] Push notifications (Web Push API)
 - [x] Multi-channel case updates (email + SMS + push)
 - [x] Multi-channel appointment reminders
-- [ ] Real-time WebSocket sync - Phase 6.5
-- [ ] IMAP for reading emails - Future phase
+
+### Phase 6.5: WebSocket Real-Time Sync ✅ COMPLETE
+- [x] Socket.IO server integration
+- [x] Real-time case event broadcasting
+- [x] Client subscription management
+- [x] useWebSocket React hook
+- [x] Event types: messages, appointments, documents, status changes
+- [x] Automatic reconnection handling
+- [x] Dev-mode graceful fallback
 
 ---
 
