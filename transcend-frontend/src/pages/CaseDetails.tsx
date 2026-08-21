@@ -3,6 +3,7 @@ import { PrimaryButton } from '@/components/UI';
 import TasksTab from '@/pages/TasksTab';
 import NotesTab from '@/pages/NotesTab';
 import AppointmentsTab from '@/pages/AppointmentsTab';
+import WorkflowTab from '@/pages/WorkflowTab';
 import './CaseDetails.css';
 
 interface CaseDetailsPageProps {
@@ -29,7 +30,7 @@ interface Document {
 }
 
 export const CaseDetails: React.FC<CaseDetailsPageProps> = ({ caseId, onBack }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'intake' | 'communications' | 'documents' | 'timeline' | 'appointments' | 'tasks' | 'notes'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'intake' | 'communications' | 'documents' | 'timeline' | 'appointments' | 'workflow' | 'tasks' | 'notes'>('overview');
 
   // Mock case data
   const caseData = {
@@ -185,6 +186,12 @@ export const CaseDetails: React.FC<CaseDetailsPageProps> = ({ caseId, onBack }) 
           onClick={() => setActiveTab('appointments')}
         >
           Appointments
+        </button>
+        <button
+          className={`tab ${activeTab === 'workflow' ? 'active' : ''}`}
+          onClick={() => setActiveTab('workflow')}
+        >
+          Workflow
         </button>
         <button
           className={`tab ${activeTab === 'tasks' ? 'active' : ''}`}
@@ -368,6 +375,10 @@ export const CaseDetails: React.FC<CaseDetailsPageProps> = ({ caseId, onBack }) 
 
         {activeTab === 'appointments' && (
           <AppointmentsTab caseId={caseId} />
+        )}
+
+        {activeTab === 'workflow' && (
+          <WorkflowTab caseId={caseId} />
         )}
 
         {activeTab === 'tasks' && (

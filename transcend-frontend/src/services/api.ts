@@ -169,5 +169,40 @@ export const api = {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     if (!response.ok) throw new Error('Failed to delete appointment');
+  },
+
+  // Workflow API
+  async getWorkflowStates(token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/workflow/states`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to fetch workflow states');
+    return response.json().then(res => res.data || []);
+  },
+
+  async getCaseStatus(caseId: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/workflow/cases/${caseId}/status`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to fetch case status');
+    return response.json().then(res => res.data);
+  },
+
+  async updateCaseStatus(caseId: string, status: string, reason?: string, token?: string) {
+    const response = await fetch(`${API_BASE}/api/v1/workflow/cases/${caseId}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ status, reason })
+    });
+    if (!response.ok) throw new Error('Failed to update case status');
+    return response.json().then(res => res.data);
+  },
+
+  async getCaseStatusHistory(caseId: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/workflow/cases/${caseId}/history`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to fetch status history');
+    return response.json().then(res => res.data || []);
   }
 };
