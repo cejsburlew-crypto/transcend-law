@@ -668,7 +668,24 @@
       "Bash(node scripts/parse-notaries.js)",
       "Bash(rm /Users/jbconsultingassociatesinc./code/transcend-ssp/transcend-frontend/src/data/notaries-parsed.ts)",
       "Bash(node scripts/deduplicate-notaries.js)",
-      "Bash(curl -s -w \"\\\\nStatus: %{http_code}\\\\n\" https://transcend-law.com)"
+      "Bash(curl -s -w \"\\\\nStatus: %{http_code}\\\\n\" https://transcend-law.com)",
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomUUID\\(\\)\\)\")",
+      "Bash(PGPASSWORD=\"transcend_dev_password\" psql -h 127.0.0.1 -U transcend -d transcend_law_dev -c \"SELECT id, name FROM organizations LIMIT 1;\")",
+      "Bash(pkill -f \"node.*dist/index\")",
+      "Bash(pkill -f \"node.*dist\")",
+      "Bash(pkill -f \"npm\")",
+      "Bash(curl -v -H \"Authorization: Bearer test-token\" http://localhost:3000/api/v1/tasks/case/1)",
+      "Bash(pkill -f \"node.*transcend-law/backend\")",
+      "Bash(curl -s -H \"Authorization: Bearer test-token\" http://localhost:3000/api/v1/tasks/case/1)",
+      "Bash(psql -U postgres -d postgres -c \"SELECT 1\")",
+      "Bash(pkill -f \"node.*backend\")",
+      "Bash(grep -E \"error|^$\")",
+      "Bash(curl -s -H \"Authorization: Bearer test\" http://localhost:3000/api/v1/tasks/case/1)",
+      "Bash(curl -s -H \"Authorization: Bearer test\" http://localhost:3000/api/v1/status)",
+      "Bash(rm -rf /Users/jbconsultingassociatesinc./code/transcend-ssp/transcend-law/backend/dist && npm run build 2>&1 | tail -3)",
+      "Bash(killall node *)",
+      "Bash(curl -s http://localhost:3000/api/v1/tasks/case/1 -H \"Authorization: Bearer test\")",
+      "Bash(curl -s http://localhost:5173)"
     ]
   }
 }

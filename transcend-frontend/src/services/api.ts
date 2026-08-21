@@ -130,5 +130,44 @@ export const api = {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     if (!response.ok) throw new Error('Failed to delete note');
+  },
+
+  // Appointments API
+  async getAppointmentsByCase(caseId: string, token: string, status?: string) {
+    const url = new URL(`${API_BASE}/api/v1/appointments/case/${caseId}`);
+    if (status) url.searchParams.append('status', status);
+    const response = await fetch(url.toString(), {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to fetch appointments');
+    return response.json().then(res => res.data || []);
+  },
+
+  async createAppointment(data: any, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/appointments`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error('Failed to create appointment');
+    return response.json().then(res => res.data);
+  },
+
+  async updateAppointment(appointmentId: string, data: any, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/appointments/${appointmentId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error('Failed to update appointment');
+    return response.json().then(res => res.data);
+  },
+
+  async deleteAppointment(appointmentId: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/appointments/${appointmentId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to delete appointment');
   }
 };

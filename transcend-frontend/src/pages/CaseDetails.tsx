@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PrimaryButton } from '@/components/UI';
 import TasksTab from '@/pages/TasksTab';
 import NotesTab from '@/pages/NotesTab';
+import AppointmentsTab from '@/pages/AppointmentsTab';
 import './CaseDetails.css';
 
 interface CaseDetailsPageProps {
@@ -28,7 +29,7 @@ interface Document {
 }
 
 export const CaseDetails: React.FC<CaseDetailsPageProps> = ({ caseId, onBack }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'intake' | 'communications' | 'documents' | 'timeline' | 'tasks' | 'notes'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'intake' | 'communications' | 'documents' | 'timeline' | 'appointments' | 'tasks' | 'notes'>('overview');
 
   // Mock case data
   const caseData = {
@@ -178,6 +179,12 @@ export const CaseDetails: React.FC<CaseDetailsPageProps> = ({ caseId, onBack }) 
           onClick={() => setActiveTab('timeline')}
         >
           Timeline
+        </button>
+        <button
+          className={`tab ${activeTab === 'appointments' ? 'active' : ''}`}
+          onClick={() => setActiveTab('appointments')}
+        >
+          Appointments
         </button>
         <button
           className={`tab ${activeTab === 'tasks' ? 'active' : ''}`}
@@ -357,6 +364,10 @@ export const CaseDetails: React.FC<CaseDetailsPageProps> = ({ caseId, onBack }) 
               </div>
             </div>
           </div>
+        )}
+
+        {activeTab === 'appointments' && (
+          <AppointmentsTab caseId={caseId} />
         )}
 
         {activeTab === 'tasks' && (
