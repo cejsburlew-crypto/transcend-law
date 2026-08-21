@@ -328,5 +328,104 @@ export const api = {
     });
     if (!response.ok) throw new Error('Failed to send appointment reminder');
     return response.json().then(res => res.data);
+  },
+
+  // Advanced Features API (AI Summarization, Auto-Tasks, Smart Routing)
+
+  async summarizeDocument(documentId: string, caseId: string, content: string, docType: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/advanced/summarize`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ documentId, caseId, documentContent: content, documentType: docType })
+    });
+    if (!response.ok) throw new Error('Failed to summarize document');
+    return response.json().then(res => res.data);
+  },
+
+  async getDocumentSummary(documentId: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/advanced/summary/${documentId}`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to fetch document summary');
+    return response.json().then(res => res.data);
+  },
+
+  async listDocumentSummaries(caseId: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/advanced/summaries/${caseId}`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to fetch document summaries');
+    return response.json().then(res => res.data);
+  },
+
+  async generateAutoTasks(caseId: string, documentId: string, title: string, summary: string, docType: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/advanced/generate-tasks`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ caseId, documentId, documentTitle: title, documentSummary: summary, documentType: docType })
+    });
+    if (!response.ok) throw new Error('Failed to generate auto tasks');
+    return response.json().then(res => res.data);
+  },
+
+  async listSuggestedTasks(caseId: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/advanced/tasks/${caseId}`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to fetch suggested tasks');
+    return response.json().then(res => res.data);
+  },
+
+  async approveSuggestedTask(taskId: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/advanced/tasks/${taskId}/approve`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to approve task');
+    return response.json();
+  },
+
+  async rejectSuggestedTask(taskId: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/advanced/tasks/${taskId}/reject`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to reject task');
+    return response.json();
+  },
+
+  async analyzeCase(caseId: string, caseType: string, complexity: string, clientName: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/advanced/analyze-case`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ caseId, caseType, complexity, clientName })
+    });
+    if (!response.ok) throw new Error('Failed to analyze case');
+    return response.json().then(res => res.data);
+  },
+
+  async routeCase(caseId: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/advanced/route-case/${caseId}`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to route case');
+    return response.json().then(res => res.data);
+  },
+
+  async getRoutingHistory(caseId: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/advanced/routing-history/${caseId}`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to fetch routing history');
+    return response.json().then(res => res.data);
+  },
+
+  async checkAdvancedFeaturesHealth(token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/advanced/health`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to fetch advanced features health');
+    return response.json();
   }
 };
