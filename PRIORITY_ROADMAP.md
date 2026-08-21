@@ -94,18 +94,22 @@
 
 ## TIER 2: Client Portal & Communication (4-6 sessions)
 
-### Phase 5: Client Portal
-- [ ] Read-only case view for clients
-- [ ] Document access control (public/confidential)
-- [ ] Communication thread visibility (messages only, not internal notes)
-- [ ] Payment portal (LawPay integration)
-- [ ] Client dashboard
+### Phase 5: Client Portal ✅ COMPLETE
+- [x] Read-only case view for clients
+- [x] Document access control (public/confidential)
+- [x] Communication thread display (messages only, not internal notes)
+- [x] Attorney contact information display
+- [x] Three-tab interface (Overview, Documents, Messages)
+- [ ] Payment portal (LawPay integration) - Tier 2.5
 
-### Phase 6: Advanced Messaging
-- [ ] Email integration (IMAP/SMTP)
-- [ ] SMS notifications (Twilio)
-- [ ] Push notifications
-- [ ] Real-time WebSocket sync
+### Phase 6: Advanced Messaging ✅ COMPLETE
+- [x] Email integration (SMTP with dev-mode fallback)
+- [x] SMS notifications (Twilio with dev-mode fallback)
+- [x] Push notifications (Web Push API)
+- [x] Multi-channel case updates (email + SMS + push)
+- [x] Multi-channel appointment reminders
+- [ ] Real-time WebSocket sync - Phase 6.5
+- [ ] IMAP for reading emails - Future phase
 
 ---
 
