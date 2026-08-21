@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import './Login.css';
 
 export const Login: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
@@ -7,6 +8,7 @@ export const Login: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const { login, loading, error } = useAuth();
+  const { t } = useLanguage();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,33 +35,33 @@ export const Login: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     <div className="login-container">
       <div className="login-card">
         <div className="login-header">
-          <h1>TRANSCEND LAW</h1>
-          <p>Global Legal Services Marketplace</p>
+          <h1>{t('login.title')}</h1>
+          <p>{t('login.subtitle')}</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={(e) => void handleSubmit(e)} className="login-form">
           <div className="form-group">
-            <label htmlFor="email">Email Address</label>
+            <label htmlFor="email">{t('login.email')}</label>
             <input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@example.com"
+              placeholder={t('login.emailPlaceholder')}
               required
               disabled={loading}
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">{t('login.password')}</label>
             <div className="password-input">
               <input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password"
+                placeholder={t('login.passwordPlaceholder')}
                 required
                 disabled={loading}
               />
@@ -67,6 +69,8 @@ export const Login: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
                 type="button"
                 className="toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? t('login.hidePassword') : t('login.showPassword')}
+                title={showPassword ? t('login.hidePassword') : t('login.showPassword')}
               >
                 {showPassword ? '👁️' : '👁️‍🗨️'}
               </button>
@@ -80,13 +84,13 @@ export const Login: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
             className="login-button"
             disabled={loading}
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? t('login.signingIn') : t('login.signIn')}
           </button>
         </form>
 
         <div className="login-footer">
-          <p className="status">🟢 Production Server Active</p>
-          <p className="security">🔐 HTTPS Secured</p>
+          <p className="status">{t('login.serverActive')}</p>
+          <p className="security">{t('login.httpsSecured')}</p>
         </div>
       </div>
     </div>

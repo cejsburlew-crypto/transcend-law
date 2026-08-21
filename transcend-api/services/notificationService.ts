@@ -46,7 +46,7 @@ export const sendNotification = async (notification: Notification): Promise<void
  * Operational alert. Distinct from sendNotification so alerting can be routed
  * to on-call rather than a client mailbox later.
  */
-export const sendAlert = async (
+export const sendAlert = (
   subjectOrUserId: string,
   subjectOrDetail?: string | Record<string, any>,
   detail?: Record<string, any>
@@ -54,13 +54,17 @@ export const sendAlert = async (
   // Two shapes in use: sendAlert(subject, detail) and
   // sendAlert(userId, subject, detail).
   const isUserScoped = typeof subjectOrDetail === 'string';
-  const subject = isUserScoped ? (subjectOrDetail as string) : subjectOrUserId;
-  const context = isUserScoped ? detail : (subjectOrDetail as Record<string, any> | undefined);
+  const subject = isUserScoped ? subjectOrDetail : subjectOrUserId;
+  const context = isUserScoped ? detail : subjectOrDetail;
 
   log.warn(`ALERT: ${subject}`, {
     ...(isUserScoped ? { userId: subjectOrUserId } : {}),
     ...(context || {}),
   });
+
+  // Synchronous today (logs only); returns a Promise so callers can await it
+  // unchanged once alerting gains a real transport.
+  return Promise.resolve();
 };
 
 export const notificationService = { send: sendNotification, sendNotification, sendAlert };

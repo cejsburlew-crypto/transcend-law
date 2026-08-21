@@ -417,7 +417,7 @@ export class ComplianceReportingService {
   private async getDataBreaches(startDate: Date, endDate: Date): Promise<DataBreachEntry[]> {
     const result = await this.db.query(
       `SELECT * FROM data_breaches
-       WHERE reported_date >= ? AND reported_date <= ?
+       WHERE reported_date >= $1 AND reported_date <= $2
        ORDER BY reported_date DESC`,
       [startDate, endDate]
     );
@@ -427,7 +427,7 @@ export class ComplianceReportingService {
   private async getAccessLogs(startDate: Date, endDate: Date): Promise<AccessLogEntry[]> {
     const result = await this.db.query(
       `SELECT * FROM access_logs
-       WHERE timestamp >= ? AND timestamp <= ?
+       WHERE timestamp >= $1 AND timestamp <= $2
        ORDER BY timestamp DESC`,
       [startDate, endDate]
     );
@@ -437,7 +437,7 @@ export class ComplianceReportingService {
   private async getChangeLogs(startDate: Date, endDate: Date): Promise<ChangeLogEntry[]> {
     const result = await this.db.query(
       `SELECT * FROM change_logs
-       WHERE timestamp >= ? AND timestamp <= ?
+       WHERE timestamp >= $1 AND timestamp <= $2
        ORDER BY timestamp DESC`,
       [startDate, endDate]
     );
@@ -447,7 +447,7 @@ export class ComplianceReportingService {
   private async getIncidents(startDate: Date, endDate: Date): Promise<IncidentReport[]> {
     const result = await this.db.query(
       `SELECT * FROM incidents
-       WHERE reported_date >= ? AND reported_date <= ?
+       WHERE reported_date >= $1 AND reported_date <= $2
        ORDER BY reported_date DESC`,
       [startDate, endDate]
     );
@@ -547,7 +547,12 @@ export class ComplianceReportingService {
     });
   }
 
-  private async identifyCriticalChanges(changes: ChangeLogEntry[]): Promise<ChangeLogEntry[]> {
+  // Synchronous filter; stays Promise-returning so callers need not change.
+  private identifyCriticalChanges(changes: ChangeLogEntry[]): Promise<ChangeLogEntry[]> {
+    return Promise.resolve(this.identifyCriticalChangesSync(changes));
+  }
+
+  private identifyCriticalChangesSync(changes: ChangeLogEntry[]): ChangeLogEntry[] {
     const criticalEntityTypes = ['user', 'role', 'permission', 'security_policy', 'encryption_key'];
     const criticalChangeTypes = ['delete'];
 
@@ -598,7 +603,12 @@ export class ComplianceReportingService {
     };
   }
 
-  private async evaluateSecurityChecklist(standards: string[]): Promise<SecurityChecklistItem[]> {
+  // Synchronous checklist build; stays Promise-returning for callers.
+  private evaluateSecurityChecklist(standards: string[]): Promise<SecurityChecklistItem[]> {
+    return Promise.resolve(this.evaluateSecurityChecklistSync(standards));
+  }
+
+  private evaluateSecurityChecklistSync(standards: string[]): SecurityChecklistItem[] {
     const checklist: SecurityChecklistItem[] = [];
 
     // SOC 2 checklist items
@@ -1052,14 +1062,16 @@ export class ComplianceReportingService {
       case 'daily':
         cronExpression = `${minutes} ${hours} * * *`;
         break;
-      case 'weekly':
+      case 'weekly': {
         const dayOfWeek = config.dayOfWeek || 0;
         cronExpression = `${minutes} ${hours} * * ${dayOfWeek}`;
         break;
-      case 'monthly':
+      }
+      case 'monthly': {
         const dayOfMonth = config.dayOfMonth || 1;
         cronExpression = `${minutes} ${hours} ${dayOfMonth} * *`;
         break;
+      }
       case 'quarterly':
         cronExpression = `${minutes} ${hours} 1 */3 *`;
         break;

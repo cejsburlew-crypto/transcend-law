@@ -84,7 +84,8 @@ const useTranslatedMessages = (texts: string[], language: string) => {
       return next;
     });
 
-    (async () => {
+    // Fire-and-forget translation pass; cancellation is handled via `cancelled`.
+    void (async () => {
       for (const text of unique) {
         const outcome = await translateTextDetailed(text, language);
         if (cancelled) return;
@@ -112,6 +113,8 @@ export const Messages: React.FC = () => {
   const [selectedId, setSelectedId] = useState('1');
   const [messageText, setMessageText] = useState('');
   const [conversations, setConversations] = useState(MOCK_CONVERSATIONS);
+  const [showCompose, setShowCompose] = useState(false);
+  const [newMessageData, setNewMessageData] = useState({ providerName: '', service: '', message: '' });
   // Message ids the reader has chosen to see in the original wording.
   const [showingOriginal, setShowingOriginal] = useState<Record<string, boolean>>({});
 
@@ -168,10 +171,40 @@ export const Messages: React.FC = () => {
     setMessageText('');
   };
 
+  const handleStartNewMessage = () => {
+    if (!newMessageData.providerName || !newMessageData.service || !newMessageData.message) return;
+
+    const newConv: Conversation = {
+      id: `conv-${Date.now()}`,
+      providerName: newMessageData.providerName,
+      providerService: newMessageData.service,
+      lastMessage: newMessageData.message,
+      lastMessageTime: 'now',
+      messages: [
+        {
+          id: `msg-${Date.now()}`,
+          sender: 'client',
+          text: newMessageData.message,
+          timestamp: 'now',
+        },
+      ],
+    };
+
+    setConversations([newConv, ...conversations]);
+    setSelectedId(newConv.id);
+    setShowCompose(false);
+    setNewMessageData({ providerName: '', service: '', message: '' });
+  };
+
   return (
     <div className="messages-container">
       <div className="conversations-list">
-        <h2>{t('messagesPage.title')}</h2>
+        <div className="list-header">
+          <h2>{t('messagesPage.title')}</h2>
+          <button className="new-message-btn" onClick={() => setShowCompose(true)}>
+            + New Message
+          </button>
+        </div>
         {conversations.map(conv => (
           <div
             key={conv.id}
@@ -259,6 +292,61 @@ export const Messages: React.FC = () => {
               <button onClick={handleSendMessage} disabled={!messageText.trim()}>
                 {t('messagesPage.send')}
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showCompose && (
+        <div className="compose-modal-overlay" onClick={() => setShowCompose(false)}>
+          <div className="compose-modal" onClick={e => e.stopPropagation()}>
+            <div className="compose-header">
+              <h3>New Message</h3>
+              <button className="close-btn" onClick={() => setShowCompose(false)}>✕</button>
+            </div>
+            <div className="compose-body">
+              <div className="compose-field">
+                <label>Service Provider</label>
+                <input
+                  type="text"
+                  placeholder="Enter provider name..."
+                  value={newMessageData.providerName}
+                  onChange={e => setNewMessageData({ ...newMessageData, providerName: e.target.value })}
+                />
+              </div>
+              <div className="compose-field">
+                <label>Service Type</label>
+                <input
+                  type="text"
+                  placeholder="e.g., Legal Research, Notary..."
+                  value={newMessageData.service}
+                  onChange={e => setNewMessageData({ ...newMessageData, service: e.target.value })}
+                />
+              </div>
+              <div className="compose-field">
+                <label>Message</label>
+                <textarea
+                  placeholder="Type your message..."
+                  rows={5}
+                  value={newMessageData.message}
+                  onChange={e => setNewMessageData({ ...newMessageData, message: e.target.value })}
+                />
+              </div>
+              <div className="compose-actions">
+                <button
+                  className="btn-cancel"
+                  onClick={() => setShowCompose(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="btn-send"
+                  onClick={handleStartNewMessage}
+                  disabled={!newMessageData.providerName || !newMessageData.service || !newMessageData.message}
+                >
+                  Send
+                </button>
+              </div>
             </div>
           </div>
         </div>

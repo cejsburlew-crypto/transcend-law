@@ -267,10 +267,23 @@ $$ LANGUAGE SQL STABLE;
 -- GRANTS (adjust based on your application user)
 -- ============================================
 
--- Grant permissions (replace 'transcend_user' with your actual database user)
-GRANT SELECT, INSERT, UPDATE, DELETE ON p2p_conversations TO transcend_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON p2p_messages TO transcend_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON p2p_referrals TO transcend_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON p2p_subcontract_negotiations TO transcend_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON p2p_disputes TO transcend_user;
-GRANT SELECT ON p2p_messaging_summary TO transcend_user;
+-- Grants are conditional: this file previously granted to a hardcoded
+-- 'transcend_user' role that no migration creates, so applying the schema to a
+-- fresh database failed here and left the p2p tables ungranted. The application
+-- role is configurable via the DB_APP_ROLE setting, defaulting to the owner.
+DO $$
+DECLARE
+  app_role text := coalesce(current_setting('transcend.app_role', true), 'transcend_user');
+  t text;
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = app_role) THEN
+    RAISE NOTICE 'Role % does not exist; skipping p2p grants (tables are owned by %)', app_role, current_user;
+    RETURN;
+  END IF;
+
+  FOREACH t IN ARRAY ARRAY['p2p_conversations','p2p_messages','p2p_referrals',
+                           'p2p_subcontract_negotiations','p2p_disputes']
+  LOOP
+    EXECUTE format('GRANT SELECT, INSERT, UPDATE, DELETE ON %I TO %I', t, app_role);
+  END LOOP;
+END $$;

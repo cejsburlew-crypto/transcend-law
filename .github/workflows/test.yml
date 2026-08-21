@@ -1,5 +1,10 @@
 name: Test & Quality Checks
 
+# Every quality step in the previous version of this file ended in `|| true`,
+# so type errors, lint failures and failing tests all reported green. That is
+# how 546 type errors accumulated unnoticed, including modules that could not
+# compile at all. Nothing below swallows its exit code.
+
 on:
   push:
     branches: [ main, develop ]
@@ -7,10 +12,29 @@ on:
     branches: [ main, develop ]
 
 jobs:
-  # Backend Tests
-  backend-tests:
+  typecheck:
+    name: Type check (blocking)
     runs-on: ubuntu-latest
-    
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      # Dependencies live in the repo-root package.json, not per-package.
+      - run: npm ci
+      - name: API
+        run: npm run typecheck:api
+      # The frontend check was vacuous until now (solution-style tsconfig with
+      # "files": [], plus an invalid ignoreDeprecations that made tsc bail on a
+      # single config error). Both fixed; the real count was 122. The ratchet
+      # fails on any INCREASE while the remainder is driven to zero.
+      - name: Frontend (ratchet)
+        run: npm run typecheck:frontend:ratchet
+
+  test:
+    name: Tests (blocking)
+    runs-on: ubuntu-latest
     services:
       postgres:
         image: postgres:14
@@ -24,102 +48,141 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
-
     steps:
-      - uses: actions/checkout@v3
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
-      
-      - name: Install API dependencies
+      - run: npm ci
+      # Provision the schema so DB-backed code paths are exercised for real.
+      - name: Provision test database
+        env:
+          PGPASSWORD: postgres
         run: |
-          cd transcend-api
-          npm ci
-      
-      - name: Run linter
-        run: |
-          cd transcend-api
-          npm run lint || true
-      
-      - name: Run type check
-        run: |
-          cd transcend-api
-          npm run type-check || true
-      
-      - name: Run unit tests
+          psql -h localhost -U postgres -d transcend_law_test -v ON_ERROR_STOP=1 \
+            -f transcend-api/src/database/schema.sql
+          psql -h localhost -U postgres -d transcend_law_test -v ON_ERROR_STOP=1 \
+            -f transcend-api/database/schema-p2p-messaging.sql
+          for m in 008_translation_cache 009_encrypt_privileged_content 010_encrypt_case_documents; do
+            psql -h localhost -U postgres -d transcend_law_test -v ON_ERROR_STOP=1 \
+              -f "transcend-api/src/database/migrations/$m.sql"
+          done
+
+      # Gated on the suites proven green: 288 tests across features,
+      # integration and the route-auth contract. The DB-backed suites
+      # (auditLogger, pushNotifications, userSegmentation, piiRedaction) are
+      # excluded and run in the advisory job below - they fail on a
+      # pre-existing schema mismatch, not on application logic. See
+      # CI_STATUS.md. Do NOT add `|| true` here; fix or exclude explicitly.
+      - name: API tests (gate)
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/transcend_law_test
-        run: |
-          cd transcend-api
-          npm test || true
+          DB_HOST: localhost
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_NAME: transcend_law_test
+          DB_SSL: 'false'
+          # Ephemeral key: exercises the encryption paths without a real secret.
+          FIELD_ENCRYPTION_KEY: 0000000000000000000000000000000000000000000000000000000000000001
+        run: npm run test:api:gate
 
-  # Frontend Tests
-  frontend-tests:
+      - name: Frontend tests
+        run: npm run test:frontend
+
+  # The route-authentication contract is called out separately because it guards
+  # a class of bug that reached production repeatedly: routers reading req.user
+  # with no middleware wired up, and admin endpoints with no auth at all.
+  auth-contract:
+    name: Route auth contract (blocking)
     runs-on: ubuntu-latest
-    
     steps:
-      - uses: actions/checkout@v3
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
-      
-      - name: Install frontend dependencies
-        run: |
-          cd transcend-frontend
-          npm ci
-      
-      - name: Run linter
-        run: |
-          cd transcend-frontend
-          npm run lint || true
-      
-      - name: Run type check
-        run: |
-          cd transcend-frontend
-          npm run type-check || true
-      
-      - name: Build
-        run: |
-          cd transcend-frontend
-          npm run build
-      
-      - name: Run E2E tests
-        run: |
-          cd transcend-frontend
-          npm run cy:run || true
+      - run: npm ci
+      - run: npx jest --selectProjects api --testPathPatterns routeAuth
 
-  # Security scanning
-  security:
+  build:
+    name: Frontend build (blocking)
     runs-on: ubuntu-latest
-    
     steps:
-      - uses: actions/checkout@v3
-      
-      - name: Run npm audit
-        run: |
-          npm audit --audit-level=moderate || true
-      
-      - name: Run security check
-        run: |
-          echo "Security checks passed"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Build frontend
+        working-directory: transcend-frontend
+        run: npx vite build
 
-  # Build Docker image
-  docker-build:
+  # Blocking, but scoped to the diff. The codebase carries 808 pre-existing lint
+  # errors, so a full-repo gate is not achievable today; linting changed files
+  # stops new floating/misused promises from landing while the backlog is paid
+  # down. Full-repo counts are reported by the advisory job below.
+  lint-changed:
+    name: Lint changed files (blocking)
     runs-on: ubuntu-latest
-    
     steps:
-      - uses: actions/checkout@v3
-      
-      - name: Build Docker image
-        run: docker build -t transcend-law:test .
-      
-      - name: Run image tests
-        run: |
-          docker run --rm transcend-law:test node -v
-          echo "Docker build successful"
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint:changed
+
+  # Advisory: known-failing suites and the lint backlog. Reported, never hidden.
+  known-failures:
+    name: Known failures (advisory)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: transcend_law_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Lint backlog (full repo)
+        run: NODE_OPTIONS=--max-old-space-size=6144 npm run lint || true
+      - name: DB-backed suites
+        env:
+          DB_HOST: localhost
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_NAME: transcend_law_test
+        run: npx jest --selectProjects api --testPathPatterns "(auditLogger|pushNotifications|userSegmentation|piiRedaction)" || true
+
+  # Advisory only: audit findings depend on upstream advisories landing, so this
+  # reports without blocking a merge. It must stay visible, not silenced.
+  audit:
+    name: Dependency audit (advisory)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm audit --audit-level=high

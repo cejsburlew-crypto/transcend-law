@@ -20,10 +20,24 @@
 -- server-side message search, which is the deliberate cost of encrypting the
 -- bodies. Reintroduce search via a keyed blind index on extracted terms if it
 -- is needed.
-DROP INDEX IF EXISTS idx_p2p_messages_content_fts;
+-- p2p_messages is created by database/schema-p2p-messaging.sql, which is applied
+-- separately from the main schema. Guard the whole block so this migration is
+-- safe on a database where the p2p schema has not been loaded.
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.tables
+              WHERE table_schema = 'public' AND table_name = 'p2p_messages') THEN
 
-COMMENT ON COLUMN p2p_messages.content IS
-  'PRIVILEGED. AES-256-GCM envelope (v1:iv:tag:ciphertext) written by fieldEncryption.ts. Never query or log directly.';
+    -- A GIN index over ciphertext matches nothing; dropping it disables
+    -- server-side message search, the deliberate cost of encrypting bodies.
+    EXECUTE 'DROP INDEX IF EXISTS idx_p2p_messages_content_fts';
+
+    EXECUTE $c$COMMENT ON COLUMN p2p_messages.content IS
+      'PRIVILEGED. AES-256-GCM envelope (v1:iv:tag:ciphertext) written by fieldEncryption.ts. Never query or log directly.'$c$;
+  ELSE
+    RAISE NOTICE 'p2p_messages not present; skipping (apply database/schema-p2p-messaging.sql first if p2p messaging is in use)';
+  END IF;
+END $$;
 
 -- ---------------------------------------------------------------------------
 -- 2. translation_cache

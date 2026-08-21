@@ -12,7 +12,8 @@ dotenv.config();
 import { initializeDatabase, closePool } from './database/connection';
 
 // Import middleware
-import { corsMiddleware } from './middleware/authMiddleware';
+import { corsMiddleware, authMiddleware } from './middleware/authMiddleware';
+import { adminMiddleware } from '../middleware/auth';
 
 // Import route handlers
 import authRoutes from './routes/auth';
@@ -66,23 +67,46 @@ app.get('/health', (req, res) => {
 // API ROUTES
 // ============================================
 
-// Authentication routes (public)
+// ---------------------------------------------------------------------------
+// Authentication is applied AT MOUNT, not inside each router.
+//
+// Six routers were found reading req.user with no middleware wired up, and the
+// three admin routers below had no authentication at all. Enforcing here means
+// a new router cannot be exposed unauthenticated by omission - the failure mode
+// becomes "route is locked" rather than "route is open".
+//
+// Anything genuinely public is listed explicitly with a reason.
+// ---------------------------------------------------------------------------
+
+// Public: login, signup, token refresh.
 app.use('/api/v2/auth', authRoutes);
 
-// Protected routes
-app.use('/api/v2/intake', intakeRoutes);
-app.use('/api/v2/messages', messagesRoutes);
-app.use('/api/v2/subscriptions', subscriptionsRoutes);
-app.use('/api/v2/payments', paymentsRoutes);
-app.use('/api/v2/documents', documentsRoutes);
-app.use('/api/v2/translate', translationRoutes);
+// Public: provider directory browsing (no user context, no private data).
 app.use('/api/v2/attorneys', attorneysRoutes);
 app.use('/api/v2/notaries', notariesRoutes);
 
-// Admin routes (request panel, health check, security scan)
-app.use('/api', adminRequestsRoutes);
-app.use('/api', adminHealthCheckRoutes);
-app.use('/api', adminSecurityScanRoutes);
+// Protected: everything touching a user, a case, a payment, or a message.
+app.use('/api/v2/intake', authMiddleware, intakeRoutes);
+app.use('/api/v2/messages', authMiddleware, messagesRoutes);
+app.use('/api/v2/subscriptions', authMiddleware, subscriptionsRoutes);
+app.use('/api/v2/payments', authMiddleware, paymentsRoutes);
+app.use('/api/v2/documents', authMiddleware, documentsRoutes);
+// Translation reaches the in-house engine with message content; leaving it open
+// would make it an unauthenticated translation proxy.
+app.use('/api/v2/translate', authMiddleware, translationRoutes);
+
+// Admin: these were mounted with NO authentication, exposing
+// /api/admin/requests (read/write/delete), /api/admin/health-check and
+// /api/admin/security/{scan,report-threat,quarantine} to anyone.
+//
+// adminMiddleware fails closed: users.user_type admits only
+// ('client','attorney','firm'), so no account can pass it yet and these now
+// return 403. That is deliberate - an unreachable admin panel is correct until
+// the role is granted; an open one is not. Add 'admin' to the CHECK constraint
+// to restore access.
+app.use('/api', adminMiddleware, adminRequestsRoutes);
+app.use('/api', adminMiddleware, adminHealthCheckRoutes);
+app.use('/api', adminMiddleware, adminSecurityScanRoutes);
 
 // ============================================
 // ERROR HANDLING
@@ -162,13 +186,20 @@ async function startServer() {
 }
 
 // Handle graceful shutdown
-process.on('SIGINT', async () => {
+process.on('SIGINT', () => {
   console.log('\n🛑 Shutting down gracefully...');
-  await closePool();
-  process.exit(0);
+  // `process.on` expects a void return, so the promise is handled here rather
+  // than returned - an unhandled rejection during shutdown would be silent.
+  void closePool()
+    .catch((error) => console.error('Error closing database pool:', error))
+    .finally(() => process.exit(0));
 });
 
-// Start the server
-startServer();
+// Start the server. Explicitly handled: an unhandled rejection here would
+// leave the process alive but not listening.
+void startServer().catch((error) => {
+  console.error('Fatal: server failed to start:', error);
+  process.exit(1);
+});
 
 export default app;

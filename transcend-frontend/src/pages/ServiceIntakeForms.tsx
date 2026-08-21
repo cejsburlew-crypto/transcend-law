@@ -22,6 +22,323 @@ const MOCK_PROFILE = {
 }
 
 const FORM_CONFIGS: Record<string, any> = {
+  'Generic Service': {
+    sections: [
+      {
+        title: 'Your Information',
+        fields: [
+          { name: 'clientName', label: 'Full Name', type: 'text', readOnly: true },
+          { name: 'clientEmail', label: 'Email', type: 'email', readOnly: true },
+          { name: 'clientPhone', label: 'Phone', type: 'tel', readOnly: true },
+          { name: 'clientAddress', label: 'Address', type: 'text', readOnly: true },
+        ],
+      },
+      {
+        title: 'What You Need',
+        fields: [
+          { name: 'requestTitle', label: 'Brief summary of your request', type: 'text' },
+          { name: 'description', label: 'Describe what you need', type: 'textarea' },
+        ],
+      },
+      {
+        title: 'Timeline & Budget',
+        fields: [
+          { name: 'deadline', label: 'When do you need this completed?', type: 'date' },
+          { name: 'budget', label: 'Budget', type: 'select', options: ['Under $250', '$250-$1K', '$1K-$3K', '$3K+', 'Not sure yet'] },
+        ],
+      },
+    ],
+  },
+  'FAFSA Assistance': {
+    sections: [
+      {
+        title: 'Your Information',
+        fields: [
+          { name: 'clientName', label: 'Full Name', type: 'text', readOnly: true },
+          { name: 'clientEmail', label: 'Email', type: 'email', readOnly: true },
+          { name: 'clientPhone', label: 'Phone', type: 'tel', readOnly: true },
+          { name: 'clientAddress', label: 'Address', type: 'text', readOnly: true },
+        ],
+      },
+      {
+        title: 'Student Details',
+        fields: [
+          { name: 'studentName', label: 'Student name', type: 'text' },
+          { name: 'awardYear', label: 'Aid year', type: 'select', options: ['2026-2027', '2025-2026', 'Renewal', 'Not sure'] },
+          { name: 'dependency', label: 'Dependency status', type: 'select', options: ['Dependent', 'Independent', 'Not sure'] },
+          { name: 'schools', label: 'Schools to receive the FAFSA', type: 'textarea' },
+        ],
+      },
+      {
+        title: 'Filing Situation',
+        fields: [
+          { name: 'filedBefore', label: 'Have you filed a FAFSA before?', type: 'select', options: ['No, first time', 'Yes, renewing', 'Yes, needs correction'] },
+          { name: 'householdSize', label: 'Household size', type: 'number' },
+          { name: 'specialCircumstances', label: 'Special circumstances (job loss, separation, etc.)', type: 'textarea' },
+        ],
+      },
+      {
+        title: 'Deadline',
+        fields: [
+          { name: 'deadline', label: 'Priority filing deadline', type: 'date' },
+        ],
+      },
+    ],
+  },
+  'Bookkeeping': {
+    sections: [
+      {
+        title: 'Your Information',
+        fields: [
+          { name: 'clientName', label: 'Full Name', type: 'text', readOnly: true },
+          { name: 'clientEmail', label: 'Email', type: 'email', readOnly: true },
+          { name: 'clientPhone', label: 'Phone', type: 'tel', readOnly: true },
+          { name: 'clientAddress', label: 'Address', type: 'text', readOnly: true },
+        ],
+      },
+      {
+        title: 'Business Details',
+        fields: [
+          { name: 'businessName', label: 'Business name', type: 'text' },
+          { name: 'entityType', label: 'Entity type', type: 'select', options: ['Sole proprietor', 'LLC', 'S-Corp', 'C-Corp', 'Partnership', 'Nonprofit'] },
+          { name: 'accountingSoftware', label: 'Accounting software in use', type: 'select', options: ['QuickBooks', 'Xero', 'Wave', 'Spreadsheets', 'None yet', 'Other'] },
+          { name: 'monthlyTransactions', label: 'Approximate transactions per month', type: 'number' },
+        ],
+      },
+      {
+        title: 'Scope of Work',
+        fields: [
+          { name: 'services', label: 'What do you need?', type: 'select', options: ['Monthly bookkeeping', 'Catch-up / cleanup', 'Reconciliation only', 'Financial statements', 'Full-service'] },
+          { name: 'monthsBehind', label: 'Months of records to catch up (if any)', type: 'number' },
+          { name: 'description', label: 'Anything else we should know', type: 'textarea' },
+        ],
+      },
+      {
+        title: 'Timeline & Budget',
+        fields: [
+          { name: 'deadline', label: 'Target start date', type: 'date' },
+          { name: 'budget', label: 'Monthly budget', type: 'select', options: ['Under $250', '$250-$500', '$500-$1K', '$1K+'] },
+        ],
+      },
+    ],
+  },
+  'Payroll Services': {
+    sections: [
+      {
+        title: 'Your Information',
+        fields: [
+          { name: 'clientName', label: 'Full Name', type: 'text', readOnly: true },
+          { name: 'clientEmail', label: 'Email', type: 'email', readOnly: true },
+          { name: 'clientPhone', label: 'Phone', type: 'tel', readOnly: true },
+          { name: 'clientAddress', label: 'Address', type: 'text', readOnly: true },
+        ],
+      },
+      {
+        title: 'Business Details',
+        fields: [
+          { name: 'businessName', label: 'Business name', type: 'text' },
+          { name: 'employeeCount', label: 'Number of employees', type: 'number' },
+          { name: 'contractorCount', label: 'Number of 1099 contractors', type: 'number' },
+          { name: 'statesOperating', label: 'States where employees work', type: 'text' },
+        ],
+      },
+      {
+        title: 'Payroll Setup',
+        fields: [
+          { name: 'payFrequency', label: 'Pay frequency', type: 'select', options: ['Weekly', 'Bi-weekly', 'Semi-monthly', 'Monthly'] },
+          { name: 'currentProvider', label: 'Current payroll provider (if any)', type: 'text' },
+          { name: 'needsTaxFiling', label: 'Include payroll tax filing?', type: 'select', options: ['Yes', 'No', 'Not sure'] },
+          { name: 'description', label: 'Benefits, garnishments, or other specifics', type: 'textarea' },
+        ],
+      },
+      {
+        title: 'Timeline',
+        fields: [
+          { name: 'deadline', label: 'First payroll date needed', type: 'date' },
+        ],
+      },
+    ],
+  },
+  'Tax Preparation': {
+    sections: [
+      {
+        title: 'Your Information',
+        fields: [
+          { name: 'clientName', label: 'Full Name', type: 'text', readOnly: true },
+          { name: 'clientEmail', label: 'Email', type: 'email', readOnly: true },
+          { name: 'clientPhone', label: 'Phone', type: 'tel', readOnly: true },
+          { name: 'clientAddress', label: 'Address', type: 'text', readOnly: true },
+        ],
+      },
+      {
+        title: 'Return Details',
+        fields: [
+          { name: 'returnType', label: 'Return type', type: 'select', options: ['Individual (1040)', 'Business (1120/1120-S)', 'Partnership (1065)', 'Nonprofit (990)', 'Both personal and business'] },
+          { name: 'taxYear', label: 'Tax year', type: 'select', options: ['2025', '2024', 'Prior year / amended', 'Multiple years'] },
+          { name: 'filingStatus', label: 'Filing status', type: 'select', options: ['Single', 'Married filing jointly', 'Married filing separately', 'Head of household', 'N/A - business return'] },
+          { name: 'statesFiling', label: 'States to file in', type: 'text' },
+        ],
+      },
+      {
+        title: 'Situation',
+        fields: [
+          { name: 'hasSelfEmployment', label: 'Self-employment or rental income?', type: 'select', options: ['No', 'Yes - self-employment', 'Yes - rental', 'Yes - both'] },
+          { name: 'description', label: 'Anything unusual this year', type: 'textarea' },
+        ],
+      },
+      {
+        title: 'Timeline',
+        fields: [
+          { name: 'deadline', label: 'Filing deadline', type: 'date' },
+        ],
+      },
+    ],
+  },
+  'Cover Letters': {
+    sections: [
+      {
+        title: 'Your Information',
+        fields: [
+          { name: 'clientName', label: 'Full Name', type: 'text', readOnly: true },
+          { name: 'clientEmail', label: 'Email', type: 'email', readOnly: true },
+          { name: 'clientPhone', label: 'Phone', type: 'tel', readOnly: true },
+          { name: 'clientAddress', label: 'Address', type: 'text', readOnly: true },
+        ],
+      },
+      {
+        title: 'Target Role',
+        fields: [
+          { name: 'targetRole', label: 'Role or job title', type: 'text' },
+          { name: 'targetCompany', label: 'Company', type: 'text' },
+          { name: 'jobPosting', label: 'Job posting link or text', type: 'textarea' },
+          { name: 'industry', label: 'Industry', type: 'text' },
+        ],
+      },
+      {
+        title: 'Your Background',
+        fields: [
+          { name: 'yearsExperience', label: 'Years of relevant experience', type: 'number' },
+          { name: 'keyAchievements', label: 'Achievements you want highlighted', type: 'textarea' },
+          { name: 'tone', label: 'Preferred tone', type: 'select', options: ['Formal', 'Professional', 'Conversational'] },
+        ],
+      },
+      {
+        title: 'Timeline',
+        fields: [
+          { name: 'deadline', label: 'Application deadline', type: 'date' },
+        ],
+      },
+    ],
+  },
+  'Resume Writing': {
+    sections: [
+      {
+        title: 'Your Information',
+        fields: [
+          { name: 'clientName', label: 'Full Name', type: 'text', readOnly: true },
+          { name: 'clientEmail', label: 'Email', type: 'email', readOnly: true },
+          { name: 'clientPhone', label: 'Phone', type: 'tel', readOnly: true },
+          { name: 'clientAddress', label: 'Address', type: 'text', readOnly: true },
+        ],
+      },
+      {
+        title: 'Career Details',
+        fields: [
+          { name: 'targetRole', label: 'Target role', type: 'text' },
+          { name: 'industry', label: 'Industry', type: 'text' },
+          { name: 'careerLevel', label: 'Career level', type: 'select', options: ['Entry level', 'Mid-career', 'Senior', 'Executive', 'Career change'] },
+          { name: 'yearsExperience', label: 'Years of experience', type: 'number' },
+        ],
+      },
+      {
+        title: 'Scope',
+        fields: [
+          { name: 'services', label: 'What do you need?', type: 'select', options: ['New resume', 'Resume rewrite', 'Resume + cover letter', 'Resume + LinkedIn', 'Full package'] },
+          { name: 'hasExisting', label: 'Do you have a current resume?', type: 'select', options: ['Yes', 'No', 'Outdated'] },
+          { name: 'description', label: 'Anything you want emphasised or left out', type: 'textarea' },
+        ],
+      },
+      {
+        title: 'Timeline',
+        fields: [
+          { name: 'deadline', label: 'When do you need it?', type: 'date' },
+        ],
+      },
+    ],
+  },
+  'Business Formation': {
+    sections: [
+      {
+        title: 'Your Information',
+        fields: [
+          { name: 'clientName', label: 'Full Name', type: 'text', readOnly: true },
+          { name: 'clientEmail', label: 'Email', type: 'email', readOnly: true },
+          { name: 'clientPhone', label: 'Phone', type: 'tel', readOnly: true },
+          { name: 'clientAddress', label: 'Address', type: 'text', readOnly: true },
+        ],
+      },
+      {
+        title: 'Entity Details',
+        fields: [
+          { name: 'businessName', label: 'Proposed business name', type: 'text' },
+          { name: 'entityType', label: 'Entity type', type: 'select', options: ['LLC', 'S-Corp', 'C-Corp', 'Partnership', 'Nonprofit', 'Not sure'] },
+          { name: 'stateOfFormation', label: 'State of formation', type: 'text' },
+          { name: 'ownerCount', label: 'Number of owners / members', type: 'number' },
+        ],
+      },
+      {
+        title: 'Filings Needed',
+        fields: [
+          { name: 'needsEIN', label: 'Need an EIN?', type: 'select', options: ['Yes', 'No', 'Not sure'] },
+          { name: 'needsRegisteredAgent', label: 'Need a registered agent?', type: 'select', options: ['Yes', 'No', 'Not sure'] },
+          { name: 'needsOperatingAgreement', label: 'Need an operating agreement?', type: 'select', options: ['Yes', 'No', 'Not sure'] },
+          { name: 'description', label: 'Business activity and anything else', type: 'textarea' },
+        ],
+      },
+      {
+        title: 'Timeline',
+        fields: [
+          { name: 'deadline', label: 'Target formation date', type: 'date' },
+        ],
+      },
+    ],
+  },
+  'Grant Writing': {
+    sections: [
+      {
+        title: 'Your Information',
+        fields: [
+          { name: 'clientName', label: 'Full Name', type: 'text', readOnly: true },
+          { name: 'clientEmail', label: 'Email', type: 'email', readOnly: true },
+          { name: 'clientPhone', label: 'Phone', type: 'tel', readOnly: true },
+          { name: 'clientAddress', label: 'Address', type: 'text', readOnly: true },
+        ],
+      },
+      {
+        title: 'Organization',
+        fields: [
+          { name: 'organizationName', label: 'Organization name', type: 'text' },
+          { name: 'organizationType', label: 'Organization type', type: 'select', options: ['501(c)(3) nonprofit', 'For-profit small business', 'Educational institution', 'Individual / researcher', 'Other'] },
+          { name: 'annualBudget', label: 'Annual operating budget', type: 'number' },
+        ],
+      },
+      {
+        title: 'Grant Details',
+        fields: [
+          { name: 'grantName', label: 'Grant or funder (if known)', type: 'text' },
+          { name: 'requestAmount', label: 'Amount you plan to request', type: 'number' },
+          { name: 'projectSummary', label: 'Project summary', type: 'textarea' },
+          { name: 'services', label: 'What do you need?', type: 'select', options: ['Funder research', 'Full proposal writing', 'Proposal review / edit', 'Budget narrative', 'Full package'] },
+        ],
+      },
+      {
+        title: 'Deadline',
+        fields: [
+          { name: 'deadline', label: 'Submission deadline', type: 'date' },
+        ],
+      },
+    ],
+  },
   Lawyer: {
     sections: [
       {
@@ -646,6 +963,264 @@ const FORM_CONFIGS: Record<string, any> = {
       },
     ],
   },
+
+  // Law-Specific Intake Forms
+  'Family Law': {
+    sections: [
+      {
+        title: 'Your Information',
+        fields: [
+          { name: 'clientName', label: 'Full Name', type: 'text', readOnly: true },
+          { name: 'clientEmail', label: 'Email', type: 'email', readOnly: true },
+          { name: 'clientPhone', label: 'Phone', type: 'tel', readOnly: true },
+        ],
+      },
+      {
+        title: 'Matter Type',
+        fields: [
+          {
+            name: 'matterType',
+            label: 'What is your family law matter?',
+            type: 'select',
+            options: ['Divorce', 'Custody/Visitation', 'Child Support', 'Spousal Support', 'Adoption', 'Paternity', 'Prenuptial Agreement', 'Domestic Violence'],
+          },
+        ],
+      },
+      {
+        title: 'Family Details',
+        fields: [
+          { name: 'spouseName', label: 'Spouse/Partner Name (if applicable)', type: 'text' },
+          { name: 'childrenCount', label: 'Number of Children', type: 'number' },
+          { name: 'childrenAges', label: 'Children Ages', type: 'text' },
+          { name: 'marriageDate', label: 'Marriage/Partnership Date', type: 'date' },
+          { name: 'separationDate', label: 'Separation Date (if applicable)', type: 'date' },
+        ],
+      },
+      {
+        title: 'Case Details',
+        fields: [
+          { name: 'assets', label: 'Approximate Total Assets', type: 'select', options: ['Under $50K', '$50K-$250K', '$250K-$1M', '$1M+'] },
+          { name: 'custody', label: 'Custody Arrangement Sought', type: 'select', options: ['Joint Custody', 'Primary Custody', 'Visitation Rights', 'To Be Determined'] },
+          { name: 'description', label: 'Case Description', type: 'textarea' },
+        ],
+      },
+      {
+        title: 'Timeline & Budget',
+        fields: [
+          { name: 'deadline', label: 'When do you need resolution?', type: 'date' },
+          { name: 'budget', label: 'Budget', type: 'select', options: ['Under $2K', '$2K-$5K', '$5K-$10K', '$10K+'] },
+        ],
+      },
+    ],
+  },
+
+  'Criminal Law': {
+    sections: [
+      {
+        title: 'Your Information',
+        fields: [
+          { name: 'clientName', label: 'Full Name', type: 'text', readOnly: true },
+          { name: 'clientEmail', label: 'Email', type: 'email', readOnly: true },
+          { name: 'clientPhone', label: 'Phone', type: 'tel', readOnly: true },
+        ],
+      },
+      {
+        title: 'Charge Information',
+        fields: [
+          { name: 'chargeType', label: 'Type of Charge', type: 'select', options: ['Felony', 'Misdemeanor', 'Infraction', 'DUI/DWI', 'Drug Offense', 'Violent Crime', 'White Collar', 'Other'] },
+          { name: 'charges', label: 'Specific Charges', type: 'textarea' },
+          { name: 'courtName', label: 'Court Name/Location', type: 'text' },
+          { name: 'caseNumber', label: 'Case Number (if available)', type: 'text' },
+        ],
+      },
+      {
+        title: 'Case Status',
+        fields: [
+          { name: 'arrestDate', label: 'Date of Arrest', type: 'date' },
+          { name: 'firstAppearance', label: 'First Appearance Date', type: 'date' },
+          { name: 'bailStatus', label: 'Bail/Release Status', type: 'select', options: ['In Custody', 'Released on Own Recognizance', 'Bail Set', 'Already Released'] },
+          { name: 'bailAmount', label: 'Bail Amount (if set)', type: 'number' },
+        ],
+      },
+      {
+        title: 'Your Needs',
+        fields: [
+          { name: 'immediateHelp', label: 'What immediate help do you need?', type: 'select', options: ['Bail/Release Assistance', 'Court Representation', 'Legal Advice', 'Plea Negotiation', 'Trial Defense'] },
+          { name: 'description', label: 'Additional Details', type: 'textarea' },
+        ],
+      },
+    ],
+  },
+
+  'Employment Law': {
+    sections: [
+      {
+        title: 'Your Information',
+        fields: [
+          { name: 'clientName', label: 'Full Name', type: 'text', readOnly: true },
+          { name: 'clientEmail', label: 'Email', type: 'email', readOnly: true },
+          { name: 'clientPhone', label: 'Phone', type: 'tel', readOnly: true },
+        ],
+      },
+      {
+        title: 'Employment Details',
+        fields: [
+          { name: 'employerName', label: 'Employer Name', type: 'text' },
+          { name: 'employmentType', label: 'Employment Status', type: 'select', options: ['Full-time', 'Part-time', 'Contract', 'Temporary', 'Freelance'] },
+          { name: 'yearsEmployed', label: 'Years at Company', type: 'number' },
+          { name: 'position', label: 'Job Position', type: 'text' },
+        ],
+      },
+      {
+        title: 'Issue Details',
+        fields: [
+          {
+            name: 'issueType',
+            label: 'What is your employment issue?',
+            type: 'select',
+            options: ['Wrongful Termination', 'Discrimination', 'Harassment', 'Wage Dispute', 'Non-Compete Agreement', 'Contract Dispute', 'Retaliation', 'Unsafe Work Environment'],
+          },
+          { name: 'description', label: 'Describe the Issue', type: 'textarea' },
+          { name: 'startDate', label: 'When did the issue begin?', type: 'date' },
+          { name: 'witnesses', label: 'Were there witnesses?', type: 'select', options: ['Yes', 'No', 'Unsure'] },
+        ],
+      },
+      {
+        title: 'Desired Resolution',
+        fields: [
+          { name: 'relief', label: 'What relief are you seeking?', type: 'select', options: ['Reinstatement', 'Severance Negotiation', 'Damages', 'Policy Change', 'References', 'Other'] },
+          { name: 'budget', label: 'Budget', type: 'select', options: ['Under $2K', '$2K-$5K', '$5K-$10K', '$10K+'] },
+        ],
+      },
+    ],
+  },
+
+  'Estate Planning': {
+    sections: [
+      {
+        title: 'Your Information',
+        fields: [
+          { name: 'clientName', label: 'Full Name', type: 'text', readOnly: true },
+          { name: 'clientEmail', label: 'Email', type: 'email', readOnly: true },
+          { name: 'clientPhone', label: 'Phone', type: 'tel', readOnly: true },
+          { name: 'dateOfBirth', label: 'Date of Birth', type: 'date' },
+        ],
+      },
+      {
+        title: 'Estate Planning Documents',
+        fields: [
+          {
+            name: 'documentsNeeded',
+            label: 'Which documents do you need?',
+            type: 'select',
+            options: ['Will', 'Trust (Living)', 'Trust (Testamentary)', 'Power of Attorney', 'Healthcare Directive', 'HIPAA Authorization', 'All of the Above'],
+          },
+        ],
+      },
+      {
+        title: 'Family & Assets',
+        fields: [
+          { name: 'spouseStatus', label: 'Marital Status', type: 'select', options: ['Single', 'Married', 'Divorced', 'Widowed'] },
+          { name: 'childrenCount', label: 'Number of Children/Beneficiaries', type: 'number' },
+          { name: 'estimatedEstate', label: 'Estimated Estate Value', type: 'select', options: ['Under $500K', '$500K-$1M', '$1M-$5M', '$5M+'] },
+          { name: 'propertyStates', label: 'States where you own property', type: 'text' },
+        ],
+      },
+      {
+        title: 'Your Wishes',
+        fields: [
+          { name: 'executor', label: 'Preferred Executor/Trustee', type: 'text' },
+          { name: 'guardianship', label: 'Guardians for minor children (if applicable)', type: 'text' },
+          { name: 'specialConcerns', label: 'Special Concerns or Wishes', type: 'textarea' },
+        ],
+      },
+    ],
+  },
+
+  'Personal Injury': {
+    sections: [
+      {
+        title: 'Your Information',
+        fields: [
+          { name: 'clientName', label: 'Full Name', type: 'text', readOnly: true },
+          { name: 'clientEmail', label: 'Email', type: 'email', readOnly: true },
+          { name: 'clientPhone', label: 'Phone', type: 'tel', readOnly: true },
+        ],
+      },
+      {
+        title: 'Accident Details',
+        fields: [
+          {
+            name: 'injuryType',
+            label: 'Type of Injury',
+            type: 'select',
+            options: ['Motor Vehicle Accident', 'Slip & Fall', 'Product Liability', 'Medical Malpractice', 'Workplace Injury', 'Assault/Battery', 'Other'],
+          },
+          { name: 'accidentDate', label: 'Date of Incident', type: 'date' },
+          { name: 'accidentLocation', label: 'Location of Incident', type: 'text' },
+          { name: 'accidentDescription', label: 'Description of What Happened', type: 'textarea' },
+        ],
+      },
+      {
+        title: 'Injuries & Medical Care',
+        fields: [
+          { name: 'injuries', label: 'Describe Your Injuries', type: 'textarea' },
+          { name: 'medicalTreatment', label: 'Medical Treatment Received', type: 'textarea' },
+          { name: 'medicalExpenses', label: 'Approximate Medical Expenses', type: 'number' },
+          { name: 'ongoing', label: 'Ongoing Treatment Needed?', type: 'select', options: ['Yes', 'No', 'Unsure'] },
+        ],
+      },
+      {
+        title: 'Liability & Damages',
+        fields: [
+          { name: 'liability', label: 'Who was at fault?', type: 'textarea' },
+          { name: 'insurance', label: 'Is insurance involved?', type: 'select', options: ['Yes', 'No', 'Unknown'] },
+          { name: 'damages', label: 'Lost Wages / Other Damages', type: 'number' },
+        ],
+      },
+    ],
+  },
+
+  'Real Estate': {
+    sections: [
+      {
+        title: 'Your Information',
+        fields: [
+          { name: 'clientName', label: 'Full Name', type: 'text', readOnly: true },
+          { name: 'clientEmail', label: 'Email', type: 'email', readOnly: true },
+          { name: 'clientPhone', label: 'Phone', type: 'tel', readOnly: true },
+        ],
+      },
+      {
+        title: 'Transaction Type',
+        fields: [
+          {
+            name: 'transactionType',
+            label: 'Type of Real Estate Matter',
+            type: 'select',
+            options: ['Purchase', 'Sale', 'Lease/Rental', 'Boundary Dispute', 'Title Issue', 'Easement', 'Deed Question', 'Other'],
+          },
+        ],
+      },
+      {
+        title: 'Property Details',
+        fields: [
+          { name: 'propertyAddress', label: 'Property Address', type: 'textarea' },
+          { name: 'propertyType', label: 'Property Type', type: 'select', options: ['Residential', 'Commercial', 'Land', 'Multi-Unit', 'Other'] },
+          { name: 'purchasePrice', label: 'Purchase/Sale Price (if applicable)', type: 'number' },
+          { name: 'squareFootage', label: 'Square Footage', type: 'number' },
+        ],
+      },
+      {
+        title: 'Your Issue',
+        fields: [
+          { name: 'issueDescription', label: 'Describe Your Concern/Issue', type: 'textarea' },
+          { name: 'otherParties', label: 'Other Parties Involved', type: 'textarea' },
+          { name: 'deadline', label: 'Timeline for Resolution', type: 'date' },
+        ],
+      },
+    ],
+  },
 }
 
 export const ServiceIntakeForms: React.FC<ServiceIntakeFormProps> = ({
@@ -654,7 +1229,10 @@ export const ServiceIntakeForms: React.FC<ServiceIntakeFormProps> = ({
   onCancel,
   providerName,
 }) => {
-  const config = FORM_CONFIGS[serviceName] || FORM_CONFIGS.Lawyer
+  // An unmapped service must NOT inherit the Lawyer form - that asked FAFSA and
+  // bookkeeping clients for "Case Type" and "Amount in Dispute". Unknown
+  // services get a neutral service-request form instead.
+  const config = FORM_CONFIGS[serviceName] || FORM_CONFIGS['Generic Service']
   const [formData, setFormData] = useState<IntakeFormData>({
     ...MOCK_PROFILE,
   })

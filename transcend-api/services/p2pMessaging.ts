@@ -847,14 +847,15 @@ class P2PMessagingService {
    * Check rate limit for a user
    */
   async checkRateLimit(userId: string): Promise<RateLimitStatus> {
-    return this.rateLimiter.check(userId);
+    // Shared Redis counter when configured, so the limit holds across instances.
+    return this.rateLimiter.checkAsync(userId);
   }
 
   /**
    * Increment message count for rate limiting
    */
   private async incrementMessageCount(userId: string): Promise<void> {
-    this.rateLimiter.increment(userId);
+    await this.rateLimiter.incrementAsync(userId);
   }
 
   /**

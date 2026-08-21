@@ -35,6 +35,46 @@ const ALLOWED_TYPES = [
 // FILE UPLOAD
 // ============================================
 
+/**
+ * Case-document authorisation.
+ *
+ * Access is limited to the case's client and attorneys holding an active offer.
+ * Extracted so every entry point uses the same rule - three of them
+ * (delete, and both presigned URL helpers) previously had no check at all,
+ * meaning any authenticated user could read or DELETE any case's documents,
+ * including medical records.
+ */
+async function assertCaseAccess(caseId: string, userId: string): Promise<void> {
+  const allowed = await query(
+    `SELECT 1
+       FROM cases c
+  LEFT JOIN case_offers o
+         ON o.case_id = c.id
+        AND o.status IN ('quoted', 'accepted', 'retained')
+  LEFT JOIN attorneys a
+         ON a.id = o.attorney_id
+      WHERE c.id = $1
+        AND (c.client_id = $2 OR a.user_id = $2)
+      LIMIT 1`,
+    [caseId, userId]
+  );
+
+  if (allowed.rows.length === 0) {
+    // Same message as a missing document: do not confirm existence.
+    throw new Error('Document not found');
+  }
+}
+
+/** Resolve a document's case, then authorise. */
+async function assertDocumentAccess(documentId: string, userId: string): Promise<any> {
+  const result = await query(`SELECT * FROM case_documents WHERE id = $1`, [documentId]);
+  const document = result.rows[0];
+  if (!document) throw new Error('Document not found');
+
+  await assertCaseAccess(document.case_id, userId);
+  return document;
+}
+
 export async function uploadCaseDocument(
   caseId: string,
   userId: string,
@@ -187,9 +227,12 @@ export async function downloadCaseDocument(
 // FILE DELETION
 // ============================================
 
-export async function deleteCaseDocument(documentId: string): Promise<void> {
+export async function deleteCaseDocument(documentId: string, userId: string): Promise<void> {
   try {
-    // Get document info
+    // Authorise before destroying anything: this previously allowed any
+    // authenticated user to delete any case document.
+    await assertDocumentAccess(documentId, userId);
+
     const result = await query(
       `SELECT file_url FROM case_documents WHERE id = $1`,
       [documentId]
@@ -230,8 +273,35 @@ export async function deleteCaseDocument(documentId: string): Promise<void> {
 // GET CASE DOCUMENTS
 // ============================================
 
-export async function getCaseDocuments(caseId: string): Promise<any[]> {
+/**
+ * List a case's documents.
+ *
+ * `userId` is required: without it this listed any case's documents to any
+ * authenticated caller, exposing filenames (which are themselves sensitive).
+ * Same authorisation rule as downloadCaseDocument - the case's client, or an
+ * attorney with an active offer.
+ */
+export async function getCaseDocuments(caseId: string, userId: string): Promise<any[]> {
   try {
+    const allowed = await query(
+      `SELECT 1
+         FROM cases c
+    LEFT JOIN case_offers o
+           ON o.case_id = c.id
+          AND o.status IN ('quoted', 'accepted', 'retained')
+    LEFT JOIN attorneys a
+           ON a.id = o.attorney_id
+        WHERE c.id = $1
+          AND (c.client_id = $2 OR a.user_id = $2)
+        LIMIT 1`,
+      [caseId, userId]
+    );
+
+    if (allowed.rows.length === 0) {
+      // Indistinguishable from an empty case: do not confirm existence.
+      return [];
+    }
+
     const result = await query(
       `SELECT id, file_name, file_size, file_type, uploaded_at FROM case_documents
        WHERE case_id = $1
@@ -256,7 +326,7 @@ export async function getCaseDocuments(caseId: string): Promise<any[]> {
 // VIRUS SCANNING (ClamAV)
 // ============================================
 
-export async function scanFileForViruses(
+export function scanFileForViruses(
   fileBuffer: Buffer,
   fileName: string
 ): Promise<boolean> {
@@ -280,10 +350,10 @@ export async function scanFileForViruses(
     // const { isInfected } = await scanner.scanBuffer(fileBuffer);
     // return !isInfected;
 
-    return true; // File is safe
+    return Promise.resolve(true); // File is safe
   } catch (error) {
     console.warn('Virus scan failed:', error);
-    return true; // Default to allow if scan fails
+    return Promise.resolve(true); // Default to allow if scan fails
   }
 }
 
@@ -308,19 +378,22 @@ function getFileMagicBytes(buffer: Buffer): string {
 
 export async function getPresignedDownloadUrl(
   documentId: string,
+  userId: string,
   expiresIn: number = 3600
 ): Promise<string> {
   try {
-    const result = await query(
-      `SELECT file_url FROM case_documents WHERE id = $1`,
-      [documentId]
-    );
+    const document = await assertDocumentAccess(documentId, userId);
 
-    if (result.rows.length === 0) {
-      throw new Error('Document not found');
+    // A presigned URL streams the raw object, bypassing decryptDocument - the
+    // caller would receive ciphertext. Refuse rather than hand back a file the
+    // user cannot open.
+    if (document.client_encrypted) {
+      throw new Error(
+        'This document is encrypted at rest; use the download endpoint instead of a presigned URL'
+      );
     }
 
-    const s3Key = result.rows[0].file_url.split('.s3.')[1]?.split('/').slice(1).join('/');
+    const s3Key = document.file_url.split('.s3.')[1]?.split('/').slice(1).join('/');
 
     const params = {
       Bucket: BUCKET_NAME,
@@ -345,38 +418,19 @@ export async function getPresignedDownloadUrl(
   }
 }
 
-export async function getPresignedUploadUrl(
-  caseId: string,
-  fileName: string,
-  mimeType: string,
-  expiresIn: number = 3600
-): Promise<string> {
-  try {
-    const documentId = uuidv4();
-    const timestamp = new Date().toISOString().split('T')[0];
-    const s3Key = `cases/${caseId}/${timestamp}/${documentId}_${fileName}`;
-
-    const params = {
-      Bucket: BUCKET_NAME,
-      Key: s3Key,
-      ContentType: mimeType,
-      Expires: expiresIn,
-    };
-
-    // WARNING: a presigned upload writes whatever the client sends, bypassing
-    // encryptDocument - the object would land as PLAINTEXT. Uploads must go
-    // through uploadCaseDocument.
-    console.warn(
-      '[security] getSignedUrl(putObject) bypasses client-side encryption; ' +
-        'documents uploaded this way are stored in plaintext. Use uploadCaseDocument.'
-    );
-
-    const url = s3.getSignedUrl('putObject', params);
-    return url;
-  } catch (error) {
-    console.error('Failed to generate presigned upload URL:', error);
-    throw error;
-  }
+export function getPresignedUploadUrl(
+  _caseId: string,
+  _fileName: string,
+  _mimeType: string,
+  _expiresIn: number = 3600
+): Promise<never> {
+  // Disabled by design. A presigned PUT writes whatever the client sends,
+  // bypassing encryptDocument - the object would land in S3 as PLAINTEXT
+  // privileged content (and for medical records, unencrypted PHI). All uploads
+  // must go through uploadCaseDocument so the envelope is applied.
+  throw new Error(
+    'Presigned uploads are disabled: they bypass client-side encryption. Use uploadCaseDocument.'
+  );
 }
 
 // ============================================

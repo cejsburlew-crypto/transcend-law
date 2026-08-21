@@ -39,6 +39,8 @@ const toAuthenticatedUser = (payload: JWTPayload): AuthenticatedUser => ({
 });
 
 declare global {
+  // Express type augmentation requires a namespace; no alternative exists.
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
       user?: AuthenticatedUser;
@@ -115,4 +117,20 @@ export function rateLimitMiddleware(req: Request, res: Response, next: NextFunct
   // Placeholder for rate limiting
   // In production, use package like 'express-rate-limit'
   next();
+}
+
+/**
+ * The authenticated caller's id, narrowed to `string`.
+ *
+ * Routes behind authMiddleware always have this set, but the Request type
+ * cannot express that across the middleware boundary. Throwing here (rather
+ * than asserting with `!`) means a route accidentally mounted without auth
+ * fails loudly instead of passing `undefined` into a query.
+ */
+export function requireUserId(req: { userId?: string; user?: { id: string } }): string {
+  const id = req.userId ?? req.user?.id;
+  if (!id) {
+    throw new Error('requireUserId called on an unauthenticated request');
+  }
+  return id;
 }

@@ -5,6 +5,7 @@ import { Router, Request, Response } from 'express';
 import multer from 'multer';
 import { authMiddleware } from '../middleware/authMiddleware';
 import { queryParam, routeParam } from '../utils/httpParams';
+import { requireUserId } from '../middleware/authMiddleware';
 
 // NOTE: `req.user!` / `req.userId!` assertions are sound - this router applies
 // authentication middleware, so no handler runs without an authenticated user.
@@ -80,7 +81,7 @@ router.get('/:caseId', authMiddleware, async (req: Request, res: Response) => {
   try {
     const caseId = routeParam(req.params.caseId);
 
-    const documents = await getCaseDocuments(caseId);
+    const documents = await getCaseDocuments(caseId, requireUserId(req));
 
     return res.json({ documents });
   } catch (error: any) {
@@ -132,7 +133,8 @@ router.get(
 
       const url = await getPresignedDownloadUrl(
         documentId,
-        parseInt(expiresIn as string) || 3600
+        requireUserId(req),
+        parseInt(expiresIn) || 3600
       );
 
       return res.json({ url });
@@ -161,8 +163,8 @@ router.get(
 
       const url = await getPresignedUploadUrl(
         caseId,
-        fileName as string,
-        mimeType as string
+        fileName,
+        mimeType
       );
 
       return res.json({ url });
@@ -184,7 +186,7 @@ router.delete(
     try {
       const documentId = routeParam(req.params.documentId);
 
-      await deleteCaseDocument(documentId);
+      await deleteCaseDocument(documentId, requireUserId(req));
 
       return res.json({ success: true });
     } catch (error: any) {

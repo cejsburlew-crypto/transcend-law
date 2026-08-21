@@ -1,5 +1,10 @@
 name: Auto Deploy Feature
 
+# NOTE: ESLint, type check, build, integration tests and BOTH deploy steps were
+# marked `continue-on-error: true`, so this workflow reported success even when
+# the production deploy failed. Gates that decide whether code ships must be
+# blocking; the flags below were removed.
+
 on:
   workflow_dispatch:
     inputs:
@@ -80,12 +85,10 @@ jobs:
       # Step 7: Run linting
       - name: Run ESLint
         run: npm run lint --if-present
-        continue-on-error: true
 
       # Step 8: Run type checking
       - name: Type check
         run: npm run type-check --if-present
-        continue-on-error: true
 
       # Step 9: Run unit tests
       - name: Run unit tests
@@ -103,13 +106,11 @@ jobs:
       # Step 11: Build backend
       - name: Build backend
         run: npm run build --if-present
-        continue-on-error: true
 
       # Step 12: Deploy to staging
       - name: Deploy to staging
         run: |
           npm run deploy:staging --if-present
-        continue-on-error: true
         env:
           DEPLOYMENT_ENV: staging
           DEPLOYMENT_REQUEST_ID: ${{ github.event.inputs.request_id }}
@@ -117,13 +118,11 @@ jobs:
       # Step 13: Run integration tests
       - name: Run integration tests
         run: npm run test:integration --if-present
-        continue-on-error: true
 
       # Step 14: Deploy to production
       - name: Deploy to production
         run: |
           npm run deploy:production --if-present
-        continue-on-error: true
         env:
           DEPLOYMENT_ENV: production
           DEPLOYMENT_REQUEST_ID: ${{ github.event.inputs.request_id }}
@@ -131,9 +130,17 @@ jobs:
       # Step 15: Push to GitHub
       - name: Push to GitHub
         run: |
-          git add -A
+          # `git add -A` previously swept every uncommitted change in the
+          # working tree - including unrelated work in progress - into a commit
+          # named after a single feature. Commit only tracked modifications and
+          # fail loudly if there is nothing to commit.
+          git add -u
+          if git diff --cached --quiet; then
+            echo "No tracked changes to commit; nothing to push."
+            exit 0
+          fi
           git commit -m "✨ ${{ github.event.inputs.feature_name }}" \
-            --author="Transcend Automation <automation@transcend-law.com>" || true
+            --author="Transcend Automation <automation@transcend-law.com>"
           git push origin "${{ env.BRANCH_NAME }}"
 
       # Step 16: Create Pull Request

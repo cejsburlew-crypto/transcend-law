@@ -12,7 +12,10 @@ import '../../styles/psychology-design-system.css';
    =========================================================================== */
 
 interface PrimaryButtonProps {
-  children: React.ReactNode;
+  /** Optional when `label` is supplied - several call sites pass text as a prop. */
+  children?: React.ReactNode;
+  /** Text alternative to `children`. */
+  label?: string;
   onClick?: () => void;
   disabled?: boolean;
   loading?: boolean;
@@ -23,6 +26,7 @@ interface PrimaryButtonProps {
 
 export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
   children,
+  label,
   onClick,
   disabled = false,
   loading = false,
@@ -38,7 +42,7 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
     style={style}
     type={type}
   >
-    {children}
+    {children ?? label}
   </button>
 );
 
@@ -91,7 +95,7 @@ interface StatusBadgeProps {
 export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, children, icon }) => (
   <span className={`badge badge-${status}`}>
     {icon && <span style={{ marginRight: '4px' }}>{icon}</span>}
-    {children}
+    {children ?? label}
   </span>
 );
 

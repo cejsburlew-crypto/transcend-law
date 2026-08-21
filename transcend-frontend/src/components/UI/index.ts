@@ -4,3 +4,4 @@
  */
 
 export * from './PsychologyOptimizedComponents';
+export * from './CommonComponents';

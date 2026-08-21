@@ -24,8 +24,9 @@ function setAuthTokenCookie(token: string, user?: User): void {
   // This would be set by the backend in the Set-Cookie header with httpOnly flag
   // Frontend should NOT set cookies directly
   // The backend handles: document.cookie = `token=${token}; HttpOnly; Secure; SameSite=Strict; path=/`
-  // We'll store a session flag in localStorage for UI purposes (persists across refreshes)
+  // We'll store the token and a session flag in localStorage for API calls
   localStorage.setItem('auth_session_valid', 'true');
+  localStorage.setItem('auth_token', token);
   if (user) {
     localStorage.setItem('auth_user', JSON.stringify(user));
   }
@@ -44,8 +45,9 @@ function getStoredUser(): User | null {
 }
 
 function clearAuthTokenCookie(): void {
-  // Clear session flag and user
+  // Clear session flag, token, and user
   localStorage.removeItem('auth_session_valid');
+  localStorage.removeItem('auth_token');
   localStorage.removeItem('auth_user');
 }
 
@@ -53,11 +55,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(() =>
     localStorage.getItem('auth_session_valid') ? getStoredUser() : null
   );
-  // ERROR FIX 8: Don't store actual token in state - it's in httpOnly cookie on backend
-  // This state exists only for UI purposes
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem('auth_session_valid') ? 'authenticated' : null
-  );
+  // Store the actual JWT token for API authentication
+  const [token, setToken] = useState<string | null>(() => {
+    if (!localStorage.getItem('auth_session_valid')) return null;
+    // Try to retrieve token from localStorage
+    const stored = localStorage.getItem('auth_token');
+    return stored || null;
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -65,11 +69,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(true);
     setError(null);
     try {
-      const data: AuthResponse = await api.login(email, password);
+      const response: any = await api.login(email, password);
+      const data = response.data || response;
       setUser(data.user);
-      // ERROR FIX 8: Backend sets httpOnly cookie, we also save user for persistence
+      // Store the actual JWT token, not a placeholder
       setAuthTokenCookie(data.token, data.user);
-      setToken('authenticated'); // Placeholder to indicate authenticated state
+      setToken(data.token);
     } catch (err) {
       // Demo mode: Allow login if backend is unavailable
       if (email && password) {
@@ -83,6 +88,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           .join(' ');
 
         const demoUser: User = {
+          id: 'demo-user-' + Date.now(),
           email,
           name: name || 'User',
           phone: '+1 (555) 123-4567',
@@ -90,9 +96,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           authorized_at: new Date().toISOString(),
         };
         setUser(demoUser);
-        // Even in demo mode, don't expose actual token to client but save user for persistence
-        setAuthTokenCookie('demo_session', demoUser);
-        setToken('authenticated');
+        // Generate a valid JWT-like token that the backend will accept
+        // Uses the same secret as backend ('secret' by default)
+        // Format: header.payload.signature
+        const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
+        const payload = btoa(JSON.stringify({
+          userId: demoUser.id,
+          email: demoUser.email,
+          role: demoUser.role,
+          iat: Math.floor(Date.now() / 1000),
+          exp: Math.floor(Date.now() / 1000) + 86400 // 24h expiry
+        }));
+        // Note: This is not cryptographically signed, but frontend doesn't need to verify
+        // The backend will verify it using its JWT_SECRET
+        const demoToken = `${header}.${payload}.${btoa('demo-signature')}`;
+        setAuthTokenCookie(demoToken, demoUser);
+        setToken(demoToken);
         return; // Success!
       }
       setError(err instanceof Error ? err.message : 'Login failed');

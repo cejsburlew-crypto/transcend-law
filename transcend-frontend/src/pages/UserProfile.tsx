@@ -11,12 +11,15 @@ interface UserProfileProps {
 export const UserProfile: React.FC<UserProfileProps> = ({ onNavigateProvider, onBack }) => {
   const { user } = useAuth();
   const { t } = useLanguage();
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
 
   const [profile, setProfile] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
+    idVerified: false,
   });
 
   const [connections, setConnections] = useState<Array<{
@@ -66,6 +69,20 @@ export const UserProfile: React.FC<UserProfileProps> = ({ onNavigateProvider, on
     return (firstInitial + lastInitial).toUpperCase();
   };
 
+  const handleSaveProfile = () => {
+    localStorage.setItem('userPhone', profile.phone);
+    localStorage.setItem('userProfile', JSON.stringify(profile));
+    setIsEditMode(false);
+  };
+
+  const handleIDmeVerification = () => {
+    setIsVerifying(true);
+    setTimeout(() => {
+      setProfile({ ...profile, idVerified: true });
+      setIsVerifying(false);
+    }, 2000);
+  };
+
   return (
     <div className="user-profile-container">
       <div className="user-profile-card">
@@ -83,25 +100,107 @@ export const UserProfile: React.FC<UserProfileProps> = ({ onNavigateProvider, on
 
         {/* Account Info Section */}
         <div className="profile-section">
-          <h2 className="section-title">Account Information</h2>
-          <div className="info-grid">
-            <div className="info-item">
-              <label>Email</label>
-              <p>{profile.email}</p>
-            </div>
-            <div className="info-item">
-              <label>First Name</label>
-              <p>{profile.firstName}</p>
-            </div>
-            <div className="info-item">
-              <label>Last Name</label>
-              <p>{profile.lastName}</p>
-            </div>
-            {profile.phone && (
-              <div className="info-item">
-                <label>Phone</label>
-                <p>{profile.phone}</p>
+          <div className="section-header">
+            <h2 className="section-title">Account Information</h2>
+            <button
+              className={`edit-btn ${isEditMode ? 'cancel' : ''}`}
+              onClick={() => isEditMode ? setIsEditMode(false) : setIsEditMode(true)}
+            >
+              {isEditMode ? 'Cancel' : 'Edit'}
+            </button>
+          </div>
+
+          {isEditMode ? (
+            <div className="edit-form">
+              <div className="form-group">
+                <label>First Name</label>
+                <input
+                  type="text"
+                  value={profile.firstName}
+                  onChange={(e) => setProfile({ ...profile, firstName: e.target.value })}
+                />
               </div>
+              <div className="form-group">
+                <label>Last Name</label>
+                <input
+                  type="text"
+                  value={profile.lastName}
+                  onChange={(e) => setProfile({ ...profile, lastName: e.target.value })}
+                />
+              </div>
+              <div className="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  value={profile.email}
+                  disabled
+                  title="Email cannot be changed"
+                />
+              </div>
+              <div className="form-group">
+                <label>Phone</label>
+                <input
+                  type="tel"
+                  value={profile.phone}
+                  onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
+                  placeholder="+1 (555) 000-0000"
+                />
+              </div>
+              <div className="form-actions">
+                <button
+                  className="btn-save"
+                  onClick={handleSaveProfile}
+                >
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="info-grid">
+              <div className="info-item">
+                <label>Email</label>
+                <p>{profile.email}</p>
+              </div>
+              <div className="info-item">
+                <label>First Name</label>
+                <p>{profile.firstName}</p>
+              </div>
+              <div className="info-item">
+                <label>Last Name</label>
+                <p>{profile.lastName}</p>
+              </div>
+              {profile.phone && (
+                <div className="info-item">
+                  <label>Phone</label>
+                  <p>{profile.phone}</p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* ID.me Verification Section */}
+        <div className="profile-section verification-section">
+          <h2 className="section-title">Identity Verification</h2>
+          <div className="verification-card">
+            <div className="verification-status">
+              <div className={`status-badge ${profile.idVerified ? 'verified' : 'unverified'}`}>
+                {profile.idVerified ? '✓ Verified' : '○ Not Verified'}
+              </div>
+              <p className="verification-description">
+                {profile.idVerified
+                  ? 'Your identity has been verified through ID.me. You can now create and manage your service provider profile.'
+                  : 'Verify your identity with ID.me to become a service provider and connect with clients.'}
+              </p>
+            </div>
+            {!profile.idVerified && (
+              <button
+                className="btn-verify"
+                onClick={handleIDmeVerification}
+                disabled={isVerifying}
+              >
+                {isVerifying ? 'Verifying...' : 'Verify with ID.me'}
+              </button>
             )}
           </div>
         </div>

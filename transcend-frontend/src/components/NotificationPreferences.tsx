@@ -2,7 +2,12 @@
 // User interface for managing notification settings, quiet hours, batching, and fatigue controls
 
 import React, { useState, useEffect } from 'react';
-import { NotificationPreferences, NotificationFatigueService } from '../services/notificationFatigue';
+// Aliased: this file exports a React component named NotificationPreferences,
+// so importing a type of the same name is a merged-declaration conflict.
+import {
+  NotificationPreferencesConfig as NotificationPreferencesData,
+  NotificationFatigueService,
+} from '../services/notificationFatigue';
 import './NotificationPreferences.css';
 
 interface TabType {
@@ -19,9 +24,80 @@ const TABS: TabType[] = [
   { id: 'analytics', label: 'Analytics', icon: '📊' },
 ];
 
+// Formatting helpers.
+// These were attached via `NotificationPreferences.prototype` and called as
+// `this.getChannelIcon(...)` inside a function component - where `this` is
+// undefined, so every call threw at runtime. Now plain module functions.
+const getChannelIcon = (channel: string) => {
+  const icons: Record<string, string> = {
+    push: '📲',
+    email: '📧',
+    sms: '💬',
+    in_app: '🔔',
+  };
+  return icons[channel] || '📬';
+};
+
+const getCategoryIcon = (category: string) => {
+  const icons: Record<string, string> = {
+    case_update: '📋',
+    message: '💬',
+    payment: '💰',
+    deadline: '⏰',
+    system: '⚙️',
+    marketing: '📢',
+  };
+  return icons[category] || '📬';
+};
+
+const formatChannelName = (channel: string) => {
+  return channel.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase());
+};
+
+const formatCategoryName = (category: string) => {
+  return category.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
+};
+
+const formatMode = (mode: string) => {
+  const modes: Record<string, string> = {
+    digest: 'Daily Digest',
+    hide_low_priority: 'Hide Low Priority',
+    defer: 'Defer to Later',
+    disabled: 'Disabled',
+  };
+  return modes[mode] || mode;
+};
+
+const getCategoryDescription = (category: string) => {
+  const descriptions: Record<string, string> = {
+    case_update: 'Updates on your cases and legal matters',
+    message: 'Messages from attorneys and service providers',
+    payment: 'Payment confirmations and billing updates',
+    deadline: 'Important upcoming deadlines and reminders',
+    system: 'System maintenance and status updates',
+    marketing: 'Promotional content and announcements',
+  };
+  return descriptions[category] || 'Notification category';
+};
+
+const getFatigueClass = (score: number) => {
+  if (score < 25) return 'low';
+  if (score < 50) return 'medium';
+  if (score < 75) return 'high';
+  return 'critical';
+};
+
+const getFatigueLevel = (score: number) => {
+  if (score < 25) return 'Low - You\'re managing notifications well';
+  if (score < 50) return 'Medium - Consider adjusting your preferences';
+  if (score < 75) return 'High - You may be receiving too many notifications';
+  return 'Critical - Notifications are significantly reduced';
+};
+
+
 export const NotificationPreferences: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType['id']>('channels');
-  const [preferences, setPreferences] = useState<NotificationPreferences | null>(null);
+  const [preferences, setPreferences] = useState<NotificationPreferencesData | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [savedMessage, setSavedMessage] = useState('');
@@ -29,8 +105,8 @@ export const NotificationPreferences: React.FC = () => {
   const [metrics, setMetrics] = useState<any>(null);
 
   useEffect(() => {
-    loadPreferences();
-    loadMetrics();
+    void loadPreferences();
+    void loadMetrics();
   }, []);
 
   const loadPreferences = async () => {
@@ -127,16 +203,16 @@ export const NotificationPreferences: React.FC = () => {
     try {
       const userId = (window as any).currentUserId;
       if (category) {
-        if (!preferences?.mutedCategories.includes(category as any)) {
+        if (!preferences?.mutedCategories.includes(category)) {
           setPreferences({
-            ...preferences!,
-            mutedCategories: [...(preferences?.mutedCategories || []), category as any],
+            ...preferences,
+            mutedCategories: [...(preferences?.mutedCategories || []), category],
           });
         }
       } else {
         await NotificationFatigueService.muteNotifications(userId, durationMinutes);
         setPreferences({
-          ...preferences!,
+          ...preferences,
           mutedUntil: new Date(Date.now() + durationMinutes * 60 * 1000),
         });
       }
@@ -153,7 +229,7 @@ export const NotificationPreferences: React.FC = () => {
       const userId = (window as any).currentUserId;
       await NotificationFatigueService.snoozeNotifications(userId, durationMinutes);
       setPreferences({
-        ...preferences!,
+        ...preferences,
         snoozedUntil: new Date(Date.now() + durationMinutes * 60 * 1000),
       });
       setSavedMessage(`Notifications snoozed for ${durationMinutes} minutes`);
@@ -192,23 +268,23 @@ export const NotificationPreferences: React.FC = () => {
             </button>
             {muteDropdown && (
               <div className="dropdown-menu">
-                <button onClick={() => handleMute(15)}>15 minutes</button>
-                <button onClick={() => handleMute(60)}>1 hour</button>
-                <button onClick={() => handleMute(480)}>8 hours</button>
-                <button onClick={() => handleMute(1440)}>1 day</button>
+                <button onClick={() => void handleMute(15)}>15 minutes</button>
+                <button onClick={() => void handleMute(60)}>1 hour</button>
+                <button onClick={() => void handleMute(480)}>8 hours</button>
+                <button onClick={() => void handleMute(1440)}>1 day</button>
               </div>
             )}
           </div>
 
           <button
             className={`quick-action-btn ${isSnoozed ? 'active' : ''}`}
-            onClick={() => handleSnooze(120)}
+            onClick={() => void handleSnooze(120)}
             title="Snooze notifications"
           >
             ⏸️ Snooze 2h
           </button>
 
-          <button className="quick-action-btn" onClick={loadMetrics} title="Refresh metrics">
+          <button className="quick-action-btn" onClick={() => void loadMetrics()} title="Refresh metrics">
             🔄 Refresh
           </button>
         </div>
@@ -253,12 +329,12 @@ export const NotificationPreferences: React.FC = () => {
               {Object.entries(preferences.channels).map(([channel, config]) => (
                 <div key={channel} className="channel-card">
                   <div className="channel-header">
-                    <h3>{this.getChannelIcon(channel as any)} {this.formatChannelName(channel)}</h3>
+                    <h3>{getChannelIcon(channel as any)} {formatChannelName(channel)}</h3>
                     <label className="toggle">
                       <input
                         type="checkbox"
                         checked={config.enabled}
-                        onChange={(e) => handleChannelChange(channel as any, 'enabled', e.target.checked)}
+                        onChange={(e) => void handleChannelChange(channel as any, 'enabled', e.target.checked)}
                       />
                       <span className="toggle-switch"></span>
                     </label>
@@ -274,7 +350,7 @@ export const NotificationPreferences: React.FC = () => {
                             min="1"
                             max="100"
                             value={config.dailyLimit || 20}
-                            onChange={(e) => handleChannelChange(channel as any, 'dailyLimit', parseInt(e.target.value))}
+                            onChange={(e) => void handleChannelChange(channel as any, 'dailyLimit', parseInt(e.target.value))}
                           />
                           <span className="setting-help">notifications/day</span>
                         </label>
@@ -321,7 +397,7 @@ export const NotificationPreferences: React.FC = () => {
                           })
                         }
                       />
-                      <span>{this.formatMode(mode)}</span>
+                      <span>{formatMode(mode)}</span>
                     </label>
                   ))}
                 </div>
@@ -341,14 +417,14 @@ export const NotificationPreferences: React.FC = () => {
                 <div key={category} className="category-item">
                   <div className="category-header">
                     <div className="category-info">
-                      <h3>{this.getCategoryIcon(category)} {this.formatCategoryName(category)}</h3>
-                      <p className="category-description">{this.getCategoryDescription(category)}</p>
+                      <h3>{getCategoryIcon(category)} {formatCategoryName(category)}</h3>
+                      <p className="category-description">{getCategoryDescription(category)}</p>
                     </div>
                     <label className="toggle">
                       <input
                         type="checkbox"
                         checked={config?.enabled || false}
-                        onChange={(e) => handleCategoryChange(category, 'enabled', e.target.checked)}
+                        onChange={(e) => void handleCategoryChange(category, 'enabled', e.target.checked)}
                       />
                       <span className="toggle-switch"></span>
                     </label>
@@ -360,7 +436,7 @@ export const NotificationPreferences: React.FC = () => {
                         <label>Minimum Priority:</label>
                         <select
                           value={config.minPriority || 'normal'}
-                          onChange={(e) => handleCategoryChange(category, 'minPriority', e.target.value)}
+                          onChange={(e) => void handleCategoryChange(category, 'minPriority', e.target.value)}
                         >
                           <option value="urgent">Urgent</option>
                           <option value="high">High</option>
@@ -386,7 +462,7 @@ export const NotificationPreferences: React.FC = () => {
                                   handleCategoryChange(category, 'channels', updated);
                                 }}
                               />
-                              <span>{this.formatChannelName(ch)}</span>
+                              <span>{formatChannelName(ch)}</span>
                             </label>
                           ))}
                         </div>
@@ -403,7 +479,7 @@ export const NotificationPreferences: React.FC = () => {
                 {preferences.mutedCategories.length > 0 ? (
                   preferences.mutedCategories.map((cat) => (
                     <div key={cat} className="muted-tag">
-                      <span>{this.getCategoryIcon(cat)} {this.formatCategoryName(cat)}</span>
+                      <span>{getCategoryIcon(cat)} {formatCategoryName(cat)}</span>
                       <button
                         className="remove-btn"
                         onClick={() =>
@@ -437,7 +513,7 @@ export const NotificationPreferences: React.FC = () => {
                   <input
                     type="checkbox"
                     checked={preferences.quietHours.enabled}
-                    onChange={(e) => handleQuietHoursChange('enabled', e.target.checked)}
+                    onChange={(e) => void handleQuietHoursChange('enabled', e.target.checked)}
                   />
                   <span>Enable Quiet Hours</span>
                 </label>
@@ -451,7 +527,7 @@ export const NotificationPreferences: React.FC = () => {
                       <input
                         type="time"
                         value={preferences.quietHours.startTime}
-                        onChange={(e) => handleQuietHoursChange('startTime', e.target.value)}
+                        onChange={(e) => void handleQuietHoursChange('startTime', e.target.value)}
                       />
                     </div>
 
@@ -460,7 +536,7 @@ export const NotificationPreferences: React.FC = () => {
                       <input
                         type="time"
                         value={preferences.quietHours.endTime}
-                        onChange={(e) => handleQuietHoursChange('endTime', e.target.value)}
+                        onChange={(e) => void handleQuietHoursChange('endTime', e.target.value)}
                       />
                     </div>
                   </div>
@@ -471,7 +547,7 @@ export const NotificationPreferences: React.FC = () => {
                       type="text"
                       placeholder="America/Los_Angeles"
                       value={preferences.quietHours.timezone}
-                      onChange={(e) => handleQuietHoursChange('timezone', e.target.value)}
+                      onChange={(e) => void handleQuietHoursChange('timezone', e.target.value)}
                     />
                   </div>
 
@@ -480,7 +556,7 @@ export const NotificationPreferences: React.FC = () => {
                       <input
                         type="checkbox"
                         checked={preferences.quietHours.allowUrgentDuringQuietHours}
-                        onChange={(e) => handleQuietHoursChange('allowUrgentDuringQuietHours', e.target.checked)}
+                        onChange={(e) => void handleQuietHoursChange('allowUrgentDuringQuietHours', e.target.checked)}
                       />
                       <span>Allow urgent notifications during quiet hours</span>
                     </label>
@@ -533,7 +609,7 @@ export const NotificationPreferences: React.FC = () => {
                         max="240"
                         value={preferences.batchingPreferences.batchWindowMinutes}
                         onChange={(e) =>
-                          handleBatchingChange('batchWindowMinutes', parseInt(e.target.value))
+                          void handleBatchingChange('batchWindowMinutes', parseInt(e.target.value))
                         }
                       />
                       <span className="setting-help">minutes</span>
@@ -550,7 +626,7 @@ export const NotificationPreferences: React.FC = () => {
                         max="10"
                         value={preferences.batchingPreferences.minNotificationsToTriggerBatch}
                         onChange={(e) =>
-                          handleBatchingChange('minNotificationsToTriggerBatch', parseInt(e.target.value))
+                          void handleBatchingChange('minNotificationsToTriggerBatch', parseInt(e.target.value))
                         }
                       />
                       <span className="setting-help">notifications</span>
@@ -604,10 +680,10 @@ export const NotificationPreferences: React.FC = () => {
 
                   <div className="metric-card">
                     <div className="metric-label">Fatigue Score</div>
-                    <div className={`metric-value ${this.getFatigueClass(metrics.fatigueScore)}`}>
+                    <div className={`metric-value ${getFatigueClass(metrics.fatigueScore)}`}>
                       {metrics.fatigueScore}
                     </div>
-                    <div className="metric-description">{this.getFatigueLevel(metrics.fatigueScore)}</div>
+                    <div className="metric-description">{getFatigueLevel(metrics.fatigueScore)}</div>
                   </div>
 
                   <div className="metric-card">
@@ -644,82 +720,15 @@ export const NotificationPreferences: React.FC = () => {
 
       {/* Save Button */}
       <div className="notification-prefs-footer">
-        <button className="btn-cancel" onClick={() => loadPreferences()} disabled={saving}>
+        <button className="btn-cancel" onClick={() => void loadPreferences()} disabled={saving}>
           Cancel
         </button>
-        <button className="btn-save" onClick={savePreferences} disabled={saving}>
+        <button className="btn-save" onClick={() => void savePreferences()} disabled={saving}>
           {saving ? 'Saving...' : 'Save Preferences'}
         </button>
       </div>
     </div>
   );
-};
-
-// Helper methods for formatting
-NotificationPreferences.prototype.getChannelIcon = (channel: string) => {
-  const icons: Record<string, string> = {
-    push: '📲',
-    email: '📧',
-    sms: '💬',
-    in_app: '🔔',
-  };
-  return icons[channel] || '📬';
-};
-
-NotificationPreferences.prototype.getCategoryIcon = (category: string) => {
-  const icons: Record<string, string> = {
-    case_update: '📋',
-    message: '💬',
-    payment: '💰',
-    deadline: '⏰',
-    system: '⚙️',
-    marketing: '📢',
-  };
-  return icons[category] || '📬';
-};
-
-NotificationPreferences.prototype.formatChannelName = (channel: string) => {
-  return channel.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase());
-};
-
-NotificationPreferences.prototype.formatCategoryName = (category: string) => {
-  return category.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
-};
-
-NotificationPreferences.prototype.formatMode = (mode: string) => {
-  const modes: Record<string, string> = {
-    digest: 'Daily Digest',
-    hide_low_priority: 'Hide Low Priority',
-    defer: 'Defer to Later',
-    disabled: 'Disabled',
-  };
-  return modes[mode] || mode;
-};
-
-NotificationPreferences.prototype.getCategoryDescription = (category: string) => {
-  const descriptions: Record<string, string> = {
-    case_update: 'Updates on your cases and legal matters',
-    message: 'Messages from attorneys and service providers',
-    payment: 'Payment confirmations and billing updates',
-    deadline: 'Important upcoming deadlines and reminders',
-    system: 'System maintenance and status updates',
-    marketing: 'Promotional content and announcements',
-  };
-  return descriptions[category] || 'Notification category';
-};
-
-NotificationPreferences.prototype.getFatigueClass = (score: number) => {
-  if (score < 25) return 'low';
-  if (score < 50) return 'medium';
-  if (score < 75) return 'high';
-  return 'critical';
-};
-
-NotificationPreferences.prototype.getFatigueLevel = (score: number) => {
-  if (score < 25) return 'Low - You\'re managing notifications well';
-  if (score < 50) return 'Medium - Consider adjusting your preferences';
-  if (score < 75) return 'High - You may be receiving too many notifications';
-  return 'Critical - Notifications are significantly reduced';
 };
 
 export default NotificationPreferences;

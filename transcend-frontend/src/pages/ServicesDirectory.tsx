@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { generateMockNotaries, getNotaryCountForState, NOTARY_COUNTS } from '../data/notaries-loader';
 import { ServiceIcon } from '../components/ServiceIcon';
 import { useLanguage } from '../context/LanguageContext';
+import { useAuth } from '../context/AuthContext';
 import './ServicesDirectory.css';
 
 interface Professional {
@@ -84,10 +85,52 @@ const SPEC_KEYS: Record<string, string> = {
   'Legal Documents': 'legalDocuments',
   'Legal Research': 'legalResearch',
   'Compliance': 'compliance',
+  'FAFSA Assistance': 'fafsaAssistance',
+  'Bookkeeping': 'bookkeeping',
+  'Payroll Services': 'payrollServices',
+  'Tax Preparation': 'taxPreparation',
+  'Cover Letters': 'coverLetters',
+  'Resume Writing': 'resumeWriting',
+  'Business Formation': 'businessFormation',
+  'Grant Writing': 'grantWriting',
 };
 
 // Max notaries rendered at once in the directory preview.
 const NOTARY_PREVIEW_LIMIT = 200;
+
+// Law-specific intake form configurations
+const LAW_INTAKE_CONFIGS: Record<string, { title: string; subtitle: string; questions: string[] }> = {
+  'Family Law': {
+    title: 'Family Law Intake Form',
+    subtitle: 'Tell us about your family matter',
+    questions: ['Matter type (divorce, custody, child support, etc.)', 'Spouse name (if applicable)', 'Number of children and their ages', 'Marriage date', 'Separation date (if applicable)', 'Major assets or property involved', 'Preferred custody arrangement', 'Timeline and budget'],
+  },
+  'Criminal Law': {
+    title: 'Criminal Law Intake Form',
+    subtitle: 'Tell us about your criminal matter',
+    questions: ['Type of charge', 'Specific charges', 'Court location', 'Case number', 'Arrest date', 'Bail status and amount', 'Immediate needs or concerns'],
+  },
+  'Employment Law': {
+    title: 'Employment Law Intake Form',
+    subtitle: 'Tell us about your employment matter',
+    questions: ['Your employer name', 'Your position and tenure', 'Issue type (wrongful termination, discrimination, harassment, wage dispute, etc.)', 'When did the issue occur?', 'Relief sought (compensation, reinstatement, etc.)', 'Timeline and budget'],
+  },
+  'Estate Planning': {
+    title: 'Estate Planning Intake Form',
+    subtitle: 'Tell us about your estate planning needs',
+    questions: ['Documents needed (Will, Trust, Power of Attorney, Healthcare Directive, HIPAA)', 'Family structure and heirs', 'Assets and properties (real estate, investments, etc.)', 'States/countries where you own property', 'Preferred executor or trustee', 'Guardian preferences for minor children'],
+  },
+  'Personal Injury': {
+    title: 'Personal Injury Intake Form',
+    subtitle: 'Tell us about your injury claim',
+    questions: ['Type of accident (car accident, slip & fall, workplace, etc.)', 'Date and location of accident', 'Description of what happened', 'Injuries sustained', 'Medical treatment received', 'Medical expenses to date', 'Liability information'],
+  },
+  'Real Estate': {
+    title: 'Real Estate Intake Form',
+    subtitle: 'Tell us about your real estate matter',
+    questions: ['Transaction type (purchase, sale, lease, dispute)', 'Property address and type', 'Purchase/sale price (if applicable)', 'Square footage and lot size', 'Specific concerns or issues', 'Timeline for resolution', 'Budget constraints'],
+  },
+};
 
 interface IntakeFormData {
   name: string;
@@ -96,6 +139,16 @@ interface IntakeFormData {
   caseDescription: string;
   specialization: string;
   preferredTier: string;
+  [key: string]: string;
+  documentNumber?: string;
+}
+
+interface SavedIntakeForm extends IntakeFormData {
+  id: string;
+  documentNumber: string;
+  createdAt: string;
+  service: string;
+  state: string;
 }
 
 const MOCK_ATTORNEYS: Record<string, Professional[]> = {
@@ -158,6 +211,7 @@ const MOCK_ATTORNEYS: Record<string, Professional[]> = {
 
 export const ServicesDirectory: React.FC = () => {
   const { t } = useLanguage();
+  const { user } = useAuth();
   const [selectedState, setSelectedState] = useState('CA');
   const [selectedCounty, setSelectedCounty] = useState('');
   const [selectedSpecializations, setSelectedSpecializations] = useState<string[]>([]);
@@ -168,7 +222,7 @@ export const ServicesDirectory: React.FC = () => {
   const [showNotaries, setShowNotaries] = useState(false);
   const [serviceIsAttorney, setServiceIsAttorney] = useState(false);
   const [selectedService, setSelectedService] = useState<string | null>(null);
-  const [intakeFormType, setIntakeFormType] = useState<'service' | 'attorney' | 'notary' | 'professional' | null>(null);
+  const [intakeFormType, setIntakeFormType] = useState<'service' | 'attorney' | 'notary' | 'professional' | 'general' | null>(null);
   const [formData, setFormData] = useState<IntakeFormData>({
     name: '',
     email: '',
@@ -177,6 +231,51 @@ export const ServicesDirectory: React.FC = () => {
     specialization: '',
     preferredTier: '',
   });
+  const [savedIntakeData, setSavedIntakeData] = useState<IntakeFormData | null>(null);
+  const [selectedFirms, setSelectedFirms] = useState<string[]>([]);
+  const [intakeStage, setIntakeStage] = useState<'form' | 'firms' | 'review'>('form');
+  const [savedIntakeForms, setSavedIntakeForms] = useState<SavedIntakeForm[]>(() => {
+    const saved = localStorage.getItem('transcendIntakeForms');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [collapsedCategories, setCollapsedCategories] = useState<Record<string, boolean>>({});
+
+  const toggleCategory = (categoryId: string) => {
+    setCollapsedCategories(prev => ({
+      ...prev,
+      [categoryId]: !prev[categoryId],
+    }));
+  };
+
+  // Persist intake forms to localStorage
+  useEffect(() => {
+    localStorage.setItem('transcendIntakeForms', JSON.stringify(savedIntakeForms));
+  }, [savedIntakeForms]);
+
+  // Generate unique document number
+  const generateDocumentNumber = (): string => {
+    const timestamp = Date.now().toString(36).toUpperCase();
+    const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+    return `TLP-${timestamp}-${random}`;
+  };
+
+  // Auto-fill related questions when "Documents needed" field is filled
+  const handleDocumentsNeededChange = (value: string) => {
+    const newFormData = { ...formData, 'Documents needed (Will, Trust, Power of Attorney, Healthcare Directive, HIPAA)': value };
+
+    if (selectedService === 'Estate Planning' && value) {
+      // Auto-fill family structure and assets fields based on documents selected
+      const documentsSelected = value.toLowerCase();
+      if (documentsSelected.includes('trust') || documentsSelected.includes('will')) {
+        newFormData['Family structure and heirs'] = newFormData['Family structure and heirs'] || 'Specified in documents';
+      }
+      if (documentsSelected.includes('power of attorney') || documentsSelected.includes('healthcare')) {
+        newFormData['States/countries where you own property'] = newFormData['States/countries where you own property'] || 'To be determined';
+      }
+    }
+
+    setFormData(newFormData);
+  };
 
   // Grouped by who delivers the service. `attorney: false` categories are
   // non-attorney providers, so their copy and CTAs never say "lawyer".
@@ -222,6 +321,22 @@ export const ServicesDirectory: React.FC = () => {
       icon: 'documents',
       attorney: false,
       specializations: ['Legal Research', 'Compliance'],
+    },
+    {
+      id: 'business-services',
+      tKey: 'businessServices',
+      icon: 'storefront',
+      attorney: false,
+      specializations: [
+        'Bookkeeping',
+        'Business Formation',
+        'Cover Letters',
+        'FAFSA Assistance',
+        'Grant Writing',
+        'Payroll Services',
+        'Resume Writing',
+        'Tax Preparation',
+      ],
     },
   ] as const;
 
@@ -278,6 +393,18 @@ export const ServicesDirectory: React.FC = () => {
 
     setFilteredProfessionals(filtered);
   }, [professionals, selectedCounty, selectedSpecializations]);
+
+  // Pre-fill form with user profile data when intake form opens
+  useEffect(() => {
+    if (intakeFormType === 'service' && user) {
+      setFormData(prev => ({
+        ...prev,
+        name: user.name || '',
+        email: user.email || '',
+        phone: user.phone || '',
+      }));
+    }
+  }, [intakeFormType, user]);
 
   // Get unique values for filter dropdowns
   const counties = [...new Set(professionals.filter((p: any) => p.county).map((p: any) => p.county))].sort();
@@ -347,6 +474,14 @@ export const ServicesDirectory: React.FC = () => {
     'Legal Research': { icon: 'search', description: 'Case law and statutory research' },
     'Document Preparation': { icon: 'documentPen', description: 'Prepare and file legal documents' },
     'Compliance': { icon: 'clipboardCheck', description: 'Regulatory compliance' },
+    'FAFSA Assistance': { icon: 'graduationCap', description: 'Student aid applications' },
+    'Bookkeeping': { icon: 'ledger', description: 'Ledgers, reconciliation, reporting' },
+    'Payroll Services': { icon: 'banknote', description: 'Payroll runs and filings' },
+    'Tax Preparation': { icon: 'receipt', description: 'Individual and business returns' },
+    'Cover Letters': { icon: 'coverLetter', description: 'Tailored cover letters' },
+    'Resume Writing': { icon: 'resume', description: 'Resume and CV preparation' },
+    'Business Formation': { icon: 'storefront', description: 'LLC and corporation filings' },
+    'Grant Writing': { icon: 'grantDocument', description: 'Grant research and applications' },
   };
 
   const toggleSpecialization = (spec: string) => {
@@ -390,121 +525,128 @@ export const ServicesDirectory: React.FC = () => {
         <p>{t('servicesDirectory.subtitle')}</p>
       </div>
 
-      {/* GLOBAL FILTERS */}
-      <div className="filters-bar">
-        <div className="filter-group">
-          <label htmlFor="state-select">{t('servicesDirectory.state')}</label>
-          <select
-            id="state-select"
-            value={selectedState}
-            onChange={(e) => {
-              setSelectedState(e.target.value);
-              setSelectedCounty('');
-            }}
-            className="filter-select"
-          >
-            {states.map((state) => (
-              <option key={state.code} value={state.code}>
-                {state.name}
-              </option>
-            ))}
-          </select>
-          <span className="filter-badge">{t('servicesDirectory.notariesAvailable', { count: getNotaryCountForState(selectedState).toLocaleString() })}</span>
-        </div>
 
-        {counties.length > 0 && (
-          <div className="filter-group">
-            <label htmlFor="county-select">{t('servicesDirectory.county')}</label>
-            <select
-              id="county-select"
-              value={selectedCounty}
-              onChange={(e) => setSelectedCounty(e.target.value)}
-              className="filter-select"
-            >
-              <option value="">{t('servicesDirectory.allCounties', { count: String(counties.length) })}</option>
-              {counties.map((county) => (
-                <option key={county} value={county}>
-                  {county}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-
-        <div className="filter-group checkbox-group">
-          <label>
-            <input
-              type="checkbox"
-              checked={showNotaries}
-              onChange={(e) => setShowNotaries(e.target.checked)}
-              className="filter-checkbox"
-            />
-            {t('servicesDirectory.notaryToggle')}
-          </label>
-        </div>
-      </div>
-
-      {/* BACK BUTTON — shows when a service is selected */}
-      {selectedSpecializations.length > 0 && (
+      {/* BACK BUTTON — shows when a service is selected OR when attorney service is active */}
+      {(selectedSpecializations.length > 0 || (serviceIsAttorney && selectedService)) && (
         <div className="services-back-button-container">
           <button
             className="services-back-button"
-            onClick={() => setSelectedSpecializations([])}
+            onClick={() => {
+              setSelectedSpecializations([]);
+              setSelectedService(null);
+              setServiceIsAttorney(false);
+              setIntakeFormType(null);
+            }}
           >
             ← {t('common.back')}
           </button>
         </div>
       )}
 
-      {/* ONLY SHOW SPECIALIZATION CARDS IF NO SELECTION MADE */}
-      {selectedSpecializations.length === 0 && categories.map((category) => (
+      {/* ATTORNEY SERVICE SELECTION - SHOW SERVICE WITH INTAKE FORM AND STATE SELECTOR */}
+      {serviceIsAttorney && selectedService && (
+        <div className="attorney-selection-section">
+          <div className="service-header">
+            <h1 className="service-title">{specName(selectedService)}</h1>
+            <select
+              id="service-state-select"
+              value={selectedState}
+              onChange={(e) => setSelectedState(e.target.value)}
+              className="state-selector-inline"
+            >
+              {states.map((state) => (
+                <option key={state.code} value={state.code}>
+                  {state.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <button
+            className="service-intake-form-btn"
+            onClick={() => {
+              setIntakeFormType('service');
+              setIntakeStage('form');
+            }}
+          >
+            Start Intake Form (Click Here)
+          </button>
+
+          <div className="attorney-grid">
+            {filteredProfessionals
+              .filter(p => p.type === 'attorney' && p.specializations?.includes(selectedService))
+              .sort((a, b) => {
+                const tierOrder = { tier1: 0, tier2: 1, tier3: 2 };
+                return (tierOrder[a.tier] || 2) - (tierOrder[b.tier] || 2);
+              })
+              .map((attorney) => (
+                <div key={attorney.id} className={`attorney-card tier-${attorney.tier}`}>
+                  <div className="attorney-card-header">
+                    <h3>{attorney.name}</h3>
+                    <span className={`tier-badge ${attorney.tier}`}>{attorney.tier === 'tier1' ? 'Premium' : attorney.tier === 'tier2' ? 'Standard' : 'Basic'}</span>
+                  </div>
+                  <p className="attorney-specialization">{attorney.specializations?.join(', ')}</p>
+                  <div className="attorney-stats">
+                    <span className="rating">⭐ {attorney.rating} ({attorney.reviews} reviews)</span>
+                    <span className="experience">{attorney.yearsExperience} years</span>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
+
+      {/* ONLY SHOW SPECIALIZATION CARDS IF NO SELECTION MADE AND NO ATTORNEY SERVICE SELECTED */}
+      {selectedSpecializations.length === 0 && !serviceIsAttorney && !selectedService && categories.map((category) => (
         <div key={category.id} className="category-section">
-          <div className="category-heading">
-            <h2 className="category-header">
-              <ServiceIcon name={category.icon} className="category-icon" />
-              {t(`servicesDirectory.categories.${category.tKey}.name`)}
-              <span className={`provider-type-badge ${category.attorney ? 'is-attorney' : ''}`}>
-                {category.attorney ? t('servicesDirectory.attorneyBadge') : t('servicesDirectory.nonAttorneyBadge')}
-              </span>
-            </h2>
-            <p className="category-subtitle">{t(`servicesDirectory.categories.${category.tKey}.subtitle`)}</p>
+          <div className="category-heading" onClick={() => toggleCategory(category.id)} style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div style={{ flex: 1 }}>
+              <h2 className="category-header">
+                <ServiceIcon name={category.icon} className="category-icon" />
+                {t(`servicesDirectory.categories.${category.tKey}.name`)}
+                <span className={`provider-type-badge ${category.attorney ? 'is-attorney' : ''}`}>
+                  {category.attorney ? t('servicesDirectory.attorneyBadge') : t('servicesDirectory.nonAttorneyBadge')}
+                </span>
+              </h2>
+              <p className="category-subtitle">{t(`servicesDirectory.categories.${category.tKey}.subtitle`)}</p>
+            </div>
+            <span style={{ fontSize: '20px', marginTop: '4px', minWidth: '24px', textAlign: 'center' }}>{collapsedCategories[category.id] ? '▶' : '▼'}</span>
           </div>
 
           {/* SPECIALIZATION CARDS FOR THIS CATEGORY - ALPHABETICAL */}
+          {!collapsedCategories[category.id] && (
           <div className="specialization-cards">
             <div className="specialization-grid">
               {[...category.specializations]
                 .sort((a, b) => specName(a).localeCompare(specName(b)))
                 .map((spec) => {
                 const details = specializationDetails[spec] || { icon: 'scales', description: '' };
-                const count = professionals.filter(p => p.specializations && p.specializations.includes(spec)).length;
+                // Get total count across all states (for initial card display)
+                const totalCount = Object.values(MOCK_ATTORNEYS).flat()
+                  .filter(p => p.specializations && p.specializations.includes(spec)).length;
                 return (
-                  <div key={spec} className="spec-card-wrapper">
-                    <button
-                      className={`spec-card ${selectedSpecializations.includes(spec) ? 'active' : ''}`}
-                      onClick={() => toggleSpecialization(spec)}
-                    >
+                  <div
+                    key={spec}
+                    className="spec-card-wrapper"
+                    onClick={() => {
+                      setSelectedService(spec);
+                      setServiceIsAttorney(category.attorney);
+                      setFormData({...formData, specialization: spec});
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <div className="spec-card">
                       <ServiceIcon name={details.icon} className="spec-icon" />
                       <span className="spec-name">{specName(spec)}</span>
                       <span className="spec-description">{specDescription(spec)}</span>
-                      <span className="spec-count">{t('servicesDirectory.available', { count: String(count) })}</span>
-                    </button>
-                    <button
-                      className="intake-btn"
-                      onClick={() => {
-                        setSelectedService(spec);
-                        setServiceIsAttorney(category.attorney);
-                        setIntakeFormType('service');
-                        setFormData({...formData, specialization: spec});
-                      }}
-                    >
-                      {t(`servicesDirectory.categories.${category.tKey}.cta`)}
-                    </button>
+                      <span className="spec-count">{t('servicesDirectory.available', { count: String(totalCount) })}</span>
+                    </div>
                   </div>
                 );
               })}
             </div>
           </div>
+          )}
 
           {/* PROFESSIONAL CARDS FOR THIS CATEGORY — only show when a specialization is selected */}
           {selectedSpecializations.length > 0 && categoryProfessionals(category.specializations).length > 0 && (
@@ -550,64 +692,222 @@ export const ServicesDirectory: React.FC = () => {
         </div>
       ))}
 
-      <div className="services-footer">
-        <h2>{t('servicesDirectory.aboutTitle')}</h2>
-        <p>{t('servicesDirectory.aboutBody')}</p>
-      </div>
+      {!serviceIsAttorney && !selectedService && (
+        <div className="services-footer">
+          <h2>{t('servicesDirectory.aboutTitle')}</h2>
+          <p>{t('servicesDirectory.aboutBody')}</p>
+        </div>
+      )}
 
-      {/* SERVICE INTAKE FORM */}
-      {intakeFormType === 'service' && selectedService && (
+
+      {/* SERVICE INTAKE FORM - LAW SPECIFIC */}
+      {intakeFormType === 'service' && selectedService && intakeStage === 'form' && serviceIsAttorney && (
         <div className="intake-form-modal">
-          <div className="intake-form-overlay" onClick={() => { setIntakeFormType(null); setSelectedService(null); }}></div>
+          <div className="intake-form-overlay" onClick={() => { setIntakeFormType(null); setSelectedService(null); setIntakeStage('form'); }}></div>
           <div className="intake-form-container">
-            <button className="close-btn" onClick={() => { setIntakeFormType(null); setSelectedService(null); }}>✕</button>
-            <h2><ServiceIcon name="clipboardCheck" className="modal-icon" /> {t('servicesDirectory.intake.heading', { service: specName(selectedService) })}</h2>
-            <p className="form-subtitle">
-              {serviceIsAttorney
-                ? t('servicesDirectory.intake.attorneySubtitle', { service: specName(selectedService) })
-                : t('servicesDirectory.intake.providerSubtitle', { service: specName(selectedService) })}
-            </p>
+            <button className="close-btn" onClick={() => { setIntakeFormType(null); setSelectedService(null); setIntakeStage('form'); }}>✕</button>
+            <h2><ServiceIcon name="clipboardCheck" className="modal-icon" /> {LAW_INTAKE_CONFIGS[selectedService]?.title || `${specName(selectedService)} Intake Form`}</h2>
+            <p className="form-subtitle">{LAW_INTAKE_CONFIGS[selectedService]?.subtitle || `Tell us about your ${specName(selectedService).toLowerCase()} matter`}</p>
 
             <form onSubmit={(e) => {
               e.preventDefault();
-              alert(serviceIsAttorney
-                ? t('servicesDirectory.intake.attorneySuccess', { service: specName(selectedService) })
-                : t('servicesDirectory.intake.providerSuccess', { service: specName(selectedService) }));
-              setIntakeFormType(null);
-              setSelectedService(null);
-              setFormData({ name: '', email: '', phone: '', caseDescription: '', specialization: '', preferredTier: '' });
+              const documentNumber = generateDocumentNumber();
+              const completeFormData = { ...formData, documentNumber };
+              setSavedIntakeData(completeFormData);
+
+              // Save to local list
+              const newSavedForm: SavedIntakeForm = {
+                ...completeFormData,
+                id: documentNumber,
+                createdAt: new Date().toISOString(),
+                service: selectedService || '',
+                state: selectedState,
+              };
+              setSavedIntakeForms(prev => [...prev, newSavedForm]);
+
+              // Move to review stage
+              setIntakeStage('review');
+              setSelectedFirms([]);
             }}>
               <div className="form-group">
                 <label>{t('servicesDirectory.intake.fullName')}</label>
-                <input type="text" placeholder={t('servicesDirectory.intake.fullNamePlaceholder')} value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
+                <input type="text" value={formData.name} disabled style={{ backgroundColor: '#f3f4f6', cursor: 'not-allowed' }} />
               </div>
               <div className="form-row">
                 <div className="form-group">
                   <label>{t('servicesDirectory.intake.email')}</label>
-                  <input type="email" placeholder="john@example.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} required />
+                  <input type="email" value={formData.email} disabled style={{ backgroundColor: '#f3f4f6', cursor: 'not-allowed' }} />
                 </div>
                 <div className="form-group">
                   <label>{t('servicesDirectory.intake.phone')}</label>
-                  <input type="tel" placeholder="(555) 123-4567" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} required />
+                  <input type="tel" value={formData.phone} disabled style={{ backgroundColor: '#f3f4f6', cursor: 'not-allowed' }} />
                 </div>
               </div>
-              <div className="form-group">
-                <label>{serviceIsAttorney ? t('servicesDirectory.intake.attorneyDescLabel') : t('servicesDirectory.intake.providerDescLabel')}</label>
-                <textarea
-                  placeholder={serviceIsAttorney
-                    ? t('servicesDirectory.intake.attorneyDescPlaceholder')
-                    : t('servicesDirectory.intake.providerDescPlaceholder', { service: specName(selectedService) })}
-                  value={formData.caseDescription}
-                  onChange={(e) => setFormData({...formData, caseDescription: e.target.value})}
-                  rows={6}
-                  required
-                ></textarea>
-              </div>
+
+              {LAW_INTAKE_CONFIGS[selectedService]?.questions ? (
+                LAW_INTAKE_CONFIGS[selectedService].questions.map((question, idx) => {
+                  const fieldKey = question;
+                  const fieldValue = (formData as any)[fieldKey] || '';
+                  const isDocumentsNeededField = question.includes('Documents needed');
+
+                  return (
+                    <div key={idx} className="form-group">
+                      <label>{question}</label>
+                      <textarea
+                        placeholder={`Enter details about ${question.toLowerCase()}...`}
+                        value={fieldValue}
+                        onChange={(e) => {
+                          if (isDocumentsNeededField) {
+                            handleDocumentsNeededChange(e.target.value);
+                          } else {
+                            setFormData({...(formData as any), [fieldKey]: e.target.value});
+                          }
+                        }}
+                        rows={3}
+                        required={idx === LAW_INTAKE_CONFIGS[selectedService].questions.length - 1}
+                      ></textarea>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="form-group">
+                  <label>Describe your {specName(selectedService).toLowerCase()} matter</label>
+                  <textarea
+                    placeholder="Tell us about your legal matter in detail..."
+                    value={formData.caseDescription}
+                    onChange={(e) => setFormData({...formData, caseDescription: e.target.value})}
+                    rows={8}
+                    required
+                  ></textarea>
+                </div>
+              )}
+
               <div className="form-actions">
-                <button type="button" className="cancel-btn" onClick={() => { setIntakeFormType(null); setSelectedService(null); }}>{t('common.cancel')}</button>
-                <button type="submit" className="submit-btn">{t('servicesDirectory.intake.submit', { service: specName(selectedService) })}</button>
+                <button type="button" className="cancel-btn" onClick={() => { setIntakeFormType(null); setSelectedService(null); setIntakeStage('form'); }}>Cancel</button>
+                <button type="submit" className="submit-btn">Continue to Select Firms →</button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* REVIEW PAGE - After form submission */}
+      {intakeFormType === 'service' && selectedService && intakeStage === 'review' && savedIntakeData && (
+        <div className="intake-form-modal">
+          <div className="intake-form-overlay" onClick={() => { setIntakeFormType(null); setSelectedService(null); setIntakeStage('form'); setSavedIntakeData(null); }}></div>
+          <div className="intake-form-container">
+            <button className="close-btn" onClick={() => { setIntakeFormType(null); setSelectedService(null); setIntakeStage('form'); setSavedIntakeData(null); }}>✕</button>
+            <h2><ServiceIcon name="clipboardCheck" className="modal-icon" /> Intake Form Review</h2>
+            <div className="review-content">
+              <div className="document-header">
+                <p className="document-number">Document ID: <strong>{savedIntakeData.documentNumber || 'TLP-PENDING'}</strong></p>
+                <p className="document-service">Service: <strong>{specName(selectedService)}</strong></p>
+              </div>
+
+              <div className="review-section">
+                <h3>Your Information</h3>
+                <div className="review-row">
+                  <span className="review-label">Name:</span>
+                  <span className="review-value">{savedIntakeData.name}</span>
+                </div>
+                <div className="review-row">
+                  <span className="review-label">Email:</span>
+                  <span className="review-value">{savedIntakeData.email}</span>
+                </div>
+                <div className="review-row">
+                  <span className="review-label">Phone:</span>
+                  <span className="review-value">{savedIntakeData.phone}</span>
+                </div>
+              </div>
+
+              <div className="review-section">
+                <h3>Case Details</h3>
+                {LAW_INTAKE_CONFIGS[selectedService]?.questions && LAW_INTAKE_CONFIGS[selectedService].questions.map((question, idx) => {
+                  const fieldValue = (savedIntakeData as any)[question] || '';
+                  return fieldValue ? (
+                    <div key={idx} className="review-row">
+                      <span className="review-label">{question}:</span>
+                      <span className="review-value">{fieldValue}</span>
+                    </div>
+                  ) : null;
+                })}
+              </div>
+
+              <p className="review-note">You can download a PDF of this form below, or proceed to select where to send it.</p>
+
+              <div className="form-actions">
+                <button type="button" className="cancel-btn" onClick={() => { setIntakeStage('form'); setSavedIntakeData(null); setFormData({ name: user?.name || '', email: user?.email || '', phone: user?.phone || '', caseDescription: '', specialization: '', preferredTier: '' }); }}>Edit Form</button>
+                <button type="button" className="action-btn" onClick={() => { /* TODO: PDF Export */ }}>📄 Download PDF</button>
+                <button type="button" className="submit-btn" onClick={() => setIntakeStage('firms')}>Proceed to Select Firms →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* FIRM SELECTOR - After saving intake form */}
+      {intakeFormType === 'service' && selectedService && intakeStage === 'firms' && savedIntakeData && (
+        <div className="intake-form-modal">
+          <div className="intake-form-overlay" onClick={() => { setIntakeStage('form'); setSavedIntakeData(null); }}></div>
+          <div className="intake-form-container">
+            <button className="close-btn" onClick={() => { setIntakeStage('form'); setSavedIntakeData(null); }}>✕</button>
+            <h2><ServiceIcon name="building" className="modal-icon" /> Select Firms to Contact</h2>
+            <p className="form-subtitle">Choose how to send your {specName(selectedService)} intake</p>
+
+            <div className="firm-selector">
+              <div className="selection-method">
+                <label className="radio-label">
+                  <input type="radio" name="method" value="all" defaultChecked onChange={() => {}} />
+                  Send to all {specName(selectedService)} attorneys in <strong>{states.find(s => s.code === selectedState)?.name}</strong>
+                </label>
+              </div>
+
+              <div className="selection-method">
+                <label className="radio-label">
+                  <input type="radio" name="method" value="specific" onChange={() => {}} />
+                  Select specific firms
+                </label>
+              </div>
+            </div>
+
+            <div className="firm-list">
+              <h3>Available Attorneys in {states.find(s => s.code === selectedState)?.name}</h3>
+              {filteredProfessionals
+                .filter(p => p.type === 'attorney' && p.specializations?.includes(selectedService))
+                .map(attorney => (
+                  <div key={attorney.id} className="firm-checkbox-item">
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={selectedFirms.includes(attorney.id)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedFirms([...selectedFirms, attorney.id]);
+                          } else {
+                            setSelectedFirms(selectedFirms.filter(id => id !== attorney.id));
+                          }
+                        }}
+                      />
+                      <span className="firm-name">{attorney.name}</span>
+                      <span className="firm-details">⭐ {attorney.rating} ({attorney.reviews} reviews) • {attorney.yearsExperience} years</span>
+                    </label>
+                    <button className="view-btn" onClick={() => alert(`View profile for ${attorney.name}`)}>View</button>
+                  </div>
+                ))}
+            </div>
+
+            <div className="form-actions">
+              <button type="button" className="cancel-btn" onClick={() => { setIntakeFormType(null); setSelectedService(null); setIntakeStage('form'); setSavedIntakeData(null); }}>Cancel</button>
+              <button type="button" className="submit-btn" onClick={() => {
+                alert(`Intake form sent to ${selectedFirms.length > 0 ? selectedFirms.length + ' selected firms' : 'all attorneys'}`);
+                setIntakeFormType(null);
+                setSelectedService(null);
+                setIntakeStage('form');
+                setSavedIntakeData(null);
+                setSelectedFirms([]);
+                setFormData({ name: '', email: '', phone: '', caseDescription: '', specialization: '', preferredTier: '' });
+              }}>Send Intake Form</button>
+            </div>
           </div>
         </div>
       )}
