@@ -204,5 +204,50 @@ export const api = {
     });
     if (!response.ok) throw new Error('Failed to fetch status history');
     return response.json().then(res => res.data || []);
+  },
+
+  // Time Tracking API
+  async getTimeEntriesByCase(caseId: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/time/case/${caseId}`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to fetch time entries');
+    return response.json().then(res => res.data || []);
+  },
+
+  async getTimeStats(caseId: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/time/case/${caseId}/stats`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to fetch time stats');
+    return response.json().then(res => res.data);
+  },
+
+  async createTimeEntry(data: any, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/time`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error('Failed to create time entry');
+    return response.json().then(res => res.data);
+  },
+
+  async updateTimeEntry(entryId: string, data: any, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/time/${entryId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error('Failed to update time entry');
+    return response.json().then(res => res.data);
+  },
+
+  async deleteTimeEntry(entryId: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/time/${entryId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to delete time entry');
   }
 };

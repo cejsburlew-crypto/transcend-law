@@ -4,6 +4,7 @@ import TasksTab from '@/pages/TasksTab';
 import NotesTab from '@/pages/NotesTab';
 import AppointmentsTab from '@/pages/AppointmentsTab';
 import WorkflowTab from '@/pages/WorkflowTab';
+import TimeTrackingTab from '@/pages/TimeTrackingTab';
 import './CaseDetails.css';
 
 interface CaseDetailsPageProps {
@@ -30,7 +31,7 @@ interface Document {
 }
 
 export const CaseDetails: React.FC<CaseDetailsPageProps> = ({ caseId, onBack }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'intake' | 'communications' | 'documents' | 'timeline' | 'appointments' | 'workflow' | 'tasks' | 'notes'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'intake' | 'communications' | 'documents' | 'timeline' | 'appointments' | 'workflow' | 'tasks' | 'notes' | 'time'>('overview');
 
   // Mock case data
   const caseData = {
@@ -204,6 +205,12 @@ export const CaseDetails: React.FC<CaseDetailsPageProps> = ({ caseId, onBack }) 
           onClick={() => setActiveTab('notes')}
         >
           Notes
+        </button>
+        <button
+          className={`tab ${activeTab === 'time' ? 'active' : ''}`}
+          onClick={() => setActiveTab('time')}
+        >
+          Time
         </button>
       </div>
 
@@ -387,6 +394,10 @@ export const CaseDetails: React.FC<CaseDetailsPageProps> = ({ caseId, onBack }) 
 
         {activeTab === 'notes' && (
           <NotesTab caseId={caseId} />
+        )}
+
+        {activeTab === 'time' && (
+          <TimeTrackingTab caseId={caseId} />
         )}
       </div>
     </div>
