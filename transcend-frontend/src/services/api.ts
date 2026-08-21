@@ -249,5 +249,84 @@ export const api = {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     if (!response.ok) throw new Error('Failed to delete time entry');
+  },
+
+  // Messaging API (Email, SMS, Push)
+  async checkMessagingHealth(token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/messaging/health`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error('Failed to check messaging health');
+    return response.json().then(res => res.data);
+  },
+
+  async sendEmail(data: any, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/messaging/email`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error('Failed to send email');
+    return response.json().then(res => res.data);
+  },
+
+  async sendSMS(data: any, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/messaging/sms`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error('Failed to send SMS');
+    return response.json().then(res => res.data);
+  },
+
+  async registerPushNotification(userId: string, subscription: any, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/messaging/push/subscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ userId, subscription })
+    });
+    if (!response.ok) throw new Error('Failed to register push notification');
+    return response.json();
+  },
+
+  async unregisterPushNotification(userId: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/messaging/push/unsubscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ userId })
+    });
+    if (!response.ok) throw new Error('Failed to unregister push notification');
+    return response.json();
+  },
+
+  async sendPushNotification(userId: string, title: string, body: string, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/messaging/push`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ userId, title, body })
+    });
+    if (!response.ok) throw new Error('Failed to send push notification');
+    return response.json().then(res => res.data);
+  },
+
+  async sendCaseUpdateNotification(data: any, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/messaging/case-update`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error('Failed to send case update notification');
+    return response.json().then(res => res.data);
+  },
+
+  async sendAppointmentReminder(data: any, token: string) {
+    const response = await fetch(`${API_BASE}/api/v1/messaging/appointment-reminder`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error('Failed to send appointment reminder');
+    return response.json().then(res => res.data);
   }
 };
